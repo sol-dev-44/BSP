@@ -157,7 +157,7 @@ const LandingPage: FC = () => {
                 </HeroButton>
               </Tooltip>
               <HeroButton
-                onClick={() => navigate("/learn-more")}
+                onClick={() => navigate("/parasailing")}
                 style={{
                   borderColor: WHITE,
                   color: WHITE,
