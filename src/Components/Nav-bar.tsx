@@ -375,7 +375,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
                       disablePortal
                       style={{ zIndex: 1300 }}
                     >
-                      {({ TransitionProps, placement }) => (
+                      {({ TransitionProps }) => (
                         <Grow
                           {...TransitionProps}
                           style={{

@@ -71,16 +71,18 @@ const LearnMorePage = () => {
       const section = hash.substring(1); // remove the # from the hash
       if (section === "experience" && experienceRef.current) {
         setActiveTab("experience");
-        experienceRef.current.scrollIntoView({ behavior: "smooth" });
+        (experienceRef.current as any)?.scrollIntoView({ behavior: "smooth" });
       } else if (section === "safety" && safetyRef.current) {
         setActiveTab("safety");
-        safetyRef.current.scrollIntoView({ behavior: "smooth" });
+        (safetyRef.current as any)?.scrollIntoView({ behavior: "smooth" });
       } else if (section === "location" && locationRef.current) {
         setActiveTab("location");
-        locationRef.current.scrollIntoView({ behavior: "smooth" });
+        (locationRef.current as any)?.scrollIntoView({ behavior: "smooth" });
       } else if (section === "testimonials" && testimonialRef.current) {
         setActiveTab("testimonial");
-        testimonialRef.current.scrollIntoView({ behavior: "smooth" });
+        (testimonialRef.current as any)?.scrollIntoView({
+          behavior: "smooth",
+        });
       }
     }
   }, []);
@@ -189,7 +191,7 @@ const LearnMorePage = () => {
               }`}
               onClick={() => {
                 setActiveTab("experience");
-                experienceRef.current?.scrollIntoView({ behavior: "smooth" });
+                (experienceRef.current as any)?.scrollIntoView({ behavior: "smooth" });
               }}
             >
               The Experience
@@ -202,7 +204,7 @@ const LearnMorePage = () => {
               }`}
               onClick={() => {
                 setActiveTab("safety");
-                safetyRef.current?.scrollIntoView({ behavior: "smooth" });
+                (safetyRef.current as any)?.scrollIntoView({ behavior: "smooth"  });
               }}
             >
               Safety & Requirements
@@ -215,7 +217,7 @@ const LearnMorePage = () => {
               }`}
               onClick={() => {
                 setActiveTab("location");
-                locationRef.current?.scrollIntoView({ behavior: "smooth" });
+                (locationRef.current as any)?.scrollIntoView({ behavior: "smooth"  });
               }}
             >
               Our Location
@@ -228,7 +230,7 @@ const LearnMorePage = () => {
               }`}
               onClick={() => {
                 setActiveTab("testimonial");
-                testimonialRef.current?.scrollIntoView({ behavior: "smooth" });
+                (testimonialRef.current as any)?.scrollIntoView({ behavior: "smooth"  });
               }}
             >
               Guest Experiences
@@ -891,7 +893,8 @@ const LearnMorePage = () => {
                   </div>
                   <div className="text-center">
                     <a
-                      href="#"
+                      href="https://order.toasttab.com/online/harbor-grille-lakeside-7135-us-hwy-93"
+                      target="_blank"
                       className="inline-flex items-center px-4 py-2 rounded-lg font-medium text-sm"
                       style={{ backgroundColor: TEAL, color: "black" }}
                     >
@@ -1137,7 +1140,7 @@ const LearnMorePage = () => {
                   <div className="text-xl font-bold" style={{ color: YELLOW }}>
                     5.0
                   </div>
-                  <div className="text-sm">FaceBook</div>
+                  <div className="text-sm">Facebook</div>
                 </div>
               </div>
             </div>
@@ -1180,7 +1183,8 @@ const LearnMorePage = () => {
                 thrilling experiences that showcase the natural beauty of
                 Flathead Lake and the surrounding wilderness.
               </p>
-              <div className="flex space-x-4 mb-4">
+              {
+                /* <div className="flex space-x-4 mb-4">
                 <a
                   href="#"
                   className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
@@ -1202,7 +1206,8 @@ const LearnMorePage = () => {
                 >
                   <span className="text-black font-bold">TW</span>
                 </a>
-              </div>
+              </div> */
+              }
               <p className="text-gray-400">
                 © 2025 Mellow Montana Co. All rights reserved.
               </p>
@@ -1269,14 +1274,29 @@ const LearnMorePage = () => {
                 CONTACT US
               </h3>
               <p className="text-gray-300 mb-2 flex items-center">
-                <span className="mr-2">📧</span> info@mellowmontana.com
+                <span className="mr-2">📧</span>
+                <a
+                  href="mailto:info@mellowmontana.com"
+                  className="hover:text-white"
+                >
+                  info@mellowmontana.com
+                </a>
               </p>
-              <p className="text-gray-300 mb-2 flex items-center">
-                <span className="mr-2">📱</span> (406) 555-1234
-              </p>
+              {
+                /* <p className="text-gray-300 mb-2 flex items-center">
+    <span className="mr-2">📱</span> (406) 555-1234
+  </p> */
+              }
               <p className="text-gray-300 mb-6 flex items-center">
                 <span className="mr-2">📍</span>{" "}
-                Lakeside Marina, Flathead Lake, MT
+                <a
+                  href="https://maps.google.com/?q=Flathead+Harbor+Marina,+7007+U.S.+93+S,+Lakeside,+MT+59922"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white"
+                >
+                  Flathead Harbor Marina, Lakeside, MT
+                </a>
               </p>
 
               <h4

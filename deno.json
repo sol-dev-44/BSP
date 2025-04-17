@@ -1,12 +1,14 @@
 {
-    "deploy": {
-      "exclude": [
-        "**/node_modules"
-      ],
-      "entrypoint": "api/main.ts"
-    },
-    "imports": {
-        "@oak/oak": "jsr:@oak/oak@^17.1.4",
-        "@tajpouria/cors": "jsr:@tajpouria/cors@^1.2.1"
-    }
+  "imports": {
+    "@oak/oak": "jsr:@oak/oak@^17.1.3",
+    "@tajpouria/cors": "jsr:@tajpouria/cors@^1.2.1"
+  },
+  "deploy": {
+    "project": "03e310c3-65b3-4a3d-a755-da3dddef5cb9",
+    "exclude": [
+      "**/node_modules"
+    ],
+    "include": [],
+    "entrypoint": "api/main.ts"
   }
+}
