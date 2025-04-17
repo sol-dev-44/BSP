@@ -2,10 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 
-// Define our color constants
+// Updated color constants with more teal dark colors
 const YELLOW = "#FFD700"; // Bright yellow for primary brand color
-const TEAL = "#40E0D0"; // Vibrant teal for water theme
+const TEAL = "#40E0D0"; // Vibrant teal
 const LIGHT_TEAL = "#7FFFD4"; // Lighter teal (Aquamarine)
+const DARK_TEAL = "#20B2AA"; // Dark teal (LightSeaGreen)
+const DEEP_TEAL = "#008080"; // Deep teal (Teal)
 const WHITE = "#FFFFFF"; // White for text and contrast
 const SAND = "#F5F5DC"; // Light sand color for subtle elements
 
@@ -71,7 +73,7 @@ const LearnMorePage: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-gray-900 text-white">
+    <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-gray-900 to-teal-900 text-white">
       {/* Parallax Hero Section */}
       <motion.div 
         className="fixed top-0 left-0 right-0 bottom-0 -z-10"
@@ -84,7 +86,7 @@ const LearnMorePage: React.FC = () => {
             filter: 'brightness(0.8)'
           }}
         >
-          <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-teal-900 to-black opacity-50"></div>
         </div>
       </motion.div>
 
@@ -135,7 +137,7 @@ const LearnMorePage: React.FC = () => {
       </div>
 
       {/* Navigation Tabs */}
-      <div className="sticky top-0 z-50 bg-black bg-opacity-70 backdrop-blur-md">
+      <div className="sticky top-0 z-50" style={{ backgroundColor: `rgba(0, 64, 64, 0.8)` }}>
         <div className="container mx-auto px-4">
           <div className="flex overflow-x-auto py-3 no-scrollbar">
             <button 
@@ -179,7 +181,7 @@ const LearnMorePage: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="bg-gradient-to-b from-transparent to-black">
+      <div className="bg-gradient-to-b from-transparent to-teal-900">
         <div className="container mx-auto">
           
           {/* The Experience Section */}
@@ -214,19 +216,19 @@ const LearnMorePage: React.FC = () => {
                 </p>
                 <ul className="space-y-4">
                   <li className="flex items-center">
-                    <span className="inline-block w-6 h-6 rounded-full mr-3" style={{ backgroundColor: LIGHT_TEAL }}></span>
+                    <span className="inline-block w-6 h-6 rounded-full mr-3" style={{ backgroundColor: TEAL }}></span>
                     <span>15-20 minute flight time</span>
                   </li>
                   <li className="flex items-center">
-                    <span className="inline-block w-6 h-6 rounded-full mr-3" style={{ backgroundColor: LIGHT_TEAL }}></span>
+                    <span className="inline-block w-6 h-6 rounded-full mr-3" style={{ backgroundColor: TEAL }}></span>
                     <span>Solo, tandem, or triple flights available</span>
                   </li>
                   <li className="flex items-center">
-                    <span className="inline-block w-6 h-6 rounded-full mr-3" style={{ backgroundColor: LIGHT_TEAL }}></span>
+                    <span className="inline-block w-6 h-6 rounded-full mr-3" style={{ backgroundColor: TEAL }}></span>
                     <span>Dry takeoffs and landings from our custom boat</span>
                   </li>
                   <li className="flex items-center">
-                    <span className="inline-block w-6 h-6 rounded-full mr-3" style={{ backgroundColor: LIGHT_TEAL }}></span>
+                    <span className="inline-block w-6 h-6 rounded-full mr-3" style={{ backgroundColor: TEAL }}></span>
                     <span>Optional GoPro photo/video package</span>
                   </li>
                 </ul>
@@ -241,11 +243,11 @@ const LearnMorePage: React.FC = () => {
                   alt="Parasailing over Flathead Lake" 
                   className="w-full h-full object-cover rounded-lg"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-teal-900 via-transparent to-transparent opacity-60"></div>
                 
                 <motion.div 
                   className="absolute bottom-6 right-6 p-4 rounded-lg"
-                  style={{ backgroundColor: `rgba(0, 0, 0, 0.7)` }}
+                  style={{ backgroundColor: `rgba(0, 96, 96, 0.8)` }}
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
@@ -259,7 +261,8 @@ const LearnMorePage: React.FC = () => {
           {/* Safety Section */}
           <section 
             ref={safetyRef}
-            className="py-16 px-4 min-h-screen flex flex-col justify-center bg-black bg-opacity-50"
+            className="py-16 px-4 min-h-screen flex flex-col justify-center"
+            style={{ backgroundColor: `rgba(0, 96, 96, 0.2)` }}
             id="safety"
           >
             <motion.div
@@ -285,7 +288,7 @@ const LearnMorePage: React.FC = () => {
                   alt="Parasailing safety equipment" 
                   className="w-full h-full object-cover rounded-lg"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-teal-900 via-transparent to-transparent opacity-60"></div>
               </motion.div>
               
               <motion.div variants={slideLeft} className="order-1 md:order-2">
@@ -296,7 +299,7 @@ const LearnMorePage: React.FC = () => {
                   Your safety is our top priority. Our USCG-certified captains and highly trained crew follow strict safety protocols and use only top-quality equipment that's inspected daily.
                 </p>
                 
-                <div className="bg-gray-900 bg-opacity-50 p-6 rounded-lg mb-8">
+                <div style={{ backgroundColor: `rgba(0, 64, 64, 0.7)` }} className="p-6 rounded-lg mb-8">
                   <h3 className="text-xl font-bold mb-4" style={{ color: LIGHT_TEAL }}>Requirements</h3>
                   <ul className="space-y-3">
                     <li className="flex items-start">
@@ -326,7 +329,7 @@ const LearnMorePage: React.FC = () => {
                   <Link 
                     to="/safety-policy" 
                     className="inline-flex items-center px-6 py-3 rounded-lg font-medium"
-                    style={{ backgroundColor: LIGHT_TEAL, color: "black" }}
+                    style={{ backgroundColor: TEAL, color: "black" }}
                   >
                     View Full Safety Policy
                     <span className="ml-2">→</span>
@@ -367,7 +370,7 @@ const LearnMorePage: React.FC = () => {
                   From the air, you'll enjoy spectacular views of the Mission and Swan mountain ranges, Wild Horse Island, and the crystal-clear waters that make Flathead Lake famous.
                 </p>
                 
-                <div className="bg-gray-900 bg-opacity-50 p-6 rounded-lg mb-8">
+                <div style={{ backgroundColor: `rgba(0, 64, 64, 0.7)` }} className="p-6 rounded-lg mb-8">
                   <h3 className="text-xl font-bold mb-4" style={{ color: LIGHT_TEAL }}>Find Us Here</h3>
                   <p className="mb-2">Lakeside Marina</p>
                   <p className="mb-2">7220 Highway 93 S</p>
@@ -388,7 +391,7 @@ const LearnMorePage: React.FC = () => {
                   <Link 
                     to="/directions" 
                     className="inline-flex items-center px-6 py-3 rounded-lg font-medium"
-                    style={{ backgroundColor: LIGHT_TEAL, color: "black" }}
+                    style={{ backgroundColor: TEAL, color: "black" }}
                   >
                     Get Directions
                     <span className="ml-2">→</span>
@@ -405,7 +408,7 @@ const LearnMorePage: React.FC = () => {
                   alt="Map of Flathead Lake" 
                   className="w-full h-full object-cover rounded-lg"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-60"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-teal-900 opacity-60"></div>
                 
                 <motion.div 
                   className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
@@ -427,7 +430,8 @@ const LearnMorePage: React.FC = () => {
           {/* Testimonials Section */}
           <section 
             ref={testimonialRef}
-            className="py-16 px-4 min-h-screen flex flex-col justify-center bg-black bg-opacity-50"
+            className="py-16 px-4 min-h-screen flex flex-col justify-center"
+            style={{ backgroundColor: `rgba(0, 96, 96, 0.2)` }}
             id="testimonials"
           >
             <motion.div
@@ -478,7 +482,8 @@ const LearnMorePage: React.FC = () => {
                       }
                     }
                   }}
-                  className="bg-gray-900 bg-opacity-60 p-8 rounded-lg"
+                  style={{ backgroundColor: `rgba(0, 64, 64, 0.7)` }}
+                  className="p-8 rounded-lg"
                 >
                   <div className="flex mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
@@ -513,20 +518,20 @@ const LearnMorePage: React.FC = () => {
       </div>
       
       {/* Footer */}
-      <footer className="bg-black py-12 px-4">
+      <footer style={{ backgroundColor: DEEP_TEAL }} className="py-12 px-4">
         <div className="container mx-auto">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
               <h3 className="text-xl font-bold mb-4" style={{ color: YELLOW }}>MELLOW MONTANA WATERSPORTS</h3>
-              <p className="text-gray-400 mb-4">Providing unforgettable aerial adventures over Montana's most beautiful lake since 2022.</p>
-              <p className="text-gray-400">© 2025 Mellow Montana Co. All rights reserved.</p>
+              <p className="text-gray-300 mb-4">Providing unforgettable aerial adventures over Montana's most beautiful lake since 2022.</p>
+              <p className="text-gray-300">© 2025 Mellow Montana Co. All rights reserved.</p>
             </div>
             
             <div>
               <h3 className="text-xl font-bold mb-4" style={{ color: YELLOW }}>CONTACT US</h3>
-              <p className="text-gray-400 mb-2">Email: info@mellowmontana.com</p>
-              <p className="text-gray-400 mb-2">Phone: (406) 555-1234</p>
-              <p className="text-gray-400">Lakeside Marina, Flathead Lake, MT</p>
+              <p className="text-gray-300 mb-2">Email: info@mellowmontana.com</p>
+              <p className="text-gray-300 mb-2">Phone: (406) 555-1234</p>
+              <p className="text-gray-300">Lakeside Marina, Flathead Lake, MT</p>
             </div>
             
             <div>
