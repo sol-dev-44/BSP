@@ -107,13 +107,13 @@ const LearnMorePage = () => {
       </motion.div>
 
       {/* Hero Content - Enhanced with more dramatic text effects */}
-      <div className="relative h-[60vh] flex flex-col items-center justify-center text-center px-2">
+      <div className="relative h-screen min-h-[400px] flex flex-col items-center justify-center text-center px-4 py-4">
         <motion.div
           className="z-10"
           style={{ y: parallaxY1, opacity }}
         >
           <motion.h1
-            className="text-5xl md:text-7xl font-bold tracking-wider"
+            className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-wider leading-tight"
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -130,7 +130,7 @@ const LearnMorePage = () => {
             EXPERIENCE
           </motion.h1>
           <motion.p
-            className="text-xl md:text-2xl mb-2"
+            className="text-lg sm:text-xl md:text-2xl mb-2 mt-2"
             style={{ color: SAND }}
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -140,7 +140,7 @@ const LearnMorePage = () => {
           </motion.p>
           {/* Added CTA button in hero section */}
           <motion.button
-            className="mt-8 px-6 py-3 text-lg font-bold rounded-full transition-all duration-300 hover:scale-105"
+            className="mt-6 md:mt-8 px-5 py-3 md:px-6 md:py-3 text-base md:text-lg font-bold rounded-full transition-all duration-300 hover:scale-105"
             style={{ backgroundColor: YELLOW, color: "#000" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -153,7 +153,7 @@ const LearnMorePage = () => {
         </motion.div>
 
         <motion.div
-          className="absolute bottom-10 left-0 right-0 flex justify-center"
+          className="absolute bottom-8 left-0 right-0 flex justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
@@ -173,64 +173,73 @@ const LearnMorePage = () => {
         </motion.div>
       </div>
 
-      {/* Navigation Tabs - Enhanced with better contrast and interaction states */}
+      {/* Navigation Tabs - Fixed to prevent horizontal scrolling */}
       <div
-        className="sticky top-0 z-50"
+        className="sticky top-0 z-50 w-full"
         style={{
           backgroundColor: `rgba(0, 64, 64, 0.9)`,
           boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
         }}
       >
-        <div className="container mx-auto px-4">
-          <div className="flex overflow-x-auto py-3 no-scrollbar">
+        <div className="container mx-auto">
+          {/* Using a flex grid layout for the tabs with proper spacing and sizing */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-2">
             <button
-              className={`px-6 py-2 mr-2 rounded-full whitespace-nowrap transition-all ${
+              className={`px-2 py-2 text-sm md:text-base rounded-full whitespace-nowrap transition-all ${
                 activeTab === "experience"
                   ? `bg-yellow-400 text-black font-bold shadow-md`
                   : "bg-transparent text-white hover:bg-teal-800"
               }`}
               onClick={() => {
                 setActiveTab("experience");
-                (experienceRef.current as any)?.scrollIntoView({ behavior: "smooth" });
+                (experienceRef.current as any)?.scrollIntoView({
+                  behavior: "smooth",
+                });
               }}
             >
               The Experience
             </button>
             <button
-              className={`px-6 py-2 mr-2 rounded-full whitespace-nowrap transition-all ${
+              className={`px-2 py-2 text-sm md:text-base rounded-full whitespace-nowrap transition-all ${
                 activeTab === "safety"
                   ? `bg-yellow-400 text-black font-bold shadow-md`
                   : "bg-transparent text-white hover:bg-teal-800"
               }`}
               onClick={() => {
                 setActiveTab("safety");
-                (safetyRef.current as any)?.scrollIntoView({ behavior: "smooth"  });
+                (safetyRef.current as any)?.scrollIntoView({
+                  behavior: "smooth",
+                });
               }}
             >
-              Safety & Requirements
+              Safety
             </button>
             <button
-              className={`px-6 py-2 mr-2 rounded-full whitespace-nowrap transition-all ${
+              className={`px-2 py-2 text-sm md:text-base rounded-full whitespace-nowrap transition-all ${
                 activeTab === "location"
                   ? `bg-yellow-400 text-black font-bold shadow-md`
                   : "bg-transparent text-white hover:bg-teal-800"
               }`}
               onClick={() => {
                 setActiveTab("location");
-                (locationRef.current as any)?.scrollIntoView({ behavior: "smooth"  });
+                (locationRef.current as any)?.scrollIntoView({
+                  behavior: "smooth",
+                });
               }}
             >
               Our Location
             </button>
             <button
-              className={`px-6 py-2 rounded-full whitespace-nowrap transition-all ${
+              className={`px-2 py-2 text-sm md:text-base rounded-full whitespace-nowrap transition-all ${
                 activeTab === "testimonial"
                   ? `bg-yellow-400 text-black font-bold shadow-md`
                   : "bg-transparent text-white hover:bg-teal-800"
               }`}
               onClick={() => {
                 setActiveTab("testimonial");
-                (testimonialRef.current as any)?.scrollIntoView({ behavior: "smooth"  });
+                (testimonialRef.current as any)?.scrollIntoView({
+                  behavior: "smooth",
+                });
               }}
             >
               Guest Experiences
@@ -242,10 +251,10 @@ const LearnMorePage = () => {
       {/* Main Content */}
       <div className="bg-gradient-to-b from-transparent to-teal-900">
         <div className="container mx-auto">
-          {/* The Experience Section */}
+          {/* The Experience Section - Fixed display issues */}
           <section
             ref={experienceRef}
-            className="py-16 px-4 min-h-screen flex flex-col justify-center"
+            className="py-12 md:py-16 px-4 min-h-screen flex flex-col justify-center"
             id="experience"
           >
             <motion.div
@@ -260,11 +269,11 @@ const LearnMorePage = () => {
               }}
               initial="hidden"
               animate={experienceInView ? "visible" : "hidden"}
-              className="grid md:grid-cols-2 gap-12 items-center"
+              className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center"
             >
-              <motion.div variants={slideRight}>
+              <motion.div variants={slideRight} className="order-2 md:order-1">
                 <h2
-                  className="text-4xl font-bold mb-6 tracking-wide"
+                  className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 tracking-wide"
                   style={{
                     color: YELLOW,
                     textShadow: "0px 0px 10px rgba(255, 215, 0, 0.3)",
@@ -272,7 +281,7 @@ const LearnMorePage = () => {
                 >
                   THE ULTIMATE AERIAL ADVENTURE
                 </h2>
-                <p className="text-lg mb-6">
+                <p className="text-base md:text-lg mb-4 md:mb-6">
                   Experience the thrill of soaring up to 500 feet above the
                   crystal-clear waters of Flathead Lake, Montana's largest
                   natural freshwater lake. Our state-of-the-art parasailing
@@ -280,7 +289,7 @@ const LearnMorePage = () => {
                   breathtaking 360° panoramic views of the Mission Mountains,
                   Wild Horse Island, and the surrounding pristine wilderness.
                 </p>
-                <p className="text-lg mb-6">
+                <p className="text-base md:text-lg mb-4 md:mb-6">
                   Whether you're seeking an adrenaline-pumping adventure or
                   peaceful moments suspended above the sapphire waters, our
                   highly-trained crew will customize your parasailing experience
@@ -288,25 +297,25 @@ const LearnMorePage = () => {
                   experience and a perfect safety record, we ensure every flight
                   delivers unforgettable memories.
                 </p>
-                <p className="text-lg mb-8">
+                <p className="text-base md:text-lg mb-4 md:mb-8">
                   No experience necessary! Our professional instructors provide
                   comprehensive pre-flight training and handle all technical
                   aspects, allowing you to simply relax and enjoy the incredible
                   sensation of flight. All ages welcome—we've safely flown
                   adventurers from 6 to 86 years old!
                 </p>
-                <div className="flex flex-col md:flex-row md:space-x-6 mb-8">
-                  <div className="md:w-1/2">
+                <div className="flex flex-col md:flex-row md:space-x-6 mb-6 md:mb-8">
+                  <div className="md:w-1/2 mb-6 md:mb-0">
                     <h3
-                      className="text-2xl font-semibold mb-4"
+                      className="text-xl md:text-2xl font-semibold mb-3 md:mb-4"
                       style={{ color: TEAL }}
                     >
                       Flight Highlights
                     </h3>
-                    <ul className="space-y-4">
+                    <ul className="space-y-3 md:space-y-4">
                       <li className="flex items-center">
                         <span
-                          className="inline-block w-6 h-6 rounded-full mr-3 flex-shrink-0"
+                          className="inline-block w-5 h-5 md:w-6 md:h-6 rounded-full mr-2 md:mr-3 flex-shrink-0"
                           style={{ backgroundColor: TEAL }}
                         >
                         </span>
@@ -314,7 +323,7 @@ const LearnMorePage = () => {
                       </li>
                       <li className="flex items-center">
                         <span
-                          className="inline-block w-6 h-6 rounded-full mr-3 flex-shrink-0"
+                          className="inline-block w-5 h-5 md:w-6 md:h-6 rounded-full mr-2 md:mr-3 flex-shrink-0"
                           style={{ backgroundColor: TEAL }}
                         >
                         </span>
@@ -325,7 +334,7 @@ const LearnMorePage = () => {
                       </li>
                       <li className="flex items-center">
                         <span
-                          className="inline-block w-6 h-6 rounded-full mr-3 flex-shrink-0"
+                          className="inline-block w-5 h-5 md:w-6 md:h-6 rounded-full mr-2 md:mr-3 flex-shrink-0"
                           style={{ backgroundColor: TEAL }}
                         >
                         </span>
@@ -336,7 +345,7 @@ const LearnMorePage = () => {
                       </li>
                       <li className="flex items-center">
                         <span
-                          className="inline-block w-6 h-6 rounded-full mr-3 flex-shrink-0"
+                          className="inline-block w-5 h-5 md:w-6 md:h-6 rounded-full mr-2 md:mr-3 flex-shrink-0"
                           style={{ backgroundColor: TEAL }}
                         >
                         </span>
@@ -347,17 +356,17 @@ const LearnMorePage = () => {
                       </li>
                     </ul>
                   </div>
-                  <div className="md:w-1/2 mt-6 md:mt-0">
+                  <div className="md:w-1/2">
                     <h3
-                      className="text-2xl font-semibold mb-4"
+                      className="text-xl md:text-2xl font-semibold mb-3 md:mb-4"
                       style={{ color: TEAL }}
                     >
                       Premium Features
                     </h3>
-                    <ul className="space-y-4">
+                    <ul className="space-y-3 md:space-y-4">
                       <li className="flex items-center">
                         <span
-                          className="inline-block w-6 h-6 rounded-full mr-3 flex-shrink-0"
+                          className="inline-block w-5 h-5 md:w-6 md:h-6 rounded-full mr-2 md:mr-3 flex-shrink-0"
                           style={{ backgroundColor: TEAL }}
                         >
                         </span>
@@ -367,7 +376,7 @@ const LearnMorePage = () => {
                       </li>
                       <li className="flex items-center">
                         <span
-                          className="inline-block w-6 h-6 rounded-full mr-3 flex-shrink-0"
+                          className="inline-block w-5 h-5 md:w-6 md:h-6 rounded-full mr-2 md:mr-3 flex-shrink-0"
                           style={{ backgroundColor: TEAL }}
                         >
                         </span>
@@ -377,7 +386,7 @@ const LearnMorePage = () => {
                       </li>
                       <li className="flex items-center">
                         <span
-                          className="inline-block w-6 h-6 rounded-full mr-3 flex-shrink-0"
+                          className="inline-block w-5 h-5 md:w-6 md:h-6 rounded-full mr-2 md:mr-3 flex-shrink-0"
                           style={{ backgroundColor: TEAL }}
                         >
                         </span>
@@ -387,7 +396,7 @@ const LearnMorePage = () => {
                       </li>
                       <li className="flex items-center">
                         <span
-                          className="inline-block w-6 h-6 rounded-full mr-3 flex-shrink-0"
+                          className="inline-block w-5 h-5 md:w-6 md:h-6 rounded-full mr-2 md:mr-3 flex-shrink-0"
                           style={{ backgroundColor: TEAL }}
                         >
                         </span>
@@ -398,14 +407,14 @@ const LearnMorePage = () => {
                     </ul>
                   </div>
                 </div>
-                <div className="bg-teal-900 bg-opacity-70 p-6 rounded-lg mb-8 shadow-lg border border-teal-800">
+                <div className="bg-teal-900 bg-opacity-70 p-4 md:p-6 rounded-lg mb-6 md:mb-8 shadow-lg border border-teal-800">
                   <h3
-                    className="text-2xl font-semibold mb-4"
+                    className="text-xl md:text-2xl font-semibold mb-3 md:mb-4"
                     style={{ color: YELLOW }}
                   >
                     Seasonal Highlights
                   </h3>
-                  <p className="text-lg mb-4 text-white">
+                  <p className="text-base md:text-lg mb-3 md:mb-4 text-white">
                     <span
                       className="font-semibold"
                       style={{ color: LIGHT_TEAL }}
@@ -415,7 +424,7 @@ const LearnMorePage = () => {
                     Experience the snowcapped mountains and vibrant green
                     landscapes during our early season flights.
                   </p>
-                  <p className="text-lg mb-4 text-white">
+                  <p className="text-base md:text-lg mb-3 md:mb-4 text-white">
                     <span
                       className="font-semibold"
                       style={{ color: LIGHT_TEAL }}
@@ -425,7 +434,7 @@ const LearnMorePage = () => {
                     Enjoy perfect flying conditions with warm temperatures and
                     crystal-clear visibility.
                   </p>
-                  <p className="text-lg text-white">
+                  <p className="text-base md:text-lg text-white">
                     <span
                       className="font-semibold"
                       style={{ color: LIGHT_TEAL }}
@@ -438,7 +447,7 @@ const LearnMorePage = () => {
                 </div>
                 <div className="flex justify-center">
                   <motion.button
-                    className="px-8 py-4 text-xl font-bold rounded-full transition-all duration-300 hover:scale-105 shadow-xl"
+                    className="px-6 md:px-8 py-3 md:py-4 text-lg md:text-xl font-bold rounded-full transition-all duration-300 hover:scale-105 shadow-xl"
                     style={{ backgroundColor: YELLOW, color: "#000" }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -451,7 +460,7 @@ const LearnMorePage = () => {
 
               <motion.div
                 variants={slideLeft}
-                className="relative h-96 md:h-full rounded-lg overflow-hidden shadow-2xl"
+                className="relative h-64 sm:h-80 md:h-full rounded-lg overflow-hidden shadow-2xl order-1 md:order-2 mb-6 md:mb-0"
               >
                 <img
                   src="/FlatheadAerial1.jpg"
@@ -462,18 +471,18 @@ const LearnMorePage = () => {
                 </div>
 
                 <motion.div
-                  className="absolute bottom-6 right-6 p-4 rounded-lg shadow-lg"
+                  className="absolute bottom-4 right-4 md:bottom-6 md:right-6 p-3 md:p-4 rounded-lg shadow-lg"
                   style={{ backgroundColor: `rgba(0, 96, 96, 0.9)` }}
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
                   <p
-                    className="text-2xl font-bold mb-1"
+                    className="text-xl md:text-2xl font-bold mb-0 md:mb-1"
                     style={{ color: YELLOW }}
                   >
                     From $99
                   </p>
-                  <p className="text-sm text-gray-200">Per person</p>
+                  <p className="text-xs md:text-sm text-gray-200">Per person</p>
                 </motion.div>
               </motion.div>
             </motion.div>
@@ -482,7 +491,7 @@ const LearnMorePage = () => {
           {/* Safety Section - Enhanced with better visuals and organization */}
           <section
             ref={safetyRef}
-            className="py-16 px-4 min-h-screen flex flex-col justify-center"
+            className="py-12 md:py-16 px-4 min-h-screen flex flex-col justify-center"
             style={{ backgroundColor: `rgba(0, 96, 96, 0.2)` }}
             id="safety"
           >
@@ -498,11 +507,11 @@ const LearnMorePage = () => {
               }}
               initial="hidden"
               animate={safetyInView ? "visible" : "hidden"}
-              className="grid md:grid-cols-2 gap-12 items-center"
+              className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center"
             >
               <motion.div
                 variants={slideRight}
-                className="order-2 md:order-1 relative h-96 md:h-full rounded-lg overflow-hidden shadow-2xl"
+                className="order-2 md:order-1 relative h-64 sm:h-80 md:h-full rounded-lg overflow-hidden shadow-2xl mb-4 md:mb-0"
               >
                 <img
                   src="/FlatheadAerial1.jpg"
@@ -513,12 +522,12 @@ const LearnMorePage = () => {
                 </div>
 
                 {/* Added safety certification badge */}
-                <div className="absolute top-6 left-6 w-24 h-24 rounded-full bg-yellow-400 flex items-center justify-center shadow-lg">
+                <div className="absolute top-4 left-4 md:top-6 md:left-6 w-16 h-16 md:w-24 md:h-24 rounded-full bg-yellow-400 flex items-center justify-center shadow-lg">
                   <div className="text-center">
                     <div className="text-xs font-bold text-teal-800">
                       CERTIFIED
                     </div>
-                    <div className="text-lg font-bold text-teal-900">
+                    <div className="text-base md:text-lg font-bold text-teal-900">
                       SAFETY
                     </div>
                     <div className="text-xs font-bold text-teal-800">
@@ -529,7 +538,7 @@ const LearnMorePage = () => {
               </motion.div>
               <motion.div variants={slideLeft} className="order-1 md:order-2">
                 <h2
-                  className="text-4xl font-bold mb-6 tracking-wide"
+                  className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 tracking-wide"
                   style={{
                     color: YELLOW,
                     textShadow: "0px 0px 10px rgba(255, 215, 0, 0.3)",
@@ -537,7 +546,7 @@ const LearnMorePage = () => {
                 >
                   SAFETY FIRST, ALWAYS
                 </h2>
-                <p className="text-lg mb-6">
+                <p className="text-base md:text-lg mb-4 md:mb-6">
                   Your safety is our top priority. Our USCG-certified captains
                   and highly trained crew follow strict safety protocols and use
                   only top-quality equipment that's inspected daily. Every
@@ -548,18 +557,18 @@ const LearnMorePage = () => {
 
                 <div
                   style={{ backgroundColor: `rgba(0, 64, 64, 0.7)` }}
-                  className="p-6 rounded-lg mb-8 border border-teal-700 shadow-lg"
+                  className="p-4 md:p-6 rounded-lg mb-6 md:mb-8 border border-teal-700 shadow-lg"
                 >
                   <h3
-                    className="text-xl font-bold mb-4"
+                    className="text-lg md:text-xl font-bold mb-3 md:mb-4"
                     style={{ color: LIGHT_TEAL }}
                   >
                     Requirements For Your Adventure
                   </h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-2 md:space-y-3">
                     <li className="flex items-start">
                       <div
-                        className="w-6 h-6 mr-2 flex-shrink-0 flex items-center justify-center rounded-full"
+                        className="w-5 h-5 md:w-6 md:h-6 mr-2 flex-shrink-0 flex items-center justify-center rounded-full"
                         style={{ backgroundColor: TEAL }}
                       >
                         <span className="text-teal-900 font-bold">✓</span>
@@ -571,7 +580,7 @@ const LearnMorePage = () => {
                     </li>
                     <li className="flex items-start">
                       <div
-                        className="w-6 h-6 mr-2 flex-shrink-0 flex items-center justify-center rounded-full"
+                        className="w-5 h-5 md:w-6 md:h-6 mr-2 flex-shrink-0 flex items-center justify-center rounded-full"
                         style={{ backgroundColor: TEAL }}
                       >
                         <span className="text-teal-900 font-bold">✓</span>
@@ -582,7 +591,7 @@ const LearnMorePage = () => {
                     </li>
                     <li className="flex items-start">
                       <div
-                        className="w-6 h-6 mr-2 flex-shrink-0 flex items-center justify-center rounded-full"
+                        className="w-5 h-5 md:w-6 md:h-6 mr-2 flex-shrink-0 flex items-center justify-center rounded-full"
                         style={{ backgroundColor: TEAL }}
                       >
                         <span className="text-teal-900 font-bold">✓</span>
@@ -595,7 +604,7 @@ const LearnMorePage = () => {
                     </li>
                     <li className="flex items-start">
                       <div
-                        className="w-6 h-6 mr-2 flex-shrink-0 flex items-center justify-center rounded-full"
+                        className="w-5 h-5 md:w-6 md:h-6 mr-2 flex-shrink-0 flex items-center justify-center rounded-full"
                         style={{ backgroundColor: TEAL }}
                       >
                         <span className="text-teal-900 font-bold">✓</span>
@@ -609,24 +618,33 @@ const LearnMorePage = () => {
                 </div>
 
                 {/* Updated safety statistics with improved layout */}
-                <div className="grid grid-cols-3 gap-4 mb-8">
-                  <div className="bg-teal-800 bg-opacity-50 p-4 rounded-lg text-center shadow-md border border-teal-700 hover:bg-teal-700 hover:bg-opacity-40 transition-all duration-300">
-                    <p className="text-3xl font-bold" style={{ color: YELLOW }}>
+                <div className="grid grid-cols-3 gap-2 md:gap-4 mb-6 md:mb-8">
+                  <div className="bg-teal-800 bg-opacity-50 p-3 md:p-4 rounded-lg text-center shadow-md border border-teal-700 hover:bg-teal-700 hover:bg-opacity-40 transition-all duration-300">
+                    <p
+                      className="text-2xl md:text-3xl font-bold"
+                      style={{ color: YELLOW }}
+                    >
                       100%
                     </p>
-                    <p className="text-sm">Safety Record</p>
+                    <p className="text-xs md:text-sm">Safety Record</p>
                   </div>
-                  <div className="bg-teal-800 bg-opacity-50 p-4 rounded-lg text-center shadow-md border border-teal-700 hover:bg-teal-700 hover:bg-opacity-40 transition-all duration-300">
-                    <p className="text-3xl font-bold" style={{ color: YELLOW }}>
+                  <div className="bg-teal-800 bg-opacity-50 p-3 md:p-4 rounded-lg text-center shadow-md border border-teal-700 hover:bg-teal-700 hover:bg-opacity-40 transition-all duration-300">
+                    <p
+                      className="text-2xl md:text-3xl font-bold"
+                      style={{ color: YELLOW }}
+                    >
                       15+
                     </p>
-                    <p className="text-sm">Years Experience</p>
+                    <p className="text-xs md:text-sm">Years Experience</p>
                   </div>
-                  <div className="bg-teal-800 bg-opacity-50 p-4 rounded-lg text-center shadow-md border border-teal-700 hover:bg-teal-700 hover:bg-opacity-40 transition-all duration-300">
-                    <p className="text-3xl font-bold" style={{ color: YELLOW }}>
+                  <div className="bg-teal-800 bg-opacity-50 p-3 md:p-4 rounded-lg text-center shadow-md border border-teal-700 hover:bg-teal-700 hover:bg-opacity-40 transition-all duration-300">
+                    <p
+                      className="text-2xl md:text-3xl font-bold"
+                      style={{ color: YELLOW }}
+                    >
                       Daily
                     </p>
-                    <p className="text-sm">Inspections</p>
+                    <p className="text-xs md:text-sm">Inspections</p>
                   </div>
                 </div>
 

@@ -53,6 +53,7 @@ const buttonHover = {
 
 // Parasailing dropdown menu items
 const parasailingMenuItems = [
+  { text: "Learn More", path: "/parasailing", isMainLink: true },
   { text: "The Experience", path: "/parasailing#experience" },
   { text: "Safety & Requirements", path: "/parasailing#safety" },
   { text: "Our Location", path: "/parasailing#location" },
@@ -66,6 +67,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ theme }) => {
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [activeHash, setActiveHash] = useState<string>("");
   const parasailingMenuRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
@@ -80,6 +82,13 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
   // Update current route when location changes
   useEffect(() => {
     dispatch(setCurrentRoute(location.pathname));
+    
+    // Extract hash from URL
+    if (location.hash) {
+      setActiveHash(location.hash.substring(1)); // Remove the # symbol
+    } else {
+      setActiveHash("");
+    }
   }, [location, dispatch]);
   
   // Parallax effect for navbar
@@ -99,6 +108,35 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Monitor hash changes through scroll
+  useEffect(() => {
+    // This function will update activeHash when scrolling to different sections
+    const handleScroll = () => {
+      if (location.pathname === "/parasailing") {
+        const sections = ["experience", "safety", "location", "testimonials"];
+        
+        for (const section of sections) {
+          const element = document.getElementById(section);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            // If section is visible in viewport
+            if (rect.top <= 200 && rect.bottom >= 200) {
+              if (activeHash !== section) {
+                setActiveHash(section);
+                // Update URL hash without reloading the page
+                window.history.replaceState(null, "", `/parasailing#${section}`);
+              }
+              break;
+            }
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [location.pathname, activeHash]);
+
   const handleDrawerToggle = () => {
     dispatch(toggleNavMenu());
   };
@@ -114,6 +152,14 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
       return location.pathname === basePath;
     }
     return path !== '/' && location.pathname.startsWith(path);
+  };
+
+  // Check if a specific hash section is active
+  const isHashActive = (path: string) => {
+    if (!path.includes("#")) return false;
+    
+    const [basePath, hash] = path.split("#");
+    return location.pathname === basePath && activeHash === hash;
   };
 
   // Toggle dropdown menu
@@ -144,17 +190,33 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
 
   // Navigate to section and close mobile menu if open
   const navigateToSection = (path: string) => {
+    // Check if this is the main "Learn More" link with no hash
+    if (path === "/parasailing") {
+      navigate(path);
+      
+      // Close menus
+      if (mobileOpen) {
+        handleDrawerToggle();
+      }
+      setDropdownOpen(false);
+      return;
+    }
+    
     const [basePath, hash] = path.split("#");
     
     // If we're already on the parasailing page and clicking a section link
     if (location.pathname === "/parasailing" && hash) {
-      // Don't navigate, just scroll to the section
+      // Set the URL with hash
+      window.history.pushState(null, "", path);
+      setActiveHash(hash);
+      
+      // Scroll to the section
       const element = document.getElementById(hash);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
       }
     } else {
-      // Otherwise navigate to the new page with hash
+      // Navigate to the new page with hash
       navigate(path);
     }
     
@@ -237,9 +299,22 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
                     sx={{ 
                       cursor: 'pointer',
                       pl: 4,
-                      backgroundColor: 'rgba(64, 224, 208, 0.05)',
+                      backgroundColor: subItem.isMainLink
+                        ? 'rgba(255, 215, 0, 0.1)'
+                        : (isHashActive(subItem.path) 
+                          ? 'rgba(255, 215, 0, 0.1)' 
+                          : 'rgba(64, 224, 208, 0.05)'),
+                      borderBottom: subItem.isMainLink 
+                        ? '1px solid rgba(255, 215, 0, 0.3)' 
+                        : 'none',
+                      marginBottom: subItem.isMainLink ? 1 : 0,
+                      paddingBottom: subItem.isMainLink ? 1 : 'auto',
                       '&:hover': {
-                        backgroundColor: 'rgba(64, 224, 208, 0.1)',
+                        backgroundColor: subItem.isMainLink
+                          ? 'rgba(255, 215, 0, 0.2)'
+                          : (isHashActive(subItem.path)
+                            ? 'rgba(255, 215, 0, 0.2)'
+                            : 'rgba(64, 224, 208, 0.1)'),
                       }
                     }}
                   >
@@ -248,7 +323,12 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
                       sx={{
                         "& .MuiListItemText-primary": {
                           fontSize: "0.9rem",
-                          color: WHITE,
+                          color: subItem.isMainLink 
+                            ? YELLOW 
+                            : (isHashActive(subItem.path) ? YELLOW : WHITE),
+                          fontWeight: subItem.isMainLink 
+                            ? 700
+                            : (isHashActive(subItem.path) ? 600 : 400),
                         },
                       }}
                     />
@@ -400,9 +480,28 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
                                     key={subItem.text} 
                                     onClick={() => navigateToSection(subItem.path)}
                                     sx={{ 
-                                      color: WHITE,
+                                      color: subItem.isMainLink 
+                                        ? YELLOW 
+                                        : (isHashActive(subItem.path) ? YELLOW : WHITE),
+                                      fontWeight: subItem.isMainLink 
+                                        ? 700
+                                        : (isHashActive(subItem.path) ? 600 : 400),
+                                      backgroundColor: subItem.isMainLink
+                                        ? 'rgba(255, 215, 0, 0.1)'
+                                        : (isHashActive(subItem.path) 
+                                          ? 'rgba(255, 215, 0, 0.1)' 
+                                          : 'transparent'),
+                                      borderBottom: subItem.isMainLink 
+                                        ? '1px solid rgba(255, 215, 0, 0.3)' 
+                                        : 'none',
+                                      marginBottom: subItem.isMainLink ? 1 : 0,
+                                      paddingBottom: subItem.isMainLink ? 1 : 'auto',
                                       '&:hover': {
-                                        backgroundColor: 'rgba(64, 224, 208, 0.1)',
+                                        backgroundColor: subItem.isMainLink
+                                          ? 'rgba(255, 215, 0, 0.2)'
+                                          : (isHashActive(subItem.path)
+                                            ? 'rgba(255, 215, 0, 0.2)'
+                                            : 'rgba(64, 224, 208, 0.1)'),
                                         color: YELLOW
                                       }
                                     }}
