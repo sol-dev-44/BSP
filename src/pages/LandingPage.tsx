@@ -164,7 +164,7 @@ const LandingPage: FC = () => {
                 </HeroButton>
               </Tooltip>
               <HeroButton
-                onClick={() => navigate("/parasailing")}
+                onClick={() => navigate("/about")}
                 style={{
                   borderColor: WHITE,
                   color: WHITE,
@@ -240,7 +240,7 @@ const LandingPage: FC = () => {
                     fontSize: '0.875rem'
                   }}
                 >
-                  © 2025 MELLOW MONTANA CO.
+                  © 2025 BIG SKY PARASAIL CO.
                 </motion.p>
               </Grid>
             </Grid>

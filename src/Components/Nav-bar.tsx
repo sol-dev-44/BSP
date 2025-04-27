@@ -51,13 +51,13 @@ const buttonHover = {
   },
 };
 
-// Parasailing dropdown menu items
-const parasailingMenuItems = [
-  { text: "Learn More", path: "/parasailing", isMainLink: true },
-  { text: "The Experience", path: "/parasailing#experience" },
-  { text: "Safety & Requirements", path: "/parasailing#safety" },
-  { text: "Our Location", path: "/parasailing#location" },
-  { text: "Guest Experiences", path: "/parasailing#testimonials" }
+// About dropdown menu items - simpler structure
+const aboutMenuItems = [
+  // { text: "Our Story", path: "/about" },
+  { text: "The Experience", path: "/about#experience" },
+  { text: "Safety & Requirements", path: "/about#safety" },
+  { text: "Location", path: "/about#location" },
+  { text: "Reviews", path: "/about#testimonials" }
 ];
 
 interface NavbarProps {
@@ -68,7 +68,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [activeHash, setActiveHash] = useState<string>("");
-  const parasailingMenuRef = useRef<HTMLDivElement>(null);
+  const aboutMenuRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
   const location = useLocation();
@@ -88,6 +88,8 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
       setActiveHash(location.hash.substring(1)); // Remove the # symbol
     } else {
       setActiveHash("");
+      // Scroll to top when route changes (no hash)
+      window.scrollTo(0, 0);
     }
   }, [location, dispatch]);
   
@@ -112,7 +114,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
   useEffect(() => {
     // This function will update activeHash when scrolling to different sections
     const handleScroll = () => {
-      if (location.pathname === "/parasailing") {
+      if (location.pathname === "/about") {
         const sections = ["experience", "safety", "location", "testimonials"];
         
         for (const section of sections) {
@@ -124,7 +126,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
               if (activeHash !== section) {
                 setActiveHash(section);
                 // Update URL hash without reloading the page
-                window.history.replaceState(null, "", `/parasailing#${section}`);
+                window.history.replaceState(null, "", `/about#${section}`);
               }
               break;
             }
@@ -170,8 +172,8 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
   // Close dropdown when clicking away
   const handleCloseDropdown = (event: Event | React.SyntheticEvent) => {
     if (
-      parasailingMenuRef.current &&
-      parasailingMenuRef.current.contains(event.target as HTMLElement)
+      aboutMenuRef.current &&
+      aboutMenuRef.current.contains(event.target as HTMLElement)
     ) {
       return;
     }
@@ -188,24 +190,28 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
     }
   };
 
+  // Function to handle navigation with scroll to top
+  const handleNavigation = (path: string) => {
+    // Only scroll to top for main navigation (not hash links)
+    if (!path.includes('#')) {
+      // Navigate to the page
+      navigate(path);
+      // Scroll to top
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      navigate(path);
+    }
+  };
+
   // Navigate to section and close mobile menu if open
   const navigateToSection = (path: string) => {
-    // Check if this is the main "Learn More" link with no hash
-    if (path === "/parasailing") {
-      navigate(path);
-      
-      // Close menus
-      if (mobileOpen) {
-        handleDrawerToggle();
-      }
-      setDropdownOpen(false);
-      return;
-    }
+    const [basePath, hash] = path.includes("#") ? path.split("#") : [path, ""];
     
-    const [basePath, hash] = path.split("#");
-    
-    // If we're already on the parasailing page and clicking a section link
-    if (location.pathname === "/parasailing" && hash) {
+    // If we're already on the about page and clicking a section link
+    if (location.pathname === "/about" && hash) {
       // Set the URL with hash
       window.history.pushState(null, "", path);
       setActiveHash(hash);
@@ -215,6 +221,9 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
       }
+    } else if (!hash) {
+      // For main navigation links, scroll to top
+      handleNavigation(path);
     } else {
       // Navigate to the new page with hash
       navigate(path);
@@ -231,11 +240,12 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
 
   const navigationItems = [
     { text: "Home", path: "/" },
-    { text: "Parasailing", path: "/parasailing", hasDropdown: true },
-    { text: "Book Now", path: "/book", isBooking: true }
+    { text: "The Boat", path: "/theboat" },
+    { text: "About", path: "/about", hasDropdown: true },
+    { text: "Book Now", path: "/book", isBooking: true },
   ];
 
-  // Mobile drawer with expanded parasailing submenu
+  // Mobile drawer with expanded about submenu
   const drawer = (
     <Paper sx={{ height: "100%", bgcolor: "rgba(0, 0, 0, 0.9)" }}>
       <List>
@@ -245,10 +255,12 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
               component="div"
               onClick={() => {
                 if (item.hasDropdown) {
-                  // Don't navigate or close drawer for parasailing main item
+                  // For About item, navigate to main About page
+                  handleNavigation(item.path);
+                  handleDrawerToggle();
                   return;
                 }
-                navigate(item.path);
+                handleNavigation(item.path);
                 handleDrawerToggle();
               }}
               sx={{ 
@@ -288,10 +300,10 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
               )}
             </ListItem>
             
-            {/* Show parasailing submenu in mobile view */}
+            {/* Show about submenu in mobile view */}
             {item.hasDropdown && (
               <List component="div" disablePadding>
-                {parasailingMenuItems.map((subItem) => (
+                {aboutMenuItems.map((subItem, index) => (
                   <ListItem 
                     key={subItem.text}
                     component="div"
@@ -299,22 +311,13 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
                     sx={{ 
                       cursor: 'pointer',
                       pl: 4,
-                      backgroundColor: subItem.isMainLink
-                        ? 'rgba(255, 215, 0, 0.1)'
-                        : (isHashActive(subItem.path) 
-                          ? 'rgba(255, 215, 0, 0.1)' 
-                          : 'rgba(64, 224, 208, 0.05)'),
-                      borderBottom: subItem.isMainLink 
-                        ? '1px solid rgba(255, 215, 0, 0.3)' 
-                        : 'none',
-                      marginBottom: subItem.isMainLink ? 1 : 0,
-                      paddingBottom: subItem.isMainLink ? 1 : 'auto',
+                      backgroundColor: isHashActive(subItem.path) 
+                        ? 'rgba(255, 215, 0, 0.1)' 
+                        : 'rgba(64, 224, 208, 0.05)',
                       '&:hover': {
-                        backgroundColor: subItem.isMainLink
+                        backgroundColor: isHashActive(subItem.path)
                           ? 'rgba(255, 215, 0, 0.2)'
-                          : (isHashActive(subItem.path)
-                            ? 'rgba(255, 215, 0, 0.2)'
-                            : 'rgba(64, 224, 208, 0.1)'),
+                          : 'rgba(64, 224, 208, 0.1)',
                       }
                     }}
                   >
@@ -323,12 +326,8 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
                       sx={{
                         "& .MuiListItemText-primary": {
                           fontSize: "0.9rem",
-                          color: subItem.isMainLink 
-                            ? YELLOW 
-                            : (isHashActive(subItem.path) ? YELLOW : WHITE),
-                          fontWeight: subItem.isMainLink 
-                            ? 700
-                            : (isHashActive(subItem.path) ? 600 : 400),
+                          color: isHashActive(subItem.path) ? YELLOW : WHITE,
+                          fontWeight: isHashActive(subItem.path) ? 600 : 400,
                         },
                       }}
                     />
@@ -362,13 +361,13 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             style={{ cursor: "pointer" }}
-            onClick={() => navigate("/")}
+            onClick={() => handleNavigation("/")}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Box 
                 component="img" 
                 src="/MM-Logo-1.png" 
-                alt="Mellow Montana Logo" 
+                alt="BIG SKY PARASAIL Logo" 
                 sx={{ 
                   height: 40, 
                   mr: 2,
@@ -379,7 +378,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
                 className="text-lg md:text-xl font-semibold tracking-wider"
                 style={{ color: YELLOW }}
               >
-                MELLOW MONTANA WATERSPORTS
+                BIG SKY PARASAIL
               </motion.div>
             </Box>
           </motion.div>
@@ -421,13 +420,21 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
                     </HeroButton>
                   </Tooltip>
                 ) : item.hasDropdown ? (
-                  // Dropdown menu for Parasailing
-                  <div ref={parasailingMenuRef} key={item.text}>
+                  // Dropdown menu for About
+                  <div ref={aboutMenuRef} key={item.text}>
                     <MotionButton 
                       color="inherit"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={handleToggleDropdown}
+                      onClick={() => {
+                        // Make About link clickable to go directly to About page
+                        if (dropdownOpen) {
+                          setDropdownOpen(false);
+                        } else {
+                          handleNavigation(item.path);
+                        }
+                      }}
+                      onMouseEnter={() => setDropdownOpen(true)}
                       sx={{
                         color: isActive(item.path) ? YELLOW : WHITE,
                         fontWeight: isActive(item.path) ? 700 : 400,
@@ -442,18 +449,39 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
                           transition: 'width 0.3s ease',
                         }
                       }}
-                      endIcon={<KeyboardArrowDown style={{ transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.3s' }} />}
+                      endIcon={
+                        <IconButton
+                          size="small"
+                          sx={{ 
+                            color: 'inherit', 
+                            p: 0,
+                            ml: -1, // Move arrow closer to text
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent parent button navigation
+                            handleToggleDropdown();
+                          }}
+                        >
+                          <KeyboardArrowDown 
+                            style={{ 
+                              transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0)', 
+                              transition: 'transform 0.3s' 
+                            }} 
+                          />
+                        </IconButton>
+                      }
                     >
                       {item.text}
                     </MotionButton>
                     <Popper
                       open={dropdownOpen}
-                      anchorEl={parasailingMenuRef.current}
+                      anchorEl={aboutMenuRef.current}
                       role={undefined}
                       placement="bottom-start"
                       transition
                       disablePortal
                       style={{ zIndex: 1300 }}
+                      onMouseLeave={() => setDropdownOpen(false)}
                     >
                       {({ TransitionProps }) => (
                         <Grow
@@ -471,37 +499,27 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
                             <ClickAwayListener onClickAway={handleCloseDropdown}>
                               <MenuList
                                 autoFocusItem={dropdownOpen}
-                                id="parasailing-menu"
-                                aria-labelledby="parasailing-button"
+                                id="about-menu"
+                                aria-labelledby="about-button"
                                 onKeyDown={handleListKeyDown}
+                                dense
                               >
-                                {parasailingMenuItems.map((subItem) => (
+                                {aboutMenuItems.map((subItem, index) => (
                                   <MenuItem 
                                     key={subItem.text} 
                                     onClick={() => navigateToSection(subItem.path)}
                                     sx={{ 
-                                      color: subItem.isMainLink 
-                                        ? YELLOW 
-                                        : (isHashActive(subItem.path) ? YELLOW : WHITE),
-                                      fontWeight: subItem.isMainLink 
-                                        ? 700
-                                        : (isHashActive(subItem.path) ? 600 : 400),
-                                      backgroundColor: subItem.isMainLink
-                                        ? 'rgba(255, 215, 0, 0.1)'
-                                        : (isHashActive(subItem.path) 
-                                          ? 'rgba(255, 215, 0, 0.1)' 
-                                          : 'transparent'),
-                                      borderBottom: subItem.isMainLink 
-                                        ? '1px solid rgba(255, 215, 0, 0.3)' 
-                                        : 'none',
-                                      marginBottom: subItem.isMainLink ? 1 : 0,
-                                      paddingBottom: subItem.isMainLink ? 1 : 'auto',
+                                      color: isHashActive(subItem.path) ? YELLOW : WHITE,
+                                      fontWeight: isHashActive(subItem.path) ? 600 : 400,
+                                      backgroundColor: isHashActive(subItem.path) 
+                                        ? 'rgba(255, 215, 0, 0.1)' 
+                                        : 'transparent',
+                                      py: 1, // Add consistent padding
+                                      minHeight: 'auto', // Reduce height
                                       '&:hover': {
-                                        backgroundColor: subItem.isMainLink
+                                        backgroundColor: isHashActive(subItem.path)
                                           ? 'rgba(255, 215, 0, 0.2)'
-                                          : (isHashActive(subItem.path)
-                                            ? 'rgba(255, 215, 0, 0.2)'
-                                            : 'rgba(64, 224, 208, 0.1)'),
+                                          : 'rgba(64, 224, 208, 0.1)',
                                         color: YELLOW
                                       }
                                     }}
@@ -522,7 +540,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
                     color="inherit"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => navigate(item.path)}
+                    onClick={() => handleNavigation(item.path)}
                     sx={{
                       color: isActive(item.path) ? YELLOW : WHITE,
                       fontWeight: isActive(item.path) ? 700 : 400,

@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import Navbar from "./Components/Nav-bar.tsx";
 import LandingPage from "./pages/LandingPage.tsx";
 import Parasailing from "./pages/Parasailing.tsx";
+import TheBoat from "./pages/TheBoat.tsx";
 
 const RoutesIndex: React.FC = () => {
   const reduxTheme = useSelector((state: any) => state.theme);
@@ -42,8 +43,13 @@ const RoutesIndex: React.FC = () => {
               />
 
               <Route
-                path="/parasailing"
+                path="/about"
                 element={<Parasailing />}
+              />
+              
+              <Route
+                path="/theboat"
+                element={<TheBoat />}
               />
 
               <Route

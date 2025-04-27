@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { Link } from "react-router-dom";
-
+import Footer from "../Components/Footer.tsx";
 // Updated color constants with more teal dark colors
 const YELLOW = "#FFD700"; // Bright yellow for primary brand color
 const TEAL = "#40E0D0"; // Vibrant teal
@@ -24,12 +23,12 @@ const slideUp = {
 };
 
 const slideLeft = {
-  hidden: { x: 100, opacity: 0 },
+  hidden: { x: 60, opacity: 0 },
   visible: { x: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } },
 };
 
 const slideRight = {
-  hidden: { x: -100, opacity: 0 },
+  hidden: { x: -60, opacity: 0 },
   visible: { x: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } },
 };
 
@@ -53,13 +52,13 @@ const LearnMorePage = () => {
 
   const experienceInView = useInView(experienceRef, {
     once: true,
-    amount: 0.3,
+    amount: 0.1,
   });
-  const safetyInView = useInView(safetyRef, { once: true, amount: 0.3 });
-  const locationInView = useInView(locationRef, { once: true, amount: 0.3 });
+  const safetyInView = useInView(safetyRef, { once: true, amount: 0.1 });
+  const locationInView = useInView(locationRef, { once: true, amount: 0.1 });
   const testimonialInView = useInView(testimonialRef, {
     once: true,
-    amount: 0.3,
+    amount: 0.1,
   });
 
   const [activeTab, setActiveTab] = useState("experience");
@@ -88,7 +87,7 @@ const LearnMorePage = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-gray-900 to-teal-900 text-white">
+    <div className="relative min-h-[80vh] overflow-x-hidden bg-gradient-to-b from-gray-900 to-teal-900 text-white">
       {/* Parallax Hero Section */}
       <motion.div
         className="fixed top-0 left-0 right-0 bottom-0 -z-10"
@@ -144,7 +143,7 @@ const LearnMorePage = () => {
             style={{ backgroundColor: YELLOW, color: "#000" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
+            transition={{ delay: 0.4, duration: 0.6 }} // Reduced duration and delay
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -254,7 +253,7 @@ const LearnMorePage = () => {
           {/* The Experience Section - Fixed display issues */}
           <section
             ref={experienceRef}
-            className="py-12 md:py-16 px-4 min-h-screen flex flex-col justify-center"
+            className="py-12 md:py-16 px-4 min-h-[80vh] flex flex-col justify-center"
             id="experience"
           >
             <motion.div
@@ -276,7 +275,7 @@ const LearnMorePage = () => {
                   className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 tracking-wide"
                   style={{
                     color: YELLOW,
-                    textShadow: "0px 0px 10px rgba(255, 215, 0, 0.3)",
+                    textShadow: "0px 0px 10px rgba(255, 215, 0, 0.1)",
                   }}
                 >
                   THE ULTIMATE AERIAL ADVENTURE
@@ -491,7 +490,7 @@ const LearnMorePage = () => {
           {/* Safety Section - Enhanced with better visuals and organization */}
           <section
             ref={safetyRef}
-            className="py-12 md:py-16 px-4 min-h-screen flex flex-col justify-center"
+            className="py-12 md:py-16 px-4 min-h-[80vh] flex flex-col justify-center"
             style={{ backgroundColor: `rgba(0, 96, 96, 0.2)` }}
             id="safety"
           >
@@ -541,7 +540,7 @@ const LearnMorePage = () => {
                   className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 tracking-wide"
                   style={{
                     color: YELLOW,
-                    textShadow: "0px 0px 10px rgba(255, 215, 0, 0.3)",
+                    textShadow: "0px 0px 10px rgba(255, 215, 0, 0.1)",
                   }}
                 >
                   SAFETY FIRST, ALWAYS
@@ -724,7 +723,7 @@ const LearnMorePage = () => {
           {/* Location Section - Enhanced with better visuals and information organization */}
           <section
             ref={locationRef}
-            className="py-16 px-4 min-h-screen flex flex-col justify-center"
+            className="py-16 px-4 min-h-[80vh] flex flex-col justify-center"
             id="location"
           >
             <motion.div variants={slideRight}>
@@ -732,7 +731,7 @@ const LearnMorePage = () => {
                 className="text-4xl font-bold mb-6 tracking-wide"
                 style={{
                   color: YELLOW,
-                  textShadow: "0px 0px 10px rgba(255, 215, 0, 0.3)",
+                  textShadow: "0px 0px 10px rgba(255, 215, 0, 0.1)",
                 }}
               >
                 OUR FLATHEAD LAKE LOCATION
@@ -1035,7 +1034,7 @@ const LearnMorePage = () => {
           {/* Testimonials Section - Enhanced with better visuals and layout */}
           <section
             ref={testimonialRef}
-            className="py-16 px-4 min-h-screen flex flex-col justify-center"
+            className="py-16 px-4 min-h-[80vh] flex flex-col justify-center"
             style={{ backgroundColor: `rgba(0, 96, 96, 0.2)` }}
             id="testimonials"
           >
@@ -1049,7 +1048,7 @@ const LearnMorePage = () => {
                 className="text-4xl font-bold mb-6 tracking-wide"
                 style={{
                   color: YELLOW,
-                  textShadow: "0px 0px 10px rgba(255, 215, 0, 0.3)",
+                  textShadow: "0px 0px 10px rgba(255, 215, 0, 0.1)",
                 }}
               >
                 GUEST EXPERIENCES
@@ -1184,151 +1183,8 @@ const LearnMorePage = () => {
         </div>
       </div>
 
-      {/* Enhanced footer with more information and better organization */}
-      <footer
-        style={{ backgroundColor: DEEP_TEAL }}
-        className="py-12 px-4 border-t border-teal-700"
-      >
-        <div className="container mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="md:col-span-2">
-              <h3 className="text-xl font-bold mb-4" style={{ color: YELLOW }}>
-                MELLOW MONTANA WATERSPORTS
-              </h3>
-              <p className="text-gray-300 mb-4 max-w-md">
-                Providing unforgettable aerial adventures over Montana's most
-                beautiful lake since 2022. Our mission is to create safe,
-                thrilling experiences that showcase the natural beauty of
-                Flathead Lake and the surrounding wilderness.
-              </p>
-              {
-                /* <div className="flex space-x-4 mb-4">
-                <a
-                  href="#"
-                  className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                  style={{ backgroundColor: LIGHT_TEAL }}
-                >
-                  <span className="text-black font-bold">IG</span>
-                </a>
-                <a
-                  href="#"
-                  className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                  style={{ backgroundColor: LIGHT_TEAL }}
-                >
-                  <span className="text-black font-bold">FB</span>
-                </a>
-                <a
-                  href="#"
-                  className="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110"
-                  style={{ backgroundColor: LIGHT_TEAL }}
-                >
-                  <span className="text-black font-bold">TW</span>
-                </a>
-              </div> */
-              }
-              <p className="text-gray-400">
-                © 2025 Mellow Montana Co. All rights reserved.
-              </p>
-            </div>
+    <Footer />
 
-            <div>
-              <h3 className="text-xl font-bold mb-4" style={{ color: YELLOW }}>
-                QUICK LINKS
-              </h3>
-              <ul className="space-y-2">
-                <li>
-                  <a
-                    href="/"
-                    className="text-gray-300 hover:text-white transition-colors"
-                  >
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#experience"
-                    className="text-gray-300 hover:text-white transition-colors"
-                  >
-                    The Experience
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#safety"
-                    className="text-gray-300 hover:text-white transition-colors"
-                  >
-                    Safety
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#location"
-                    className="text-gray-300 hover:text-white transition-colors"
-                  >
-                    Location
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#testimonials"
-                    className="text-gray-300 hover:text-white transition-colors"
-                  >
-                    Reviews
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/booking"
-                    className="text-gray-300 hover:text-white transition-colors"
-                  >
-                    Book Now
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-bold mb-4" style={{ color: YELLOW }}>
-                CONTACT US
-              </h3>
-              <p className="text-gray-300 mb-2 flex items-center">
-                <span className="mr-2">📧</span>
-                <a
-                  href="mailto:info@mellowmontana.com"
-                  className="hover:text-white"
-                >
-                  info@mellowmontana.com
-                </a>
-              </p>
-              {
-                /* <p className="text-gray-300 mb-2 flex items-center">
-    <span className="mr-2">📱</span> (406) 555-1234
-  </p> */
-              }
-              <p className="text-gray-300 mb-6 flex items-center">
-                <span className="mr-2">📍</span>{" "}
-                <a
-                  href="https://maps.google.com/?q=Flathead+Harbor+Marina,+7007+U.S.+93+S,+Lakeside,+MT+59922"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white"
-                >
-                  Flathead Harbor Marina, Lakeside, MT
-                </a>
-              </p>
-
-              <h4
-                className="text-md font-semibold mb-2"
-                style={{ color: LIGHT_TEAL }}
-              >
-                HOURS
-              </h4>
-              <p className="text-gray-300 mb-1">May-September: Daily 9am-7pm</p>
-              <p className="text-gray-300">October: Fri-Sun 10am-5pm</p>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
