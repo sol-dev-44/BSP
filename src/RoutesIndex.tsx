@@ -7,9 +7,14 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useSelector } from "react-redux";
 
 import Navbar from "./Components/Nav-bar.tsx";
+import ScrollToTop from "./Components/ScrollToTop.tsx";
 import LandingPage from "./pages/LandingPage.tsx";
 import Parasailing from "./pages/Parasailing.tsx";
 import TheBoat from "./pages/TheBoat.tsx";
+import TheCrew from "./pages/TheCrew.tsx";
+import Book from "./pages/Book.tsx";
+import FAQ from "./pages/FAQ.tsx";
+import Location from "./pages/Location.tsx";
 
 const RoutesIndex: React.FC = () => {
   const reduxTheme = useSelector((state: any) => state.theme);
@@ -35,6 +40,8 @@ const RoutesIndex: React.FC = () => {
         <Navbar theme={theme} />
           {/* Add Suspense with a fallback UI while components are loading */}
           <Suspense fallback={<StylishLoader />}>
+
+          <ScrollToTop />
             <Routes>
 
               <Route
@@ -50,6 +57,26 @@ const RoutesIndex: React.FC = () => {
               <Route
                 path="/theboat"
                 element={<TheBoat />}
+              />
+
+              <Route
+                path="/location"
+                element={<Location />}
+              />
+
+              <Route
+                path="/thecrew"
+                element={<TheCrew />}
+              />
+
+              <Route
+                path="/book"
+                element={<Book />}
+              />
+
+              <Route
+                path="/faq"
+                element={<FAQ />}
               />
 
               <Route

@@ -140,7 +140,7 @@ const ParasailBoat = () => {
         .padding(0.3);
 
       const yScale = d3.scaleLinear()
-        .domain([0, d3.max(data, (d) => d.elevation) * 1.1])
+        .domain([0, d3.max(data, (d: { elevation: any; }) => d.elevation) * 1.1])
         .range([height - margin.bottom, margin.top]);
 
       // Draw bars
@@ -149,11 +149,12 @@ const ParasailBoat = () => {
         .enter()
         .append("rect")
         .attr("class", "bar")
-        .attr("x", (d) => xScale(d.name))
-        .attr("y", (d) => yScale(d.elevation))
+        // .attr("x", (d: { name: any; }) => xScale(d.name))
+        .attr("x", (d: { name: any; }) => (xScale?.(d.name) ?? 0) + 10)
+        .attr("y", (d: { elevation: any; }) => yScale(d.elevation))
         .attr("width", xScale.bandwidth())
-        .attr("height", (d) => height - margin.bottom - yScale(d.elevation))
-        .attr("fill", (d) => d.color)
+        .attr("height", (d: { elevation: any; }) => height - margin.bottom - yScale(d.elevation))
+        .attr("fill", (d: { color: any; }) => d.color)
         .attr("rx", 4) // Rounded corners
         .attr("ry", 4);
 
@@ -163,11 +164,11 @@ const ParasailBoat = () => {
         .enter()
         .append("text")
         .attr("class", "label")
-        .attr("x", (d) => xScale(d.name) + xScale.bandwidth() / 2)
-        .attr("y", (d) => yScale(d.elevation) - 5)
+        .attr("x", (d: { name: any; }) => (xScale?.(d.name) ?? 0) + (xScale?.bandwidth() ?? 0) / 2)
+        .attr("y", (d: { elevation: any; }) => yScale(d.elevation) - 5)
         .attr("text-anchor", "middle")
         .attr("fill", WHITE)
-        .text((d) => d.elevation + "ft");
+        .text((d: any) => d.elevation + "ft");
 
       // X-axis
       svg.append("g")
@@ -181,7 +182,7 @@ const ParasailBoat = () => {
       // Y-axis
       svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
-        .call(d3.axisLeft(yScale).tickFormat((d) => d + "ft"))
+        .call(d3.axisLeft(yScale).ticks(5).tickFormat((d: any) => d + "ft"))
         .selectAll("text")
         .attr("font-size", "12px");
 

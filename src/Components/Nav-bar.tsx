@@ -1,105 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
-import { 
-  AppBar, 
-  Box, 
-  Button, 
-  Drawer, 
-  IconButton, 
-  List, 
-  ListItem, 
-  ListItemText, 
-  Paper, 
-  Toolbar, 
-  Tooltip, 
-  useMediaQuery,
-  Popper,
-  Grow,
-  ClickAwayListener,
-  MenuList,
-  MenuItem
-} from "@mui/material";
-import { useNavigate, useLocation } from "react-router-dom";
-import { Menu as MenuIcon, KeyboardArrowDown } from "@mui/icons-material";
-import { styled } from "@mui/material/styles";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../redux/store.ts";
-import { toggleNavMenu, setCurrentRoute } from "../redux/slices/navSlice.ts";
-import { Theme } from "@mui/material/styles";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link, useLocation } from "react-router-dom";
 
-// Define our color constants
-const YELLOW = "#FFD700"; // Bright yellow for primary brand color
-const TEAL = "#40E0D0"; // Vibrant teal for water theme
-const WHITE = "#FFFFFF"; // White for text and contrast
-
-// Motion components
-const MotionAppBar = motion(AppBar);
-const MotionButton = motion(Button);
-
-const HeroButton = styled(MotionButton)(({ theme }: { theme: Theme }) => ({
-  padding: theme.spacing(1.5, 4),
-  borderRadius: theme.shape.borderRadius,
-  fontWeight: 600,
-  letterSpacing: "0.1em",
-}));
-
-// Animation variants
-const buttonHover = {
-  hover: {
-    scale: 1.05,
-    transition: { type: "spring", stiffness: 400, damping: 10 },
-  },
-};
-
-// About dropdown menu items - simpler structure
-const aboutMenuItems = [
-  // { text: "Our Story", path: "/about" },
-  { text: "The Experience", path: "/about#experience" },
-  { text: "Safety & Requirements", path: "/about#safety" },
-  { text: "Location", path: "/about#location" },
-  { text: "Reviews", path: "/about#testimonials" }
-];
-
-interface NavbarProps {
-  theme: any;
-}
-
-const Navbar: React.FC<NavbarProps> = ({ theme }) => {
+const Navbar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [activeHash, setActiveHash] = useState<string>("");
-  const aboutMenuRef = useRef<HTMLDivElement>(null);
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch();
-  const { scrollY } = useScroll();
-  
-  // Get mobileOpen state from Redux
-  const mobileOpen = useSelector((state: RootState) => state.nav.mobileMenuOpen);
-  const currentRoute = useSelector((state: RootState) => state.nav.currentRoute);
-  
-  // Update current route when location changes
-  useEffect(() => {
-    dispatch(setCurrentRoute(location.pathname));
-    
-    // Extract hash from URL
-    if (location.hash) {
-      setActiveHash(location.hash.substring(1)); // Remove the # symbol
-    } else {
-      setActiveHash("");
-      // Scroll to top when route changes (no hash)
-      window.scrollTo(0, 0);
-    }
-  }, [location, dispatch]);
-  
-  // Parallax effect for navbar
-  const opacityNavbar = useTransform(scrollY, [0, 100], [0, 1]);
 
-  // Monitor scroll position for navbar effects
+  // Detect scroll position for navbar background change
   useEffect(() => {
     const handleScroll = () => {
-      if ((window as any).scrollY > 50) {
+      if (window.scrollY > 60) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -107,486 +18,244 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
-  // Monitor hash changes through scroll
+  // Close mobile menu when route changes
   useEffect(() => {
-    // This function will update activeHash when scrolling to different sections
-    const handleScroll = () => {
-      if (location.pathname === "/about") {
-        const sections = ["experience", "safety", "location", "testimonials"];
-        
-        for (const section of sections) {
-          const element = document.getElementById(section);
-          if (element) {
-            const rect = element.getBoundingClientRect();
-            // If section is visible in viewport
-            if (rect.top <= 200 && rect.bottom >= 200) {
-              if (activeHash !== section) {
-                setActiveHash(section);
-                // Update URL hash without reloading the page
-                window.history.replaceState(null, "", `/about#${section}`);
-              }
-              break;
-            }
-          }
-        }
-      }
-    };
+    setIsOpen(false);
+  }, [location.pathname]);
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [location.pathname, activeHash]);
-
-  const handleDrawerToggle = () => {
-    dispatch(toggleNavMenu());
-  };
-
-  // Check if a route is active
-  const isActive = (path: string) => {
-    if (path === '/' && location.pathname === '/') {
-      return true;
-    }
-    if (path.includes("#")) {
-      // For hash routes, check if the base path matches
-      const basePath = path.split("#")[0];
-      return location.pathname === basePath;
-    }
-    return path !== '/' && location.pathname.startsWith(path);
-  };
-
-  // Check if a specific hash section is active
-  const isHashActive = (path: string) => {
-    if (!path.includes("#")) return false;
-    
-    const [basePath, hash] = path.split("#");
-    return location.pathname === basePath && activeHash === hash;
-  };
-
-  // Toggle dropdown menu
-  const handleToggleDropdown = () => {
-    setDropdownOpen((prev) => !prev);
-  };
-
-  // Close dropdown when clicking away
-  const handleCloseDropdown = (event: Event | React.SyntheticEvent) => {
-    if (
-      aboutMenuRef.current &&
-      aboutMenuRef.current.contains(event.target as HTMLElement)
-    ) {
-      return;
-    }
-    setDropdownOpen(false);
-  };
-
-  // Handle keyboard navigation for dropdown
-  const handleListKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      setDropdownOpen(false);
-    } else if (event.key === 'Escape') {
-      setDropdownOpen(false);
-    }
-  };
-
-  // Function to handle navigation with scroll to top
-  const handleNavigation = (path: string) => {
-    // Only scroll to top for main navigation (not hash links)
-    if (!path.includes('#')) {
-      // Navigate to the page
-      navigate(path);
-      // Scroll to top
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    } else {
-      navigate(path);
-    }
-  };
-
-  // Navigate to section and close mobile menu if open
-  const navigateToSection = (path: string) => {
-    const [basePath, hash] = path.includes("#") ? path.split("#") : [path, ""];
-    
-    // If we're already on the about page and clicking a section link
-    if (location.pathname === "/about" && hash) {
-      // Set the URL with hash
-      window.history.pushState(null, "", path);
-      setActiveHash(hash);
-      
-      // Scroll to the section
-      const element = document.getElementById(hash);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    } else if (!hash) {
-      // For main navigation links, scroll to top
-      handleNavigation(path);
-    } else {
-      // Navigate to the new page with hash
-      navigate(path);
-    }
-    
-    // Close menus
-    if (mobileOpen) {
-      handleDrawerToggle();
-    }
-    setDropdownOpen(false);
-  };
-
-  const drawerWidth = 240;
-
-  const navigationItems = [
-    { text: "Home", path: "/" },
-    { text: "The Boat", path: "/theboat" },
-    { text: "About", path: "/about", hasDropdown: true },
-    { text: "Book Now", path: "/book", isBooking: true },
+  // Navigation links - simplified to 5 main links
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "FAQ", path: "/faq" },
+    { name: "Location", path: "/location" },
+    // { name: "Gallery", path: "/gallery" },
+    // { name: "Contact", path: "/contact" },
   ];
 
-  // Mobile drawer with expanded about submenu
-  const drawer = (
-    <Paper sx={{ height: "100%", bgcolor: "rgba(0, 0, 0, 0.9)" }}>
-      <List>
-        {navigationItems.map((item) => (
-          <React.Fragment key={item.text}>
-            <ListItem 
-              component="div"
-              onClick={() => {
-                if (item.hasDropdown) {
-                  // For About item, navigate to main About page
-                  handleNavigation(item.path);
-                  handleDrawerToggle();
-                  return;
-                }
-                handleNavigation(item.path);
-                handleDrawerToggle();
-              }}
-              sx={{ 
-                cursor: 'pointer',
-                backgroundColor: isActive(item.path) ? 'rgba(255, 215, 0, 0.1)' : 'transparent',
-                '&:hover': {
-                  backgroundColor: isActive(item.path) ? 'rgba(255, 215, 0, 0.2)' : 'rgba(255, 255, 255, 0.05)',
-                }
-              }}
-            >
-              {item.isBooking ? (
-                <Tooltip title="Dates coming soon" arrow placement="right">
-                  <ListItemText
-                    primary={item.text}
-                    sx={{
-                      "& .MuiListItemText-primary": {
-                        letterSpacing: "0.1em",
-                        textAlign: "center",
-                        color: YELLOW,
-                        fontWeight: isActive(item.path) ? 700 : 400,
-                      },
-                    }}
-                  />
-                </Tooltip>
-              ) : (
-                <ListItemText
-                  primary={item.text}
-                  sx={{
-                    "& .MuiListItemText-primary": {
-                      letterSpacing: "0.1em",
-                      textAlign: "center",
-                      color: isActive(item.path) ? YELLOW : WHITE,
-                      fontWeight: isActive(item.path) ? 700 : 400,
-                    },
-                  }}
-                />
-              )}
-            </ListItem>
-            
-            {/* Show about submenu in mobile view */}
-            {item.hasDropdown && (
-              <List component="div" disablePadding>
-                {aboutMenuItems.map((subItem, index) => (
-                  <ListItem 
-                    key={subItem.text}
-                    component="div"
-                    onClick={() => navigateToSection(subItem.path)}
-                    sx={{ 
-                      cursor: 'pointer',
-                      pl: 4,
-                      backgroundColor: isHashActive(subItem.path) 
-                        ? 'rgba(255, 215, 0, 0.1)' 
-                        : 'rgba(64, 224, 208, 0.05)',
-                      '&:hover': {
-                        backgroundColor: isHashActive(subItem.path)
-                          ? 'rgba(255, 215, 0, 0.2)'
-                          : 'rgba(64, 224, 208, 0.1)',
-                      }
-                    }}
-                  >
-                    <ListItemText
-                      primary={subItem.text}
-                      sx={{
-                        "& .MuiListItemText-primary": {
-                          fontSize: "0.9rem",
-                          color: isHashActive(subItem.path) ? YELLOW : WHITE,
-                          fontWeight: isHashActive(subItem.path) ? 600 : 400,
-                        },
-                      }}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            )}
-          </React.Fragment>
-        ))}
-      </List>
-    </Paper>
-  );
+  // Animation variants
+  const mobileMenuVariants = {
+    closed: {
+      opacity: 0,
+      x: "100%",
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut"
+      }
+    },
+    open: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut",
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const mobileMenuItemVariants = {
+    closed: { opacity: 0, x: 20 },
+    open: { 
+      opacity: 1, 
+      x: 0,
+      transition: { duration: 0.3 }
+    }
+  };
+
+  const logoAnimation = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.5 }
+    }
+  };
+
+  // Check if a link is active
+  const isActive = (path: string) => {
+    if (path === "/") {
+      return location.pathname === path;
+    }
+    return location.pathname.startsWith(path);
+  };
 
   return (
-    <>
-      <MotionAppBar 
-        position="fixed" 
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
-        sx={{
-          background: scrolled 
-            ? "rgba(0, 0, 0, 0.8)" 
-            : "rgba(0, 0, 0, 0.4)",
-          transition: "background 0.3s ease"
-        }}
-      >
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            style={{ cursor: "pointer" }}
-            onClick={() => handleNavigation("/")}
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      scrolled ? "bg-white shadow-md py-2" : "bg-transparent py-4"
+    }`}>
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={logoAnimation}
           >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Box 
-                component="img" 
-                src="/MM-Logo-1.png" 
-                alt="BIG SKY PARASAIL Logo" 
-                sx={{ 
-                  height: 40, 
-                  mr: 2,
-                  display: { xs: "none", sm: "block" }
-                }} 
+            <Link to="/" className="flex items-center">
+              <img 
+                src="/JerryBearLogo.png"
+                alt="Big Sky Parasail Logo" 
+                className={`h-12 mr-3 transition-all ${scrolled ? "filter-none" : "brightness-[1.15]"}`} 
               />
-              <motion.div 
-                className="text-lg md:text-xl font-semibold tracking-wider"
-                style={{ color: YELLOW }}
-              >
+              <span className={`font-bold text-xl tracking-wider transition-colors ${
+                scrolled ? "text-blue-600" : "text-white"
+              }`}>
                 BIG SKY PARASAIL
-              </motion.div>
-            </Box>
+              </span>
+            </Link>
           </motion.div>
 
-          {isMobile ? (
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              component={motion.button}
-              whileTap={{ scale: 0.95 }}
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-1">
+            <nav className="flex items-center">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className={`px-4 py-2 mx-1 rounded-lg font-medium transition-all ${
+                    scrolled 
+                      ? isActive(link.path) 
+                        ? "text-blue-600" 
+                        : "text-gray-800 hover:text-blue-600" 
+                      : isActive(link.path) 
+                        ? "text-amber-400" 
+                        : "text-white hover:text-amber-300"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
+            
+            {/* Book Now Button */}
+            <Link 
+              to="/book" 
+              className={`ml-4 px-5 py-2.5 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 ${
+                scrolled 
+                  ? "bg-amber-500 hover:bg-amber-600 text-white" 
+                  : "bg-amber-500 hover:bg-amber-600 text-white"
+              }`}
             >
-              <MenuIcon />
-            </IconButton>
-          ) : (
-            <motion.div 
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="flex items-center gap-6"
-            >
-              {navigationItems.map((item) => 
-                item.isBooking ? (
-                  <Tooltip key={item.text} title="Dates coming soon" arrow placement="bottom">
-                    <HeroButton
-                      variant="contained"
-                      color="primary"
-                      whileHover={buttonHover.hover}
-                      whileTap={{ scale: 0.95 }}
-                      initial={{ scale: 1 }}
-                      sx={{
-                        "&:hover": {
-                          bgcolor: "#E6C200", // Slightly darker yellow on hover
-                        },
-                      }}
-                    >
-                      {item.text}
-                    </HeroButton>
-                  </Tooltip>
-                ) : item.hasDropdown ? (
-                  // Dropdown menu for About
-                  <div ref={aboutMenuRef} key={item.text}>
-                    <MotionButton 
-                      color="inherit"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => {
-                        // Make About link clickable to go directly to About page
-                        if (dropdownOpen) {
-                          setDropdownOpen(false);
-                        } else {
-                          handleNavigation(item.path);
-                        }
-                      }}
-                      onMouseEnter={() => setDropdownOpen(true)}
-                      sx={{
-                        color: isActive(item.path) ? YELLOW : WHITE,
-                        fontWeight: isActive(item.path) ? 700 : 400,
-                        '&::after': {
-                          content: '""',
-                          position: 'absolute',
-                          width: isActive(item.path) ? '50%' : '0%',
-                          height: '2px',
-                          bottom: '0',
-                          left: '25%',
-                          backgroundColor: YELLOW,
-                          transition: 'width 0.3s ease',
-                        }
-                      }}
-                      endIcon={
-                        <IconButton
-                          size="small"
-                          sx={{ 
-                            color: 'inherit', 
-                            p: 0,
-                            ml: -1, // Move arrow closer to text
-                          }}
-                          onClick={(e) => {
-                            e.stopPropagation(); // Prevent parent button navigation
-                            handleToggleDropdown();
-                          }}
-                        >
-                          <KeyboardArrowDown 
-                            style={{ 
-                              transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0)', 
-                              transition: 'transform 0.3s' 
-                            }} 
-                          />
-                        </IconButton>
-                      }
-                    >
-                      {item.text}
-                    </MotionButton>
-                    <Popper
-                      open={dropdownOpen}
-                      anchorEl={aboutMenuRef.current}
-                      role={undefined}
-                      placement="bottom-start"
-                      transition
-                      disablePortal
-                      style={{ zIndex: 1300 }}
-                      onMouseLeave={() => setDropdownOpen(false)}
-                    >
-                      {({ TransitionProps }) => (
-                        <Grow
-                          {...TransitionProps}
-                          style={{
-                            transformOrigin: 'top center',
-                          }}
-                        >
-                          <Paper sx={{ 
-                            mt: 1, 
-                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                            border: '1px solid rgba(255, 255, 255, 0.1)',
-                            minWidth: 200
-                          }}>
-                            <ClickAwayListener onClickAway={handleCloseDropdown}>
-                              <MenuList
-                                autoFocusItem={dropdownOpen}
-                                id="about-menu"
-                                aria-labelledby="about-button"
-                                onKeyDown={handleListKeyDown}
-                                dense
-                              >
-                                {aboutMenuItems.map((subItem, index) => (
-                                  <MenuItem 
-                                    key={subItem.text} 
-                                    onClick={() => navigateToSection(subItem.path)}
-                                    sx={{ 
-                                      color: isHashActive(subItem.path) ? YELLOW : WHITE,
-                                      fontWeight: isHashActive(subItem.path) ? 600 : 400,
-                                      backgroundColor: isHashActive(subItem.path) 
-                                        ? 'rgba(255, 215, 0, 0.1)' 
-                                        : 'transparent',
-                                      py: 1, // Add consistent padding
-                                      minHeight: 'auto', // Reduce height
-                                      '&:hover': {
-                                        backgroundColor: isHashActive(subItem.path)
-                                          ? 'rgba(255, 215, 0, 0.2)'
-                                          : 'rgba(64, 224, 208, 0.1)',
-                                        color: YELLOW
-                                      }
-                                    }}
-                                  >
-                                    {subItem.text}
-                                  </MenuItem>
-                                ))}
-                              </MenuList>
-                            </ClickAwayListener>
-                          </Paper>
-                        </Grow>
-                      )}
-                    </Popper>
-                  </div>
-                ) : (
-                  <MotionButton 
-                    key={item.text}
-                    color="inherit"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => handleNavigation(item.path)}
-                    sx={{
-                      color: isActive(item.path) ? YELLOW : WHITE,
-                      fontWeight: isActive(item.path) ? 700 : 400,
-                      '&::after': {
-                        content: '""',
-                        position: 'absolute',
-                        width: isActive(item.path) ? '50%' : '0%',
-                        height: '2px',
-                        bottom: '0',
-                        left: '25%',
-                        backgroundColor: YELLOW,
-                        transition: 'width 0.3s ease',
-                      }
-                    }}
-                  >
-                    {item.text}
-                  </MotionButton>
-                )
-              )}
-            </motion.div>
-          )}
-        </Toolbar>
-      </MotionAppBar>
+              Book Now
+            </Link>
+          </div>
 
-      {/* Mobile Drawer */}
-      <Box component="nav">
-        <Drawer
-          variant="temporary"
-          anchor="right"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better mobile performance
-          }}
-          sx={{
-            display: { xs: "block", md: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </Box>
-    </>
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className={`flex items-center p-2 rounded-lg transition-colors ${
+                scrolled 
+                  ? "text-gray-800 hover:bg-gray-100" 
+                  : "text-white hover:bg-blue-800 hover:bg-opacity-30"
+              }`}
+              aria-label="Toggle menu"
+            >
+              {!isOpen ? (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={mobileMenuVariants}
+            className="md:hidden fixed top-0 right-0 w-4/5 h-screen bg-gradient-to-b from-blue-700 to-blue-900 z-50"
+          >
+            <div className="flex justify-end p-4">
+              <button
+                onClick={() => setIsOpen(false)}
+                className="text-white p-2 hover:bg-blue-800 hover:bg-opacity-50 rounded-full transition-colors"
+                aria-label="Close menu"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            
+            <div className="flex justify-center my-8">
+              <img 
+                src="/JerryBearLogo.png"
+                alt="Big Sky Parasail Logo" 
+                className="h-20" 
+              />
+            </div>
+            
+            <div className="px-4 py-2">
+              <nav className="flex flex-col space-y-1">
+                {navLinks.map((link) => (
+                  <motion.div
+                    key={link.name}
+                    variants={mobileMenuItemVariants}
+                    className="border-b border-blue-600 last:border-b-0"
+                  >
+                    <Link
+                      to={link.path}
+                      className={`block px-4 py-4 text-white hover:bg-blue-800 hover:bg-opacity-50 rounded-lg transition-colors ${
+                        isActive(link.path) ? "font-semibold" : ""
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
+                
+                <motion.div variants={mobileMenuItemVariants} className="mt-4">
+                  <Link 
+                    to="/book" 
+                    className="block w-full text-center px-4 py-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg transition-colors shadow-md"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Book Your Flight
+                  </Link>
+                </motion.div>
+              </nav>
+            </div>
+            
+            <motion.div
+              variants={mobileMenuItemVariants}
+              className="absolute bottom-0 left-0 right-0 p-6 text-center text-blue-200 text-sm"
+            >
+              <p>© 2025 Big Sky Parasail Co.</p>
+              <div className="flex justify-center mt-4 space-x-4">
+                <a href="#" className="text-white hover:text-amber-300 transition-colors">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+                  </svg>
+                </a>
+                <a href="#" className="text-white hover:text-amber-300 transition-colors">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" />
+                  </svg>
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 };
 
