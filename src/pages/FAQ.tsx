@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import Footer from "../Components/Footer.tsx";
 
 // Animation variants
 const fadeInUp = {
@@ -33,8 +34,13 @@ const fadeIn = {
   }
 };
 
+interface FAQ {
+    question: string;
+    answer: string;
+}
+
 // FAQ Item Component
-const FAQItem = ({ question, answer }) => {
+const FAQItem = ({ question, answer }: FAQ) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -113,11 +119,11 @@ const FAQPage = () => {
     },
     {
       question: "How long does the excursion take?",
-      answer: "The entire experience typically takes about 1.5 hours from check-in to return. This includes check-in procedures, safety briefing, boat ride to and from the parasailing area, and the flight itself. Actual flight time is approximately 10-12 minutes per group, which is the optimal duration for enjoying the experience."
+      answer: "The entire experience typically takes about 1 hour from check-in to return. This includes check-in procedures, safety briefing, boat ride to and from the parasailing area, and the flight itself. Actual flight time is approximately 10-12 minutes per group, which is the optimal duration for enjoying the experience."
     },
     {
       question: "Is your company specially trained, experienced and or licensed?",
-      answer: "Absolutely! Our captains are USCG certified with 15+ years of parasailing experience. We maintain WSIA (Water Sports Industry Association) certification, which is the gold standard in parasailing safety. All of our equipment meets or exceeds industry safety standards with daily inspections, and our crew is trained in CPR, first aid, and water rescue techniques."
+      answer: "Absolutely! Our captains are USCG certified with 15+ years of parasailing experience. All of our equipment meets or exceeds industry safety standards with daily inspections, and our crew is trained in CPR, first aid, and water rescue techniques."
     },
     {
       question: "Are reservations required?",
@@ -157,7 +163,7 @@ const FAQPage = () => {
           <div className="absolute w-full h-full bg-black opacity-30"></div>
           {/* Background image */}
           <img 
-            src="/HighAerial.jpeg" 
+            src="/WFishHappyFar.jpg"
             alt="Parasailing over Flathead Lake" 
             className="w-full h-full object-cover"
           />
@@ -340,6 +346,7 @@ const FAQPage = () => {
           </motion.div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

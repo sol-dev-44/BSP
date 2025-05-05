@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import Footer from "../Components/Footer.tsx";
 
 // Image configuration for easy updates
 const images = {
@@ -203,32 +204,32 @@ const BookNowPage = () => {
               <motion.div variants={fadeIn} className="bg-gray-50 p-6 rounded-xl shadow-md">
                 <h3 className="text-xl font-bold mb-4 text-blue-600">What To Bring</h3>
                 <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-amber-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-amber-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span>Swimwear (under clothing)</span>
                   </li>
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-amber-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-amber-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span>Sunscreen</span>
                   </li>
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-amber-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-amber-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span>Sunglasses with strap</span>
                   </li>
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-amber-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-amber-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span>Towel</span>
                   </li>
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-amber-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-amber-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span>Camera (optional)</span>
@@ -239,32 +240,32 @@ const BookNowPage = () => {
               <motion.div variants={fadeIn} className="bg-gray-50 p-6 rounded-xl shadow-md">
                 <h3 className="text-xl font-bold mb-4 text-blue-600">Good To Know</h3>
                 <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-amber-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-amber-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span>Arrive 15 minutes before your scheduled time</span>
                   </li>
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-amber-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-amber-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span>Weight limits: 40-450 lbs combined</span>
                   </li>
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-amber-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-amber-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span>Age minimum: 6+ years (under 12 with adult)</span>
                   </li>
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-amber-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-amber-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span>Photo packages available for purchase</span>
                   </li>
-                  <li className="flex items-start">
-                    <svg className="w-5 h-5 text-amber-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <li className="flex items-center">
+                    <svg className="w-5 h-5 text-amber-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span>Weather-dependent activity (rescheduling available)</span>
@@ -273,73 +274,56 @@ const BookNowPage = () => {
               </motion.div>
             </div>
             
+            {/* New Pricing Section with Cards */}
             <motion.div 
               variants={fadeIn}
-              className="mt-8 bg-gray-50 p-6 rounded-xl shadow-md"
+              className="mt-8"
             >
-              <h3 className="text-xl font-bold mb-4 text-blue-600">Pricing</h3>
-              <div className="overflow-x-auto">
-                <table className="min-w-full bg-white">
-                  <thead>
-                    <tr>
-                      <th className="px-6 py-3 border-b-2 border-gray-200 text-left text-sm leading-4 font-semibold text-gray-600 uppercase tracking-wider">
-                        Experience
-                      </th>
-                      <th className="px-6 py-3 border-b-2 border-gray-200 text-left text-sm leading-4 font-semibold text-gray-600 uppercase tracking-wider">
-                        Duration
-                      </th>
-                      <th className="px-6 py-3 border-b-2 border-gray-200 text-left text-sm leading-4 font-semibold text-gray-600 uppercase tracking-wider">
-                        Price
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                        <div className="text-sm leading-5 font-medium text-gray-900">Solo Flight</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                        <div className="text-sm leading-5 text-gray-500">10-12 minutes</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                        <div className="text-sm leading-5 font-bold text-amber-500">$99 per person</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                        <div className="text-sm leading-5 font-medium text-gray-900">Tandem Flight</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                        <div className="text-sm leading-5 text-gray-500">10-12 minutes</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                        <div className="text-sm leading-5 font-bold text-amber-500">$89 per person</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                        <div className="text-sm leading-5 font-medium text-gray-900">Triple Flight</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                        <div className="text-sm leading-5 text-gray-500">10-12 minutes</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                        <div className="text-sm leading-5 font-bold text-amber-500">$79 per person</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                        <div className="text-sm leading-5 font-medium text-gray-900">Photo Package</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                        <div className="text-sm leading-5 text-gray-500">Digital delivery</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                        <div className="text-sm leading-5 font-bold text-amber-500">$29</div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+              <h3 className="text-xl font-bold mb-6 text-blue-600">Pricing Options</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {/* Parasail Flight */}
+                <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="bg-blue-600 h-2"></div>
+                  <div className="p-5">
+                    <h4 className="text-lg font-bold text-gray-900 mb-2">Parasail Flight</h4>
+                    <div className="text-3xl font-bold text-amber-500 mb-3">$99</div>
+                    <p className="text-gray-600 text-sm">10-12 minute parasailing experience high above Flathead Lake</p>
+                  </div>
+                </div>
+                
+                {/* Photo Package */}
+                <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="bg-amber-500 h-2"></div>
+                  <div className="p-5">
+                    <h4 className="text-lg font-bold text-gray-900 mb-2">Photo Package</h4>
+                    <div className="text-3xl font-bold text-amber-500 mb-3">$30</div>
+                    <p className="text-gray-600 text-sm">Professional photos of your flight delivered digitally</p>
+                  </div>
+                </div>
+                
+                {/* GoPro Package */}
+                <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="bg-green-500 h-2"></div>
+                  <div className="p-5">
+                    <h4 className="text-lg font-bold text-gray-900 mb-2">GoPro Package</h4>
+                    <div className="text-3xl font-bold text-amber-500 mb-3">$30</div>
+                    <p className="text-gray-600 text-sm">High-definition video of your entire parasailing experience</p>
+                  </div>
+                </div>
+                
+                {/* Observer (Ride Along) */}
+                <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="bg-purple-500 h-2"></div>
+                  <div className="p-5">
+                    <h4 className="text-lg font-bold text-gray-900 mb-2">Observer</h4>
+                    <div className="text-3xl font-bold text-amber-500 mb-3">$30</div>
+                    <p className="text-gray-600 text-sm">Ride along on the boat without parasailing</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-6 bg-gray-50 p-4 rounded-lg text-center text-gray-600 text-sm">
+                <p>All prices are per person. Discounts available for groups of 6 or more.</p>
               </div>
             </motion.div>
           </motion.div>
@@ -424,6 +408,7 @@ const BookNowPage = () => {
           </motion.div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

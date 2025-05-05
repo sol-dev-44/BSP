@@ -37,7 +37,7 @@ const RoutesIndex: React.FC = () => {
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Router>
-        <Navbar theme={theme} />
+        <Navbar />
           {/* Add Suspense with a fallback UI while components are loading */}
           <Suspense fallback={<StylishLoader />}>
 

@@ -1,11 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import Footer from "../Components/Footer.tsx";
 
 // Image configuration for easy updates
 const images = {
-  historyImage: "/HighAerial.jpeg", // History section image
-  flatheadImage: "/FlatheadAerial.jpg", // Flathead Lake image
+  historyImage: "/WhiteFishSmiles.jpg", // History image
+  boatImage: "/cloudDancerInclineDock.jpg", // Boat image
+  flatheadImage: "/FlatheadWithShadow.jpg", // Flathead Lake image
   safetyImage: "/WhiteFishSmiles.jpg", // Safety image
   commitmentImage: "/DaytonaImage.png", // Commitment image
 };
@@ -137,13 +139,13 @@ const AboutPage = () => {
                     <svg className="w-5 h-5 text-amber-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span>USCG certified captains with 15+ years of experience</span>
+                    <span>USCG certified captains with 15+ years of Parasailing experience specifically</span>
                   </li>
                   <li className="flex items-start">
                     <svg className="w-5 h-5 text-amber-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span>Water Sports Industry Association (WSIA) certification</span>
+                    <span>Adhere to Water Sports Industry Association Standards</span>
                   </li>
                   <li className="flex items-start">
                     <svg className="w-5 h-5 text-amber-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -169,7 +171,7 @@ const AboutPage = () => {
             >
               <div className="rounded-2xl overflow-hidden shadow-2xl h-full">
                 <img 
-                  src={images.historyImage} 
+                  src={images.boatImage}
                   alt="Big Sky Parasail boat on Flathead Lake" 
                   className="w-full h-full object-cover"
                 />
@@ -296,7 +298,7 @@ const AboutPage = () => {
                     <svg className="w-5 h-5 text-amber-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span>Custom 31' parasail boat designed for Flathead Lake</span>
+                    <span>State-of-the art Commercial 31' parasail boat</span>
                   </li>
                   <li className="flex items-start">
                     <svg className="w-5 h-5 text-amber-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -314,7 +316,7 @@ const AboutPage = () => {
                     <svg className="w-5 h-5 text-amber-500 mt-0.5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span>Marine-grade parasail canopies inspected daily</span>
+                    <span>Marine-grade, commercial parasail canopies inspected daily</span>
                   </li>
                 </ul>
               </motion.div>
@@ -476,7 +478,7 @@ const AboutPage = () => {
             <p className="text-xl italic mb-6 text-center">
               "The most breathtaking experience of our Montana vacation. The views of the mountains and lake were spectacular, and the crew made us feel safe the entire time. Worth every penny!"
             </p>
-            <p className="font-semibold text-amber-400 text-center">— Countless Happy Adventurers</p>
+            <p className="font-semibold text-amber-400 text-center">— Sarah J.</p>
           </motion.div>
         </div>
       </section>
@@ -516,6 +518,7 @@ const AboutPage = () => {
           </motion.div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

@@ -1,12 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import Footer from "../Components/Footer.tsx";
 
 // Image configuration for easy updates
 const images = {
   heroLogo: "/JerryBearLogo.png", // Hero section logo
   feature1: "/FlatheadAerial.jpg",
-  feature2: "/WhiteFishSmiles.jpg", // Safe & Fun feature image
+  feature2: "/cloudDancerInclineDock.jpg",
   feature3: "/DaytonaImage.png", // Photo Packages feature image 
 };
 
@@ -135,9 +136,15 @@ const LandingPage: React.FC = () => {
     <div className="min-h-screen overflow-hidden">
       {/* Hero Section */}
       <div className="relative bg-gradient-to-r from-blue-600 to-cyan-500 text-white">
-        <div className="absolute inset-0 z-0 overflow-hidden">
+      <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute w-full h-full bg-black opacity-30"></div>
-          {/* Background pattern */}
+          {/* Background image */}
+          <img 
+            src={"/HighAerial.jpeg"}
+            alt="Parasailing over Flathead Lake" 
+            className="w-full h-full object-cover"
+          />
+          {/* Pattern overlay */}
           <div className="absolute inset-0 opacity-10">
             <svg width="100%" height="100%">
               <pattern id="pattern-circles" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse" patternContentUnits="userSpaceOnUse">
@@ -239,7 +246,7 @@ const LandingPage: React.FC = () => {
                   </svg>
                 ))}
               </div>
-              <p className="ml-2 text-sm text-gray-700">4.9/5 (350+ reviews)</p>
+              {/* <p className="ml-2 text-sm text-gray-700">5/5 (100+ reviews)</p> */}
             </div>
           </div>
         </div>
@@ -331,15 +338,7 @@ const LandingPage: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-center mt-10"
           >
-            <Link 
-              to="/about#testimonials" 
-              className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
-            >
-              See more reviews
-              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-              </svg>
-            </Link>
+
           </motion.div>
         </div>
       </div>
@@ -376,6 +375,7 @@ const LandingPage: React.FC = () => {
           </motion.div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
