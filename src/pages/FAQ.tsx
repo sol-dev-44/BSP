@@ -478,7 +478,7 @@ const FAQPage = () => {
               </motion.p>
               <motion.div variants={fadeInUp}>
                 <Link
-                  to="/book"
+                  to="/reservations"
                   className="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 inline-block"
                 >
                   Book Your Flight

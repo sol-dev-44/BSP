@@ -21,7 +21,7 @@ const bookingPageStructuredData = {
     "price": "139.00",
     "priceCurrency": "USD",
     "availability": "https://schema.org/InStock",
-    "url": "https://www.montanaparasail.com/book",
+    "url": "https://www.montanaparasail.com/reservations",
   },
   "areaServed": {
     "@type": "Place",
@@ -80,7 +80,7 @@ const BookNowPage = () => {
         title="Book Your Parasailing Adventure | Flathead Lake Montana"
         description="Reserve your parasailing experience on Flathead Lake. Easy online booking for Montana's premier parasailing adventure with breathtaking mountain views."
         keywords="book parasailing, Flathead Lake parasail reservations, Montana parasailing tickets, parasail booking, parasail adventure reservation"
-        canonicalUrl="https://www.montanaparasail.com/book"
+        canonicalUrl="https://www.montanaparasail.com/reservations"
         ogImage="https://www.montanaparasail.com/WhiteFishSmiles.jpg"
         structuredData={bookingPageStructuredData}
       />

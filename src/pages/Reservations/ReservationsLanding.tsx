@@ -45,7 +45,7 @@ const ReservationsLanding = () => {
           <div className="absolute w-full h-full bg-black opacity-30"></div>
           {/* Background image */}
           <img
-            src="/FlatheadParasailHero.jpg"
+            src="/cloudDancerInclineDock.jpg"
             alt="Parasailing on Flathead Lake"
             className="w-full h-full object-cover"
           />

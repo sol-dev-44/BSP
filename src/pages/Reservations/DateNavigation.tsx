@@ -1,6 +1,6 @@
 // components/DateNavigation.tsx
-import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface DateNavigationProps {
   dates: string[];
@@ -10,19 +10,6 @@ interface DateNavigationProps {
   onSelectDate: (date: string) => void;
 }
 
-// Animation variants
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut",
-    },
-  },
-};
-
 const DateNavigation: React.FC<DateNavigationProps> = ({
   dates,
   currentIndex,
@@ -30,49 +17,75 @@ const DateNavigation: React.FC<DateNavigationProps> = ({
   onNext,
   onSelectDate,
 }) => {
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const calendarRef = useRef<any>(null);
-
-  // Close calendar when clicking outside
+  // State for modal instead of dropdown
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Close the modal when clicking outside or with escape key
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        calendarRef.current &&
-        !calendarRef.current.contains(event.target as any)
-      ) {
-        setIsCalendarOpen(false);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsModalOpen(false);
       }
     };
-
-    document.addEventListener("mousedown", handleClickOutside);
+    
+    if (isModalOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+      // Prevent body scrolling when modal is open
+      document.body.style.overflow = 'hidden';
+    }
+    
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
     };
-  }, []);
+  }, [isModalOpen]);
 
-  // Convert date strings to Date objects for the calendar
-  const dateObjects = dates.map((dateStr) => new Date(dateStr));
+  // Animation variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+  
+  // Format date for display
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, { 
+      weekday: 'short', 
+      month: 'short', 
+      day: 'numeric' 
+    });
+  };
 
-  // Get the current date for highlighting
-  const currentDate = dates[currentIndex]
-    ? new Date(dates[currentIndex])
-    : new Date();
-
-  // Find min and max dates for the calendar
-  const minDate = dateObjects.length > 0
-    ? new Date(Math.min(...dateObjects.map((d) => d.getTime())))
-    : new Date();
-  const maxDate = dateObjects.length > 0
-    ? new Date(Math.max(...dateObjects.map((d) => d.getTime())))
-    : new Date();
+  // Get current date text
+  const currentDateText = dates[currentIndex] ? formatDate(dates[currentIndex]) : "Select Date";
+  
+  // Group dates by month for better organization
+  const groupedDates = React.useMemo(() => {
+    const groups: Record<string, string[]> = {};
+    
+    dates.forEach(date => {
+      const dateObj = new Date(date);
+      const monthYear = dateObj.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+      
+      if (!groups[monthYear]) {
+        groups[monthYear] = [];
+      }
+      
+      groups[monthYear].push(date);
+    });
+    
+    return groups;
+  }, [dates]);
 
   return (
-    <motion.div
-      className="relative bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-lg shadow-lg overflow-hidden"
-      initial="hidden"
-      animate="visible"
-      variants={fadeInUp}
-    >
+    <div className="relative bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-lg shadow-lg overflow-hidden">
       {/* Pattern overlay */}
       <div className="absolute inset-0 opacity-10">
         <svg width="100%" height="100%">
@@ -104,160 +117,65 @@ const DateNavigation: React.FC<DateNavigationProps> = ({
             disabled={currentIndex === 0}
             className={`
               p-2 rounded-full focus:outline-none transition-all duration-200
-              ${
-              currentIndex === 0
-                ? "text-blue-200 cursor-not-allowed opacity-50"
-                : "text-white hover:bg-white hover:bg-opacity-20"
-            }
+              ${currentIndex === 0 
+                ? "text-blue-200 cursor-not-allowed opacity-50" 
+                : "text-white hover:bg-white hover:bg-opacity-20"}
             `}
             aria-label="Previous date"
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M15 19l-7-7 7-7"
-              />
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
 
-          <div className="relative">
-            <button
-              onClick={() => setIsCalendarOpen(!isCalendarOpen)}
-              className="flex items-center px-5 py-2.5 bg-blue-800 bg-opacity-30 hover:bg-opacity-40 border border-white border-opacity-30 rounded-full focus:outline-none transition-colors duration-200"
-            >
-              <span className="font-medium text-white">
-                {dates[currentIndex]
-                  ? new Date(dates[currentIndex]).toLocaleDateString(
-                    undefined,
-                    { weekday: "short", month: "short", day: "numeric" },
-                  )
-                  : "Select Date"}
-              </span>
-              <svg
-                className="w-4 h-4 ml-2 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </button>
-
-            {/* Calendar Dropdown */}
-            // Replace the entire calendar dropdown code in DateNavigation.tsx
-            with this:
-
-            {isCalendarOpen && (
-              <div
-                ref={calendarRef}
-                className="absolute z-20 mt-2 bg-white rounded-lg shadow-xl border border-gray-200 right-0 w-64"
-                style={{
-                  maxHeight: "400px",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <div className="p-3 text-sm font-medium text-center border-b border-gray-200 text-gray-700 bg-white">
-                  Select a date
-                </div>
-
-                <div className="overflow-y-auto" style={{ maxHeight: "350px" }}>
-                  <div className="grid grid-cols-2 gap-1 p-2">
-                    {dates.map((date, index) => (
-                      <button
-                        key={date}
-                        onClick={() => {
-                          onSelectDate(date);
-                          setIsCalendarOpen(false);
-                        }}
-                        className={`
-              px-3 py-2.5 text-sm rounded-md transition-colors duration-200
-              ${
-                          currentIndex === index
-                            ? "bg-blue-100 text-blue-800 font-medium"
-                            : "hover:bg-gray-100 text-gray-700"
-                        }
-            `}
-                      >
-                        {new Date(date).toLocaleDateString(undefined, {
-                          weekday: "short",
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="flex items-center px-4 py-2 bg-blue-800 bg-opacity-30 hover:bg-opacity-40 border border-white border-opacity-30 rounded-full focus:outline-none transition-colors duration-200"
+          >
+            <span className="font-medium text-white">
+              {currentDateText}
+            </span>
+            <svg className="w-4 h-4 ml-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
 
           <button
             onClick={onNext}
             disabled={currentIndex >= dates.length - 1}
             className={`
               p-2 rounded-full focus:outline-none transition-all duration-200
-              ${
-              currentIndex >= dates.length - 1
-                ? "text-blue-200 cursor-not-allowed opacity-50"
-                : "text-white hover:bg-white hover:bg-opacity-20"
-            }
+              ${currentIndex >= dates.length - 1 
+                ? "text-blue-200 cursor-not-allowed opacity-50" 
+                : "text-white hover:bg-white hover:bg-opacity-20"}
             `}
             aria-label="Next date"
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M9 5l7 7-7 7"
-              />
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
             </svg>
           </button>
         </div>
 
-        {/* Date Pills for Desktop */}
+        {/* Date Pills for Larger Screens */}
         <div className="hidden md:flex flex-wrap mt-4 gap-2 pb-1">
-          {dates.map((date, index) => (
+          {dates.slice(0, 7).map((date, index) => (
             <button
               key={date}
               onClick={() => onSelectDate(date)}
               className={`
-        px-4 py-1.5 text-sm rounded-full transition-colors duration-200
-        ${
-                currentIndex === index
-                  ? "bg-amber-500 text-white font-medium shadow-md"
-                  : "bg-blue-800 bg-opacity-30 hover:bg-opacity-50 text-white border border-white border-opacity-30"
-              }
-      `}
+                px-4 py-1.5 text-sm rounded-full transition-colors duration-200
+                ${currentIndex === index 
+                  ? "bg-amber-500 text-white font-medium shadow-md" 
+                  : "bg-blue-800 bg-opacity-30 hover:bg-opacity-50 text-white border border-white border-opacity-30"}
+              `}
             >
-              {new Date(date).toLocaleDateString(undefined, {
-                weekday: "short",
-                month: "short",
-                day: "numeric",
-              })}
+              {formatDate(date)}
             </button>
           ))}
           {dates.length > 7 && (
             <button
-              onClick={() => setIsCalendarOpen(true)}
+              onClick={() => setIsModalOpen(true)}
               className="px-4 py-1.5 text-sm rounded-full bg-blue-800 bg-opacity-30 hover:bg-opacity-50 text-white border border-white border-opacity-30"
             >
               More dates...
@@ -277,7 +195,87 @@ const DateNavigation: React.FC<DateNavigationProps> = ({
           </path>
         </svg>
       </div>
-    </motion.div>
+
+      {/* Date Selection Modal - Replacing the problematic dropdown */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsModalOpen(false)}
+              className="absolute inset-0 bg-black bg-opacity-50"
+            />
+            
+            {/* Modal content */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="relative bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[80vh] overflow-hidden flex flex-col"
+            >
+              {/* Header */}
+              <div className="p-4 border-b border-gray-200 bg-blue-50">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-semibold text-blue-900">Select Date</h3>
+                  <button 
+                    onClick={() => setIsModalOpen(false)}
+                    className="p-1 rounded-full hover:bg-gray-200 transition-colors"
+                  >
+                    <svg className="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              
+              {/* Scrollable content */}
+              <div className="overflow-y-auto p-4 flex-grow">
+                {Object.entries(groupedDates).map(([monthYear, monthDates]) => (
+                  <div key={monthYear} className="mb-6 last:mb-0">
+                    <h4 className="text-md font-medium text-gray-700 mb-2">{monthYear}</h4>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                      {monthDates.map((date) => {
+                        const isCurrentDate = dates.indexOf(date) === currentIndex;
+                        return (
+                          <button
+                            key={date}
+                            onClick={() => {
+                              onSelectDate(date);
+                              setIsModalOpen(false);
+                            }}
+                            className={`
+                              px-4 py-3 text-sm rounded-lg transition-colors duration-200 font-medium
+                              ${isCurrentDate 
+                                ? "bg-blue-600 text-white" 
+                                : "bg-gray-100 hover:bg-gray-200 text-gray-800"}
+                            `}
+                          >
+                            {formatDate(date)}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              {/* Footer */}
+              <div className="p-4 border-t border-gray-200 bg-gray-50 flex justify-end">
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md font-medium transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 

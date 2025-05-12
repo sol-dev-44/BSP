@@ -1,4 +1,4 @@
-# robots.txt for Big Sky Parasail
+# robots.txt for Montana Parasail
 User-agent: *
 Allow: /
 

@@ -51,7 +51,7 @@ const landingPageStructuredData = {
     "priceCurrency": "USD",
     "price": "139.00",
     "validFrom": "2025-05-01",
-    "url": "https://www.montanaparasail.com/book",
+    "url": "https://www.montanaparasail.com/reservations",
   },
 };
 
@@ -198,7 +198,7 @@ const LandingPage: React.FC = () => {
   return (
     <>
       <SEO
-        title="Flathead Lake Parasailing | Montana Parasail Adventures"
+        title="Big Sky Parasail - Flathead Lake, Montana"
         description="Experience the thrill of parasailing on Flathead Lake in Montana. Safe, breathtaking adventures with stunning mountain views. Book your parasail ride today!"
         keywords="parasailing Montana, Flathead Lake parasailing, Montana water sports, parasail adventure, Lakeside Montana"
         canonicalUrl="https://www.montanaparasail.com"
@@ -276,7 +276,7 @@ const LandingPage: React.FC = () => {
                     className="flex flex-wrap gap-4"
                   >
                     <Link
-                      to="/book"
+                      to="/reservations"
                       className="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1"
                     >
                       Book Your Flight
@@ -470,7 +470,7 @@ const LandingPage: React.FC = () => {
               </motion.p>
               <motion.div variants={fadeInUp}>
                 <Link
-                  to="/book"
+                  to="/reservations"
                   className="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 inline-block"
                 >
                   Book Your Flight

@@ -239,7 +239,7 @@ const ParasailFooter: React.FC<FooterProps> = ({
               </li>
               <li>
                 <Link
-                  to="/book"
+                  to="/reservations"
                   className="text-blue-50 hover:text-white transition-colors flex items-center"
                 >
                   <svg

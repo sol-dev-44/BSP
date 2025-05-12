@@ -136,7 +136,7 @@ const Navbar: React.FC = () => {
             
             {/* Book Now Button */}
             <Link 
-              to="/book" 
+              to="/reservations" 
               className={`ml-4 px-5 py-2.5 rounded-lg font-semibold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 ${
                 scrolled 
                   ? "bg-amber-500 hover:bg-amber-600 text-white" 
@@ -224,7 +224,7 @@ const Navbar: React.FC = () => {
                 
                 <motion.div variants={mobileMenuItemVariants} className="mt-4">
                   <Link 
-                    to="/book" 
+                    to="/reservations" 
                     className="block w-full text-center px-4 py-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg transition-colors shadow-md"
                     onClick={() => setIsOpen(false)}
                   >

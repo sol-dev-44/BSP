@@ -5,7 +5,15 @@ import { join } from "https://deno.land/std@0.224.0/path/mod.ts";
 
 // Define constants
 const PUBLIC_DIR = "./public";
-const SITE_URL = "https://www.montanaparasail.com"; // Updated with correct domain
+const ROUTES_FILE = "./src/RoutesIndex.tsx"; // Path to your routes file
+const SITE_URL = "https://www.montanaparasail.com";
+
+// Interface for page data
+interface Page {
+  path: string;
+  priority: string;
+  changefreq: string;
+}
 
 // Function to ensure the public directory exists
 async function ensurePublicDir() {
@@ -21,9 +29,60 @@ async function ensurePublicDir() {
   }
 }
 
+// Function to extract routes from RoutesIndex.tsx
+async function extractRoutes(): Promise<string[]> {
+  try {
+    const content = await Deno.readTextFile(ROUTES_FILE);
+    
+    // Extract route paths using regex
+    const routeRegex = /<Route\s+path=["']([^"']+)["']/g;
+    const routes: string[] = [];
+    let match;
+    
+    while ((match = routeRegex.exec(content)) !== null) {
+      const route = match[1];
+      // Exclude dynamic routes with params and redirect routes
+      if (!route.includes("*") && route !== "") {
+        routes.push(route);
+      }
+    }
+    
+    return [...new Set(routes)]; // Remove duplicates
+  } catch (error) {
+    console.error(`❌ Error reading routes file: ${error.message}`);
+    // Fallback to default routes if file can't be read
+    return [
+      "/",
+      "/about",
+      "/theboat",
+      "/location", 
+      "/faq",
+      "/reservations",
+      "/reservations/book/time",
+      "/reservations/book/info",
+      "/reservations/book/payment",
+      "/reservations/book/confirmation"
+    ];
+  }
+}
+
+// Function to determine page priority and change frequency
+function getPageMetadata(path: string): { priority: string; changefreq: string } {
+  // Set priority and change frequency based on the page type
+  if (path === "/") {
+    return { priority: "1.0", changefreq: "weekly" };
+  } else if (path.includes("/reservations")) {
+    return { priority: "0.9", changefreq: "daily" };
+  } else if (path === "/location" || path === "/faq") {
+    return { priority: "0.8", changefreq: "monthly" };
+  } else {
+    return { priority: "0.7", changefreq: "monthly" };
+  }
+}
+
 // Generate robots.txt
 async function generateRobotsTxt() {
-  const robotsContent = `# robots.txt for Big Sky Parasail
+  const robotsContent = `# robots.txt for Montana Parasail
 User-agent: *
 Allow: /
 
@@ -41,14 +100,14 @@ Sitemap: ${SITE_URL}/sitemap.xml`;
 
 // Generate sitemap.xml
 async function generateSitemap() {
-  // Define your pages - extend this as your site grows
-  const pages = [
-    { path: "/", priority: "1.0", changefreq: "weekly" },
-    { path: "/about", priority: "0.8", changefreq: "monthly" },
-    { path: "/location", priority: "0.8", changefreq: "monthly" },
-    { path: "/book", priority: "0.9", changefreq: "weekly" },
-    { path: "/faq", priority: "0.8", changefreq: "monthly" }
-  ];
+  // Extract routes from React Router configuration
+  const routes = await extractRoutes();
+  
+  // Create page objects with metadata
+  const pages: Page[] = routes.map(route => ({
+    path: route,
+    ...getPageMetadata(route)
+  }));
 
   // Generate timestamp for lastmod
   const today = new Date().toISOString().split('T')[0];
@@ -71,6 +130,12 @@ ${pages.map(page => `
   const sitemapPath = join(PUBLIC_DIR, "sitemap.xml");
   await Deno.writeTextFile(sitemapPath, sitemapContent);
   console.log(`✅ Generated sitemap.xml at ${sitemapPath}`);
+  
+  // Log all detected routes
+  console.log("\n📄 Pages detected and included in sitemap:");
+  pages.forEach(page => {
+    console.log(`  • ${page.path} (priority: ${page.priority}, changefreq: ${page.changefreq})`);
+  });
 }
 
 // Main function to run all SEO tasks

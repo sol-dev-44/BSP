@@ -838,9 +838,7 @@ const ReservationCalendar: React.FC = () => {
   return (
     <div className="min-h-screen overflow-hidden">
       {/* Mini Banner Section */}
-      // Update the banner section in ReservationCalendar.tsx
-
-      // Replace the mini banner section with this taller version:
+ 
       {/* Mini Banner Section */}
       <div className="relative bg-gradient-to-r from-blue-600 to-cyan-500 text-white py-16 md:py-20 mb-8">
         <div className="absolute inset-0 z-0 overflow-hidden">

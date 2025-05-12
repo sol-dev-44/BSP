@@ -42,7 +42,7 @@ const ParasailingHeader: React.FC<ParasailingHeaderProps> = ({
         <div className="absolute w-full h-full bg-black opacity-30"></div>
         {/* Background image */}
         <img
-          src="/FlatheadAerial.jpg"
+          src="/cloudDancerInclineDock.jpg"
           alt="Parasailing on Flathead Lake"
           className="w-full h-full object-cover"
         />
