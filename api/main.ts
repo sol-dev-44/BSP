@@ -2,10 +2,16 @@
 import { Application, Router } from "@oak/oak";
 import { oakCors } from "@tajpouria/cors";
 import { load } from "https://deno.land/std@0.220.0/dotenv/mod.ts";
+import timeSlotRoutes from "./timeSlotRoutes.ts";
+import reservationRoutes from "./reservationRoutes.ts";
+import routeStaticFilesFrom from "./routeStaticFilesFrom.ts";
+import dotenv from "dotenv";
 
-// Set up router
-const router = new Router();
 
+// Load environment variables
+dotenv.config();
+
+// Initialize the app
 const app = new Application();
 
 // Global error listener
@@ -17,58 +23,18 @@ app.addEventListener("error", (evt) => {
   });
 });
 
+// CORS middleware
+app.use(oakCors());
 
-// API routes
-app.use(router.routes());
-app.use(router.allowedMethods());
+// Use the modular routes
+app.use(timeSlotRoutes.routes());
+app.use(timeSlotRoutes.allowedMethods());
+app.use(reservationRoutes.routes());
+app.use(reservationRoutes.allowedMethods());
 
-// Static files handler
-app.use(async (ctx, next) => {
-  const path = ctx.request.url.pathname;
-  console.log("🔍 Request path:", path);
-  console.log(
-    "💻 Environment:",
-    Deno.env.get("DENO_DEPLOYMENT_ID") ? "Production" : "Local",
-  );
-
-  try {
-    // If it looks like a static asset, try to serve it
-    if (path.startsWith("/assets/") || path.includes(".")) {
-      try {
-        // Try multiple possible roots
-        const roots = ["./dist", "dist", "/dist"];
-        let served = false;
-
-        for (const root of roots) {
-          try {
-            await ctx.send({
-              root,
-              path,
-            });
-            console.log("📦 Successfully served static file from", root + path);
-            served = true;
-            break;
-          } catch (e) {
-            console.log(`📁 Attempted ${root}, trying next...`);
-          }
-        }
-
-        if (!served) {
-          throw new Error("Could not serve from any root");
-        }
-        return;
-      } catch (error) {
-        console.error("❌ Static file error for path:", path, error);
-        await next();
-      }
-    } else {
-      await next();
-    }
-  } catch (error) {
-    console.error("💥 Middleware error:", error);
-    await next();
-  }
-});
+// Static files handler - using the dedicated function
+const staticPaths = ["./dist", "dist", "/dist"];
+app.use(routeStaticFilesFrom(staticPaths));
 
 // SPA handler
 app.use(async (ctx) => {
@@ -115,7 +81,12 @@ app.use(async (ctx) => {
 // Dynamically set port based on environment
 const PORT = Deno.env.get("PORT") ? Number(Deno.env.get("PORT")) : 8000;
 
+// Print Stripe configuration
+console.log(`🔑 Stripe configuration: API key ${Deno.env.get("STRIPE_SECRET_KEY") ? "is set" : "is MISSING"}`);
+console.log(`🔑 Stripe public key: ${Deno.env.get("VITE_STRIPE_PUBLIC_KEY") ? "is set" : "is MISSING"}`);
+
 // Listen with a more flexible configuration
+console.log(`🚀 Starting server on port ${PORT}...`);
 await app.listen({
   port: PORT,
   // Remove explicit hostname for Deno Deploy compatibility

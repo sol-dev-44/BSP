@@ -1,0 +1,10 @@
+# robots.txt for Big Sky Parasail
+User-agent: *
+Allow: /
+
+# Disallow any potential admin areas
+Disallow: /admin/
+Disallow: /wp-admin/
+
+# Sitemap location
+Sitemap: https://www.montanaparasail.com/sitemap.xml

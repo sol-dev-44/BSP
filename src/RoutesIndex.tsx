@@ -12,9 +12,10 @@ import LandingPage from "./pages/LandingPage.tsx";
 import Parasailing from "./pages/Parasailing.tsx";
 import TheBoat from "./pages/TheBoat.tsx";
 import TheCrew from "./pages/TheCrew.tsx";
-import Book from "./pages/Book.tsx";
 import FAQ from "./pages/FAQ.tsx";
 import Location from "./pages/Location.tsx";
+import ReservationsLanding from './pages/Reservations/ReservationsLanding.tsx';
+import ReservationCalendar from './pages/Reservations/ReservationCalendar.tsx';
 
 const RoutesIndex: React.FC = () => {
   const reduxTheme = useSelector((state: any) => state.theme);
@@ -43,46 +44,21 @@ const RoutesIndex: React.FC = () => {
 
           <ScrollToTop />
             <Routes>
-
-              <Route
-                path="/"
-                element={<LandingPage />}
-              />
-
-              <Route
-                path="/about"
-                element={<Parasailing />}
-              />
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/about" element={<Parasailing />} />
+              <Route path="/theboat" element={<TheBoat />} />
+              <Route path="/location" element={<Location />} />
+              <Route path="/faq" element={<FAQ />} />
               
-              <Route
-                path="/theboat"
-                element={<TheBoat />}
-              />
-
-              <Route
-                path="/location"
-                element={<Location />}
-              />
-
-              <Route
-                path="/thecrew"
-                element={<TheCrew />}
-              />
-
-              <Route
-                path="/book"
-                element={<Book />}
-              />
-
-              <Route
-                path="/faq"
-                element={<FAQ />}
-              />
-
-              <Route
-                path="*"
-                element={<Navigate to="/" />}
-              />
+              {/* Reservations routes */}
+              <Route path="/reservations" element={<ReservationsLanding />} />
+              <Route path="/reservations/book/time" element={<ReservationCalendar />} />
+              <Route path="/reservations/book/info" element={<ReservationCalendar />} />
+              <Route path="/reservations/book/payment" element={<ReservationCalendar />} />
+              <Route path="/reservations/book/confirmation" element={<ReservationCalendar />} />
+              
+              {/* Fallback route */}
+              <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </Suspense>
         </Router>

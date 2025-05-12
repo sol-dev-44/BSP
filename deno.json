@@ -10,5 +10,8 @@
     ],
     "include": [],
     "entrypoint": "api/main.ts"
+  },
+  "tasks": {
+    "build:seo": "deno run --allow-read --allow-write scripts/build-seo.ts"
   }
 }
