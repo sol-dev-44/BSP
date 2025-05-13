@@ -49,7 +49,7 @@ async function extractRoutes(): Promise<string[]> {
     
     return [...new Set(routes)]; // Remove duplicates
   } catch (error) {
-    console.error(`❌ Error reading routes file: ${error.message}`);
+    console.error(`❌ Error reading routes file`);
     // Fallback to default routes if file can't be read
     return [
       "/",

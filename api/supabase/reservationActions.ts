@@ -256,19 +256,40 @@ export const fetchTodaysReservations = async () => {
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
     
-    const { data, error } = await supabase
-      .from("reservations")
-      .select(`
-        *,
-        time_slots (*)
-      `)
-      .gte("time_slots.start_time", today.toISOString())
-      .lt("time_slots.start_time", tomorrow.toISOString())
-      .in("status", ["confirmed", "pending"])
-      .order("time_slots.start_time", { ascending: true });
+    // First, get the time slots for today
+    const { data: todaySlots, error: slotsError } = await supabase
+      .from("time_slots")
+      .select("id")
+      .gte("start_time", today.toISOString())
+      .lt("start_time", tomorrow.toISOString())
+      .order("start_time", { ascending: true });
       
-    if (error) return error.message;
-    return data;
+    if (slotsError) return slotsError.message;
+    
+    // Then, get reservations for these time slots
+    if (todaySlots && todaySlots.length > 0) {
+      const slotIds = todaySlots.map(slot => slot.id);
+      
+      const { data, error } = await supabase
+        .from("reservations")
+        .select(`
+          *,
+          time_slots (*)
+        `)
+        .in("time_slot_id", slotIds)
+        .in("status", ["confirmed", "pending"]);
+        
+      if (error) return error.message;
+      
+      // Sort manually by time_slot.start_time
+      return data ? data.sort((a, b) => {
+        const timeA = new Date(a.time_slots?.start_time || 0).getTime();
+        const timeB = new Date(b.time_slots?.start_time || 0).getTime();
+        return timeA - timeB;
+      }) : [];
+    }
+    
+    return [];
   } catch (error) {
     return error instanceof Error ? error.message : "Unknown error";
   }

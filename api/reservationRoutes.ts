@@ -15,6 +15,12 @@ import {
   createPaymentIntent,
   processStripeRefund,
 } from "./supabase/stripeActions.ts";
+import dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config();
+
+const adminPin = process.env.ADMIN_API_KEY || "";
 
 const router = new Router();
 
@@ -159,7 +165,7 @@ router
     try {
       // Basic auth check
       const authHeader = ctx.request.headers.get("Authorization");
-      if (!authHeader || authHeader !== `Bearer ${Deno.env.get("ADMIN_API_KEY")}`) {
+      if (!authHeader || authHeader !== `Bearer ${adminPin}`) {
         ctx.response.status = 401;
         ctx.response.body = { error: "Unauthorized" };
         return;
@@ -185,7 +191,9 @@ router
     try {
       // Basic auth check
       const authHeader = ctx.request.headers.get("Authorization");
-      if (!authHeader || authHeader !== `Bearer ${Deno.env.get("ADMIN_API_KEY")}`) {
+      if (
+        !authHeader || authHeader !== `Bearer ${Deno.env.get("ADMIN_API_KEY")}`
+      ) {
         ctx.response.status = 401;
         ctx.response.body = { error: "Unauthorized" };
         return;
@@ -211,7 +219,7 @@ router
     try {
       // Basic auth check
       const authHeader = ctx.request.headers.get("Authorization");
-      if (!authHeader || authHeader !== `Bearer ${Deno.env.get("ADMIN_API_KEY")}`) {
+      if (!authHeader || authHeader !== `Bearer ${adminPin}`) {
         ctx.response.status = 401;
         ctx.response.body = { error: "Unauthorized" };
         return;
@@ -248,7 +256,7 @@ router
     try {
       // Basic auth check
       const authHeader = ctx.request.headers.get("Authorization");
-      if (!authHeader || authHeader !== `Bearer ${Deno.env.get("ADMIN_API_KEY")}`) {
+      if (!authHeader || authHeader !== `Bearer ${adminPin}`) {
         ctx.response.status = 401;
         ctx.response.body = { error: "Unauthorized" };
         return;
@@ -294,7 +302,7 @@ router
     try {
       // Basic auth check
       const authHeader = ctx.request.headers.get("Authorization");
-      if (!authHeader || authHeader !== `Bearer ${Deno.env.get("ADMIN_API_KEY")}`) {
+      if (!authHeader || authHeader !== `Bearer ${adminPin}`) {
         ctx.response.status = 401;
         ctx.response.body = { error: "Unauthorized" };
         return;
@@ -328,7 +336,7 @@ router
     try {
       // Basic auth check
       const authHeader = ctx.request.headers.get("Authorization");
-      if (!authHeader || authHeader !== `Bearer ${Deno.env.get("ADMIN_API_KEY")}`) {
+      if (!authHeader || authHeader !== `Bearer ${adminPin}`) {
         ctx.response.status = 401;
         ctx.response.body = { error: "Unauthorized" };
         return;
@@ -349,24 +357,24 @@ router
       ctx.response.status = 500;
       ctx.response.body = { error: "Failed to clean up expired reservations" };
     }
-  })
-  // Test endpoint for debugging
-  .get("/api/test", async (ctx) => {
-    try {
-      // Return a simple response to verify API is working
-      ctx.response.body = {
-        message: "API is working correctly",
-        timestamp: new Date().toISOString(),
-        env: {
-          hasStripeKey: !!Deno.env.get("STRIPE_SECRET_KEY"),
-          stripeKeyType: Deno.env.get("STRIPE_SECRET_KEY") ? "real" : "mock",
-        },
-      };
-    } catch (error) {
-      console.error("❌ Error in test endpoint:", error);
-      ctx.response.status = 500;
-      ctx.response.body = { error: "Test endpoint failed" };
-    }
   });
+// Test endpoint for debugging
+// .get("/api/test", async (ctx) => {
+//   try {
+//     // Return a simple response to verify API is working
+//     ctx.response.body = {
+//       message: "API is working correctly",
+//       timestamp: new Date().toISOString(),
+//       env: {
+//         hasStripeKey: !!Deno.env.get("STRIPE_SECRET_KEY"),
+//         stripeKeyType: Deno.env.get("STRIPE_SECRET_KEY") ? "real" : "mock",
+//       },
+//     };
+//   } catch (error) {
+//     console.error("❌ Error in test endpoint:", error);
+//     ctx.response.status = 500;
+//     ctx.response.body = { error: "Test endpoint failed" };
+//   }
+// });
 
 export default router;
