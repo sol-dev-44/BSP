@@ -4,9 +4,19 @@ import { load } from "https://deno.land/std@0.224.0/dotenv/mod.ts";
 import { supabase } from "./client.ts";
 
 // Types to match our new database schema
-export type TimeSlotStatus = 'available' | 'partially_booked' | 'fully_booked' | 'weather_blocked';
+export type TimeSlotStatus =
+  | "available"
+  | "partially_booked"
+  | "fully_booked"
+  | "weather_blocked";
 
-export type ReservationStatus = 'pending' | 'confirmed' | 'cancelled' | 'refunded' | 'completed' | 'weather_cancelled';
+export type ReservationStatus =
+  | "pending"
+  | "confirmed"
+  | "cancelled"
+  | "refunded"
+  | "completed"
+  | "weather_cancelled";
 
 export type TimeSlot = {
   id: string;
@@ -27,7 +37,7 @@ export type Reservation = {
   customer_email: string;
   customer_phone: string;
   number_of_people: number;
-  riders?: number; 
+  riders?: number;
   photo_package?: boolean;
   go_pro_package?: boolean;
   tshirts?: number;
@@ -46,20 +56,33 @@ export type Reservation = {
 // Calculate the total price for a reservation in cents
 export const calculatePrice = (reservation: Partial<Reservation>): number => {
   let total = 0;
-  
+
+  // Convert to numbers if they're strings
+  const numPeople = typeof reservation.number_of_people === "string"
+    ? parseInt(reservation.number_of_people, 10)
+    : (reservation.number_of_people || 0);
+
+  const numRiders = typeof reservation.riders === "string"
+    ? parseInt(reservation.riders, 10)
+    : (reservation.riders || 0);
+
+  const numTshirts = typeof reservation.tshirts === "string"
+    ? parseInt(reservation.tshirts, 10)
+    : (reservation.tshirts || 0);
+
   // Base price: $99 per parasailer
-  total += (reservation.number_of_people || 0) * 9900;
-  
+  total += numPeople * 9900;
+
   // Riders: $30 per ride-along person
-  total += (reservation.riders || 0) * 3000;
-  
+  total += numRiders * 3000;
+
   // Add-ons
   if (reservation.photo_package) total += 3000;
   if (reservation.go_pro_package) total += 3000;
-  
+
   // T-shirts: $50 each
-  total += (reservation.tshirts || 0) * 5000;
-  
+  total += numTshirts * 5000;
+
   return total;
 };
 
@@ -69,7 +92,7 @@ export const fetchAvailableTimeSlots = async (daysAhead = 7) => {
     const now = new Date();
     const future = new Date();
     future.setDate(now.getDate() + daysAhead);
-    
+
     const { data, error } = await supabase
       .from("time_slots")
       .select("*")
@@ -87,7 +110,17 @@ export const fetchAvailableTimeSlots = async (daysAhead = 7) => {
 };
 
 // Create a pending reservation (before payment)
-export const createPendingReservation = async (reservationData: Omit<Reservation, 'id' | 'status' | 'payment_intent_id' | 'payment_amount' | 'created_at' | 'updated_at'>) => {
+export const createPendingReservation = async (
+  reservationData: Omit<
+    Reservation,
+    | "id"
+    | "status"
+    | "payment_intent_id"
+    | "payment_amount"
+    | "created_at"
+    | "updated_at"
+  >,
+) => {
   try {
     // First make sure the time slot is not fully booked
     const { data: timeSlot, error: timeSlotError } = await supabase
@@ -100,38 +133,55 @@ export const createPendingReservation = async (reservationData: Omit<Reservation
 
     if (timeSlotError) return timeSlotError.message;
     if (!timeSlot) return "Time slot is no longer available";
-    
-    // Check if there's enough capacity
-    const totalPeople = (reservationData.number_of_people || 0) + (reservationData.riders || 0);
+
+    // Check if there's enough capacity - FIXED: Convert strings to numbers
+    const numPeople = typeof reservationData.number_of_people === "string"
+      ? parseInt(reservationData.number_of_people, 10)
+      : (reservationData.number_of_people || 0);
+
+    const numRiders = typeof reservationData.riders === "string"
+      ? parseInt(reservationData.riders, 10)
+      : (reservationData.riders || 0);
+
+    const totalPeople = numPeople + numRiders;
+
     if (timeSlot.booked_count + totalPeople > timeSlot.capacity) {
-      return `Not enough capacity. Only ${timeSlot.capacity - timeSlot.booked_count} spots left.`;
+      return `Not enough capacity. Only ${
+        timeSlot.capacity - timeSlot.booked_count
+      } spots left.`;
     }
-    
-    // Calculate payment amount
-    const payment_amount = calculatePrice(reservationData);
-    
+
+    // Calculate payment amount with the converted numeric values
+    const payment_amount = calculatePrice({
+      ...reservationData,
+      number_of_people: numPeople,
+      riders: numRiders,
+    });
+
     // Set expiration time (5 minutes from now)
     const expires_at = new Date();
     expires_at.setMinutes(expires_at.getMinutes() + 5);
-    
-    // Create the pending reservation
+
+    // Create the pending reservation with numeric values
     const { data, error } = await supabase
       .from("reservations")
       .insert({
         ...reservationData,
-        status: 'pending',
+        number_of_people: numPeople, // Ensure number_of_people is a number
+        riders: numRiders, // Ensure riders is a number
+        status: "pending",
         payment_amount,
-        expires_at: expires_at.toISOString()
+        expires_at: expires_at.toISOString(),
       })
       .select()
       .single();
 
     if (error) return error.message;
-    
+
     return {
       reservation: data,
       expires_at: expires_at.toISOString(),
-      payment_amount
+      payment_amount,
     };
   } catch (error) {
     return error instanceof Error ? error.message : "Unknown error";
@@ -139,23 +189,26 @@ export const createPendingReservation = async (reservationData: Omit<Reservation
 };
 
 // Confirm a reservation after payment
-export const confirmReservation = async (reservationId: string, paymentIntentId: string) => {
+export const confirmReservation = async (
+  reservationId: string,
+  paymentIntentId: string,
+) => {
   try {
     // Update reservation status
     const { data, error } = await supabase
       .from("reservations")
       .update({
-        status: 'confirmed',
-        payment_intent_id: paymentIntentId
+        status: "confirmed",
+        payment_intent_id: paymentIntentId,
       })
       .eq("id", reservationId)
       .eq("status", "pending")
       .select()
       .single();
-      
+
     if (error) return error.message;
     if (!data) return "Reservation not found or already confirmed";
-    
+
     return { success: true, reservation: data };
   } catch (error) {
     return error instanceof Error ? error.message : "Unknown error";
@@ -163,22 +216,25 @@ export const confirmReservation = async (reservationId: string, paymentIntentId:
 };
 
 // Cancel a reservation (admin only)
-export const cancelReservation = async (reservationId: string, reason: string) => {
+export const cancelReservation = async (
+  reservationId: string,
+  reason: string,
+) => {
   try {
     // Update reservation status
     const { data, error } = await supabase
       .from("reservations")
-      .update({ 
-        status: 'cancelled',
-        cancellation_reason: reason
+      .update({
+        status: "cancelled",
+        cancellation_reason: reason,
       })
       .eq("id", reservationId)
       .select()
       .single();
-      
+
     if (error) return error.message;
     if (!data) return "Reservation not found";
-    
+
     return { success: true, reservation: data };
   } catch (error) {
     return error instanceof Error ? error.message : "Unknown error";
@@ -186,23 +242,27 @@ export const cancelReservation = async (reservationId: string, reason: string) =
 };
 
 // Process a refund (admin only)
-export const processRefund = async (reservationId: string, refundId: string, refundAmount: number) => {
+export const processRefund = async (
+  reservationId: string,
+  refundId: string,
+  refundAmount: number,
+) => {
   try {
     // Update reservation with refund info
     const { data, error } = await supabase
       .from("reservations")
-      .update({ 
-        status: 'refunded',
+      .update({
+        status: "refunded",
         refund_id: refundId,
-        refund_amount: refundAmount
+        refund_amount: refundAmount,
       })
       .eq("id", reservationId)
       .select()
       .single();
-      
+
     if (error) return error.message;
     if (!data) return "Reservation not found";
-    
+
     return { success: true, reservation: data };
   } catch (error) {
     return error instanceof Error ? error.message : "Unknown error";
@@ -215,14 +275,14 @@ export const completeReservation = async (reservationId: string) => {
     // Update reservation status
     const { data, error } = await supabase
       .from("reservations")
-      .update({ status: 'completed' })
+      .update({ status: "completed" })
       .eq("id", reservationId)
       .select()
       .single();
-      
+
     if (error) return error.message;
     if (!data) return "Reservation not found";
-    
+
     return { success: true, reservation: data };
   } catch (error) {
     return error instanceof Error ? error.message : "Unknown error";
@@ -239,7 +299,7 @@ export const fetchAllReservations = async () => {
         time_slots (*)
       `)
       .order("created_at", { ascending: false });
-      
+
     if (error) return error.message;
     return data;
   } catch (error) {
@@ -252,10 +312,10 @@ export const fetchTodaysReservations = async () => {
   try {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
+
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
-    
+
     // First, get the time slots for today
     const { data: todaySlots, error: slotsError } = await supabase
       .from("time_slots")
@@ -263,13 +323,13 @@ export const fetchTodaysReservations = async () => {
       .gte("start_time", today.toISOString())
       .lt("start_time", tomorrow.toISOString())
       .order("start_time", { ascending: true });
-      
+
     if (slotsError) return slotsError.message;
-    
+
     // Then, get reservations for these time slots
     if (todaySlots && todaySlots.length > 0) {
-      const slotIds = todaySlots.map(slot => slot.id);
-      
+      const slotIds = todaySlots.map((slot) => slot.id);
+
       const { data, error } = await supabase
         .from("reservations")
         .select(`
@@ -278,17 +338,19 @@ export const fetchTodaysReservations = async () => {
         `)
         .in("time_slot_id", slotIds)
         .in("status", ["confirmed", "pending"]);
-        
+
       if (error) return error.message;
-      
+
       // Sort manually by time_slot.start_time
-      return data ? data.sort((a, b) => {
-        const timeA = new Date(a.time_slots?.start_time || 0).getTime();
-        const timeB = new Date(b.time_slots?.start_time || 0).getTime();
-        return timeA - timeB;
-      }) : [];
+      return data
+        ? data.sort((a, b) => {
+          const timeA = new Date(a.time_slots?.start_time || 0).getTime();
+          const timeB = new Date(b.time_slots?.start_time || 0).getTime();
+          return timeA - timeB;
+        })
+        : [];
     }
-    
+
     return [];
   } catch (error) {
     return error instanceof Error ? error.message : "Unknown error";
@@ -306,7 +368,7 @@ export const fetchReservationsByEmail = async (email: string) => {
       `)
       .eq("customer_email", email)
       .order("created_at", { ascending: false });
-      
+
     if (error) return error.message;
     return data;
   } catch (error) {
@@ -319,8 +381,8 @@ export const cleanupExpiredReservations = async () => {
   try {
     // Call the database function
     const { data, error } = await supabase
-      .rpc('expire_pending_reservations');
-      
+      .rpc("expire_pending_reservations");
+
     if (error) return error.message;
     return { expired: data };
   } catch (error) {
@@ -329,19 +391,24 @@ export const cleanupExpiredReservations = async () => {
 };
 
 // Create multiple time slots (admin)
-export const createTimeSlots = async (timeSlots: Omit<TimeSlot, 'id' | 'booked_count' | 'created_at' | 'updated_at'>[]) => {
+export const createTimeSlots = async (
+  timeSlots: Omit<
+    TimeSlot,
+    "id" | "booked_count" | "created_at" | "updated_at"
+  >[],
+) => {
   try {
     // Add default booked_count = 0
-    const slotsWithDefaults = timeSlots.map(slot => ({
+    const slotsWithDefaults = timeSlots.map((slot) => ({
       ...slot,
-      booked_count: 0
+      booked_count: 0,
     }));
-    
+
     const { data, error } = await supabase
       .from("time_slots")
       .insert(slotsWithDefaults)
       .select();
-      
+
     if (error) return error.message;
     return data as TimeSlot[];
   } catch (error) {
@@ -350,17 +417,20 @@ export const createTimeSlots = async (timeSlots: Omit<TimeSlot, 'id' | 'booked_c
 };
 
 // Block time slots due to weather (admin)
-export const blockTimeSlotsDueToWeather = async (slotIds: string[], weatherStatus: string) => {
+export const blockTimeSlotsDueToWeather = async (
+  slotIds: string[],
+  weatherStatus: string,
+) => {
   try {
     const { data, error } = await supabase
       .from("time_slots")
-      .update({ 
-        status: 'weather_blocked',
-        weather_status: weatherStatus
+      .update({
+        status: "weather_blocked",
+        weather_status: weatherStatus,
       })
       .in("id", slotIds)
       .select();
-      
+
     if (error) return error.message;
     return data as TimeSlot[];
   } catch (error) {
@@ -376,31 +446,38 @@ export const generateTimeSlotsFromRange = (
   endHour = 17,
   durationMinutes = 60,
   capacity = 10,
-  skipDays: number[] = [] // e.g., [0, 6] to skip Sunday and Saturday
-): Omit<TimeSlot, 'id' | 'booked_count' | 'created_at' | 'updated_at'>[] => {
-  const slots: Omit<TimeSlot, 'id' | 'booked_count' | 'created_at' | 'updated_at'>[] = [];
-  
-  for (let day = new Date(startDate); day <= endDate; day.setDate(day.getDate() + 1)) {
+  skipDays: number[] = [], // e.g., [0, 6] to skip Sunday and Saturday
+): Omit<TimeSlot, "id" | "booked_count" | "created_at" | "updated_at">[] => {
+  const slots: Omit<
+    TimeSlot,
+    "id" | "booked_count" | "created_at" | "updated_at"
+  >[] = [];
+
+  for (
+    let day = new Date(startDate);
+    day <= endDate;
+    day.setDate(day.getDate() + 1)
+  ) {
     // Skip specified days of week (0 = Sunday, 6 = Saturday)
     if (skipDays.includes(day.getDay())) continue;
-    
+
     for (let hour = startHour; hour < endHour; hour += durationMinutes / 60) {
       const slotStart = new Date(day);
       slotStart.setHours(Math.floor(hour), (hour % 1) * 60, 0, 0);
-      
+
       const slotEnd = new Date(day);
       const endTimeHour = hour + (durationMinutes / 60);
       slotEnd.setHours(Math.floor(endTimeHour), (endTimeHour % 1) * 60, 0, 0);
-      
+
       slots.push({
         start_time: slotStart.toISOString(),
         end_time: slotEnd.toISOString(),
         capacity,
-        status: 'available'
+        status: "available",
       });
     }
   }
-  
+
   return slots;
 };
 
@@ -419,8 +496,17 @@ export const createReservation = async (reservationData: Omit<Reservation, 'id' 
     if (timeSlotError) return timeSlotError.message;
     if (!timeSlot) return "Time slot is no longer available";
     
-    // Check if there's enough capacity
-    const totalPeople = (reservationData.number_of_people || 0) + (reservationData.riders || 0);
+    // Check if there's enough capacity - FIXED: Convert strings to numbers
+    const numPeople = typeof reservationData.number_of_people === 'string' 
+      ? parseInt(reservationData.number_of_people, 10) 
+      : (reservationData.number_of_people || 0);
+      
+    const numRiders = typeof reservationData.riders === 'string'
+      ? parseInt(reservationData.riders, 10)
+      : (reservationData.riders || 0);
+      
+    const totalPeople = numPeople + numRiders;
+
     if (timeSlot.booked_count + totalPeople > timeSlot.capacity) {
       return `Not enough capacity. Only ${timeSlot.capacity - timeSlot.booked_count} spots left.`;
     }
@@ -428,17 +514,15 @@ export const createReservation = async (reservationData: Omit<Reservation, 'id' 
     // Set status if not provided (default to confirmed)
     const status = reservationData.status || 'confirmed';
     
-    // Start a transaction
-    // Note: Supabase JS client doesn't support transactions directly, so we use a stored procedure here
-    // If your DB supports it, you could implement a transaction here to ensure atomicity
-    
     // 1. Create the reservation with confirmed status
     const { data: reservation, error: reservationError } = await supabase
       .from("reservations")
       .insert({
         ...reservationData,
+        number_of_people: numPeople, // Ensure number_of_people is a number
+        riders: numRiders, // Ensure riders is a number
         status,
-        payment_amount: reservationData.payment_amount || calculatePrice(reservationData),
+        payment_amount: reservationData.payment_amount || calculatePrice({...reservationData, number_of_people: numPeople, riders: numRiders}),
       })
       .select()
       .single();

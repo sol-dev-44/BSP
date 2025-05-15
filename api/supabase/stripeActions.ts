@@ -1,4 +1,4 @@
-// stripe/stripeActions.ts
+// stripe/stripeActions.ts - Updated to handle potential string values
 import Stripe from "stripe";
 import { Reservation, calculatePrice } from "../supabase/reservationActions.ts";
 import dotenv from "dotenv";
@@ -21,8 +21,22 @@ export const createPaymentIntent = async (reservationData: Omit<Reservation, 'id
   try {
     console.log("Creating payment intent for:", reservationData);
     
-    // Calculate the total price for the reservation
-    const amount = calculatePrice(reservationData);
+    // Ensure number fields are properly converted from strings if needed
+    const processedData = {
+      ...reservationData,
+      number_of_people: typeof reservationData.number_of_people === 'string' 
+        ? parseInt(reservationData.number_of_people, 10) 
+        : (reservationData.number_of_people || 0),
+      riders: typeof reservationData.riders === 'string'
+        ? parseInt(reservationData.riders, 10)
+        : (reservationData.riders || 0),
+      tshirts: typeof reservationData.tshirts === 'string'
+        ? parseInt(reservationData.tshirts, 10)
+        : (reservationData.tshirts || 0)
+    };
+    
+    // Calculate the total price for the reservation using the processed data
+    const amount = calculatePrice(processedData);
     
     // Check if amount is valid
     if (amount <= 0) {
@@ -41,13 +55,13 @@ export const createPaymentIntent = async (reservationData: Omit<Reservation, 'id
       const paymentIntent = await stripe.paymentIntents.create({
         amount,
         currency: "usd",
-        description: `Parasailing Reservation for ${reservationData.customer_name}`,
+        description: `Parasailing Reservation for ${processedData.customer_name}`,
         metadata: {
-          customer_name: reservationData.customer_name,
-          customer_email: reservationData.customer_email,
-          time_slot_id: reservationData.time_slot_id,
+          customer_name: processedData.customer_name,
+          customer_email: processedData.customer_email,
+          time_slot_id: processedData.time_slot_id,
         },
-        receipt_email: reservationData.customer_email,
+        receipt_email: processedData.customer_email,
         automatic_payment_methods: {
           enabled: true,
         },
@@ -67,7 +81,7 @@ export const createPaymentIntent = async (reservationData: Omit<Reservation, 'id
       return {
         clientSecret: paymentIntent.client_secret,
         amount,
-        reservationData
+        reservationData: processedData
       };
     } catch (stripeError) {
       console.error("Stripe error:", stripeError);

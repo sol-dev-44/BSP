@@ -4,7 +4,7 @@
     "@tajpouria/cors": "jsr:@tajpouria/cors@^1.2.1"
   },
   "deploy": {
-    "project": "03e310c3-65b3-4a3d-a755-da3dddef5cb9",
+    "project": "mellow-montana-company",
     "exclude": [
       "**/node_modules"
     ],

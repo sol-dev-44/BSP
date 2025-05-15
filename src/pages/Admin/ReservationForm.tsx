@@ -1,4 +1,4 @@
-// components/admin/ReservationForm.tsx
+// Enhanced ReservationForm with improved number input handling
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useParams, useNavigate } from 'react-router-dom';
@@ -43,10 +43,10 @@ const ReservationForm: React.FC = () => {
   const [isCalculatingPrice, setIsCalculatingPrice] = useState(false);
   const [calculatedPrice, setCalculatedPrice] = useState(0);
   
-  // RTK Query hooks
-  const { data: timeSlots = [], isLoading: isLoadingTimeSlots } = timeSlotsApi.useGetTimeSlotsQuery();
+  // RTK Query hooks - use admin endpoints
+  const { data: timeSlots = [], isLoading: isLoadingTimeSlots } = timeSlotsApi.useGetAllTimeSlotsQuery();
   const { data: reservations = [], isLoading: isLoadingReservations } = reservationsApi.useGetAllReservationsQuery();
-  const [createReservation, { isLoading: isCreating }] = reservationsApi.useCreateReservationMutation();
+  const [createReservation, { isLoading: isCreating }] = reservationsApi.useCreateAdminReservationMutation();
   
   // Load existing reservation data if in edit mode
   useEffect(() => {
@@ -79,24 +79,37 @@ const ReservationForm: React.FC = () => {
     // Calculate price based on the same logic as in your API
     let total = 0;
     
+    // Convert to numbers if they're strings
+    const numPeople = typeof formData.number_of_people === "string"
+      ? parseInt(formData.number_of_people, 10)
+      : (formData.number_of_people || 0);
+
+    const numRiders = typeof formData.riders === "string"
+      ? parseInt(formData.riders, 10)
+      : (formData.riders || 0);
+
+    const numTshirts = typeof formData.tshirts === "string"
+      ? parseInt(formData.tshirts, 10)
+      : (formData.tshirts || 0);
+
     // Base price: $99 per parasailer
-    total += (formData.number_of_people || 0) * 9900;
-    
+    total += numPeople * 9900;
+
     // Riders: $30 per ride-along person
-    total += (formData.riders || 0) * 3000;
-    
+    total += numRiders * 3000;
+
     // Add-ons
     if (formData.photo_package) total += 3000;
     if (formData.go_pro_package) total += 3000;
-    
+
     // T-shirts: $50 each
-    total += (formData.tshirts || 0) * 5000;
+    total += numTshirts * 5000;
     
     setCalculatedPrice(total);
     setIsCalculatingPrice(false);
   }, [formData.number_of_people, formData.riders, formData.photo_package, formData.go_pro_package, formData.tshirts]);
   
-  // Handle form input changes
+  // Handle form input changes - enhanced to support direct input
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
@@ -107,10 +120,13 @@ const ReservationForm: React.FC = () => {
         ...formData,
         [name]: (e.target as any).checked,
       });
-    } else if (type === 'number') {
+    } else if (type === 'number' || name === 'number_of_people' || name === 'riders' || name === 'tshirts') {
+      // Allow empty string for direct editing
+      const newValue = value === '' ? '' : parseInt(value, 10) || 0;
+      
       setFormData({
         ...formData,
-        [name]: parseInt(value) || 0,
+        [name]: newValue,
       });
     } else {
       setFormData({
@@ -124,6 +140,26 @@ const ReservationForm: React.FC = () => {
       setErrors({
         ...errors,
         [name]: '',
+      });
+    }
+  };
+
+  // Special handler for number input blur - ensures valid numbers
+  const handleBlur = (e: any) => {
+    const { name, value } = e.target;
+    
+    // Convert empty strings to 0 or minimum value
+    if (value === '') {
+      let defaultValue = 0;
+      
+      // Minimum value for number_of_people is 1
+      if (name === 'number_of_people') {
+        defaultValue = 1;
+      }
+      
+      setFormData({
+        ...formData,
+        [name]: defaultValue,
       });
     }
   };
@@ -150,8 +186,18 @@ const ReservationForm: React.FC = () => {
       newErrors.customer_phone = 'Phone number is required';
     }
     
-    if (!(formData.number_of_people && formData.number_of_people > 0)) {
+    // Convert to number for validation
+    const numPeople = typeof formData.number_of_people === 'string' 
+      ? (formData.number_of_people === '' ? 0 : parseInt(formData.number_of_people, 10))
+      : (formData.number_of_people || 0);
+      
+    if (numPeople < 1) {
       newErrors.number_of_people = 'At least 1 parasailer is required';
+    }
+    
+    // Check if the total price is 0
+    if (calculatedPrice <= 0) {
+      newErrors.general = 'Total price must be greater than $0';
     }
     
     setErrors(newErrors);
@@ -171,6 +217,16 @@ const ReservationForm: React.FC = () => {
       const reservationWithPrice = {
         ...formData,
         payment_amount: calculatedPrice,
+        // Ensure numeric fields are valid numbers
+        number_of_people: typeof formData.number_of_people === 'string' 
+          ? parseInt(formData.number_of_people, 10) 
+          : (formData.number_of_people || 1),
+        riders: typeof formData.riders === 'string' 
+          ? parseInt(formData.riders, 10) 
+          : (formData.riders || 0),
+        tshirts: typeof formData.tshirts === 'string' 
+          ? parseInt(formData.tshirts, 10) 
+          : (formData.tshirts || 0),
       };
       
       await createReservation(reservationWithPrice).unwrap();
@@ -327,43 +383,111 @@ const ReservationForm: React.FC = () => {
             </select>
           </div>
           
-          {/* Number of Parasailers */}
+          {/* Number of Parasailers - Enhanced with direct input */}
           <div>
             <label htmlFor="number_of_people" className="block text-sm font-medium text-gray-700 mb-1">
               Number of Parasailers*
             </label>
-            <input
-              type="number"
-              id="number_of_people"
-              name="number_of_people"
-              min="1"
-              max="10"
-              value={formData.number_of_people || 1}
-              onChange={handleInputChange}
-              className={`block w-full px-3 py-2 border ${errors.number_of_people ? 'border-red-300' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
-              required
-            />
+            <div className="flex items-center">
+              <input
+                type="text"
+                inputMode="numeric"
+                id="number_of_people"
+                name="number_of_people"
+                value={formData.number_of_people === 0 ? '' : formData.number_of_people || ''}
+                onChange={handleInputChange}
+                onBlur={handleBlur}
+                className={`block w-full px-3 py-2 border ${errors.number_of_people ? 'border-red-300' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+                required
+              />
+              <div className="flex ml-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const currentValue = typeof formData.number_of_people === 'string' 
+                      ? parseInt(formData.number_of_people || '0', 10) 
+                      : (formData.number_of_people || 0);
+                    setFormData({
+                      ...formData,
+                      number_of_people: Math.max(1, currentValue - 1)
+                    });
+                  }}
+                  className="px-2 py-1 border border-gray-300 bg-gray-100 rounded-l-md"
+                >
+                  -
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const currentValue = typeof formData.number_of_people === 'string' 
+                      ? parseInt(formData.number_of_people || '0', 10) 
+                      : (formData.number_of_people || 0);
+                    setFormData({
+                      ...formData,
+                      number_of_people: currentValue + 1
+                    });
+                  }}
+                  className="px-2 py-1 border border-gray-300 bg-gray-100 rounded-r-md"
+                >
+                  +
+                </button>
+              </div>
+            </div>
             {errors.number_of_people && (
               <p className="mt-1 text-sm text-red-600">{errors.number_of_people}</p>
             )}
             <p className="mt-1 text-xs text-blue-600">$99 per person</p>
           </div>
           
-          {/* Riders */}
+          {/* Riders - Enhanced with direct input */}
           <div>
             <label htmlFor="riders" className="block text-sm font-medium text-gray-700 mb-1">
               Number of Riders (non-parasailing)
             </label>
-            <input
-              type="number"
-              id="riders"
-              name="riders"
-              min="0"
-              max="5"
-              value={formData.riders || 0}
-              onChange={handleInputChange}
-              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            />
+            <div className="flex items-center">
+              <input
+                type="text"
+                inputMode="numeric"
+                id="riders"
+                name="riders"
+                value={formData.riders === 0 ? '' : formData.riders || ''}
+                onChange={handleInputChange}
+                onBlur={handleBlur}
+                className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+              <div className="flex ml-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const currentValue = typeof formData.riders === 'string' 
+                      ? parseInt(formData.riders || '0', 10) 
+                      : (formData.riders || 0);
+                    setFormData({
+                      ...formData,
+                      riders: Math.max(0, currentValue - 1)
+                    });
+                  }}
+                  className="px-2 py-1 border border-gray-300 bg-gray-100 rounded-l-md"
+                >
+                  -
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const currentValue = typeof formData.riders === 'string' 
+                      ? parseInt(formData.riders || '0', 10) 
+                      : (formData.riders || 0);
+                    setFormData({
+                      ...formData,
+                      riders: currentValue + 1
+                    });
+                  }}
+                  className="px-2 py-1 border border-gray-300 bg-gray-100 rounded-r-md"
+                >
+                  +
+                </button>
+              </div>
+            </div>
             <p className="mt-1 text-xs text-blue-600">$30 per person</p>
           </div>
           
@@ -404,20 +528,55 @@ const ReservationForm: React.FC = () => {
                   </label>
                 </div>
                 
-                {/* T-shirts */}
+                {/* T-shirts - Enhanced with direct input */}
                 <div className="md:col-span-2">
                   <label htmlFor="tshirts" className="block text-sm font-medium text-gray-700 mb-1">
                     T-shirts
                   </label>
-                  <input
-                    type="number"
-                    id="tshirts"
-                    name="tshirts"
-                    min="0"
-                    value={formData.tshirts || 0}
-                    onChange={handleInputChange}
-                    className="block w-32 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  />
+                  <div className="flex items-center">
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      id="tshirts"
+                      name="tshirts"
+                      value={formData.tshirts === 0 ? '' : formData.tshirts || ''}
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
+                      className="block w-32 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    />
+                    <div className="flex ml-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const currentValue = typeof formData.tshirts === 'string' 
+                            ? parseInt(formData.tshirts || '0', 10) 
+                            : (formData.tshirts || 0);
+                          setFormData({
+                            ...formData,
+                            tshirts: Math.max(0, currentValue - 1)
+                          });
+                        }}
+                        className="px-2 py-1 border border-gray-300 bg-gray-100 rounded-l-md"
+                      >
+                        -
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const currentValue = typeof formData.tshirts === 'string' 
+                            ? parseInt(formData.tshirts || '0', 10) 
+                            : (formData.tshirts || 0);
+                          setFormData({
+                            ...formData,
+                            tshirts: currentValue + 1
+                          });
+                        }}
+                        className="px-2 py-1 border border-gray-300 bg-gray-100 rounded-r-md"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
                   <p className="mt-1 text-xs text-blue-600">$50 per shirt</p>
                 </div>
               </div>
@@ -460,6 +619,11 @@ const ReservationForm: React.FC = () => {
                   </div>
                 )}
               </div>
+              
+              {/* Display general validation error */}
+              {errors.general && (
+                <p className="mt-3 text-sm text-red-600 bg-red-50 p-2 rounded">{errors.general}</p>
+              )}
             </div>
           </div>
         </div>
@@ -474,7 +638,7 @@ const ReservationForm: React.FC = () => {
           <button
             type="submit"
             className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            disabled={isCreating}
+            disabled={isCreating || calculatedPrice <= 0}
           >
             {isCreating ? (
               <>

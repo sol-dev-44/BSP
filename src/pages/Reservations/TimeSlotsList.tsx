@@ -169,7 +169,7 @@ const TimeSlotsList: React.FC<TimeSlotsListProps> = ({
                           ALMOST FULL
                         </div>
                       )}
-                      {isNoBookings && !isFullyBooked && !isWeatherBlocked && (
+                      {!isFullyBooked && !isWeatherBlocked && !isLowAvailability && (
                         <div className="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
                           OPEN
                         </div>

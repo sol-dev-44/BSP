@@ -174,7 +174,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
           </div>
           
           {/* Show test card info */}
-          {testCardInfo}
+          {/* {testCardInfo} */}
           
           <p className="mt-2 text-xs text-gray-500">
             Your card information is encrypted and secure. We do not store your card details.

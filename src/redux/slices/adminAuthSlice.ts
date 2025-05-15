@@ -6,8 +6,16 @@ interface AdminAuthState {
   error: string | null;
 }
 
+// Check if admin is authenticated in localStorage
+const checkInitialAuthState = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  
+  const adminApiKey = localStorage.getItem('adminApiKey');
+  return !!adminApiKey;
+};
+
 const initialState: AdminAuthState = {
-  isAuthenticated: false,
+  isAuthenticated: checkInitialAuthState(),
   error: null,
 };
 
@@ -26,6 +34,8 @@ const adminAuthSlice = createSlice({
     logout(state) {
       state.isAuthenticated = false;
       state.error = null;
+      // Clear localStorage when logging out
+      localStorage.removeItem('adminApiKey');
     },
   },
 });

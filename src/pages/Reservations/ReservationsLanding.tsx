@@ -152,7 +152,7 @@ const ReservationsLanding = () => {
               </div>
               <div className="px-6 py-8">
                 <div className="text-4xl font-bold text-gray-900 mb-2">$99<span className="text-lg text-gray-600">/person</span></div>
-                <p className="text-gray-600 mb-6">Experience the ultimate Flathead Lake adventure</p>
+                <p className="text-gray-600 mb-6">Ultimate Flathead Lake adventure</p>
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-start">
                     <svg className="h-6 w-6 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">

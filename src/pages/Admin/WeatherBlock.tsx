@@ -1,5 +1,5 @@
 // components/admin/WeatherBlock.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { timeSlotsApi } from '../../redux/apis/timeSlotsApi.ts';
@@ -43,6 +43,17 @@ const WeatherBlock: React.FC = () => {
   
   const { data: timeSlots = [], isLoading } = timeSlotsApi.useGetTimeSlotsQuery();
   const [blockTimeSlots, { isLoading: isBlocking }] = timeSlotsApi.useBlockTimeSlotsDueToWeatherMutation();
+
+  useEffect(() => {
+    if (timeSlots.length > 0) {
+      console.log("Sample time slot:", {
+        id: timeSlots[0].id,
+        startTime: new Date(timeSlots[0].start_time).toLocaleString(),
+        endTime: new Date(timeSlots[0].end_time).toLocaleString(),
+        raw: timeSlots[0]
+      });
+    }
+  }, [timeSlots]);
   
   // Filter time slots - keep only those that are not already weather-blocked
   const availableTimeSlots = timeSlots.filter(slot => 

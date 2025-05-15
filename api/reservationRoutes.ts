@@ -357,7 +357,102 @@ router
       ctx.response.status = 500;
       ctx.response.body = { error: "Failed to clean up expired reservations" };
     }
+  })
+  // Add this to your reservationRoutes.ts
+  .post("/api/admin/reservations/create", async (ctx) => {
+    try {
+      // Basic auth check
+      const authHeader = ctx.request.headers.get("Authorization");
+      if (!authHeader || authHeader !== `Bearer ${adminPin}`) {
+        ctx.response.status = 401;
+        ctx.response.body = { error: "Unauthorized" };
+        return;
+      }
+
+      if (!ctx.request.hasBody) {
+        ctx.response.status = 400;
+        ctx.response.body = { error: "No data provided" };
+        return;
+      }
+
+      const value = await ctx.request.body.json();
+
+      // Use the direct createReservation function which can create confirmed reservations
+      const result = await createReservation({
+        ...value,
+        status: value.status || "confirmed", // Default to confirmed for admin
+      });
+
+      if (typeof result === "string") {
+        ctx.response.status = 400;
+        ctx.response.body = { error: result };
+        return;
+      }
+
+      ctx.response.status = 201;
+      ctx.response.body = result;
+    } catch (error) {
+      console.error("❌ Error creating admin reservation:", error);
+      ctx.response.status = 500;
+      ctx.response.body = { error: "Failed to create reservation" };
+    }
+  })
+  // Add admin reservation creation endpoint to reservationRoutes.ts
+  .post("/api/admin/reservations/create", async (ctx) => {
+    try {
+      // Basic auth check
+      const authHeader = ctx.request.headers.get("Authorization");
+      const adminKey = Deno.env.get("ADMIN_API_KEY") ||
+        process.env.ADMIN_API_KEY || "";
+
+      if (!authHeader || authHeader !== `Bearer ${adminKey}`) {
+        console.error(
+          "❌ Admin authentication failed for reservation creation",
+        );
+        ctx.response.status = 401;
+        ctx.response.body = { error: "Unauthorized" };
+        return;
+      }
+
+      console.log(
+        "✅ Admin authentication successful for reservation creation",
+      );
+
+      if (!ctx.request.hasBody) {
+        ctx.response.status = 400;
+        ctx.response.body = { error: "No data provided" };
+        return;
+      }
+
+      const value = await ctx.request.body.json();
+      console.log("📝 Received admin reservation data:", value);
+
+      // Use the direct createReservation function which can create confirmed reservations
+      const result = await createReservation({
+        ...value,
+        status: value.status || "confirmed", // Default to confirmed for admin
+      });
+
+      if (typeof result === "string") {
+        console.error("❌ Error creating reservation:", result);
+        ctx.response.status = 400;
+        ctx.response.body = { error: result };
+        return;
+      }
+
+      console.log("✅ Reservation created:", result);
+      ctx.response.status = 201;
+      ctx.response.body = result;
+    } catch (error) {
+      console.error("❌ Error creating admin reservation:", error);
+      ctx.response.status = 500;
+      ctx.response.body = {
+        error: "Failed to create reservation: " +
+          (error instanceof Error ? error.message : String(error)),
+      };
+    }
   });
+
 // Test endpoint for debugging
 // .get("/api/test", async (ctx) => {
 //   try {

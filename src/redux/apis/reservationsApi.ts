@@ -1,4 +1,4 @@
-// store/apis/reservationsApi.ts
+// Add createAdminReservation to reservationsApi.ts
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { Reservation } from "../../types.ts";
 
@@ -64,6 +64,25 @@ export const reservationsApi = createApi({
         console.error("API Error:", response);
         return response;
       },
+    }),
+
+    // Admin-only: Create a reservation directly (no payment intent)
+    createAdminReservation: builder.mutation<
+      { success: boolean; reservation: Reservation; message: string },
+      Partial<Reservation>
+    >({
+      query: (reservationData) => {
+        console.log("Creating admin reservation with data:", reservationData);
+        return {
+          url: "api/admin/reservations/create", 
+          method: "POST",
+          body: reservationData,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminApiKey")}`,
+          },
+        };
+      },
+      invalidatesTags: ["Reservation", "TimeSlot"],
     }),
 
     // Confirm a reservation after payment
@@ -169,4 +188,5 @@ export const reservationsApi = createApi({
       invalidatesTags: ["Reservation", "TimeSlot"],
     }),
   }),
-});
+})
+

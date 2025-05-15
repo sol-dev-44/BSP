@@ -1,4 +1,4 @@
-// store/slices/bookingSlice.ts
+// store/slices/bookingSlice.ts - Updated redux slice
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { TimeSlot, Reservation } from '../../types.ts';
 
@@ -59,10 +59,21 @@ const bookingSlice = createSlice({
     },
     updateFormData(state, action: PayloadAction<{ name: string; value: string | number | boolean }>) {
       const { name, value } = action.payload;
-      state.formData = {
-        ...state.formData,
-        [name]: value
-      };
+      
+      // FIXED: Ensure numeric fields remain numbers in state
+      if (name === 'number_of_people' || name === 'riders' || name === 'tshirts') {
+        // Parse strings to numbers if necessary
+        const numericValue = typeof value === 'string' ? parseInt(value, 10) : value;
+        state.formData = {
+          ...state.formData,
+          [name]: numericValue
+        };
+      } else {
+        state.formData = {
+          ...state.formData,
+          [name]: value
+        };
+      }
     },
     setPaymentInfo(state, action: PayloadAction<{ clientSecret: string; amount: number } | null>) {
       state.paymentInfo = action.payload;

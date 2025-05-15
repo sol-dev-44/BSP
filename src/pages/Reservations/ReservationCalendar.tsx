@@ -20,7 +20,7 @@ import TimeSlotsList from "./TimeSlotsList.tsx";
 import CustomerForm from "./CustomerForm.tsx";
 import PaymentForm from "./PaymentForm.tsx";
 import { formatDateTimeRange } from "../../utils/dateFormatters.ts";
-import { stripePromise } from "../../../stripeConfig.ts";
+import { stripePromise } from "../../stripeConfig.ts";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Footer from "../../Components/Footer.tsx";
 
@@ -45,7 +45,7 @@ const pageVariants = {
 
 const ReservationCalendar: React.FC = () => {
   // Refs for scrolling
-  const selectedTimeRef = useRef<HTMLDivElement>(null);
+  const selectedTimeRef = useRef<any>(null);
 
   // React Router hooks
   const navigate = useNavigate();
@@ -453,6 +453,9 @@ const ReservationCalendar: React.FC = () => {
               onChange={handleFormInputChange}
               onSubmit={handleCustomerFormSubmit}
               isProcessing={isCreatingReservation}
+              availableCapacity={selectedTimeSlot
+                ? (selectedTimeSlot.capacity - selectedTimeSlot.booked_count)
+                : 0}
             />
           </motion.div>
         );
@@ -478,7 +481,7 @@ const ReservationCalendar: React.FC = () => {
         console.log("Rendering payment step with:", {
           hasClientSecret: !!paymentInfo.clientSecret,
           amount: paymentInfo.amount,
-          stripePromise: typeof stripePromise,
+          stripePromise:  stripePromise,
         });
 
         return (
@@ -741,10 +744,13 @@ const ReservationCalendar: React.FC = () => {
                             d="M5 13l4 4L19 7"
                           />
                         </svg>
-                        A confirmation email has been sent to{" "}
-                        <span className="font-semibold">
-                          {formData.customer_email}
-                        </span>
+                        <div>
+                          <span>A confirmation email has been sent to</span>
+                          &nbsp;
+                          <span className="font-semibold">
+                            {formData.customer_email}
+                          </span>
+                        </div>
                       </li>
                       <li className="flex items-start">
                         <svg
@@ -760,11 +766,15 @@ const ReservationCalendar: React.FC = () => {
                             d="M5 13l4 4L19 7"
                           />
                         </svg>
-                        Please arrive{" "}
-                        <span className="font-semibold">30 minutes before</span>
-                        {" "}
-                        your scheduled time
+                        <div>
+                          <span>Please arrive</span>
+                          &nbsp;
+                          <span className="font-semibold">30 minutes</span>
+                          &nbsp;
+                          <span>before your scheduled time</span>
+                        </div>
                       </li>
+
                       <li className="flex items-start">
                         <svg
                           className="h-5 w-5 text-green-500 mr-2 flex-shrink-0"
@@ -838,7 +848,7 @@ const ReservationCalendar: React.FC = () => {
   return (
     <div className="min-h-screen overflow-hidden">
       {/* Mini Banner Section */}
- 
+
       {/* Mini Banner Section */}
       <div className="relative bg-gradient-to-r from-blue-600 to-cyan-500 text-white py-16 md:py-20 mb-8">
         <div className="absolute inset-0 z-0 overflow-hidden">

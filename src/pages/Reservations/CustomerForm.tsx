@@ -8,6 +8,7 @@ interface CustomerFormProps {
   onChange: (name: string, value: string | number | boolean) => void;
   onSubmit: () => void;
   isProcessing: boolean;
+  availableCapacity?: number; // Add availableCapacity prop
 }
 
 // Animation variants
@@ -38,7 +39,8 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
   formData, 
   onChange, 
   onSubmit,
-  isProcessing
+  isProcessing,
+  availableCapacity = 10 // Default to 10 if not provided
 }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target as any;
@@ -46,7 +48,8 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
     if (type === 'checkbox') {
       const checked = (e.target as any).checked;
       onChange(name, checked);
-    } else if (type === 'number') {
+    } else if (type === 'number' || name === 'number_of_people' || name === 'riders' || name === 'tshirts') {
+      // Always convert these fields to numbers, even from select elements
       onChange(name, parseInt(value, 10) || 0);
     } else {
       onChange(name, value);
@@ -55,8 +58,27 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Ensure riders is 0 when submitting
+    if (formData.riders !== 0) {
+      onChange('riders', 0);
+    }
     onSubmit();
   };
+
+  // Generate parasailer options based on available capacity
+  const parasailerOptions = [];
+  for (let i = 1; i <= Math.min(10, availableCapacity); i++) {
+    parasailerOptions.push(
+      <option key={i} value={i}>{i} {i === 1 ? 'person' : 'people'}</option>
+    );
+  }
+
+  // If no spots are available, add a disabled option
+  if (parasailerOptions.length === 0) {
+    parasailerOptions.push(
+      <option key="none" value="0" disabled>No spots available</option>
+    );
+  }
 
   return (
     <motion.form 
@@ -150,7 +172,12 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
       <div className="bg-blue-50 px-6 py-5 border-t border-blue-100">
         <h4 className="text-lg font-bold text-blue-900 mb-4">Booking Options</h4>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
+        {/* Show available capacity info */}
+        <div className="mb-4 bg-blue-100 rounded-md p-3 text-blue-800 text-sm">
+          <p className="font-medium">Available capacity: {availableCapacity} {availableCapacity === 1 ? 'spot' : 'spots'}</p>
+        </div>
+        
+        <div className="grid grid-cols-1 gap-5 mb-6">
           <motion.div variants={inputVariants}>
             <label htmlFor="number_of_people" className="block text-sm font-medium text-gray-700 mb-1">
               Parasailers
@@ -164,9 +191,7 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
                 required
                 className="block w-full pl-4 pr-10 py-3 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               >
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
-                  <option key={num} value={num}>{num} {num === 1 ? 'person' : 'people'}</option>
-                ))}
+                {parasailerOptions}
               </select>
               <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                 <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -182,32 +207,26 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
             </div>
           </motion.div>
           
-          <motion.div variants={inputVariants}>
-            <label htmlFor="riders" className="block text-sm font-medium text-gray-700 mb-1">
-              Boat Riders (Non-parasailing)
-            </label>
-            <div className="relative">
-              <select
-                id="riders"
-                name="riders"
-                value={formData.riders || 0}
-                onChange={handleInputChange}
-                className="block w-full pl-4 pr-10 py-3 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              >
-                {[0, 1, 2, 3, 4, 5].map(num => (
-                  <option key={num} value={num}>{num} {num === 1 ? 'person' : 'people'}</option>
-                ))}
-              </select>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          {/* Riders Info Box - replaces the rider selection dropdown */}
+          <motion.div 
+            variants={inputVariants}
+            className="bg-amber-50 border border-amber-200 rounded-lg p-4 mt-2"
+          >
+            <div className="flex items-start">
+              <div className="flex-shrink-0 mt-0.5">
+                <svg className="h-5 w-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <div className="text-sm text-blue-600 font-medium mt-1.5 flex items-center">
-                <svg className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                $30 per person
+              <div className="ml-3">
+                <h3 className="text-sm font-medium text-amber-800">Want to bring additional boat riders?</h3>
+                <div className="mt-2 text-sm text-amber-700">
+                  <p>
+                    Additional boat riders (non-parasailing guests) can be arranged for <span className="font-semibold">$30 per person</span>, based on availability.
+                    Please call <a href="tel:4062706256" className="font-medium underline">406-270-6256</a> or email{" "}
+                    <a href="mailto:bigskyparasailing@gmail.com" className="font-medium underline">bigskyparasailing@gmail.com</a> after booking to inquire about adding riders to your reservation.
+                  </p>
+                </div>
               </div>
             </div>
           </motion.div>
