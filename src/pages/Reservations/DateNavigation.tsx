@@ -66,7 +66,7 @@ const DateNavigation: React.FC<DateNavigationProps> = ({
   // Get current date text
   const currentDateText = dates[currentIndex] ? formatDate(dates[currentIndex]) : "Select Date";
   
-  // Group dates by month for better organization
+  // Group dates by month for better organization and sort within each month
   const groupedDates = React.useMemo(() => {
     const groups: Record<string, string[]> = {};
     
@@ -79,6 +79,11 @@ const DateNavigation: React.FC<DateNavigationProps> = ({
       }
       
       groups[monthYear].push(date);
+    });
+    
+    // Sort dates within each month group
+    Object.keys(groups).forEach(monthYear => {
+      groups[monthYear].sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
     });
     
     return groups;

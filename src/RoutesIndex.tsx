@@ -13,11 +13,12 @@ import ScrollToTop from "./Components/ScrollToTop.tsx";
 import LandingPage from "./pages/LandingPage.tsx";
 import Parasailing from "./pages/Parasailing.tsx";
 import TheBoat from "./pages/TheBoat.tsx";
-import TheCrew from "./pages/TheCrew.tsx";
+// import TheCrew from "./pages/TheCrew.tsx";
 import FAQ from "./pages/FAQ.tsx";
 import Location from "./pages/Location.tsx";
 import ReservationsLanding from './pages/Reservations/ReservationsLanding.tsx';
 import ReservationCalendar from './pages/Reservations/ReservationCalendar.tsx';
+import MarinaMap from './Components/MarinaMap.tsx';
 
 // Admin components
 import AdminLogin from './pages/Admin/AdminLogin.tsx';

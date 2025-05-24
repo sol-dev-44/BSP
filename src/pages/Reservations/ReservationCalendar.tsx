@@ -23,6 +23,7 @@ import { formatDateTimeRange } from "../../utils/dateFormatters.ts";
 import { stripePromise } from "../../stripeConfig.ts";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Footer from "../../Components/Footer.tsx";
+import DetailedInvoice from "./DetailedInvoice.tsx";
 
 // Animation variants
 const fadeInUp = {
@@ -481,7 +482,7 @@ const ReservationCalendar: React.FC = () => {
         console.log("Rendering payment step with:", {
           hasClientSecret: !!paymentInfo.clientSecret,
           amount: paymentInfo.amount,
-          stripePromise:  stripePromise,
+          stripePromise: stripePromise,
         });
 
         return (
@@ -637,7 +638,40 @@ const ReservationCalendar: React.FC = () => {
           </motion.div>
         );
 
-      case "confirmation":
+      case "confirmation": {
+        // Helper function to extract payment method details
+        const getPaymentMethodInfo = () => {
+          // You might need to store this in confirmationDetails from your backend
+          // For now, using placeholder - you can update based on your Stripe webhook data
+          return {
+            method: "VISA", // or "MASTERCARD", "AMEX", etc.
+            last4: confirmationDetails?.paymentMethod?.last4 || "****",
+          };
+        };
+
+        const paymentMethod = getPaymentMethodInfo();
+
+        // Create invoice data from existing state
+        const invoiceData = {
+          receiptNumber:
+            confirmationDetails?.reservation?.id?.substring(0, 13) || "N/A",
+          customerName: formData.customer_name || "",
+          customerEmail: formData.customer_email || "",
+          customerPhone: formData.customer_phone || "",
+          reservationDate: selectedTimeSlot?.start_time?.split("T")[0] || "",
+          timeSlot:
+            selectedTimeSlot?.start_time?.split("T")[1]?.substring(0, 5) || "",
+          numberOfPeople: Number(formData.number_of_people) || 0,
+          riders: Number(formData.riders) || 0,
+          photoPackage: Boolean(formData.photo_package),
+          goProPackage: Boolean(formData.go_pro_package),
+          tshirts: Number(formData.tshirts) || 0,
+          paymentAmount: paymentInfo?.amount || 0,
+          paymentDate: new Date().toISOString(), // Current timestamp, or use from confirmationDetails
+          paymentMethod: paymentMethod.method,
+          cardLast4: paymentMethod.last4,
+        };
+
         return (
           <motion.div
             key="confirmation"
@@ -645,200 +679,110 @@ const ReservationCalendar: React.FC = () => {
             initial="initial"
             animate="animate"
             exit="exit"
-            className="text-center"
+            className="max-w-4xl mx-auto"
           >
             <motion.h2
               variants={fadeInUp}
-              className="text-2xl font-bold text-blue-900 mb-6 text-center"
+              className="text-3xl font-bold text-green-600 mb-8 text-center flex items-center justify-center"
             >
+              <motion.div
+                className="w-12 h-12 rounded-full bg-green-500 mr-4 flex items-center justify-center"
+                initial={{ scale: 0.5, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 300, delay: 0.2 }}
+              >
+                <svg
+                  className="h-6 w-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={3}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </motion.div>
               Booking Confirmed!
             </motion.h2>
 
-            <motion.div
-              className="w-20 h-20 rounded-full bg-green-500 mx-auto mb-6 flex items-center justify-center"
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 300, delay: 0.2 }}
-            >
-              <svg
-                className="h-10 w-10 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={3}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-            </motion.div>
+            {confirmationDetails && selectedTimeSlot
+              ? (
+                <div className="space-y-8">
+                  {/* Detailed Invoice */}
+                  <DetailedInvoice invoiceData={invoiceData} />
 
-            {confirmationDetails && selectedTimeSlot && (
-              <div className="max-w-2xl mx-auto">
-                <p className="text-lg text-gray-800 mb-6">
-                  Thank you,{" "}
-                  {formData.customer_name}! Your parasailing adventure is
-                  booked.
-                </p>
-
-                <motion.div
-                  className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 mb-8"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                >
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 text-left">
-                    Booking Details:
-                  </h3>
-                  <dl className="divide-y divide-gray-200 text-left">
-                    <div className="py-3 grid grid-cols-3 gap-4">
-                      <dt className="text-sm font-medium text-gray-500">
-                        Date/Time:
-                      </dt>
-                      <dd className="text-sm text-gray-900 col-span-2 font-semibold">
-                        {formatDateTimeRange(
-                          selectedTimeSlot.start_time,
-                          selectedTimeSlot.end_time,
-                        )}
-                      </dd>
-                    </div>
-                    <div className="py-3 grid grid-cols-3 gap-4">
-                      <dt className="text-sm font-medium text-gray-500">
-                        Confirmation #:
-                      </dt>
-                      <dd className="text-sm font-mono text-gray-900 col-span-2 font-semibold">
-                        {confirmationDetails.reservation.id.substring(0, 8)
-                          .toUpperCase()}
-                      </dd>
-                    </div>
-                    <div className="py-3 grid grid-cols-3 gap-4">
-                      <dt className="text-sm font-medium text-gray-500">
-                        Total Paid:
-                      </dt>
-                      <dd className="text-sm text-gray-900 col-span-2 font-semibold">
-                        ${paymentInfo
-                          ? (paymentInfo.amount / 100).toFixed(2)
-                          : 0}
-                      </dd>
-                    </div>
-                  </dl>
-
-                  <div className="mt-6 pt-6 border-t border-gray-200 text-left">
-                    <h4 className="text-lg font-bold text-gray-900 mb-3">
-                      What's Next:
-                    </h4>
-                    <ul className="text-sm text-gray-700 space-y-3">
-                      <li className="flex items-start">
-                        <svg
-                          className="h-5 w-5 text-green-500 mr-2 flex-shrink-0"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        <div>
-                          <span>A confirmation email has been sent to</span>
-                          &nbsp;
-                          <span className="font-semibold">
-                            {formData.customer_email}
-                          </span>
-                        </div>
-                      </li>
-                      <li className="flex items-start">
-                        <svg
-                          className="h-5 w-5 text-green-500 mr-2 flex-shrink-0"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        <div>
-                          <span>Please arrive</span>
-                          &nbsp;
-                          <span className="font-semibold">30 minutes</span>
-                          &nbsp;
-                          <span>before your scheduled time</span>
-                        </div>
-                      </li>
-
-                      <li className="flex items-start">
-                        <svg
-                          className="h-5 w-5 text-green-500 mr-2 flex-shrink-0"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        Bring swimwear, a towel, and sunscreen
-                      </li>
-                      <li className="flex items-start">
-                        <svg
-                          className="h-5 w-5 text-green-500 mr-2 flex-shrink-0"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        Our staff will provide all necessary safety equipment
-                      </li>
-                    </ul>
-                  </div>
-                </motion.div>
-
-                <motion.button
-                  className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-md text-white bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
-                  onClick={handleRestart}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.6 }}
-                >
-                  Book Another Adventure
-                  <svg
-                    className="ml-2 -mr-1 h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                  {/* Action Buttons */}
+                  <motion.div
+                    className="flex flex-col sm:flex-row gap-4 justify-center"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.8 }}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                    />
-                  </svg>
-                </motion.button>
-              </div>
-            )}
+                    <motion.button
+                      className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      onClick={() => window.print()}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <svg
+                        className="mr-2 -ml-1 h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
+                        />
+                      </svg>
+                      Print Receipt
+                    </motion.button>
+
+                    <motion.button
+                      className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-md text-white bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
+                      onClick={handleRestart}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      Book Another Adventure
+                      <svg
+                        className="ml-2 -mr-1 h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                        />
+                      </svg>
+                    </motion.button>
+                  </motion.div>
+                </div>
+              )
+              : (
+                <div className="text-center p-8">
+                  <p className="text-red-600 mb-4">
+                    Confirmation details not available.
+                  </p>
+                  <button
+                    className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                    onClick={handleRestart}
+                  >
+                    Start Over
+                  </button>
+                </div>
+              )}
           </motion.div>
         );
+      }
 
       default:
         return <div>Something went wrong. Please refresh the page.</div>;
