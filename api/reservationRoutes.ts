@@ -163,7 +163,11 @@ router
             timeSlot: timeSlot,
             customerEmail: value.reservationData.customer_email,
             customerPhone: value.reservationData.customer_phone,
-            totalAmount: paymentConfirmation.amount
+            totalAmount: paymentConfirmation.paymentIntent.amount,
+            // Add-on fields
+            photo_package: value.reservationData.photo_package || false,
+            go_pro_package: value.reservationData.go_pro_package || false,
+            tshirts: value.reservationData.tshirts || 0
           };
 
           // Try to send SMS, fallback to console log if it fails
@@ -180,7 +184,11 @@ router
             timeSlot: { start_time: "Unknown", end_time: "Unknown" },
             customerEmail: value.reservationData.customer_email,
             customerPhone: value.reservationData.customer_phone,
-            totalAmount: paymentConfirmation.amount
+            totalAmount: paymentConfirmation.amount,
+            // Add-on fields
+            photo_package: value.reservationData.photo_package || false,
+            go_pro_package: value.reservationData.go_pro_package || false,
+            tshirts: value.reservationData.tshirts || 0
           });
         }
       } catch (smsError) {
@@ -484,7 +492,11 @@ router
             timeSlot: timeSlot,
             customerEmail: value.customer_email,
             customerPhone: value.customer_phone,
-            totalAmount: value.payment_amount
+            totalAmount: value.payment_amount,
+            // Add-on fields
+            photo_package: value.photo_package || false,
+            go_pro_package: value.go_pro_package || false,
+            tshirts: value.tshirts || 0
           };
 
           // Try to send SMS, fallback to console log if it fails
@@ -501,7 +513,11 @@ router
             timeSlot: { start_time: "Unknown", end_time: "Unknown" },
             customerEmail: value.customer_email,
             customerPhone: value.customer_phone,
-            totalAmount: value.payment_amount
+            totalAmount: value.payment_amount,
+            // Add-on fields
+            photo_package: value.photo_package || false,
+            go_pro_package: value.go_pro_package || false,
+            tshirts: value.tshirts || 0
           });
         }
       } catch (smsError) {

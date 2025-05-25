@@ -1,4 +1,4 @@
-// components/PaymentForm.tsx
+// components/PaymentForm.tsx - Fixed button re-enabling issue
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -28,6 +28,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentError, setPaymentError] = useState<string | null>(null);
   const [cardComplete, setCardComplete] = useState(false);
+  const [paymentSucceeded, setPaymentSucceeded] = useState(false); // NEW: Track payment success
   
   // Debug output
   useEffect(() => {
@@ -76,22 +77,29 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
         console.error("Payment error:", result.error);
         setPaymentError(result.error.message || "An error occurred with your payment");
         onPaymentError(result.error.message || "An error occurred with your payment");
+        // Only re-enable on error
+        setIsProcessing(false);
       } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
         console.log("Payment succeeded:", result.paymentIntent);
+        setPaymentSucceeded(true); // Mark as succeeded - don't re-enable button
         onPaymentSuccess(result.paymentIntent.id);
+        // DON'T set isProcessing to false - keep button disabled until view changes
       } else {
         console.error("Payment not successful:", result.paymentIntent);
         setPaymentError("Payment not successful. Please try again.");
         onPaymentError("Payment not successful. Please try again.");
+        // Only re-enable on error
+        setIsProcessing(false);
       }
     } catch (err) {
       console.error("Exception during payment:", err);
       const errorMessage = err instanceof Error ? err.message : "An unexpected error occurred";
       setPaymentError(errorMessage);
       onPaymentError(errorMessage);
-    } finally {
+      // Only re-enable on error
       setIsProcessing(false);
     }
+    // Removed the finally block that was re-enabling the button
   };
 
   // Handle card input changes
@@ -115,15 +123,8 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   };
 
-  // Helper text for test cards
-  const testCardInfo = (
-    <div className="mt-2 p-2 bg-yellow-50 text-yellow-800 text-xs rounded">
-      <p className="font-medium">Test Mode: Use these cards:</p>
-      <p>Success: 4242 4242 4242 4242</p>
-      <p>Decline: 4000 0000 0000 0002</p>
-      <p>Any future date, any 3 digits for CVC, any zip code</p>
-    </div>
-  );
+  // Button should be disabled if: no stripe, processing, card incomplete, OR payment succeeded
+  const isButtonDisabled = !stripe || isProcessing || !cardComplete || paymentSucceeded;
 
   return (
     <motion.form 
@@ -167,14 +168,11 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
                     iconColor: '#e25950',
                   },
                 },
-                hidePostalCode: true, // Optional: remove if you want to collect postal code
+                hidePostalCode: true,
               }}
               onChange={handleCardChange}
             />
           </div>
-          
-          {/* Show test card info */}
-          {/* {testCardInfo} */}
           
           <p className="mt-2 text-xs text-gray-500">
             Your card information is encrypted and secure. We do not store your card details.
@@ -199,15 +197,35 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Success message when payment succeeds but before navigation */}
+        <AnimatePresence>
+          {paymentSucceeded && (
+            <motion.div 
+              className="text-green-600 bg-green-50 rounded-md p-3 mb-4 text-sm"
+              initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+              animate={{ opacity: 1, height: 'auto', marginBottom: 16 }}
+              exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="flex items-center">
+                <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Payment successful! Confirming your reservation...</span>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
         
         <div className="flex justify-between space-x-4">
           <motion.button 
             type="button" 
             className="flex-1 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             onClick={onCancel}
-            disabled={isProcessing}
-            whileHover={{ scale: isProcessing ? 1 : 1.02 }}
-            whileTap={{ scale: isProcessing ? 1 : 0.98 }}
+            disabled={isProcessing || paymentSucceeded}
+            whileHover={{ scale: (isProcessing || paymentSucceeded) ? 1 : 1.02 }}
+            whileTap={{ scale: (isProcessing || paymentSucceeded) ? 1 : 0.98 }}
           >
             Back
           </motion.button>
@@ -215,14 +233,24 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
             type="submit" 
             className={`
               flex-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white 
-              bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
-              ${(!stripe || isProcessing || !cardComplete) ? 'opacity-70 cursor-not-allowed' : ''}
+              ${paymentSucceeded 
+                ? 'bg-green-600' 
+                : 'bg-blue-600 hover:bg-blue-700'} 
+              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+              ${isButtonDisabled ? 'opacity-70 cursor-not-allowed' : ''}
             `}
-            disabled={!stripe || isProcessing || !cardComplete}
-            whileHover={{ scale: (!stripe || isProcessing || !cardComplete) ? 1 : 1.02 }}
-            whileTap={{ scale: (!stripe || isProcessing || !cardComplete) ? 1 : 0.98 }}
+            disabled={isButtonDisabled}
+            whileHover={{ scale: isButtonDisabled ? 1 : 1.02 }}
+            whileTap={{ scale: isButtonDisabled ? 1 : 0.98 }}
           >
-            {isProcessing ? (
+            {paymentSucceeded ? (
+              <span className="flex items-center justify-center">
+                <svg className="mr-2 h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Payment Successful
+              </span>
+            ) : isProcessing ? (
               <span className="flex items-center justify-center">
                 <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
