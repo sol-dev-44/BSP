@@ -1,4 +1,4 @@
-// reservationRoutes.ts
+// reservationRoutes.ts - Updated with SMS notifications
 import { Router } from "@oak/oak";
 import {
   cancelReservation,
@@ -15,6 +15,8 @@ import {
   createPaymentIntent,
   processStripeRefund,
 } from "./supabase/stripeActions.ts";
+import { sendReservationAlert, logReservationAlert } from "./smsService.ts";
+import { supabase } from "./supabase/client.ts";
 import dotenv from "dotenv";
 
 // Load environment variables
@@ -23,6 +25,27 @@ dotenv.config();
 const adminPin = process.env.ADMIN_API_KEY || "";
 
 const router = new Router();
+
+// Helper function to get time slot details for SMS
+const getTimeSlotForSMS = async (timeSlotId: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("time_slots")
+      .select("start_time, end_time")
+      .eq("id", timeSlotId)
+      .single();
+    
+    if (error || !data) {
+      console.error("Failed to fetch time slot for SMS:", error);
+      return null;
+    }
+    
+    return data;
+  } catch (error) {
+    console.error("Error fetching time slot for SMS:", error);
+    return null;
+  }
+};
 
 router
   // Create a pending reservation with payment intent
@@ -84,7 +107,8 @@ router
       };
     }
   })
-  // Confirm a reservation after payment
+  
+  // Confirm a reservation after payment - UPDATED WITH SMS
   .post("/api/reservations/confirm", async (ctx) => {
     try {
       if (!ctx.request.hasBody) {
@@ -127,6 +151,43 @@ router
         return;
       }
 
+      // 🎯 NEW: Send SMS notification after successful reservation confirmation
+      try {
+        const timeSlot = await getTimeSlotForSMS(value.reservationData.time_slot_id);
+        
+        if (timeSlot) {
+          const smsData = {
+            customerName: value.reservationData.customer_name,
+            numberOfPeople: value.reservationData.number_of_people,
+            riders: value.reservationData.riders || 0,
+            timeSlot: timeSlot,
+            customerEmail: value.reservationData.customer_email,
+            customerPhone: value.reservationData.customer_phone,
+            totalAmount: paymentConfirmation.amount
+          };
+
+          // Try to send SMS, fallback to console log if it fails
+          const smsSent = await sendReservationAlert(smsData);
+          if (!smsSent) {
+            logReservationAlert(smsData);
+          }
+        } else {
+          // Fallback if we can't get time slot details
+          logReservationAlert({
+            customerName: value.reservationData.customer_name,
+            numberOfPeople: value.reservationData.number_of_people,
+            riders: value.reservationData.riders || 0,
+            timeSlot: { start_time: "Unknown", end_time: "Unknown" },
+            customerEmail: value.reservationData.customer_email,
+            customerPhone: value.reservationData.customer_phone,
+            totalAmount: paymentConfirmation.amount
+          });
+        }
+      } catch (smsError) {
+        console.error("❌ Error sending reservation SMS alert:", smsError);
+        // Don't fail the reservation if SMS fails
+      }
+
       ctx.response.status = 200;
       ctx.response.body = result;
     } catch (error) {
@@ -135,6 +196,7 @@ router
       ctx.response.body = { error: "Failed to confirm reservation" };
     }
   })
+  
   // Get reservations by customer email
   .get("/api/reservations/lookup/:email", async (ctx) => {
     try {
@@ -160,6 +222,7 @@ router
       ctx.response.body = { error: "Failed to fetch reservations" };
     }
   })
+  
   // Get all reservations (admin)
   .get("/api/admin/reservations", async (ctx) => {
     try {
@@ -186,6 +249,7 @@ router
       ctx.response.body = { error: "Failed to fetch reservations" };
     }
   })
+  
   // Get today's reservations (admin)
   .get("/api/admin/reservations/today", async (ctx) => {
     try {
@@ -214,6 +278,7 @@ router
       ctx.response.body = { error: "Failed to fetch today's reservations" };
     }
   })
+  
   // Cancel a reservation (admin only)
   .post("/api/admin/reservations/cancel/:id", async (ctx) => {
     try {
@@ -251,6 +316,7 @@ router
       ctx.response.body = { error: "Failed to cancel reservation" };
     }
   })
+  
   // Process a refund (admin only)
   .post("/api/admin/reservations/refund/:id", async (ctx) => {
     try {
@@ -297,6 +363,7 @@ router
       ctx.response.body = { error: "Failed to process refund" };
     }
   })
+  
   // Mark a reservation as completed (admin only)
   .post("/api/admin/reservations/complete/:id", async (ctx) => {
     try {
@@ -331,6 +398,7 @@ router
       ctx.response.body = { error: "Failed to complete reservation" };
     }
   })
+  
   // Clean up expired reservations (should be done with a cron job in production)
   .post("/api/admin/reservations/cleanup", async (ctx) => {
     try {
@@ -358,46 +426,8 @@ router
       ctx.response.body = { error: "Failed to clean up expired reservations" };
     }
   })
-  // Add this to your reservationRoutes.ts
-  .post("/api/admin/reservations/create", async (ctx) => {
-    try {
-      // Basic auth check
-      const authHeader = ctx.request.headers.get("Authorization");
-      if (!authHeader || authHeader !== `Bearer ${adminPin}`) {
-        ctx.response.status = 401;
-        ctx.response.body = { error: "Unauthorized" };
-        return;
-      }
-
-      if (!ctx.request.hasBody) {
-        ctx.response.status = 400;
-        ctx.response.body = { error: "No data provided" };
-        return;
-      }
-
-      const value = await ctx.request.body.json();
-
-      // Use the direct createReservation function which can create confirmed reservations
-      const result = await createReservation({
-        ...value,
-        status: value.status || "confirmed", // Default to confirmed for admin
-      });
-
-      if (typeof result === "string") {
-        ctx.response.status = 400;
-        ctx.response.body = { error: result };
-        return;
-      }
-
-      ctx.response.status = 201;
-      ctx.response.body = result;
-    } catch (error) {
-      console.error("❌ Error creating admin reservation:", error);
-      ctx.response.status = 500;
-      ctx.response.body = { error: "Failed to create reservation" };
-    }
-  })
-  // Add admin reservation creation endpoint to reservationRoutes.ts
+  
+  // Admin reservation creation - UPDATED WITH SMS
   .post("/api/admin/reservations/create", async (ctx) => {
     try {
       // Basic auth check
@@ -441,6 +471,44 @@ router
       }
 
       console.log("✅ Reservation created:", result);
+
+      // 🎯 NEW: Send SMS notification for admin-created reservations
+      try {
+        const timeSlot = await getTimeSlotForSMS(value.time_slot_id);
+        
+        if (timeSlot) {
+          const smsData = {
+            customerName: value.customer_name,
+            numberOfPeople: value.number_of_people,
+            riders: value.riders || 0,
+            timeSlot: timeSlot,
+            customerEmail: value.customer_email,
+            customerPhone: value.customer_phone,
+            totalAmount: value.payment_amount
+          };
+
+          // Try to send SMS, fallback to console log if it fails
+          const smsSent = await sendReservationAlert(smsData);
+          if (!smsSent) {
+            logReservationAlert(smsData);
+          }
+        } else {
+          // Fallback if we can't get time slot details
+          logReservationAlert({
+            customerName: value.customer_name,
+            numberOfPeople: value.number_of_people,
+            riders: value.riders || 0,
+            timeSlot: { start_time: "Unknown", end_time: "Unknown" },
+            customerEmail: value.customer_email,
+            customerPhone: value.customer_phone,
+            totalAmount: value.payment_amount
+          });
+        }
+      } catch (smsError) {
+        console.error("❌ Error sending admin reservation SMS alert:", smsError);
+        // Don't fail the reservation if SMS fails
+      }
+
       ctx.response.status = 201;
       ctx.response.body = result;
     } catch (error) {
@@ -452,24 +520,5 @@ router
       };
     }
   });
-
-// Test endpoint for debugging
-// .get("/api/test", async (ctx) => {
-//   try {
-//     // Return a simple response to verify API is working
-//     ctx.response.body = {
-//       message: "API is working correctly",
-//       timestamp: new Date().toISOString(),
-//       env: {
-//         hasStripeKey: !!Deno.env.get("STRIPE_SECRET_KEY"),
-//         stripeKeyType: Deno.env.get("STRIPE_SECRET_KEY") ? "real" : "mock",
-//       },
-//     };
-//   } catch (error) {
-//     console.error("❌ Error in test endpoint:", error);
-//     ctx.response.status = 500;
-//     ctx.response.body = { error: "Test endpoint failed" };
-//   }
-// });
 
 export default router;
