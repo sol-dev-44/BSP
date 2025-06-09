@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../Components/Footer.tsx";
 import SEO from "../Components/Seo.tsx";
 
@@ -93,6 +93,7 @@ const Testimonial: React.FC<TestimonialProps> = ({ quote, author, location, feat
 );
 
 const LandingPage: React.FC = () => {
+  const navigate = useNavigate();
   // Enhanced testimonials data
   const featuredTestimonial = {
     quote: "Absolutely incredible! The views of Flathead Lake and the surrounding mountains were breathtaking. Our captain was so professional and made us feel completely safe. This was the highlight of our Montana vacation!",
@@ -316,6 +317,77 @@ const LandingPage: React.FC = () => {
           </div>
         </div>
 
+        {/* Vibrant Help Wanted Banner */}
+        <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 border-t border-orange-300 shadow-lg">
+          <div className="container mx-auto px-4 py-6">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
+              className="flex flex-col sm:flex-row items-center justify-between"
+            >
+              <div className="flex items-center mb-4 sm:mb-0">
+                <motion.div 
+                  className="bg-white p-3 rounded-xl mr-4 shadow-lg"
+                  animate={{
+                    rotate: [0, 5, -5, 0],
+                    scale: [1, 1.05, 1]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <svg className="w-6 h-6 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clipRule="evenodd" />
+                  </svg>
+                </motion.div>
+                <div className="text-white">
+                  <div className="flex items-center mb-1">
+                    <motion.span 
+                      className="bg-green-400 text-white px-3 py-1 rounded-full text-sm font-bold mr-3 shadow-lg"
+                      animate={{
+                        boxShadow: ["0 0 0 0 rgba(34, 197, 94, 0.7)", "0 0 0 10px rgba(34, 197, 94, 0)", "0 0 0 0 rgba(34, 197, 94, 0)"]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity
+                      }}
+                    >
+                      🌟 NOW HIRING 🌟
+                    </motion.span>
+                    <span className="text-2xl">🚤</span>
+                  </div>
+                  <span className="font-bold text-lg">Join Our Summer Crew Adventure!</span>
+                  <div className="text-orange-100 text-sm mt-1">
+                    <span className="hidden sm:inline">✨ No experience required • Work on the water • Great pay • </span>
+                    <span className="font-semibold">Make this summer unforgettable!</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex gap-3">
+                <Link
+                  to="/careers"
+                  className="px-6 py-3 bg-white hover:bg-gray-100 text-orange-600 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center"
+                >
+                  <span className="mr-2">🚀</span>
+                  Apply Now
+                </Link>
+                <a
+                  href="mailto:bigskyparasailing@gmail.com"
+                  className="px-6 py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center"
+                >
+                  <span className="mr-2">📧</span>
+                  Email Us
+                </a>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
         {/* Enhanced Features Section */}
         <div className="py-20 bg-gray-50">
           <div className="container mx-auto px-4">
@@ -435,7 +507,7 @@ const LandingPage: React.FC = () => {
                   Don't just experience the thrill - take it home with you! Our professional photo packages capture your incredible parasailing adventure with high-quality images you'll treasure forever.
                 </p>
                 <div className="bg-green-50 p-4 rounded-lg mb-4">
-                  <p className="text-green-800 font-semibold">📸 Professional photos included with every flight!</p>
+                  <p className="text-green-800 font-semibold">📸 Professional photos and/or GoPro video available for your group!</p>
                 </div>
                 <ul className="space-y-2">
                   <li className="flex items-center">
@@ -597,6 +669,169 @@ const LandingPage: React.FC = () => {
                 </div>
               </motion.div>
             </div>
+          </div>
+        </div>
+
+        {/* Premium Charter Services Section - NEW */}
+        <div className="py-20 bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-100">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerChildren}
+              className="text-center mb-16"
+            >
+              <motion.div variants={fadeInUp} className="mb-4">
+                <span className="inline-block bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold tracking-wide">
+                  ⭐ PREMIUM EXPERIENCES ⭐
+                </span>
+              </motion.div>
+              <motion.h2
+                variants={fadeInUp}
+                className="text-4xl font-bold mb-6 text-gray-900"
+              >
+                Exclusive Charter Adventures
+              </motion.h2>
+              <motion.p
+                variants={fadeInUp}
+                className="text-xl text-gray-700 max-w-3xl mx-auto"
+              >
+                Take your adventure to the next level with our exclusive charter services. 
+                Private groups, custom itineraries, and unforgettable experiences on Flathead Lake.
+              </motion.p>
+            </motion.div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-2 border-t-4 border-cyan-500"
+              >
+                <div className="text-center mb-6">
+                  <div className="bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">🏄‍♂️</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900">Private Wakeboarding</h3>
+                </div>
+                <p className="text-gray-700 mb-6 text-center">
+                  Experience the thrill of wakeboarding behind Cloud Dancer on the pristine waters of Flathead Lake. 
+                  Perfect for all skill levels with professional instruction available.
+                </p>
+                <div className="space-y-2 mb-6">
+                  <div className="flex items-center text-sm text-gray-600">
+                    <svg className="w-4 h-4 text-cyan-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    Private group experience
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <svg className="w-4 h-4 text-cyan-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    All equipment provided
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <svg className="w-4 h-4 text-cyan-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    Instruction available
+                  </div>
+                </div>
+                <div className="text-center">
+                  <span className="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-semibold">Custom Pricing</span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-2 border-t-4 border-amber-500"
+              >
+                <div className="text-center mb-6">
+                  <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">🏝️</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900">Wild Horse Island</h3>
+                </div>
+                <p className="text-gray-700 mb-6 text-center">
+                  Charter to Montana's largest island in the middle of Flathead Lake. 
+                  Explore this 2,160-acre state park accessible only by boat.
+                </p>
+                <div className="space-y-2 mb-6">
+                  <div className="flex items-center text-sm text-gray-600">
+                    <svg className="w-4 h-4 text-amber-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    Round trip boat transport
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <svg className="w-4 h-4 text-amber-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    Wildlife viewing opportunities
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <svg className="w-4 h-4 text-amber-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    Hiking and exploration time
+                  </div>
+                </div>
+                <div className="text-center">
+                  <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-semibold">Half/Full Day</span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                onClick={(e:any) => navigate('/charter')}
+                className="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-2 border-t-4 border-red-500"
+              >
+                <div className="text-center mb-6">
+                  <div className="bg-gradient-to-r from-red-500 to-pink-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">🎆</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900">4th of July Charter</h3>
+                </div>
+                <p className="text-gray-700 mb-6 text-center">
+                  Experience Flathead Lake's spectacular fireworks display from the best seats in the house - 
+                  right on the water under the stars.
+                </p>
+                <div className="space-y-2 mb-6">
+                  <div className="flex items-center text-sm text-gray-600">
+                    <svg className="w-4 h-4 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    Premium fireworks viewing
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <svg className="w-4 h-4 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    Exclusive boat access
+                  </div>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <svg className="w-4 h-4 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    Evening cruise included
+                  </div>
+                </div>
+                <div className="text-center">
+                  <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">Limited Dates</span>
+                </div>
+              </motion.div>
+            </div>
+
+      
           </div>
         </div>
 

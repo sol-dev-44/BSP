@@ -56,6 +56,7 @@ async function extractRoutes(): Promise<string[]> {
       "/about",
       "/location", 
       "/faq",
+      "/careers",
       "/reservations",
       "/reservations/book/time",
       "/reservations/book/info",

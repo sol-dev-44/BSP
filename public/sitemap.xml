@@ -6,121 +6,133 @@
 
   <url>
     <loc>https://www.montanaparasail.com/</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/about</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/theboat</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/location</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/faq</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.montanaparasail.com/careers</loc>
+    <lastmod>2025-06-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.montanaparasail.com/charters</loc>
+    <lastmod>2025-06-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.montanaparasail.com/reservations</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/reservations/book/time</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/reservations/book/info</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/reservations/book/payment</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/reservations/book/confirmation</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/management-console-login</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/management-console</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/management-console/reservations</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/management-console/reservations/:id</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/management-console/reservations/create</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/management-console/reservations/:id/edit</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/management-console/time-slots</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/management-console/time-slots/create</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/management-console/time-slots/weather</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.montanaparasail.com/management-console/settings</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

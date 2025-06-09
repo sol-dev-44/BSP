@@ -19,6 +19,8 @@ import Location from "./pages/Location.tsx";
 import ReservationsLanding from './pages/Reservations/ReservationsLanding.tsx';
 import ReservationCalendar from './pages/Reservations/ReservationCalendar.tsx';
 import MarinaMap from './Components/MarinaMap.tsx';
+import Careers from './pages/CareersMain.tsx';
+import Charters from './pages/Charters.tsx';
 
 // Admin components
 import AdminLogin from './pages/Admin/AdminLogin.tsx';
@@ -54,6 +56,10 @@ const AppContent = () => {
           <Route path="/theboat" element={<TheBoat />} />
           <Route path="/location" element={<Location />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/charters" element={<Charters />} />
+          
+          {/* Marina Map Route */}
           
           {/* Reservations routes */}
           <Route path="/reservations" element={<ReservationsLanding />} />

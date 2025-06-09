@@ -322,7 +322,8 @@ const ReservationsLanding = () => {
                   <h3 className="text-xl font-bold text-gray-900">Arrival Time</h3>
                 </div>
                 <p className="text-gray-700 mb-4">
-                  Please arrive 30 minutes before your scheduled time to complete check-in and safety briefing.
+                  Please arrive 15 minutes before your scheduled time to be safe. If you arrive after your scheduled time, we may have to reschedule
+                  your flight.
                 </p>
                 <div className="bg-yellow-50 p-3 rounded-lg border-l-4 border-yellow-500">
                   <p className="text-sm text-yellow-800">

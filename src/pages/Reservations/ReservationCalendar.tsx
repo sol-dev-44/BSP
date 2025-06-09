@@ -478,13 +478,6 @@ const ReservationCalendar: React.FC = () => {
           );
         }
 
-        // Log for debugging
-        console.log("Rendering payment step with:", {
-          hasClientSecret: !!paymentInfo.clientSecret,
-          amount: paymentInfo.amount,
-          stripePromise: stripePromise,
-        });
-
         return (
           <motion.div
             key="payment"
@@ -529,6 +522,7 @@ const ReservationCalendar: React.FC = () => {
                 <h3 className="text-lg font-bold text-blue-900 mb-3">
                   Booking Summary:
                 </h3>
+
                 <div className="border-t border-gray-200 pt-3">
                   <dl className="divide-y divide-gray-200">
                     <div className="py-3 grid grid-cols-3 gap-4">
@@ -567,46 +561,64 @@ const ReservationCalendar: React.FC = () => {
                         (${Number(formData.number_of_people) * 99})
                       </dd>
                     </div>
-                    {formData.riders && formData.riders > 0 && (
-                      <div className="py-3 grid grid-cols-3 gap-4">
-                        <dt className="text-sm font-medium text-gray-500">
-                          Boat Riders:
-                        </dt>
-                        <dd className="text-sm text-gray-900 col-span-2">
-                          {formData.riders} (${Number(formData.riders) * 30})
-                        </dd>
-                      </div>
-                    )}
-                    {formData.photo_package && (
-                      <div className="py-3 grid grid-cols-3 gap-4">
-                        <dt className="text-sm font-medium text-gray-500">
-                          Photo Package:
-                        </dt>
-                        <dd className="text-sm text-gray-900 col-span-2">
-                          $30
-                        </dd>
-                      </div>
-                    )}
-                    {formData.go_pro_package && (
-                      <div className="py-3 grid grid-cols-3 gap-4">
-                        <dt className="text-sm font-medium text-gray-500">
-                          GoPro Package:
-                        </dt>
-                        <dd className="text-sm text-gray-900 col-span-2">
-                          $30
-                        </dd>
-                      </div>
-                    )}
-                    {formData.tshirts && formData.tshirts > 0 && (
-                      <div className="py-3 grid grid-cols-3 gap-4">
-                        <dt className="text-sm font-medium text-gray-500">
-                          T-Shirts:
-                        </dt>
-                        <dd className="text-sm text-gray-900 col-span-2">
-                          {formData.tshirts} (${Number(formData.tshirts) * 50})
-                        </dd>
-                      </div>
-                    )}
+
+                    {/* Boat Riders */}
+                    {formData.riders && Number(formData.riders) > 0
+                      ? (
+                        <div className="py-3 grid grid-cols-3 gap-4">
+                          <dt className="text-sm font-medium text-gray-500">
+                            Boat Riders:
+                          </dt>
+                          <dd className="text-sm text-gray-900 col-span-2">
+                            {formData.riders} (${Number(formData.riders) * 30})
+                          </dd>
+                        </div>
+                      )
+                      : null}
+
+                    {/* Photo Package */}
+                    {formData.photo_package === true
+                      ? (
+                        <div className="py-3 grid grid-cols-3 gap-4">
+                          <dt className="text-sm font-medium text-gray-500">
+                            Photo Package:
+                          </dt>
+                          <dd className="text-sm text-gray-900 col-span-2">
+                            $30
+                          </dd>
+                        </div>
+                      )
+                      : null}
+
+                    {/* GoPro Package */}
+                    {formData.go_pro_package === true
+                      ? (
+                        <div className="py-3 grid grid-cols-3 gap-4">
+                          <dt className="text-sm font-medium text-gray-500">
+                            GoPro Package:
+                          </dt>
+                          <dd className="text-sm text-gray-900 col-span-2">
+                            $30
+                          </dd>
+                        </div>
+                      )
+                      : null}
+
+                    {/* T-Shirts */}
+                    {formData.tshirts && Number(formData.tshirts) > 0
+                      ? (
+                        <div className="py-3 grid grid-cols-3 gap-4">
+                          <dt className="text-sm font-medium text-gray-500">
+                            T-Shirts:
+                          </dt>
+                          <dd className="text-sm text-gray-900 col-span-2">
+                            {formData.tshirts}{" "}
+                            (${Number(formData.tshirts) * 50})
+                          </dd>
+                        </div>
+                      )
+                      : null}
+
                     <div className="py-3 grid grid-cols-3 gap-4">
                       <dt className="text-sm font-medium text-gray-500">
                         Total:
@@ -640,16 +652,18 @@ const ReservationCalendar: React.FC = () => {
 
       case "confirmation": {
         // Helper function to extract payment method details
-        const getPaymentMethodInfo = () => {
-          // You might need to store this in confirmationDetails from your backend
-          // For now, using placeholder - you can update based on your Stripe webhook data
-          return {
-            method: "VISA", // or "MASTERCARD", "AMEX", etc.
-            last4: confirmationDetails?.paymentMethod?.last4 || "****",
-          };
-        };
+const getPaymentMethodInfo = () => {
+  if (!confirmationDetails?.paymentMethod) {
+    return null; // Return null if no payment method data
+  }
+  
+  return {
+    method: confirmationDetails.paymentMethod.brand?.toUpperCase() || "CARD",
+    last4: confirmationDetails.paymentMethod.last4 || "****",
+  };
+};
 
-        const paymentMethod = getPaymentMethodInfo();
+const paymentMethod = getPaymentMethodInfo();
 
         // Create invoice data from existing state
         const invoiceData = {
@@ -668,8 +682,8 @@ const ReservationCalendar: React.FC = () => {
           tshirts: Number(formData.tshirts) || 0,
           paymentAmount: paymentInfo?.amount || 0,
           paymentDate: new Date().toISOString(), // Current timestamp, or use from confirmationDetails
-          paymentMethod: paymentMethod.method,
-          cardLast4: paymentMethod.last4,
+          paymentMethod: paymentMethod?.method || "Unknown",
+          cardLast4: paymentMethod?.last4 || "****",
         };
 
         return (
