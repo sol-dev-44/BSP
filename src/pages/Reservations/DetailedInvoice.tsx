@@ -1,4 +1,4 @@
-// DetailedInvoice.tsx
+// DetailedInvoice.tsx - FIXED VERSION
 import React from 'react';
 import { motion } from 'framer-motion';
 
@@ -30,20 +30,48 @@ const DetailedInvoice: React.FC<{ invoiceData: InvoiceData }> = ({ invoiceData }
   
   const subtotal = parasailingCost + ridersCost + photoCost + goproCost + tshirtCost;
 
+  // FIXED: Better date formatting that preserves the original datetime
+  const formatReservationDate = (isoDateTimeString: string) => {
+    if (!isoDateTimeString) return "Date not available";
+    
+    try {
+      const date = new Date(isoDateTimeString);
+      return date.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    } catch (error) {
+      console.error("Error formatting reservation date:", error);
+      return "Date not available";
+    }
+  };
+
+  // FIXED: Better time formatting that preserves the original datetime
+  const formatReservationTime = (isoDateTimeString: string) => {
+    if (!isoDateTimeString) return "Time not available";
+    
+    try {
+      const date = new Date(isoDateTimeString);
+      return date.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      });
+    } catch (error) {
+      console.error("Error formatting reservation time:", error);
+      return "Time not available";
+    }
+  };
+
+  // LEGACY: Keep these for other date formatting (payment date, etc.)
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
       day: 'numeric'
-    });
-  };
-
-  const formatTime = (timeString: string) => {
-    return new Date(`2000-01-01T${timeString}`).toLocaleTimeString('en-US', {
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true
     });
   };
 
@@ -143,11 +171,13 @@ const DetailedInvoice: React.FC<{ invoiceData: InvoiceData }> = ({ invoiceData }
             <div className="bg-blue-50 rounded-lg p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-gray-600">Date:</span>
-                <span className="font-medium text-gray-900">{formatDate(invoiceData.reservationDate)}</span>
+                {/* FIXED: Use the new formatting functions that handle full datetime */}
+                <span className="font-medium text-gray-900">{formatReservationDate(invoiceData.reservationDate)}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-gray-600">Time:</span>
-                <span className="font-medium text-gray-900">{formatTime(invoiceData.timeSlot)}</span>
+                {/* FIXED: Use the new formatting functions that handle full datetime */}
+                <span className="font-medium text-gray-900">{formatReservationTime(invoiceData.reservationDate)}</span>
               </div>
               <div className="pt-2 border-t border-blue-200">
                 <p className="text-sm text-blue-700 font-medium">

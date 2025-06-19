@@ -652,18 +652,19 @@ const ReservationCalendar: React.FC = () => {
 
       case "confirmation": {
         // Helper function to extract payment method details
-const getPaymentMethodInfo = () => {
-  if (!confirmationDetails?.paymentMethod) {
-    return null; // Return null if no payment method data
-  }
-  
-  return {
-    method: confirmationDetails.paymentMethod.brand?.toUpperCase() || "CARD",
-    last4: confirmationDetails.paymentMethod.last4 || "****",
-  };
-};
+        const getPaymentMethodInfo = () => {
+          if (!confirmationDetails?.paymentMethod) {
+            return null; // Return null if no payment method data
+          }
 
-const paymentMethod = getPaymentMethodInfo();
+          return {
+            method: confirmationDetails.paymentMethod.brand?.toUpperCase() ||
+              "CARD",
+            last4: confirmationDetails.paymentMethod.last4 || "****",
+          };
+        };
+
+        const paymentMethod = getPaymentMethodInfo();
 
         // Create invoice data from existing state
         const invoiceData = {
@@ -672,16 +673,16 @@ const paymentMethod = getPaymentMethodInfo();
           customerName: formData.customer_name || "",
           customerEmail: formData.customer_email || "",
           customerPhone: formData.customer_phone || "",
-          reservationDate: selectedTimeSlot?.start_time?.split("T")[0] || "",
-          timeSlot:
-            selectedTimeSlot?.start_time?.split("T")[1]?.substring(0, 5) || "",
+          // FIXED: Pass the full ISO datetime string instead of splitting it
+          reservationDate: selectedTimeSlot?.start_time || "",
+          timeSlot: "", // Not used anymore, but kept for interface compatibility
           numberOfPeople: Number(formData.number_of_people) || 0,
           riders: Number(formData.riders) || 0,
           photoPackage: Boolean(formData.photo_package),
           goProPackage: Boolean(formData.go_pro_package),
           tshirts: Number(formData.tshirts) || 0,
           paymentAmount: paymentInfo?.amount || 0,
-          paymentDate: new Date().toISOString(), // Current timestamp, or use from confirmationDetails
+          paymentDate: new Date().toISOString(),
           paymentMethod: paymentMethod?.method || "Unknown",
           cardLast4: paymentMethod?.last4 || "****",
         };

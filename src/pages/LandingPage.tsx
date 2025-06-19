@@ -712,13 +712,13 @@ const LandingPage: React.FC = () => {
               >
                 <div className="text-center mb-6">
                   <div className="bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">🏄‍♂️</span>
+                    <span className="text-2xl">🛟</span>
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900">Private Wakeboarding</h3>
+                  <h3 className="text-2xl font-bold text-gray-900">Private Tubing</h3>
                 </div>
                 <p className="text-gray-700 mb-6 text-center">
-                  Experience the thrill of wakeboarding behind Cloud Dancer on the pristine waters of Flathead Lake. 
-                  Perfect for all skill levels with professional instruction available.
+                  Experience the thrill of tubing behind Cloud Dancer on the pristine waters of Flathead Lake. 
+                  Perfect for all skill levels.
                 </p>
                 <div className="space-y-2 mb-6">
                   <div className="flex items-center text-sm text-gray-600">
@@ -792,7 +792,7 @@ const LandingPage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                onClick={(e:any) => navigate('/charter')}
+                onClick={(e:any) => navigate('/charters')}
                 className="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-2 border-t-4 border-red-500"
               >
                 <div className="text-center mb-6">

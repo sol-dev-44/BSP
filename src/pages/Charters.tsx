@@ -8,7 +8,7 @@ const charterPageStructuredData = {
   "@context": "https://schema.org",
   "@type": "Service",
   "name": "Big Sky Parasail Charter Services",
-  "description": "Premium charter services including private wakeboarding, Wild Horse Island tours, and 4th of July fireworks charters on Flathead Lake, Montana.",
+  "description": "Premium charter services including private tubing, Wild Horse Island tours, and 4th of July fireworks charters on Flathead Lake, Montana.",
   "provider": {
     "@type": "Organization",
     "name": "Big Sky Parasail",
@@ -25,7 +25,7 @@ const charterPageStructuredData = {
 
 // Image configuration
 const images = {
-  wakeboardingHero: "/girlwake.jpeg",
+  tubingHero: "/tubing.jpg",
   wildHorseHero: "/wildHorseIsland.jpeg", 
   fireworksHero: "/fourthJuly.jpg",
   chartergallery1: "/WhiteFishSmiles.jpg",
@@ -159,7 +159,7 @@ const CharterCard: React.FC<CharterCardProps> = ({
 };
 
 const ChartersPage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'wakeboarding' | 'island' | 'fireworks'>('wakeboarding');
+  const [activeTab, setActiveTab] = useState<'tubing' | 'island' | 'fireworks'>('tubing');
 
   // Animation variants
   const fadeInUp = {
@@ -186,27 +186,27 @@ const ChartersPage: React.FC = () => {
 
   const charterData = [
     {
-      title: "Private Wakeboarding",
-      subtitle: "Adrenaline-Pumping Water Sports",
-      description: "Experience the ultimate thrill of wakeboarding behind our powerful Ocean Pro 31 on Flathead Lake's pristine waters. $500/hour with 3-hour minimum. Perfect for beginners and pros alike!",
+      title: "Private Tubing",
+      subtitle: "Fun-Filled Water Adventures",
+      description: "Experience the excitement of tubing behind our powerful Ocean Pro 31 on Flathead Lake's pristine waters. $500/hour with 3-hour minimum. Perfect for all ages and skill levels!",
       features: [
-        "Private group experience (up to 10 guests)",
-        "Professional wakeboarding equipment provided",
+        "Private group experience (up to 12 guests)",
+        "Professional tubing equipment provided",
         "3 hour minimum booking",
         "All safety gear included",
         "Professional captain & crew",
         "Scenic lake cruise included",
-        "Multiple wakeboarding sessions"
+        "Multiple tubing sessions for everyone"
       ],
       pricing: "$500/hr",
       duration: "3 Hr Min",
       season: "May - September",
-      image: images.wakeboardingHero,
+      image: images.tubingHero,
       gradient: "bg-gradient-to-br from-cyan-500 to-blue-600",
       borderColor: "border-cyan-500",
       bgColor: "bg-cyan-100",
       textColor: "text-cyan-600",
-      icon: "🏄‍♂️"
+      icon: "🛟"
     },
     {
       title: "Wild Horse Island Adventure",
@@ -259,13 +259,13 @@ const ChartersPage: React.FC = () => {
   ];
 
   const itineraryData = {
-    wakeboarding: {
-      title: "Wakeboarding Adventure Timeline",
+    tubing: {
+      title: "Tubing Adventure Timeline",
       steps: [
         { time: "7:45 AM", activity: "Meet at Flathead Harbor Marina", details: "Safety briefing & equipment fitting" },
-        { time: "8:15 AM", activity: "Departure & Lake Tour", details: "Scenic cruise to perfect wakeboarding waters" },
-        { time: "8:30 AM", activity: "Wakeboarding Sessions Begin", details: "Individual practice runs & coaching" },
-        { time: "11:00 PM", activity: "Return to Marina", details: "Final group photos & departure" }
+        { time: "8:15 AM", activity: "Departure & Lake Tour", details: "Scenic cruise to perfect tubing waters" },
+        { time: "8:30 AM", activity: "Tubing Sessions Begin", details: "Individual and group tubing runs for all ages" },
+        { time: "11:00 AM", activity: "Return to Marina", details: "Final group photos & departure" }
       ]
     },
     island: {
@@ -296,8 +296,8 @@ const ChartersPage: React.FC = () => {
     <>
       <SEO
         title="Charter Services - Big Sky Parasail | Flathead Lake Montana"
-        description="Premium charter services on Flathead Lake: private wakeboarding, Wild Horse Island tours, and exclusive 4th of July fireworks charters. Book your custom adventure today!"
-        keywords="charter services Montana, Flathead Lake charters, private wakeboarding, Wild Horse Island tours, 4th of July fireworks charter"
+        description="Premium charter services on Flathead Lake: private tubing, Wild Horse Island tours, and exclusive 4th of July fireworks charters. Book your custom adventure today!"
+        keywords="charter services Montana, Flathead Lake charters, private tubing, Wild Horse Island tours, 4th of July fireworks charter"
         canonicalUrl="https://www.montanaparasail.com/charters"
         ogImage="https://www.montanaparasail.com/HighAerial.jpeg"
         structuredData={charterPageStructuredData}
@@ -358,7 +358,7 @@ const ChartersPage: React.FC = () => {
                 variants={fadeInUp}
                 className="text-xl md:text-2xl mb-8 text-orange-100 leading-relaxed"
               >
-                Escape the ordinary with our exclusive charter services. Private wakeboarding, 
+                Escape the ordinary with our exclusive charter services. Private tubing, 
                 island expeditions, and unforgettable fireworks experiences await!
               </motion.p>
               
@@ -482,7 +482,7 @@ const ChartersPage: React.FC = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  {key === 'wakeboarding' && '🏄‍♂️ Wakeboarding'}
+                  {key === 'tubing' && '🛟 Tubing'}
                   {key === 'island' && '🏝️ Island Adventure'}  
                   {key === 'fireworks' && '🎆 Fireworks'}
                 </motion.button>
