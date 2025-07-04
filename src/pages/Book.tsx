@@ -37,7 +37,7 @@ const bookingPageStructuredData = {
 
 // Image configuration for easy updates
 const images = {
-  heroImage: "/HighAerial.jpeg", // Hero section background image
+  heroImage: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images/https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//HighAerial.jpeg", // Hero section background image
   phoneIcon: "/phone-icon.svg", // Replace with actual phone icon path
   emailIcon: "/email-icon.svg", // Replace with actual email icon path
 };
@@ -81,7 +81,7 @@ const BookNowPage = () => {
         description="Reserve your parasailing experience on Flathead Lake. Easy online booking for Montana's premier parasailing adventure with breathtaking mountain views."
         keywords="book parasailing, Flathead Lake parasail reservations, Montana parasailing tickets, parasail booking, parasail adventure reservation"
         canonicalUrl="https://www.montanaparasail.com/reservations"
-        ogImage="https://www.montanaparasail.com/WhiteFishSmiles.jpg"
+        ogImage="https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//WhiteFishSmiles.jpg"
         structuredData={bookingPageStructuredData}
       />
       <div className="min-h-screen overflow-hidden">

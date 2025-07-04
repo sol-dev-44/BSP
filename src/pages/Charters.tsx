@@ -25,12 +25,12 @@ const charterPageStructuredData = {
 
 // Image configuration
 const images = {
-  tubingHero: "/tubing.jpg",
-  wildHorseHero: "/wildHorseIsland.jpeg", 
-  fireworksHero: "/fourthJuly.jpg",
-  chartergallery1: "/WhiteFishSmiles.jpg",
-  chartergallery2: "/DaytonaImage.png",
-  chartergallery3: "/FlatheadWithShadow.jpg"
+  tubingHero: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//tubing.jpg",
+  wildHorseHero: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wildHorseIsland.jpeg", 
+  fireworksHero: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//fourthJuly.jpg",
+  chartergallery1: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//WhiteFishSmiles.jpg",
+  chartergallery2: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//DaytonaImage.png",
+  chartergallery3: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//FlatheadWithShadow.jpg"
 };
 
 type CharterCardProps = {
@@ -299,7 +299,7 @@ const ChartersPage: React.FC = () => {
         description="Premium charter services on Flathead Lake: private tubing, Wild Horse Island tours, and exclusive 4th of July fireworks charters. Book your custom adventure today!"
         keywords="charter services Montana, Flathead Lake charters, private tubing, Wild Horse Island tours, 4th of July fireworks charter"
         canonicalUrl="https://www.montanaparasail.com/charters"
-        ogImage="https://www.montanaparasail.com/HighAerial.jpeg"
+        ogImage="https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//HighAerial.jpeg"
         structuredData={charterPageStructuredData}
       />
 

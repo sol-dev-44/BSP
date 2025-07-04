@@ -59,8 +59,34 @@ const TimeSlotsList: React.FC<TimeSlotsListProps> = ({
   }, {} as Record<string, TimeSlot[]>);
 
   // Keep track of visible dates for navigation
-  const sortedDates = Object.keys(timeSlotsByDate).sort();
-  const [visibleDateIndex, setVisibleDateIndex] = useState(0);
+  const sortedDates = Object.keys(timeSlotsByDate).sort((a, b) => {
+    return new Date(a).getTime() - new Date(b).getTime();
+  });
+  
+  // Find today's date or the nearest future date
+  const findInitialDateIndex = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset to start of day for comparison
+    
+    // Try to find today first
+    const todayStr = today.toLocaleDateString();
+    const todayIndex = sortedDates.findIndex(date => date === todayStr);
+    if (todayIndex >= 0) return todayIndex;
+    
+    // If today not found, find the first future date
+    for (let i = 0; i < sortedDates.length; i++) {
+      const dateObj = new Date(sortedDates[i]);
+      dateObj.setHours(0, 0, 0, 0);
+      if (dateObj >= today) {
+        return i;
+      }
+    }
+    
+    // If no future dates, just return the first date
+    return 0;
+  };
+  
+  const [visibleDateIndex, setVisibleDateIndex] = useState(findInitialDateIndex());
   const visibleDate = sortedDates[visibleDateIndex];
 
   // Navigation functions

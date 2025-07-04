@@ -1,0 +1,31 @@
+/* TEAM */
+Developer: Big Sky Parasail Development Team
+Site: https://www.montanaparasail.com
+Location: Flathead Lake, Montana, USA
+
+/* SITE */
+Standards: HTML5, CSS3, JavaScript ES6+
+Components: React, TypeScript, Tailwind CSS
+Software: VS Code, Deno, Vite
+Last update: 2025-06-30
+Language: English
+Doctype: HTML5
+IDE: Visual Studio Code
+
+/* THANKS */
+Fonts: Inter, system fonts
+Images: Professional photography of Flathead Lake
+Hosting: Modern web hosting platform
+Analytics: Privacy-focused analytics
+
+                            .-""""""-.
+                          .'          '.
+                         /   O      O   \
+                        :           '    :
+                        |                |
+                        :    .------.    :
+                         \  '        '  /
+                          '.          .'
+                            '-.......-'
+                     
+            Thank you for visiting Big Sky Parasail!

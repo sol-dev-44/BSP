@@ -1,4 +1,4 @@
-// reservationRoutes.ts - Updated with SMS notifications
+// reservationRoutes.ts - Updated with SMS notifications and TIP SUPPORT
 import { Router } from "@oak/oak";
 import {
   cancelReservation,
@@ -60,7 +60,7 @@ router
       const value = await ctx.request.body.json();
       console.log("Received pending reservation request:", value);
 
-      // Create payment intent with Stripe first (this is the critical part for getting a client secret)
+      // 🔥 CRITICAL FIX: Include tip_amount in payment intent calculation
       const paymentIntentResult = await createPaymentIntent({
         time_slot_id: value.time_slot_id,
         customer_name: value.customer_name,
@@ -71,6 +71,7 @@ router
         photo_package: value.photo_package || false,
         go_pro_package: value.go_pro_package || false,
         tshirts: value.tshirts || 0,
+        tip_amount: value.tip_amount || 0, // 🔥 THIS WAS MISSING!
       });
 
       // If createPaymentIntent returns a string, it's an error message
@@ -85,6 +86,7 @@ router
       console.log("Payment intent created:", {
         hasClientSecret: Boolean(paymentIntentResult.clientSecret),
         amount: paymentIntentResult.amount,
+        tipIncluded: value.tip_amount || 0,
         clientSecretStart: paymentIntentResult.clientSecret
           ? paymentIntentResult.clientSecret.substring(0, 10) + "..."
           : "none",
@@ -164,10 +166,11 @@ router
             customerEmail: value.reservationData.customer_email,
             customerPhone: value.reservationData.customer_phone,
             totalAmount: paymentConfirmation.paymentIntent.amount,
-            // Add-on fields
+            // Add-on fields including tip
             photo_package: value.reservationData.photo_package || false,
             go_pro_package: value.reservationData.go_pro_package || false,
-            tshirts: value.reservationData.tshirts || 0
+            tshirts: value.reservationData.tshirts || 0,
+            tip_amount: value.reservationData.tip_amount || 0 // Include tip in SMS data
           };
 
           // Try to send SMS, fallback to console log if it fails
@@ -185,10 +188,11 @@ router
             customerEmail: value.reservationData.customer_email,
             customerPhone: value.reservationData.customer_phone,
             totalAmount: paymentConfirmation.amount,
-            // Add-on fields
+            // Add-on fields including tip
             photo_package: value.reservationData.photo_package || false,
             go_pro_package: value.reservationData.go_pro_package || false,
-            tshirts: value.reservationData.tshirts || 0
+            tshirts: value.reservationData.tshirts || 0,
+            tip_amount: value.reservationData.tip_amount || 0
           });
         }
       } catch (smsError) {
@@ -202,6 +206,59 @@ router
       console.error("❌ Error confirming reservation:", error);
       ctx.response.status = 500;
       ctx.response.body = { error: "Failed to confirm reservation" };
+    }
+  })
+
+  // Simple tip endpoint - add this before export default router;
+  .post("/api/tips/create", async (ctx) => {
+    try {
+      if (!ctx.request.hasBody) {
+        ctx.response.status = 400;
+        ctx.response.body = { error: "No data provided" };
+        return;
+      }
+
+      const { amount, customer_name } = await ctx.request.body.json();
+      console.log("Creating tip payment intent:", { amount, customer_name });
+
+      // Simple tip payment intent creation
+      const stripeApiKey = Deno.env.get("STRIPE_SECRET_KEY") || "";
+      
+      if (!stripeApiKey) {
+        ctx.response.status = 500;
+        ctx.response.body = { error: "Payment processing not configured" };
+        return;
+      }
+
+      // Import Stripe the same way your stripeActions.ts does
+      const Stripe = (await import("stripe")).default;
+      const stripe = new Stripe(stripeApiKey, {
+        apiVersion: "2025-04-30.basil",
+        typescript: true,
+      });
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: Math.round(amount),
+        currency: "usd",
+        description: `Crew tip from ${customer_name}`,
+        metadata: {
+          type: "crew_tip",
+          customer_name,
+        },
+        automatic_payment_methods: {
+          enabled: true,
+        },
+      });
+
+      ctx.response.status = 201;
+      ctx.response.body = {
+        clientSecret: paymentIntent.client_secret,
+        amount: paymentIntent.amount,
+      };
+    } catch (error) {
+      console.error("Error creating tip:", error);
+      ctx.response.status = 500;
+      ctx.response.body = { error: "Failed to create tip payment" };
     }
   })
   
@@ -493,10 +550,11 @@ router
             customerEmail: value.customer_email,
             customerPhone: value.customer_phone,
             totalAmount: value.payment_amount,
-            // Add-on fields
+            // Add-on fields including tip
             photo_package: value.photo_package || false,
             go_pro_package: value.go_pro_package || false,
-            tshirts: value.tshirts || 0
+            tshirts: value.tshirts || 0,
+            tip_amount: value.tip_amount || 0
           };
 
           // Try to send SMS, fallback to console log if it fails
@@ -514,10 +572,11 @@ router
             customerEmail: value.customer_email,
             customerPhone: value.customer_phone,
             totalAmount: value.payment_amount,
-            // Add-on fields
+            // Add-on fields including tip
             photo_package: value.photo_package || false,
             go_pro_package: value.go_pro_package || false,
-            tshirts: value.tshirts || 0
+            tshirts: value.tshirts || 0,
+            tip_amount: value.tip_amount || 0
           });
         }
       } catch (smsError) {

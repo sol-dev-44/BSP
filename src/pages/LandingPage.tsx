@@ -1,8 +1,12 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../Components/Footer.tsx";
 import SEO from "../Components/Seo.tsx";
+import TipComponent from "../Components/Tip.tsx";
+import CanadianWelcomeBanner from "../Components/CanadianWelcomeBanner.tsx";
+
+
 
 const landingPageStructuredData = {
   "@context": "https://schema.org",
@@ -10,7 +14,7 @@ const landingPageStructuredData = {
   "name": "Big Sky Parasail",
   "description":
     "Experience Montana's premier parasailing adventure on Flathead Lake. Safe, thrilling parasail rides with breathtaking mountain views.",
-  "image": "https://www.montanaparasail.com/WhiteFishSmiles.jpg",
+  "image": "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//WhiteFishSmiles.jpg",
   "url": "https://www.montanaparasail.com",
   "telephone": "(406) 270-6256",
   "email": "bigskyparasailing@gmail.com",
@@ -57,12 +61,12 @@ const landingPageStructuredData = {
 
 // Image configuration for easy updates
 const images = {
-  heroLogo: "/JerryBearLogo.png",
-  feature1: "/FlatheadAerial.jpg",
-  feature2: "/cloudDancerInclineDock.jpg",
-  feature3: "/DaytonaImage.png",
-  flatheadImage: "/FlatheadWithShadow.jpg",
-  safetyImage: "/WhiteFishSmiles.jpg",
+  heroLogo: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//noiredancingbear.png",
+  feature1: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//FlatheadAerial.jpg",
+  feature2: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//cloudDancerInclineDock.jpg",
+  feature3: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//DaytonaImage.png",
+  flatheadImage: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//FlatheadWithShadow.jpg",
+  safetyImage: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//WhiteFishSmiles.jpg",
 };
 
 type TestimonialProps = {
@@ -72,56 +76,236 @@ type TestimonialProps = {
   featured?: boolean;
 };
 
-const Testimonial: React.FC<TestimonialProps> = ({ quote, author, location, featured = false }) => (
-  <div className={`${featured ? 'bg-white p-8 shadow-xl' : 'bg-white p-6 shadow-lg'} rounded-2xl hover:shadow-xl transition-shadow`}>
+const Testimonial: React.FC<TestimonialProps> = (
+  { quote, author, location, featured = false },
+) => (
+  <div
+    className={`${
+      featured ? "bg-white/95 backdrop-blur-lg p-8 shadow-2xl border border-white/20" : "bg-white/90 backdrop-blur-md p-6 shadow-xl border border-white/10"
+    } rounded-2xl hover:shadow-2xl transition-all duration-300 hover:scale-105`}
+  >
     <div className="flex mb-4 justify-center">
       {[...Array(5)].map((_, i) => (
-        <svg
+        <motion.svg
           key={i}
-          className={`${featured ? 'w-6 h-6' : 'w-5 h-5'} text-amber-500 fill-current`}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: i * 0.1 }}
+          className={`${
+            featured ? "w-6 h-6" : "w-5 h-5"
+          } text-amber-500 fill-current`}
           viewBox="0 0 24 24"
         >
           <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-        </svg>
+        </motion.svg>
       ))}
     </div>
-    <p className={`italic text-gray-700 mb-4 ${featured ? 'text-xl text-center' : 'text-center'}`}>"{quote}"</p>
-    <p className={`${featured ? 'text-center font-semibold text-blue-600' : 'text-sm font-semibold text-center'}`}>
-      — {author}{location && `, ${location}`}
+    <p
+      className={`italic text-gray-700 mb-4 ${
+        featured ? "text-xl text-center font-medium" : "text-center"
+      }`}
+    >
+      "{quote}"
+    </p>
+    <p
+      className={`${
+        featured
+          ? "text-center font-semibold text-blue-600"
+          : "text-sm font-semibold text-center"
+      }`}
+    >
+      — {author}
+      {location && `, ${location}`}
     </p>
   </div>
 );
 
+// Enhanced floating CTA button
+const FloatingCTA: React.FC<{ isVisible: boolean }> = ({ isVisible }) => {
+  const navigate = useNavigate();
+  
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 0, y: 100, scale: 0.8 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 100, scale: 0.8 }}
+          className="fixed bottom-6 right-6 z-[40]"
+          style={{ zIndex: 40 }}
+        >
+          <motion.button
+            onClick={() => navigate('/reservations')}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-3 rounded-full shadow-2xl font-bold text-lg hover:shadow-amber-500/25 transition-all duration-300 flex items-center space-x-2"
+          >
+            <span>🎯 Book Now</span>
+          </motion.button>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [showFloatingCTA, setShowFloatingCTA] = useState(false);
+  const [activeFeature, setActiveFeature] = useState(0);
+  const { scrollYProgress } = useScroll();
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.1]);
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Handle video autoplay with proven mobile technique
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Set video loaded when metadata is ready
+    const handleLoadedMetadata = () => {
+      setIsVideoLoaded(true);
+    };
+
+    // Track play/pause state
+    const handlePlay = () => setIsVideoPlaying(true);
+    const handlePause = () => setIsVideoPlaying(false);
+
+    // Attempt autoplay
+    const attemptAutoplay = async () => {
+      try {
+        // Always mute first for mobile compatibility
+        video.muted = true;
+        video.playsInline = true;
+        
+        await video.play();
+        setIsVideoPlaying(true);
+      } catch (error) {
+        console.log("Autoplay prevented:", error);
+        setIsVideoPlaying(false);
+      }
+    };
+
+    // Add event listeners
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+    video.addEventListener('play', handlePlay);
+    video.addEventListener('pause', handlePause);
+
+    // Try autoplay when ready
+    if (video.readyState >= 1) {
+      handleLoadedMetadata();
+      attemptAutoplay();
+    } else {
+      video.addEventListener('loadeddata', () => {
+        attemptAutoplay();
+      });
+    }
+
+    return () => {
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      video.removeEventListener('play', handlePlay);
+      video.removeEventListener('pause', handlePause);
+    };
+  }, []);
+
+  // Manual play function for mobile - simplified and more reliable
+  const handleManualPlay = async (e?: React.MouseEvent | React.TouchEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    
+    const video = videoRef.current;
+    if (!video) return;
+
+    try {
+      // Ensure video is muted and inline for mobile
+      video.muted = true;
+      video.playsInline = true;
+      
+      // Remove controls to prevent double UI
+      video.controls = false;
+      
+      // Play the video
+      const playPromise = video.play();
+      
+      if (playPromise !== undefined) {
+        await playPromise;
+        setIsVideoPlaying(true);
+      }
+    } catch (error) {
+      console.error("Manual play failed:", error);
+      // As a last resort, show native controls
+      if (video) {
+        video.controls = true;
+      }
+    }
+  };
+
+  // Show floating CTA after scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowFloatingCTA(window.scrollY > 800);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Cycle through features
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveFeature((prev) => (prev + 1) % 3);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
   // Enhanced testimonials data
   const featuredTestimonial = {
-    quote: "Absolutely incredible! The views of Flathead Lake and the surrounding mountains were breathtaking. Our captain was so professional and made us feel completely safe. This was the highlight of our Montana vacation!",
+    quote:
+      "Absolutely incredible! The views of Flathead Lake and the surrounding mountains were breathtaking. Our captain was so professional and made us feel completely safe. This was the highlight of our Montana vacation!",
     author: "Jennifer & Mike T.",
     location: "Missoula, MT",
   };
 
   const testimonials = [
     {
-      quote: "My kids loved it! Even my husband with his fear of heights had a blast. We'll be back next year!",
+      quote:
+        "My kids loved it! Even my husband with his fear of heights had a blast. We'll be back next year!",
       author: "Sarah J.",
       location: "Bozeman, MT",
     },
     {
-      quote: "The most amazing experience of our vacation! Views were incredible and the staff made us feel completely safe.",
+      quote:
+        "The most amazing experience of our vacation! Views were incredible and the staff made us feel completely safe.",
       author: "Mark R.",
       location: "Seattle, WA",
     },
     {
-      quote: "Worth every penny! The photo package captured memories we'll treasure forever.",
+      quote:
+        "Worth every penny! The photo package captured memories we'll treasure forever.",
       author: "Lisa M.",
       location: "Denver, CO",
     },
     {
-      quote: "Professional, safe, and absolutely thrilling. Can't wait to bring friends back!",
+      quote:
+        "Professional, safe, and absolutely thrilling. Can't wait to bring friends back!",
       author: "David K.",
       location: "Spokane, WA",
-    }
+    },
   ];
 
   // Animation variants
@@ -160,683 +344,531 @@ const LandingPage: React.FC = () => {
       <SEO
         title="Big Sky Parasail - Flathead Lake, Montana"
         description="Experience the thrill of parasailing on Flathead Lake in Montana. Safe, breathtaking adventures with stunning mountain views. Book your parasail ride today!"
-        keywords="parasailing Montana, Flathead Lake parasailing, Montana water sports, parasail adventure, Lakeside Montana"
-        canonicalUrl="https://www.montanaparasail.com"
-        ogImage="https://www.montanaparasail.com/WhiteFishSmiles.jpg"
-        structuredData={landingPageStructuredData}
       />
-      <div className="min-h-screen overflow-hidden">
-        {/* Hero Section */}
-        <div className="relative bg-gradient-to-r from-blue-600 to-cyan-500 text-white">
-          <div className="absolute inset-0 z-0 overflow-hidden">
-            <div className="absolute w-full h-full bg-black opacity-30"></div>
-            <img
-              src={"/HighAerial.jpeg"}
-              alt="Parasailing over Flathead Lake"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 opacity-10">
-              <svg width="100%" height="100%">
-                <pattern
-                  id="pattern-circles"
-                  x="0"
-                  y="0"
-                  width="50"
-                  height="50"
-                  patternUnits="userSpaceOnUse"
-                  patternContentUnits="userSpaceOnUse"
-                >
-                  <circle cx="25" cy="25" r="10" fill="currentColor" />
-                </pattern>
-                <rect
-                  x="0"
-                  y="0"
-                  width="100%"
-                  height="100%"
-                  fill="url(#pattern-circles)"
-                />
-              </svg>
-            </div>
-          </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(landingPageStructuredData),
+        }}
+      />
+      <style>{`
+        /* Ensure tip modal has highest z-index */
+        [class*="tip"], [id*="tip"], [data-testid*="tip"] {
+          z-index: 9999 !important;
+        }
+        .tip-modal, .tip-component, .modal {
+          z-index: 9999 !important;
+        }
+      `}</style>
 
-          <div className="container mx-auto px-4 py-20 md:py-32 relative z-10">
-            <div className="flex flex-col md:flex-row items-center">
-              <div className="md:w-1/2 mb-10 md:mb-0">
-                <motion.div
-                  initial="hidden"
-                  animate="visible"
-                  variants={staggerChildren}
-                  className="max-w-xl"
-                >
-                  <motion.p
-                    variants={fadeInUp}
-                    className="text-amber-400 font-bold tracking-widest mb-2"
-                  >
-                    BIG SKY PARASAIL CO.
-                  </motion.p>
-                  <motion.h1
-                    variants={fadeInUp}
-                    className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight"
-                  >
-                    Soar Above <br />
-                    <span className="text-amber-400">Flathead Lake</span>
-                  </motion.h1>
-                  <motion.p
-                    variants={fadeInUp}
-                    className="text-lg md:text-xl mb-8 text-blue-50"
-                  >
-                    Experience breathtaking views from 300 feet above Montana's
-                    crystal waters on our safe, thrilling parasailing
-                    adventures.
-                  </motion.p>
-                  <motion.div
-                    variants={fadeInUp}
-                    className="flex flex-wrap gap-4"
-                  >
-                    <Link
-                      to="/reservations"
-                      className="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1"
-                    >
-                      Book Your Flight
-                    </Link>
-                    <Link
-                      to="/about"
-                      className="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-600 transition-all"
-                    >
-                      Learn More
-                    </Link>
-                  </motion.div>
-                </motion.div>
-              </div>
-              <div className="md:w-1/2 flex justify-center md:justify-end">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className="relative"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full opacity-20 blur-2xl">
-                  </div>
-                  <motion.img
-                    src={images.heroLogo}
-                    alt="Big Sky Parasail"
-                    className="relative z-10 max-w-sm md:max-w-md"
-                    animate={{
-                      y: [0, -15, 0],
-                      transition: {
+      <div className="relative min-h-screen overflow-hidden">
+        {/* VIDEO BACKGROUND CONTAINER */}
+        <div className="fixed inset-0 w-full h-full z-0">
+          {/* Video Background - Replace src with your video file */}
+          <video
+            ref={videoRef}
+            className="absolute inset-0 w-full h-full object-cover object-center"
+            autoPlay
+            loop
+            muted
+            playsInline
+            webkit-playsinline="true"
+            preload="auto"
+            poster={images.flatheadImage}
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+          >
+            {/* Replace with your actual video file */}
+            <source src="https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//ownBusiness.mp4" type="video/mp4" />
+            {/* <source src="/your-badass-video.webm" type="video/webm" /> */}
+            {/* Fallback for browsers that don't support video */}
+          </video>
+          
+          {/* Beautiful Loading Placeholder */}
+          <AnimatePresence>
+            {!isVideoLoaded && (
+              <motion.div 
+                className="absolute inset-0"
+                initial={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                {/* Background image placeholder */}
+                <div 
+                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                  style={{
+                    backgroundImage: `url('${images.flatheadImage}')`,
+                  }}
+                ></div>
+                
+                {/* Overlay for better contrast */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50 pointer-events-none"></div>
+                
+                {/* Animated loading indicator */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center">
+                    {/* Floating parasail animation */}
+                    <motion.div
+                      animate={{
+                        y: [0, -20, 0],
+                        rotate: [0, 5, -5, 0],
+                      }}
+                      transition={{
                         duration: 3,
                         repeat: Infinity,
                         ease: "easeInOut",
-                      },
-                    }}
-                  />
-                </motion.div>
-              </div>
-            </div>
-          </div>
-
-          <div className="absolute bottom-0 left-0 right-0">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120">
-              <path
-                fill="#ffffff"
-                fillOpacity="1"
-                d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"
-              >
-              </path>
-            </svg>
-          </div>
-        </div>
-
-        {/* Stats Section - NEW */}
-        <div className="py-16 bg-white border-b border-gray-100">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerChildren}
-              className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
-            >
-              <motion.div variants={fadeInUp} className="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-                <p className="text-3xl font-bold text-amber-500">5,000+</p>
-                <p className="text-gray-600">Happy Flyers</p>
-              </motion.div>
-              <motion.div variants={fadeInUp} className="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-                <p className="text-3xl font-bold text-blue-600">300ft</p>
-                <p className="text-gray-600">Max Height</p>
-              </motion.div>
-              <motion.div variants={fadeInUp} className="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-                <p className="text-3xl font-bold text-amber-500">100%</p>
-                <p className="text-gray-600">Safety Record</p>
-              </motion.div>
-              <motion.div variants={fadeInUp} className="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-                <p className="text-3xl font-bold text-blue-600">Since 2022</p>
-                <p className="text-gray-600">Serving Montana</p>
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Vibrant Help Wanted Banner */}
-        <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 border-t border-orange-300 shadow-lg">
-          <div className="container mx-auto px-4 py-6">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4 }}
-              className="flex flex-col sm:flex-row items-center justify-between"
-            >
-              <div className="flex items-center mb-4 sm:mb-0">
-                <motion.div 
-                  className="bg-white p-3 rounded-xl mr-4 shadow-lg"
-                  animate={{
-                    rotate: [0, 5, -5, 0],
-                    scale: [1, 1.05, 1]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                >
-                  <svg className="w-6 h-6 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clipRule="evenodd" />
-                  </svg>
-                </motion.div>
-                <div className="text-white">
-                  <div className="flex items-center mb-1">
-                    <motion.span 
-                      className="bg-green-400 text-white px-3 py-1 rounded-full text-sm font-bold mr-3 shadow-lg"
+                      }}
+                      className="text-8xl mb-6"
+                    >
+                      🪂
+                    </motion.div>
+                    
+                    {/* Loading text */}
+                    <motion.h3
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-3xl font-bold text-white mb-4"
+                    >
+                      Preparing Your Adventure...
+                    </motion.h3>
+                    
+                    {/* Animated dots */}
+                    <div className="flex justify-center space-x-2">
+                      {[0, 1, 2].map((index) => (
+                        <motion.div
+                          key={index}
+                          animate={{
+                            scale: [1, 1.5, 1],
+                            opacity: [0.3, 1, 0.3],
+                          }}
+                          transition={{
+                            duration: 1.5,
+                            repeat: Infinity,
+                            delay: index * 0.2,
+                          }}
+                          className="w-3 h-3 bg-amber-400 rounded-full"
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* Subtle tagline */}
+                    <motion.p
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="text-blue-100 mt-6 text-lg"
+                    >
+                      Get ready to soar above Flathead Lake
+                    </motion.p>
+                  </div>
+                </div>
+                
+                {/* Floating elements for ambiance */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 1 }}>
+                  {[...Array(8)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute text-2xl opacity-20"
                       animate={{
-                        boxShadow: ["0 0 0 0 rgba(34, 197, 94, 0.7)", "0 0 0 10px rgba(34, 197, 94, 0)", "0 0 0 0 rgba(34, 197, 94, 0)"]
+                        y: [100, -50],
+                        x: [0, Math.sin(i) * 30],
+                        rotate: [0, 360],
                       }}
                       transition={{
-                        duration: 2,
-                        repeat: Infinity
+                        duration: Math.random() * 10 + 8,
+                        repeat: Infinity,
+                        ease: "linear",
+                        delay: Math.random() * 5,
+                      }}
+                      style={{
+                        left: `${Math.random() * 100}%`,
+                        top: `${100 + Math.random() * 20}%`,
                       }}
                     >
-                      🌟 NOW HIRING 🌟
-                    </motion.span>
-                    <span className="text-2xl">🚤</span>
-                  </div>
-                  <span className="font-bold text-lg">Join Our Summer Crew Adventure!</span>
-                  <div className="text-orange-100 text-sm mt-1">
-                    <span className="hidden sm:inline">✨ No experience required • Work on the water • Great pay • </span>
-                    <span className="font-semibold">Make this summer unforgettable!</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex gap-3">
-                <Link
-                  to="/careers"
-                  className="px-6 py-3 bg-white hover:bg-gray-100 text-orange-600 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center"
-                >
-                  <span className="mr-2">🚀</span>
-                  Apply Now
-                </Link>
-                <a
-                  href="mailto:bigskyparasailing@gmail.com"
-                  className="px-6 py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center"
-                >
-                  <span className="mr-2">📧</span>
-                  Email Us
-                </a>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Enhanced Features Section */}
-        <div className="py-20 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerChildren}
-              className="text-center mb-16"
-            >
-              <motion.h2
-                variants={fadeInUp}
-                className="text-3xl font-bold mb-4 text-gray-900"
-              >
-                The Ultimate Parasailing Experience
-              </motion.h2>
-              <motion.p
-                variants={fadeInUp}
-                className="max-w-2xl mx-auto text-gray-600"
-              >
-                Discover why Big Sky Parasail offers Montana's most breathtaking and safest aerial adventures.
-              </motion.p>
-            </motion.div>
-
-            {/* Feature 1 - Breathtaking Views */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerChildren}
-              className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20"
-            >
-              <motion.div variants={fadeInUp} className="rounded-2xl overflow-hidden shadow-2xl">
-                <img src={images.feature1} alt="Breathtaking aerial views" className="w-full h-full object-cover" />
-              </motion.div>
-              <motion.div variants={fadeInUp}>
-                <h3 className="text-3xl font-bold mb-6 text-gray-900">Breathtaking 360° Views</h3>
-                <p className="text-gray-700 mb-6">
-                  Soar 300 feet above Flathead Lake's crystal waters and experience panoramic mountain views that stretch for miles. On clear days, you can see all the way to Glacier National Park's majestic peaks!
-                </p>
-                <div className="bg-blue-50 p-4 rounded-lg mb-4">
-                  <p className="text-blue-800 font-semibold">✨ Perfect for photography enthusiasts and Instagram content!</p>
-                </div>
-                <ul className="space-y-2">
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-amber-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>197 square miles of pristine lake views</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-amber-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Panoramic mountain ranges in every direction</span>
-                  </li>
-                </ul>
-              </motion.div>
-            </motion.div>
-
-            {/* Feature 2 - Cloud Dancer */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerChildren}
-              className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20"
-            >
-              <motion.div variants={fadeInUp} className="order-2 md:order-1">
-                <h3 className="text-3xl font-bold mb-6 text-gray-900">Meet Cloud Dancer</h3>
-                <p className="text-gray-700 mb-6">
-                  Our state-of-the-art Ocean Pro 31 - the heavyweight champion of parasail vessels. Built specifically for commercial parasailing with unmatched reliability, safety features, and comfort.
-                </p>
-                <div className="bg-amber-50 p-4 rounded-lg mb-6">
-                  <p className="text-amber-800 font-semibold">🚤 The gold standard in parasailing vessels!</p>
-                </div>
-                <ul className="space-y-2">
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-amber-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Hydraulic winch system for the smoothest flights</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-amber-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>USCG certified captains with 15+ years experience</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-amber-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Commercial-grade safety equipment throughout</span>
-                  </li>
-                </ul>
-              </motion.div>
-              <motion.div variants={fadeInUp} className="order-1 md:order-2 rounded-2xl overflow-hidden shadow-2xl">
-                <img src={images.feature2} alt="Cloud Dancer parasail boat" className="w-full h-full object-cover" />
-              </motion.div>
-            </motion.div>
-
-            {/* Feature 3 - Photo Packages */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerChildren}
-              className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
-            >
-              <motion.div variants={fadeInUp} className="rounded-2xl overflow-hidden shadow-2xl">
-                <img src={images.feature3} alt="Professional photo packages" className="w-full h-full object-cover" />
-              </motion.div>
-              <motion.div variants={fadeInUp}>
-                <h3 className="text-3xl font-bold mb-6 text-gray-900">Capture Every Moment</h3>
-                <p className="text-gray-700 mb-6">
-                  Don't just experience the thrill - take it home with you! Our professional photo packages capture your incredible parasailing adventure with high-quality images you'll treasure forever.
-                </p>
-                <div className="bg-green-50 p-4 rounded-lg mb-4">
-                  <p className="text-green-800 font-semibold">📸 Professional photos and/or GoPro video available for your group!</p>
-                </div>
-                <ul className="space-y-2">
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-amber-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>High-resolution digital photos</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-amber-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Multiple angles and perspectives</span>
-                  </li>
-                  <li className="flex items-center">
-                    <svg className="w-5 h-5 text-amber-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    <span>Instant digital delivery</span>
-                  </li>
-                </ul>
-              </motion.div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Flathead Lake Experience Section - NEW */}
-        <div className="py-20 bg-white">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerChildren}
-              className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
-            >
-              <motion.div variants={fadeInUp}>
-                <h2 className="text-3xl font-bold mb-6 text-gray-900">Montana's Crown Jewel</h2>
-                <p className="text-gray-700 mb-6">
-                  Flathead Lake is the largest natural freshwater lake west of the Mississippi, spanning 197 square miles of crystal-clear waters. From 300 feet up, you'll witness views that few people ever get to see - a perspective that transforms your understanding of Montana's raw beauty.
-                </p>
-                <p className="text-gray-700 mb-6">
-                  Our unique location offers unparalleled flying conditions with consistent summer breezes, protected waters, and some of the most spectacular mountain backdrops in North America.
-                </p>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-gray-50 p-4 rounded-lg shadow">
-                    <p className="font-bold text-blue-600">197 sq miles</p>
-                    <p className="text-sm text-gray-600">Lake surface area</p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg shadow">
-                    <p className="font-bold text-blue-600">370 feet</p>
-                    <p className="text-sm text-gray-600">Maximum depth</p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg shadow">
-                    <p className="font-bold text-blue-600">300 feet</p>
-                    <p className="text-sm text-gray-600">Your flight height</p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg shadow">
-                    <p className="font-bold text-blue-600">Glacier Views</p>
-                    <p className="text-sm text-gray-600">On clear days</p>
-                  </div>
+                      {['🎈', '☁️', '🏔️', '🌊'][Math.floor(Math.random() * 4)]}
+                    </motion.div>
+                  ))}
                 </div>
               </motion.div>
+            )}
+          </AnimatePresence>
+          
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40 pointer-events-none" style={{ zIndex: 30 }}></div>
+          
+          {/* Animated particles overlay */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 31 }}>
+            {[...Array(20)].map((_, i) => (
               <motion.div
-                variants={fadeInUp}
-                className="rounded-2xl overflow-hidden shadow-2xl"
-              >
-                <img src={images.flatheadImage} alt="Flathead Lake aerial view" className="w-full h-full object-cover" />
-              </motion.div>
-            </motion.div>
+                key={i}
+                className="absolute w-2 h-2 bg-white/20 rounded-full"
+                animate={{
+                  y: [-20, -100],
+                  opacity: [0, 1, 0],
+                }}
+                transition={{
+                  duration: Math.random() * 3 + 2,
+                  repeat: Infinity,
+                  delay: Math.random() * 2,
+                }}
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                }}
+              />
+            ))}
           </div>
         </div>
 
-        {/* Why Choose Us Section - NEW */}
-        <div className="py-20 bg-gray-50">
-          <div className="container mx-auto px-4">
+        {/* Mobile Play Button Overlay - MOVED OUTSIDE VIDEO CONTAINER */}
+        {isVideoLoaded && !isVideoPlaying && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="fixed inset-0 flex items-center justify-center bg-black/30 cursor-pointer z-[100]"
+            onClick={handleManualPlay}
+          >
+            <motion.button
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-white/20 backdrop-blur-md rounded-full p-6 md:p-8 border-4 border-white/40 shadow-2xl"
+              aria-label="Play video"
+            >
+              <svg 
+                className="w-16 h-16 md:w-20 md:h-20 text-white" 
+                fill="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </motion.button>
+            {isMobile && (
+              <p className="absolute bottom-10 text-white text-sm font-medium bg-black/50 px-4 py-2 rounded-full">
+                Tap to play video
+              </p>
+            )}
+          </motion.div>
+        )}
+
+        {/* HERO SECTION WITH ENHANCED ENGAGEMENT */}
+        <motion.div 
+          className="relative z-10 min-h-screen flex items-center justify-center pt-20"
+          style={{ opacity: heroOpacity, scale: heroScale }}
+        >
+          <div className="container mx-auto px-4 text-center">
             <motion.div
               initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
+              animate="visible"
               variants={staggerChildren}
-              className="text-center mb-16"
+              className="max-w-5xl mx-auto"
             >
-              <motion.h2
+              {/* Main headline with dynamic text */}
+              <motion.h1
                 variants={fadeInUp}
-                className="text-3xl font-bold mb-4 text-gray-900"
+                className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-tight"
               >
-                Why Choose Big Sky Parasail?
-              </motion.h2>
-              <motion.p
-                variants={fadeInUp}
-                className="text-gray-600 max-w-2xl mx-auto"
-              >
-                We're not just another water sports company - we're Montana's premier parasailing experts with an unwavering commitment to your safety and experience.
-              </motion.p>
-            </motion.div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow"
-              >
-                <div className="rounded-full bg-blue-100 w-16 h-16 flex items-center justify-center mb-6 mx-auto">
-                  <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-900 text-center">Unmatched Safety Record</h3>
-                <p className="text-gray-700 text-center mb-4">
-                  100% perfect safety record since day one. Our USCG certified captains have 15+ years of parasailing experience and adhere to the highest industry standards.
-                </p>
-                <div className="text-center">
-                  <span className="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">Perfect Safety Record</span>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow"
-              >
-                <div className="rounded-full bg-amber-100 w-16 h-16 flex items-center justify-center mb-6 mx-auto">
-                  <svg className="w-8 h-8 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-900 text-center">Premium Equipment</h3>
-                <p className="text-gray-700 text-center mb-4">
-                  Our Ocean Pro 31 "Cloud Dancer" is the heavyweight champion of parasail vessels, featuring state-of-the-art hydraulic systems and commercial-grade safety equipment.
-                </p>
-                <div className="text-center">
-                  <span className="inline-block bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-semibold">Commercial Grade</span>
-                </div>
-              </motion.div>
-
-       <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow"
-              >
-                <div className="rounded-full bg-cyan-100 w-16 h-16 flex items-center justify-center mb-6 mx-auto">
-                  <svg className="w-8 h-8 text-cyan-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm-2 5V6a2 2 0 114 0v1H8zm5 3a1 1 0 11-2 0 1 1 0 012 0zM7 10a1 1 0 11-2 0 1 1 0 012 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-900 text-center">Exceptional Service</h3>
-                <p className="text-gray-700 text-center mb-4">
-                  From booking to landing, we're dedicated to exceeding expectations. Personalized attention, flexible scheduling, and a commitment to making your adventure unforgettable.
-                </p>
-                <div className="text-center">
-                  <span className="inline-block bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-semibold">5-Star Service</span>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-
-        {/* Premium Charter Services Section - NEW */}
-        <div className="py-20 bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-100">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerChildren}
-              className="text-center mb-16"
-            >
-              <motion.div variants={fadeInUp} className="mb-4">
-                <span className="inline-block bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold tracking-wide">
-                  ⭐ PREMIUM EXPERIENCES ⭐
+                <span className="bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                  SOAR
                 </span>
+                <br />
+                <span className="text-white">500 FEET ABOVE</span>
+                <br />
+                <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                  MONTANA
+                </span>
+              </motion.h1>
+
+              {/* Subheadline with value proposition */}
+              <motion.p
+                variants={fadeInUp}
+                className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto font-medium"
+              >
+                Experience the ULTIMATE adrenaline rush over Flathead Lake's crystal waters. 
+                <span className="text-amber-400 font-bold"> Safe. Thrilling. Unforgettable.</span>
+              </motion.p>
+
+              {/* Social proof badges */}
+              <motion.div
+                variants={fadeInUp}
+                className="flex flex-wrap justify-center gap-4 md:gap-8 mb-10 text-white"
+              >
+                <div className="text-center">
+                  <div className="text-xl md:text-3xl font-bold text-amber-400">5,000+</div>
+                  <div className="text-xs md:text-sm">Happy Flyers</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xl md:text-3xl font-bold text-amber-400">100%</div>
+                  <div className="text-xs md:text-sm">Safety Record</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xl md:text-3xl font-bold text-amber-400">5.0★</div>
+                  <div className="text-xs md:text-sm">Google Rating</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xl md:text-3xl font-bold text-amber-400">20</div>
+                  <div className="text-xs md:text-sm">Years Experience</div>
+                </div>
               </motion.div>
+
+              {/* Enhanced CTA buttons */}
+              <motion.div
+                variants={fadeInUp}
+                className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+              >
+                <motion.button
+                  onClick={() => navigate('/reservations')}
+                  whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(255, 193, 7, 0.4)" }}
+                  whileTap={{ scale: 0.95 }}
+                  className="group relative px-10 py-5 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-xl rounded-2xl shadow-2xl hover:shadow-amber-500/25 transition-all duration-300 overflow-hidden"
+                >
+                  <span className="relative z-10 flex items-center">
+                    🚁 BOOK YOUR FLIGHT NOW
+                    <motion.span
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ repeat: Infinity, duration: 1.5 }}
+                      className="ml-2"
+                    >
+                      →
+                    </motion.span>
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </motion.button>
+
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-white/10 backdrop-blur-lg text-white font-semibold text-lg rounded-xl border border-white/30 hover:bg-white/20 transition-all duration-300"
+                  onClick={() => {
+                    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  📋 View Packages
+                </motion.button>
+              </motion.div>
+
+              {/* Enhanced logo with animation */}
+              <motion.div
+                variants={fadeInUp}
+                className="relative"
+              >
+                <motion.img
+                  src={images.heroLogo}
+                  alt="Big Sky Parasail"
+                  className="max-w-xs md:max-w-md mx-auto opacity-90"
+                  animate={{
+                    y: [0, -15, 0],
+                    rotate: [0, 2, -2, 0],
+                  }}
+                  transition={{
+                    duration: 6,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-full blur-3xl opacity-50"></div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* SIMPLIFIED PRICING SECTION */}
+        <section id="pricing" className="relative z-10 py-24 bg-gradient-to-br from-slate-900/95 via-blue-900/95 to-cyan-900/95 backdrop-blur-lg">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerChildren}
+              className="text-center mb-16"
+            >
               <motion.h2
                 variants={fadeInUp}
-                className="text-4xl font-bold mb-6 text-gray-900"
+                className="text-4xl md:text-6xl font-black text-white mb-6"
               >
-                Exclusive Charter Adventures
+                Simple <span className="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Pricing</span>
               </motion.h2>
               <motion.p
                 variants={fadeInUp}
-                className="text-xl text-gray-700 max-w-3xl mx-auto"
+                className="text-xl text-blue-200 max-w-3xl mx-auto"
               >
-                Take your adventure to the next level with our exclusive charter services. 
-                Private groups, custom itineraries, and unforgettable experiences on Flathead Lake.
+                Straightforward pricing for an unforgettable parasailing experience
               </motion.p>
             </motion.div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-2 border-t-4 border-cyan-500"
-              >
-                <div className="text-center mb-6">
-                  <div className="bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">🛟</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900">Private Tubing</h3>
-                </div>
-                <p className="text-gray-700 mb-6 text-center">
-                  Experience the thrill of tubing behind Cloud Dancer on the pristine waters of Flathead Lake. 
-                  Perfect for all skill levels.
-                </p>
-                <div className="space-y-2 mb-6">
-                  <div className="flex items-center text-sm text-gray-600">
-                    <svg className="w-4 h-4 text-cyan-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    Private group experience
-                  </div>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <svg className="w-4 h-4 text-cyan-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    All equipment provided
-                  </div>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <svg className="w-4 h-4 text-cyan-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    Instruction available
-                  </div>
-                </div>
-                <div className="text-center">
-                  <span className="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-semibold">Custom Pricing</span>
-                </div>
-              </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-2 border-t-4 border-amber-500"
-              >
-                <div className="text-center mb-6">
-                  <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">🏝️</span>
+            <div className="max-w-5xl mx-auto">
+              <div className="grid md:grid-cols-3 gap-8">
+                
+                {/* Parasailing Flight */}
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="relative p-8 rounded-2xl backdrop-blur-lg border bg-gradient-to-br from-amber-500/20 to-orange-500/20 border-amber-500/50 shadow-2xl shadow-amber-500/25"
+                >
+                  <div className="text-center mb-8">
+                    <h3 className="text-2xl font-bold text-white mb-4">🎈 Parasailing Flight</h3>
+                    <div className="text-5xl font-extrabold text-amber-400 mb-2">$99</div>
+                    <p className="text-blue-200 text-lg">per person</p>
+                    <p className="text-blue-200 text-sm">10-12 minutes flight time</p>
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900">Wild Horse Island</h3>
-                </div>
-                <p className="text-gray-700 mb-6 text-center">
-                  Charter to Montana's largest island in the middle of Flathead Lake. 
-                  Explore this 2,160-acre state park accessible only by boat.
-                </p>
-                <div className="space-y-2 mb-6">
-                  <div className="flex items-center text-sm text-gray-600">
-                    <svg className="w-4 h-4 text-amber-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    Round trip boat transport
+                  
+                  <ul className="space-y-3 mb-8">
+                    {[
+                      "Up to 500ft maximum altitude",
+                      "Professional captain & crew",
+                      "Complete safety briefing",
+                      "All safety equipment provided",
+                      "Boat transportation included",
+                      "Unforgettable mountain views"
+                    ].map((feature, index) => (
+                      <motion.li
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="flex items-center text-white"
+                      >
+                        <svg className="w-5 h-5 text-green-400 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        {feature}
+                      </motion.li>
+                    ))}
+                  </ul>
+                  
+                  <div className="text-center">
+                    <Link to="/reservations">
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="w-full px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-amber-500/25 transition-all duration-300"
+                      >
+                        🚁 Book Your Flight
+                      </motion.button>
+                    </Link>
                   </div>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <svg className="w-4 h-4 text-amber-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    Wildlife viewing opportunities
-                  </div>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <svg className="w-4 h-4 text-amber-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    Hiking and exploration time
-                  </div>
-                </div>
-                <div className="text-center">
-                  <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-semibold">Half/Full Day</span>
-                </div>
-              </motion.div>
+                </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                onClick={(e:any) => navigate('/charters')}
-                className="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-2 border-t-4 border-red-500"
-              >
-                <div className="text-center mb-6">
-                  <div className="bg-gradient-to-r from-red-500 to-pink-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">🎆</span>
+                {/* Photo/GoPro Add-On */}
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="relative p-8 rounded-2xl backdrop-blur-lg border bg-white/10 border-white/20 shadow-xl"
+                >
+                  <div className="text-center mb-8">
+                    <h3 className="text-2xl font-bold text-white mb-4">📸 Capture the Moment</h3>
+                    <div className="text-5xl font-extrabold text-amber-400 mb-2">$30</div>
+                    <p className="text-blue-200 text-lg">add-on option</p>
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900">4th of July Charter</h3>
-                </div>
-                <p className="text-gray-700 mb-6 text-center">
-                  Experience Flathead Lake's spectacular fireworks display from the best seats in the house - 
-                  right on the water under the stars.
-                </p>
-                <div className="space-y-2 mb-6">
-                  <div className="flex items-center text-sm text-gray-600">
-                    <svg className="w-4 h-4 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    Premium fireworks viewing
+                  
+                  <div className="space-y-6 mb-8">
+                    <div className="bg-white/10 rounded-lg p-4 border border-white/20">
+                      <h4 className="text-white font-semibold mb-2">📷 Photo Package</h4>
+                      <p className="text-blue-200 text-sm">Professional photos of your entire flight experience</p>
+                    </div>
+                    
+                    <div className="text-center text-amber-400 font-bold">OR</div>
+                    
+                    <div className="bg-white/10 rounded-lg p-4 border border-white/20">
+                      <h4 className="text-white font-semibold mb-2">🎬 GoPro Video</h4>
+                      <p className="text-blue-200 text-sm">HD action footage of your aerial adventure</p>
+                    </div>
                   </div>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <svg className="w-4 h-4 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    Exclusive boat access
+                  
+                  <div className="text-center">
+                    <Link to="/reservations">
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="w-full px-8 py-4 bg-white/20 text-white border border-white/30 hover:bg-white/30 font-bold text-lg rounded-xl transition-all duration-300"
+                      >
+                        Add to Booking
+                      </motion.button>
+                    </Link>
                   </div>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <svg className="w-4 h-4 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    Evening cruise included
+                </motion.div>
+
+                {/* Ride-Along Option */}
+                <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="relative p-8 rounded-2xl backdrop-blur-lg border bg-white/10 border-white/20 shadow-xl"
+                >
+                  <div className="text-center mb-8">
+                    <h3 className="text-2xl font-bold text-white mb-4">🚤 Ride-Along</h3>
+                    <div className="text-5xl font-extrabold text-amber-400 mb-2">$30</div>
+                    <p className="text-blue-200 text-lg">per passenger</p>
+                    <p className="text-blue-200 text-sm">boat ride only</p>
                   </div>
-                </div>
-                <div className="text-center">
-                  <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">Limited Dates</span>
-                </div>
-              </motion.div>
+                  
+                  <ul className="space-y-3 mb-8">
+                    {[
+                      "Come along for the boat ride",
+                      "Watch others parasail from deck",
+                      "Enjoy the lake scenery",
+                      "Perfect for non-flyers",
+                      "All ages welcome",
+                      "Great for photographers"
+                    ].map((feature, index) => (
+                      <motion.li
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.4 + (index * 0.1) }}
+                        className="flex items-center text-white"
+                      >
+                        <svg className="w-5 h-5 text-green-400 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        {feature}
+                      </motion.li>
+                    ))}
+                  </ul>
+                  
+                  <div className="bg-amber-500/20 rounded-lg p-4 border border-amber-500/30 mb-6">
+                    <p className="text-amber-200 text-center font-semibold text-sm">
+                      ⚠️ Must book by phone or email
+                    </p>
+                  </div>
+                  
+                  <div className="flex flex-col gap-3">
+                    <a 
+                      href="tel:+14062706256"
+                      className="w-full text-center px-6 py-3 bg-white/20 text-white font-semibold rounded-lg border border-white/30 hover:bg-white/30 transition-all duration-300"
+                    >
+                      📞 Call (406) 270-6256
+                    </a>
+                    <a 
+                      href="mailto:bigskyparasailing@gmail.com"
+                      className="w-full text-center px-6 py-3 bg-white/20 text-white font-semibold rounded-lg border border-white/30 hover:bg-white/30 transition-all duration-300"
+                    >
+                      ✉️ Email Us
+                    </a>
+                  </div>
+                </motion.div>
+              </div>
             </div>
-
-      
           </div>
-        </div>
+        </section>
 
-        {/* Enhanced Testimonials Section */}
-        <div className="py-20 bg-gradient-to-r from-blue-600 to-cyan-500">
+        {/* CANADIAN WELCOME BANNER */}
+        <section className="relative z-10 py-16 bg-gradient-to-br from-blue-900/95 via-slate-900/95 to-blue-900/95 backdrop-blur-lg">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <CanadianWelcomeBanner />
+          </div>
+        </section>
+
+        {/* CHARTER SERVICES CTA SECTION */}
+        <section className="relative z-10 py-24 bg-gradient-to-br from-purple-600/90 via-indigo-600/90 to-blue-600/90 backdrop-blur-lg">
           <div className="container mx-auto px-4">
             <motion.div
               initial="hidden"
@@ -845,13 +877,142 @@ const LandingPage: React.FC = () => {
               variants={staggerChildren}
               className="max-w-6xl mx-auto"
             >
-              <motion.div variants={fadeInUp} className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-white mb-4">What Our Adventurers Say</h2>
-                <p className="text-blue-100 max-w-2xl mx-auto">
-                  Don't just take our word for it - hear from the thousands of guests who've experienced the magic of parasailing over Flathead Lake.
+              <motion.div variants={fadeInUp} className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+                  Want Something <span className="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Extra Special?</span>
+                </h2>
+                <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+                  Take your adventure to the next level with our premium charter services
                 </p>
               </motion.div>
-              
+
+              <div className="grid md:grid-cols-3 gap-8 mb-12">
+                {/* Private Tubing */}
+                <motion.div
+                  variants={fadeInUp}
+                  whileHover={{ scale: 1.05, y: -10 }}
+                  className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-xl text-center"
+                >
+                  <div className="text-5xl mb-4">🏄‍♂️</div>
+                  <h3 className="text-2xl font-bold text-white mb-4">Private Tubing</h3>
+                  <p className="text-blue-200 mb-4">
+                    Exclusive boat charter for your group's tubing adventure
+                  </p>
+                  <div className="text-3xl font-bold text-amber-400 mb-2">Starting at $1,600</div>
+                  <p className="text-blue-200 text-sm">4 hours • Up to 12 guests</p>
+                </motion.div>
+
+                {/* Wild Horse Island */}
+                <motion.div
+                  variants={fadeInUp}
+                  whileHover={{ scale: 1.05, y: -10 }}
+                  className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-xl text-center"
+                >
+                  <div className="text-5xl mb-4">🏝️</div>
+                  <h3 className="text-2xl font-bold text-white mb-4">Wild Horse Island</h3>
+                  <p className="text-blue-200 mb-4">
+                    Private tours to Montana's famous Wild Horse Island
+                  </p>
+                  <div className="text-3xl font-bold text-amber-400 mb-2">$2,000</div>
+                  <p className="text-blue-200 text-sm">4 hours • Up to 12 guests</p>
+                </motion.div>
+
+                {/* Fireworks Charter */}
+                <motion.div
+                  variants={fadeInUp}
+                  whileHover={{ scale: 1.05, y: -10 }}
+                  className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-xl text-center"
+                >
+                  <div className="text-5xl mb-4">🎆</div>
+                  <h3 className="text-2xl font-bold text-white mb-4">July 4th Fireworks</h3>
+                  <p className="text-blue-200 mb-4">
+                    Premium fireworks viewing from the best seats on the lake
+                  </p>
+                  <div className="text-3xl font-bold text-amber-400 mb-2">$4,000</div>
+                  <p className="text-blue-200 text-sm">4 hours • Up to 10 guests</p>
+                </motion.div>
+              </div>
+
+              <motion.div variants={fadeInUp} className="text-center">
+                <Link to="/charters">
+                  <motion.button
+                    whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(168, 85, 247, 0.4)" }}
+                    whileTap={{ scale: 0.95 }}
+                    className="group px-12 py-6 bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-bold text-2xl rounded-2xl shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 relative overflow-hidden mb-6"
+                  >
+                    <span className="relative z-10 flex items-center">
+                      🛥️ EXPLORE CHARTER OPTIONS
+                      <motion.span
+                        animate={{ x: [0, 8, 0] }}
+                        transition={{ repeat: Infinity, duration: 1.5 }}
+                        className="ml-3 text-3xl"
+                      >
+                        →
+                      </motion.span>
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </motion.button>
+                </Link>
+                
+                <p className="text-blue-200 max-w-2xl mx-auto">
+                  All charters are fully customizable and include professional crew, safety equipment, and unforgettable memories. 
+                  <span className="text-amber-400 font-semibold"> Contact us for custom quotes!</span>
+                </p>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ENHANCED STATS SECTION WITH ANIMATION */}
+        <section className="relative z-10 py-16 md:py-20 bg-white/95 backdrop-blur-lg overflow-hidden">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerChildren}
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center"
+            >
+              {[
+                { number: "5,000+", label: "Happy Flyers", icon: "🎈" },
+                { number: "100%", label: "Safety Record", icon: "🛡️" },
+                { number: "5.0★", label: "Google • Yelp • Facebook", icon: "⭐" },
+                { number: "20", label: "Years Experience", icon: "🏆" }
+              ].map((stat, index) => (
+                <motion.div
+                  key={index}
+                  variants={fadeInUp}
+                  whileHover={{ scale: 1.1, rotate: 2 }}
+                  className="bg-gradient-to-br from-blue-50 to-cyan-50 p-4 md:p-8 rounded-xl md:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-blue-100"
+                >
+                  <div className="text-2xl md:text-4xl mb-1 md:mb-2">{stat.icon}</div>
+                  <div className="text-2xl md:text-4xl font-black text-blue-600 mb-1 md:mb-2">{stat.number}</div>
+                  <div className="text-xs md:text-base text-gray-700 font-semibold leading-tight">{stat.label}</div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ENHANCED TESTIMONIALS WITH BETTER DESIGN */}
+        <section className="relative z-10 py-24 bg-gradient-to-br from-cyan-600/90 via-blue-600/90 to-purple-600/90 backdrop-blur-lg">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerChildren}
+              className="max-w-6xl mx-auto"
+            >
+              <motion.div variants={fadeInUp} className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
+                  What Our <span className="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Adventurers</span> Say
+                </h2>
+                <p className="text-xl text-blue-100 max-w-2xl mx-auto">
+                  Join thousands of thrill-seekers who've experienced the magic of Montana from above
+                </p>
+              </motion.div>
+
               {/* Featured testimonial */}
               <motion.div variants={fadeInUp} className="mb-12">
                 <Testimonial
@@ -861,9 +1022,9 @@ const LandingPage: React.FC = () => {
                   featured={true}
                 />
               </motion.div>
-              
+
               {/* Grid of testimonials */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {testimonials.map((testimonial, index) => (
                   <motion.div
                     key={index}
@@ -879,14 +1040,12 @@ const LandingPage: React.FC = () => {
                   </motion.div>
                 ))}
               </div>
-
-           
             </motion.div>
           </div>
-        </div>
+        </section>
 
-        {/* CTA Section */}
-        <div className="bg-white py-16">
+        {/* FINAL CTA SECTION */}
+        <section className="relative z-[50] py-24 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500" style={{ zIndex: 50 }}>
           <div className="container mx-auto px-4 text-center">
             <motion.div
               initial="hidden"
@@ -896,37 +1055,77 @@ const LandingPage: React.FC = () => {
             >
               <motion.h2
                 variants={fadeInUp}
-                className="text-3xl font-bold mb-6 text-gray-900"
+                className="text-4xl md:text-6xl font-black text-white mb-6"
               >
-                Ready for Takeoff?
+                Ready for <span className="text-yellow-300">Takeoff?</span>
               </motion.h2>
+
               <motion.p
                 variants={fadeInUp}
-                className="max-w-2xl mx-auto mb-8 text-lg text-gray-700"
+                className="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto font-medium"
               >
-                Book your parasailing adventure today and create memories that
-                will last a lifetime. Experience Montana like never before!
+                Experience Montana's most breathtaking adventure over Flathead Lake's crystal waters.
+                <span className="block mt-2 text-yellow-300 font-bold">Book your parasailing flight today!</span>
               </motion.p>
-              <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  to="/reservations"
-                  className="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 inline-block"
+
+              <motion.div
+                variants={fadeInUp}
+                className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12"
+              >
+                <motion.button
+                  onClick={() => navigate('/reservations')}
+                  whileHover={{ scale: 1.05, boxShadow: "0 25px 50px rgba(0,0,0,0.3)" }}
+                  whileTap={{ scale: 0.95 }}
+                  className="group px-12 py-6 bg-white text-orange-500 font-black text-2xl rounded-2xl shadow-2xl hover:bg-yellow-100 transition-all duration-300 relative overflow-hidden"
                 >
-                  Book Your Flight
-                </Link>
-                <Link
-                  to="/about"
-                  className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 inline-block"
-                >
-                  Learn More About Us
-                </Link>
+                  <span className="relative z-10 flex items-center">
+                    🚁 BOOK YOUR FLIGHT NOW
+                    <motion.span
+                      animate={{ x: [0, 8, 0] }}
+                      transition={{ repeat: Infinity, duration: 1.2 }}
+                      className="ml-3 text-3xl"
+                    >
+                      →
+                    </motion.span>
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-200 to-amber-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </motion.button>
+
+                <div className="text-white text-center">
+                  <div className="text-sm opacity-80">Questions? Call us:</div>
+                  <a href="tel:+14062706256" className="text-2xl font-bold hover:text-yellow-300 transition-colors">
+                    (406) 270-6256
+                  </a>
+                </div>
               </motion.div>
-              <motion.p variants={fadeInUp} className="mt-6 text-sm text-gray-500">
-                📞 (406) 270-6256 | May-September: Daily 9am-7pm | Reservations recommended
-              </motion.p>
+
+              {/* Tip Your Crew Section */}
+              <motion.div
+                variants={fadeInUp}
+                className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 max-w-2xl mx-auto relative z-[9999]"
+                style={{ zIndex: 9999 }}
+              >
+                <h3 className="text-2xl font-bold text-white mb-4">
+                  🙌 Show Your Appreciation
+                </h3>
+                <p className="text-white/90 mb-6">
+                  Love your experience? Our crew works hard to make your adventure unforgettable.
+                </p>
+                <div className="relative z-[9999]" style={{ zIndex: 9999 }}>
+                  <TipComponent mode="standalone" className="inline-block relative z-[9999]" />
+                </div>
+                <p className="text-white/70 text-sm mt-4">
+                  🚤 Tips go directly to our hardworking crew members
+                </p>
+              </motion.div>
             </motion.div>
           </div>
-        </div>
+        </section>
+
+        {/* FLOATING CTA BUTTON */}
+        <FloatingCTA isVisible={showFloatingCTA} />
+
+        {/* Footer */}
         <Footer />
       </div>
     </>

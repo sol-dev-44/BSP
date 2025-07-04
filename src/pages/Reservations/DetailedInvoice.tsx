@@ -1,4 +1,4 @@
-// DetailedInvoice.tsx - FIXED VERSION
+// DetailedInvoice.tsx - Updated with tip support
 import React from 'react';
 import { motion } from 'framer-motion';
 
@@ -14,6 +14,7 @@ export interface InvoiceData {
   photoPackage: boolean;
   goProPackage: boolean;
   tshirts: number;
+  tipAmount?: number; // Add tip amount to interface
   paymentAmount: number;
   paymentDate: string;
   paymentMethod: string;
@@ -27,8 +28,9 @@ const DetailedInvoice: React.FC<{ invoiceData: InvoiceData }> = ({ invoiceData }
   const photoCost = invoiceData.photoPackage ? 30 : 0;
   const goproCost = invoiceData.goProPackage ? 30 : 0;
   const tshirtCost = invoiceData.tshirts * 50;
+  const tipCost = (invoiceData.tipAmount || 0) / 100; // Convert from cents to dollars
   
-  const subtotal = parasailingCost + ridersCost + photoCost + goproCost + tshirtCost;
+  const subtotal = parasailingCost + ridersCost + photoCost + goproCost + tshirtCost + tipCost;
 
   // FIXED: Better date formatting that preserves the original datetime
   const formatReservationDate = (isoDateTimeString: string) => {
@@ -316,6 +318,28 @@ const DetailedInvoice: React.FC<{ invoiceData: InvoiceData }> = ({ invoiceData }
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900">${tshirtCost.toFixed(2)}</td>
                   </tr>
                 )}
+
+                {/* Crew Tip */}
+                {invoiceData.tipAmount && invoiceData.tipAmount > 0 && (
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center mr-3">
+                          <svg className="h-5 w-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                          </svg>
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium text-gray-900">Crew Tip</div>
+                          <div className="text-sm text-gray-500">Appreciation for exceptional service</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap text-center text-sm text-gray-900">1</td>
+                    <td className="px-4 py-4 whitespace-nowrap text-center text-sm text-gray-900">${tipCost.toFixed(2)}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900">${tipCost.toFixed(2)}</td>
+                  </tr>
+                )}
               </tbody>
               <tfoot className="bg-gray-50">
                 <tr>
@@ -341,6 +365,9 @@ const DetailedInvoice: React.FC<{ invoiceData: InvoiceData }> = ({ invoiceData }
             <p>• Wear comfortable clothing and secure shoes</p>
             <p>• Weather conditions may affect your reservation - we'll contact you if changes are needed</p>
             <p>• Cancellation policy: 24-hour notice required for full refund</p>
+            {invoiceData.tipAmount && invoiceData.tipAmount > 0 && (
+              <p>• Thank you for your generous tip to our crew! 🚤</p>
+            )}
           </div>
         </div>
 

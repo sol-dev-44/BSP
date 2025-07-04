@@ -51,7 +51,7 @@ const AdminLogin: React.FC = () => {
         <div className="px-6 py-8">
           <div className="text-center mb-8">
             <img 
-              src="/JerryBearLogo.png" 
+              src="/noiredancingbear.png" 
               alt="Big Sky Parasail" 
               className="h-16 mx-auto mb-4"
             />

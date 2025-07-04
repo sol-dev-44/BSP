@@ -10,7 +10,7 @@ const aboutPageStructuredData = {
   "name": "Big Sky Parasail",
   "description":
     "Learn about Montana's premier parasailing adventure on Flathead Lake. Established in 2022 with USCG certified captains and a perfect safety record.",
-  "image": "https://www.montanaparasail.com/WhiteFishSmiles.jpg",
+  "image": "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//WhiteFishSmiles.jpg",
   "url": "https://www.montanaparasail.com/about",
   "telephone": "(406) 270-6256",
   "additionalProperty": [
@@ -34,11 +34,11 @@ const aboutPageStructuredData = {
 
 // Image configuration for easy updates
 const images = {
-  historyImage: "/WhiteFishSmiles.jpg", // History image
-  boatImage: "/cloudDancerInclineDock.jpg", // Boat image
-  flatheadImage: "/FlatheadWithShadow.jpg", // Flathead Lake image
-  safetyImage: "/WhiteFishSmiles.jpg", // Safety image
-  commitmentImage: "/DaytonaImage.png", // Commitment image
+  historyImage: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//WhiteFishSmiles.jpg", // History image
+  boatImage: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//cloudDancerInclineDock.jpg", // Boat image
+  flatheadImage: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//FlatheadWithShadow.jpg", // Flathead Lake image
+  safetyImage: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//WhiteFishSmiles.jpg", // Safety image
+  commitmentImage: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//DaytonaImage.png", // Commitment image
 };
 
 // Animation variants
@@ -80,7 +80,7 @@ const AboutPage = () => {
         description="Learn about Montana's premier parasailing adventure on Flathead Lake. Established in 2022, our USCG certified captains provide safe, thrilling parasailing experiences with breathtaking mountain views."
         keywords="Big Sky Parasail, Flathead Lake parasailing, Montana water sports, parasailing adventure, USCG certified parasailing, safe parasailing Montana"
         canonicalUrl="https://www.montanaparasail.com/about"
-        ogImage="https://www.montanaparasail.com/cloudDancerInclineDock.jpg"
+        ogImage="https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//cloudDancerInclineDock.jpg"
         structuredData={aboutPageStructuredData}
       />
       <div className="min-h-screen overflow-hidden">

@@ -1,4 +1,4 @@
-// ReservationCalendar.tsx
+// ReservationCalendar.tsx - Updated with tip support
 import React, { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "../../redux/store.ts";
@@ -619,6 +619,20 @@ const ReservationCalendar: React.FC = () => {
                       )
                       : null}
 
+                    {/* Crew Tip */}
+                    {formData.tip_amount && Number(formData.tip_amount) > 0
+                      ? (
+                        <div className="py-3 grid grid-cols-3 gap-4">
+                          <dt className="text-sm font-medium text-gray-500">
+                            Crew Tip:
+                          </dt>
+                          <dd className="text-sm text-gray-900 col-span-2">
+                            ${(Number(formData.tip_amount) / 100).toFixed(2)}
+                          </dd>
+                        </div>
+                      )
+                      : null}
+
                     <div className="py-3 grid grid-cols-3 gap-4">
                       <dt className="text-sm font-medium text-gray-500">
                         Total:
@@ -681,6 +695,7 @@ const ReservationCalendar: React.FC = () => {
           photoPackage: Boolean(formData.photo_package),
           goProPackage: Boolean(formData.go_pro_package),
           tshirts: Number(formData.tshirts) || 0,
+          tipAmount: Number(formData.tip_amount) || 0, // Add tip amount
           paymentAmount: paymentInfo?.amount || 0,
           paymentDate: new Date().toISOString(),
           paymentMethod: paymentMethod?.method || "Unknown",
@@ -814,7 +829,7 @@ const ReservationCalendar: React.FC = () => {
           <div className="absolute w-full h-full bg-black opacity-30"></div>
           {/* Background image */}
           <img
-            src="/FlatheadAerial.jpg"
+            src="https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//FlatheadAerial.jpg"
             alt="Parasailing on Flathead Lake"
             className="w-full h-full object-cover"
           />

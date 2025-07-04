@@ -1,146 +1,182 @@
-// stripe/stripeActions.ts - Updated to handle potential string values
+// stripeActions.ts - Fixed to include tip_amount in payment calculation
 import Stripe from "stripe";
-import { Reservation, calculatePrice } from "../supabase/reservationActions.ts";
 import dotenv from "dotenv";
 
 // Load environment variables
 dotenv.config();
 
-// Initialize Stripe with the API key from environment variables
 const stripeApiKey = Deno.env.get("STRIPE_SECRET_KEY") || "";
-console.log(`Using Stripe API key: ${stripeApiKey ? stripeApiKey.substring(0, 8) + "..." : "MISSING"}`);
 
-// Initialize Stripe with proper API version
+if (!stripeApiKey) {
+  console.error("❌ STRIPE_SECRET_KEY not found in environment");
+}
+
+console.log("🔑 Stripe configuration: API key is", stripeApiKey ? "set" : "missing");
+
 const stripe = new Stripe(stripeApiKey, {
   apiVersion: "2025-04-30.basil",
   typescript: true,
 });
 
-// Create a payment intent for a reservation
-export const createPaymentIntent = async (reservationData: Omit<Reservation, 'id' | 'status' | 'payment_intent_id' | 'payment_amount' | 'created_at' | 'updated_at'>) => {
+interface ReservationData {
+  time_slot_id: string;
+  customer_name: string;
+  customer_email: string;
+  customer_phone: string;
+  number_of_people: number;
+  riders?: number;
+  photo_package?: boolean;
+  go_pro_package?: boolean;
+  tshirts?: number;
+  tip_amount?: number; // Add tip_amount to interface
+}
+
+// Calculate total amount including tip
+const calculateTotalAmount = (data: ReservationData): number => {
+  const {
+    number_of_people = 0,
+    riders = 0,
+    photo_package = false,
+    go_pro_package = false,
+    tshirts = 0,
+    tip_amount = 0 // 🔥 CRITICAL: Include tip amount
+  } = data;
+
+  // All amounts in cents for Stripe
+  const parasailingCost = number_of_people * 9900; // $99 per person
+  const ridersCost = riders * 3000; // $30 per rider
+  const photoCost = photo_package ? 3000 : 0; // $30 for photo package
+  const goproCost = go_pro_package ? 3000 : 0; // $30 for GoPro package
+  const tshirtCost = tshirts * 5000; // $50 per t-shirt
+  const tipCost = tip_amount || 0; // Tip amount (already in cents)
+
+  const totalAmount = parasailingCost + ridersCost + photoCost + goproCost + tshirtCost + tipCost;
+
+  // 🔍 Debug logging
+  console.log('💰 Payment calculation breakdown:', {
+    parasailing: `$${parasailingCost / 100} (${number_of_people} × $99)`,
+    riders: `$${ridersCost / 100} (${riders} × $30)`,
+    photo: `$${photoCost / 100}`,
+    gopro: `$${goproCost / 100}`,
+    tshirts: `$${tshirtCost / 100} (${tshirts} × $50)`,
+    tip: `$${tipCost / 100}`, // 🔥 Make sure this shows up!
+    total: `$${totalAmount / 100}`
+  });
+
+  return totalAmount;
+};
+
+export const createPaymentIntent = async (
+  reservationData: ReservationData,
+): Promise<{ clientSecret: string; amount: number } | string> => {
   try {
     console.log("Creating payment intent for:", reservationData);
-    
-    // Ensure number fields are properly converted from strings if needed
-    const processedData = {
-      ...reservationData,
-      number_of_people: typeof reservationData.number_of_people === 'string' 
-        ? parseInt(reservationData.number_of_people, 10) 
-        : (reservationData.number_of_people || 0),
-      riders: typeof reservationData.riders === 'string'
-        ? parseInt(reservationData.riders, 10)
-        : (reservationData.riders || 0),
-      tshirts: typeof reservationData.tshirts === 'string'
-        ? parseInt(reservationData.tshirts, 10)
-        : (reservationData.tshirts || 0)
+
+    // 🔥 CRITICAL FIX: Use the calculateTotalAmount function that includes tip
+    const totalAmount = calculateTotalAmount(reservationData);
+
+    console.log(`Creating Stripe payment intent for amount: ${totalAmount}`);
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: totalAmount, // 🔥 Now includes tip!
+      currency: "usd",
+      description: `Parasailing reservation for ${reservationData.customer_name}`,
+      metadata: {
+        time_slot_id: reservationData.time_slot_id,
+        customer_name: reservationData.customer_name,
+        customer_email: reservationData.customer_email,
+        number_of_people: reservationData.number_of_people.toString(),
+        riders: (reservationData.riders || 0).toString(),
+        photo_package: (reservationData.photo_package || false).toString(),
+        go_pro_package: (reservationData.go_pro_package || false).toString(),
+        tshirts: (reservationData.tshirts || 0).toString(),
+        tip_amount: (reservationData.tip_amount || 0).toString(), // Include tip in metadata
+      },
+      automatic_payment_methods: {
+        enabled: true,
+      },
+    });
+
+    console.log("Stripe payment intent created:", {
+      id: paymentIntent.id,
+      clientSecret: "exists",
+    });
+
+    return {
+      clientSecret: paymentIntent.client_secret!,
+      amount: totalAmount, // 🔥 Return total including tip
     };
-    
-    // Calculate the total price for the reservation using the processed data
-    const amount = calculatePrice(processedData);
-    
-    // Check if amount is valid
-    if (amount <= 0) {
-      return "Invalid reservation amount";
-    }
-    
-    // Check if we have a valid API key
-    if (!stripeApiKey || stripeApiKey.trim() === "") {
-      console.error("No Stripe API key provided. Cannot create a payment intent.");
-      return "Stripe API key is missing";
-    }
-    
-    // Create a payment intent with Stripe
-    try {
-      console.log(`Creating Stripe payment intent for amount: ${amount}`);
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount,
-        currency: "usd",
-        description: `Parasailing Reservation for ${processedData.customer_name}`,
-        metadata: {
-          customer_name: processedData.customer_name,
-          customer_email: processedData.customer_email,
-          time_slot_id: processedData.time_slot_id,
-        },
-        receipt_email: processedData.customer_email,
-        automatic_payment_methods: {
-          enabled: true,
-        },
-      });
-      
-      console.log("Stripe payment intent created:", {
-        id: paymentIntent.id,
-        clientSecret: paymentIntent.client_secret ? "exists" : "missing",
-      });
-      
-      // Only continue if we have a client secret
-      if (!paymentIntent.client_secret) {
-        throw new Error("No client secret returned from Stripe");
-      }
-      
-      // Return the client secret and other data
-      return {
-        clientSecret: paymentIntent.client_secret,
-        amount,
-        reservationData: processedData
-      };
-    } catch (stripeError) {
-      console.error("Stripe error:", stripeError);
-      return "Error creating payment intent: " + (stripeError instanceof Error ? stripeError.message : "Unknown error");
-    }
   } catch (error) {
-    console.error("Payment intent creation error:", error);
-    return error instanceof Error ? error.message : "Unknown error creating payment intent";
+    console.error("❌ Error creating payment intent:", error);
+    return `Failed to create payment intent: ${
+      error instanceof Error ? error.message : "Unknown error"
+    }`;
   }
 };
 
-// Confirm a payment intent (this is mostly handled client-side with Stripe Elements)
-export const confirmPaymentIntent = async (paymentIntentId: string) => {
+export const confirmPaymentIntent = async (
+  paymentIntentId: string,
+): Promise<{ paymentIntent: Stripe.PaymentIntent; paymentMethod: Stripe.PaymentMethod } | string> => {
   try {
-    // Check if we have a valid API key
-    if (!stripeApiKey || stripeApiKey.trim() === "") {
-      console.error("No Stripe API key provided. Cannot confirm the payment intent.");
-      return "Stripe API key is missing";
-    }
-    
-    // Retrieve the payment intent to check its status
+    console.log("Confirming payment intent:", paymentIntentId);
+
+    // Retrieve the payment intent to confirm it was successful
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-    
-    // Check if the payment was successful
+
     if (paymentIntent.status !== "succeeded") {
       return `Payment not successful. Status: ${paymentIntent.status}`;
     }
-    
-    return { 
-      success: true,
-      paymentIntent
+
+    // Get payment method details for the receipt
+    let paymentMethod: Stripe.PaymentMethod | null = null;
+    if (paymentIntent.payment_method) {
+      try {
+        paymentMethod = await stripe.paymentMethods.retrieve(
+          paymentIntent.payment_method as string,
+        );
+      } catch (error) {
+        console.warn("Could not retrieve payment method details:", error);
+      }
+    }
+
+    console.log("Payment intent confirmed successfully");
+
+    return {
+      paymentIntent,
+      paymentMethod: paymentMethod!,
     };
   } catch (error) {
-    console.error("Payment confirmation error:", error);
-    return error instanceof Error ? error.message : "Unknown error confirming payment";
+    console.error("❌ Error confirming payment intent:", error);
+    return `Failed to confirm payment intent: ${
+      error instanceof Error ? error.message : "Unknown error"
+    }`;
   }
 };
 
-// Process a refund for a payment
-export const processStripeRefund = async (paymentIntentId: string, amount?: number) => {
+export const processStripeRefund = async (
+  paymentIntentId: string,
+  amount?: number,
+): Promise<{ refund: Stripe.Refund } | string> => {
   try {
-    // Check if we have a valid API key
-    if (!stripeApiKey || stripeApiKey.trim() === "") {
-      console.error("No Stripe API key provided. Cannot process refund.");
-      return "Stripe API key is missing";
-    }
-    
-    const refund = await stripe.refunds.create({
+    console.log("Processing refund for payment intent:", paymentIntentId);
+
+    const refundData: Stripe.RefundCreateParams = {
       payment_intent: paymentIntentId,
-      amount: amount, // If not specified, refund the full amount
-    });
-    
-    return {
-      success: true,
-      refundId: refund.id,
-      refundAmount: refund.amount
     };
+
+    if (amount) {
+      refundData.amount = amount;
+    }
+
+    const refund = await stripe.refunds.create(refundData);
+
+    console.log("Refund processed successfully:", refund.id);
+
+    return { refund };
   } catch (error) {
-    console.error("Refund processing error:", error);
-    return error instanceof Error ? error.message : "Unknown error processing refund";
+    console.error("❌ Error processing refund:", error);
+    return `Failed to process refund: ${
+      error instanceof Error ? error.message : "Unknown error"
+    }`;
   }
 };

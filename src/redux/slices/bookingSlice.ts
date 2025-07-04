@@ -1,4 +1,4 @@
-// store/slices/bookingSlice.ts - Updated redux slice
+// store/slices/bookingSlice.ts - Updated with tip functionality
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { TimeSlot, Reservation } from '../../types.ts';
 
@@ -10,7 +10,9 @@ interface BookingState {
   currentStep: BookingStep;
   selectedSlot: string | null;
   selectedTimeSlot: TimeSlot | null;
-  formData: Partial<Reservation>;
+  formData: Partial<Reservation> & {
+    tip_amount?: number; // Add tip amount to form data
+  };
   paymentInfo: {
     clientSecret: string;
     amount: number;
@@ -33,7 +35,8 @@ const initialState: BookingState = {
     riders: 0,
     photo_package: false,
     go_pro_package: false,
-    tshirts: 0
+    tshirts: 0,
+    tip_amount: 0 // Initialize tip amount
   },
   paymentInfo: null,
   confirmationDetails: null,
@@ -61,7 +64,7 @@ const bookingSlice = createSlice({
       const { name, value } = action.payload;
       
       // FIXED: Ensure numeric fields remain numbers in state
-      if (name === 'number_of_people' || name === 'riders' || name === 'tshirts') {
+      if (name === 'number_of_people' || name === 'riders' || name === 'tshirts' || name === 'tip_amount') {
         // Parse strings to numbers if necessary
         const numericValue = typeof value === 'string' ? parseInt(value, 10) : value;
         state.formData = {

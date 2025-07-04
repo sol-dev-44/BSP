@@ -68,7 +68,7 @@ const AdminDashboard: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center">
             <img 
-              src="/JerryBearLogo.png" 
+              src="/noiredancingbear.png" 
               alt="Big Sky Parasail" 
               className="h-10 mr-3"
             />

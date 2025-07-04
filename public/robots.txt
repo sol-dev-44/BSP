@@ -1,10 +1,42 @@
-# robots.txt for Montana Parasail
+# Robots.txt for Big Sky Parasail
+# Generated on 2025-06-30T04:05:37.954Z
+
 User-agent: *
 Allow: /
 
-# Disallow any potential admin areas
+# Disallow admin and management areas
+Disallow: /management-console/
+Disallow: /management-console-login
 Disallow: /admin/
 Disallow: /wp-admin/
+Disallow: /api/
+
+# Disallow common non-public paths
+Disallow: /private/
+Disallow: /temp/
+Disallow: /*.json$
+Disallow: /*.xml$
+Disallow: /*?*debug*
+Disallow: /*?*test*
+
+# Allow specific important files
+Allow: /sitemap.xml
+Allow: /robots.txt
+Allow: /favicon.ico
+Allow: /*.css
+Allow: /*.js
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.webp
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
 
 # Sitemap location
 Sitemap: https://www.montanaparasail.com/sitemap.xml
+
+# Additional sitemaps (if you create them)
+# Sitemap: https://www.montanaparasail.com/sitemap-images.xml
+# Sitemap: https://www.montanaparasail.com/sitemap-news.xml

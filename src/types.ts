@@ -1,4 +1,4 @@
-// types.ts
+// types.ts - Updated with tip support
 export type TimeSlotStatus = 'available' | 'partially_booked' | 'fully_booked' | 'weather_blocked';
 
 export type ReservationStatus = 'confirmed' | 'cancelled' | 'refunded' | 'completed' | 'weather_cancelled' | 'pending';
@@ -26,6 +26,7 @@ export interface Reservation {
   photo_package?: boolean;
   go_pro_package?: boolean;
   tshirts?: number;
+  tip_amount?: number; // Add tip amount in cents
   status: ReservationStatus;
   payment_intent_id?: string;
   payment_amount?: number;

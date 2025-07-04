@@ -19,6 +19,7 @@ export interface ReservationAlert {
   photo_package?: boolean;
   go_pro_package?: boolean;
   tshirts?: number;
+  tip_amount?: number;
 }
 
 // Format date and time for SMS

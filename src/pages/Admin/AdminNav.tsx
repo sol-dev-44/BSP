@@ -58,7 +58,7 @@ const AdminNav: React.FC<AdminNavProps> = ({ fixed = false }) => {
             <div className="flex-shrink-0 flex items-center">
               <Link to="/management-console" className="flex items-center">
                 <img
-                  src="/JerryBearLogo.png"
+                  src="/noiredancingbear.png"
                   alt="Big Sky Parasail"
                   className="h-8 w-auto mr-2"
                 />

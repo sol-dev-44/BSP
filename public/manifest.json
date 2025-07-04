@@ -1,0 +1,40 @@
+{
+  "name": "Big Sky Parasail - Montana Parasailing",
+  "short_name": "Big Sky Parasail",
+  "description": "Experience the ultimate parasailing adventure on Montana's pristine Flathead Lake",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "categories": [
+    "travel",
+    "sports",
+    "recreation"
+  ],
+  "lang": "en-US",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images/FlatheadWithShadow.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "Parasailing on Flathead Lake"
+    }
+  ]
+}

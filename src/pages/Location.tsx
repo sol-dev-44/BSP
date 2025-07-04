@@ -116,28 +116,28 @@ const LocationPage = () => {
       description:
         "Experience the majestic mountains, pristine forests, and alpine meadows in this crown jewel of the National Park System.",
       distance: "40 miles north",
-      image: "/glacierPark.jpg",
+      image: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//glacierPark.jpg",
     },
     {
       title: "Wild Horse Island",
       description:
         "Visit the largest island on Flathead Lake, home to wild horses, bighorn sheep, and pristine hiking trails.",
       distance: "Short boat ride from marina",
-      image: "/wildHorse.jpg",
+      image: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wildHorse.jpg",
     },
     {
       title: "Bigfork",
       description:
         "Explore this charming village known for its galleries, fine dining, and summer theater.",
       distance: "20 minutes by car",
-      image: "/bigFork.jpg", // Replace with actual image
+      image: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//bigFork.jpg", // Replace with actual image
     },
     {
       title: "Whitefish",
       description:
         "Enjoy year-round activities including hiking, mountain biking, and scenic lift rides.",
       distance: "35 minutes by car",
-      image: "/whiteFish.jpg", // Replace with actual image
+      image: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//whiteFish.jpg", // Replace with actual image
     },
   ];
 
@@ -148,7 +148,7 @@ const LocationPage = () => {
         description="Located at Flathead Harbor Marina in Lakeside, MT. Find directions to Big Sky Parasail on Flathead Lake and information about our stunning parasailing location."
         keywords="Flathead Lake parasailing location, Lakeside MT parasailing, Flathead Harbor Marina, directions to parasailing Montana"
         canonicalUrl="https://www.montanaparasail.com/location"
-        ogImage="https://www.montanaparasail.com/FlatheadWithShadow.jpg"
+        ogImage="https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//FlatheadWithShadow.jpg"
         structuredData={locationPageStructuredData}
       />
       <div className="min-h-screen overflow-hidden">
@@ -158,7 +158,7 @@ const LocationPage = () => {
             <div className="absolute w-full h-full bg-black opacity-30"></div>
             {/* Background image */}
             <img
-              src="/FlatheadMarinaAerial.jpg"
+              src="https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//FlatheadMarinaAerial.jpg"
               alt="Flathead Harbor Marina"
               className="w-full h-full object-cover"
             />

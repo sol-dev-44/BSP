@@ -1,6 +1,12 @@
 // RoutesIndex.tsx
 import React, { Suspense } from "react";
-import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import StylishLoader from "./Components/StylishLoader.tsx";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -16,35 +22,34 @@ import TheBoat from "./pages/TheBoat.tsx";
 // import TheCrew from "./pages/TheCrew.tsx";
 import FAQ from "./pages/FAQ.tsx";
 import Location from "./pages/Location.tsx";
-import ReservationsLanding from './pages/Reservations/ReservationsLanding.tsx';
-import ReservationCalendar from './pages/Reservations/ReservationCalendar.tsx';
-import MarinaMap from './Components/MarinaMap.tsx';
-import Careers from './pages/CareersMain.tsx';
-import Charters from './pages/Charters.tsx';
-import Gallery from './pages/Gallery.tsx';
+import ReservationsLanding from "./pages/Reservations/ReservationsLanding.tsx";
+import ReservationCalendar from "./pages/Reservations/ReservationCalendar.tsx";
+import MarinaMap from "./Components/MarinaMap.tsx";
+import Careers from "./pages/CareersMain.tsx";
+import Charters from "./pages/Charters.tsx";
+import Gallery from "./pages/Gallery.tsx";
 
 // Admin components
-import AdminLogin from './pages/Admin/AdminLogin.tsx';
-import AdminNav from './pages/Admin/AdminNav.tsx';
-import AdminDashboard from './pages/Admin/AdminDashboard.tsx';
-import ReservationManagement from './pages/Admin/ReservationManagement.tsx';
-import ReservationDetail from './pages/Admin/ReservationDetail.tsx';
-import ReservationForm from './pages/Admin/ReservationForm.tsx';
-import TimeSlotManagement from './pages/Admin/TimeSlotManagement.tsx';
-import TimeSlotForm from './pages/Admin/TimeSlotForm.tsx';
-import WeatherBlock from './pages/Admin/WeatherBlock.tsx';
-import Settings from './pages/Admin/Settings.tsx';
-import ProtectedRoute from './pages/Admin/ProtectedRoute.tsx';
+import AdminLogin from "./pages/Admin/AdminLogin.tsx";
+import AdminNav from "./pages/Admin/AdminNav.tsx";
+import AdminDashboard from "./pages/Admin/AdminDashboard.tsx";
+import ReservationManagement from "./pages/Admin/ReservationManagement.tsx";
+import ReservationDetail from "./pages/Admin/ReservationDetail.tsx";
+import ReservationForm from "./pages/Admin/ReservationForm.tsx";
+import TimeSlotManagement from "./pages/Admin/TimeSlotManagement.tsx";
+import TimeSlotForm from "./pages/Admin/TimeSlotForm.tsx";
+import WeatherBlock from "./pages/Admin/WeatherBlock.tsx";
+import Settings from "./pages/Admin/Settings.tsx";
+import ProtectedRoute from "./pages/Admin/ProtectedRoute.tsx";
 
 // Create a wrapper component for content that needs conditional Navbar
 const AppContent = () => {
   const location = useLocation();
-  
+
   // Check if current path is an admin route
-  const isAdminRoute = 
-    location.pathname.startsWith('/management-console') || 
-    location.pathname === '/management-console-login';
-  
+  const isAdminRoute = location.pathname.startsWith("/management-console") ||
+    location.pathname === "/management-console-login";
+
   return (
     <>
       {!isAdminRoute && <Navbar />}
@@ -60,119 +65,161 @@ const AppContent = () => {
           <Route path="/careers" element={<Careers />} />
           <Route path="/charters" element={<Charters />} />
           <Route path="/gallery" element={<Gallery />} />
-          
+
           {/* Marina Map Route */}
-          
+
           {/* Reservations routes */}
-          <Route path="/reservations" element={<ReservationsLanding />} />
-          <Route path="/reservations/book/time" element={<ReservationCalendar />} />
-          <Route path="/reservations/book/info" element={<ReservationCalendar />} />
-          <Route path="/reservations/book/payment" element={<ReservationCalendar />} />
-          <Route path="/reservations/book/confirmation" element={<ReservationCalendar />} />
-          
+          <Route
+            path="/reservations"
+            element={<Navigate to="/reservations/book/time" replace />}
+          />
+          <Route
+            path="/reservations/book/time"
+            element={<ReservationCalendar />}
+          />
+          <Route
+            path="/reservations/book/info"
+            element={<ReservationCalendar />}
+          />
+          <Route
+            path="/reservations/book/payment"
+            element={<ReservationCalendar />}
+          />
+          <Route
+            path="/reservations/book/confirmation"
+            element={<ReservationCalendar />}
+          />
+
           {/* Admin Login Route */}
           <Route path="/management-console-login" element={<AdminLogin />} />
-          
+
           {/* Protected Admin Routes */}
-          <Route path="/management-console" element={
-            <ProtectedRoute>
-              <div className="min-h-screen flex flex-col">
-                <AdminNav fixed={true} />
-                <div className="pt-16">
-                  <AdminDashboard />
+          <Route
+            path="/management-console"
+            element={
+              <ProtectedRoute>
+                <div className="min-h-screen flex flex-col">
+                  <AdminNav fixed={true} />
+                  <div className="pt-16">
+                    <AdminDashboard />
+                  </div>
                 </div>
-              </div>
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/management-console/reservations" element={
-            <ProtectedRoute>
-              <div className="min-h-screen flex flex-col">
-                <AdminNav fixed={true} />
-                <div className="pt-16">
-                  <ReservationManagement />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/management-console/reservations"
+            element={
+              <ProtectedRoute>
+                <div className="min-h-screen flex flex-col">
+                  <AdminNav fixed={true} />
+                  <div className="pt-16">
+                    <ReservationManagement />
+                  </div>
                 </div>
-              </div>
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/management-console/reservations/:id" element={
-            <ProtectedRoute>
-              <div className="min-h-screen flex flex-col">
-                <AdminNav fixed={true} />
-                <div className="pt-16">
-                  <ReservationDetail />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/management-console/reservations/:id"
+            element={
+              <ProtectedRoute>
+                <div className="min-h-screen flex flex-col">
+                  <AdminNav fixed={true} />
+                  <div className="pt-16">
+                    <ReservationDetail />
+                  </div>
                 </div>
-              </div>
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/management-console/reservations/create" element={
-            <ProtectedRoute>
-              <div className="min-h-screen flex flex-col">
-                <AdminNav fixed={true} />
-                <div className="pt-16">
-                  <ReservationForm />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/management-console/reservations/create"
+            element={
+              <ProtectedRoute>
+                <div className="min-h-screen flex flex-col">
+                  <AdminNav fixed={true} />
+                  <div className="pt-16">
+                    <ReservationForm />
+                  </div>
                 </div>
-              </div>
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/management-console/reservations/:id/edit" element={
-            <ProtectedRoute>
-              <div className="min-h-screen flex flex-col">
-                <AdminNav fixed={true} />
-                <div className="pt-16">
-                  <ReservationForm />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/management-console/reservations/:id/edit"
+            element={
+              <ProtectedRoute>
+                <div className="min-h-screen flex flex-col">
+                  <AdminNav fixed={true} />
+                  <div className="pt-16">
+                    <ReservationForm />
+                  </div>
                 </div>
-              </div>
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/management-console/time-slots" element={
-            <ProtectedRoute>
-              <div className="min-h-screen flex flex-col">
-                <AdminNav fixed={true} />
-                <div className="pt-16">
-                  <TimeSlotManagement />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/management-console/time-slots"
+            element={
+              <ProtectedRoute>
+                <div className="min-h-screen flex flex-col">
+                  <AdminNav fixed={true} />
+                  <div className="pt-16">
+                    <TimeSlotManagement />
+                  </div>
                 </div>
-              </div>
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/management-console/time-slots/create" element={
-            <ProtectedRoute>
-              <div className="min-h-screen flex flex-col">
-                <AdminNav fixed={true} />
-                <div className="pt-16">
-                  <TimeSlotForm />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/management-console/time-slots/create"
+            element={
+              <ProtectedRoute>
+                <div className="min-h-screen flex flex-col">
+                  <AdminNav fixed={true} />
+                  <div className="pt-16">
+                    <TimeSlotForm />
+                  </div>
                 </div>
-              </div>
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/management-console/time-slots/weather" element={
-            <ProtectedRoute>
-              <div className="min-h-screen flex flex-col">
-                <AdminNav fixed={true} />
-                <div className="pt-16">
-                  <WeatherBlock />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/management-console/time-slots/weather"
+            element={
+              <ProtectedRoute>
+                <div className="min-h-screen flex flex-col">
+                  <AdminNav fixed={true} />
+                  <div className="pt-16">
+                    <WeatherBlock />
+                  </div>
                 </div>
-              </div>
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/management-console/settings" element={
-            <ProtectedRoute>
-              <div className="min-h-screen flex flex-col">
-                <AdminNav fixed={true} />
-                <div className="pt-16">
-                  <Settings />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/management-console/settings"
+            element={
+              <ProtectedRoute>
+                <div className="min-h-screen flex flex-col">
+                  <AdminNav fixed={true} />
+                  <div className="pt-16">
+                    <Settings />
+                  </div>
                 </div>
-              </div>
-            </ProtectedRoute>
-          } />
-          
+              </ProtectedRoute>
+            }
+          />
+
           {/* Fallback route */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

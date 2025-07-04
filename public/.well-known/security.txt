@@ -1,0 +1,7 @@
+Contact: mailto:bigskyparasailing@gmail.com
+Expires: 2026-06-30T04:05:37.957Z
+Preferred-Languages: en
+Canonical: https://www.montanaparasail.com/.well-known/security.txt
+
+# Security policy
+# We take security seriously. Please report any security issues responsibly.

@@ -1,14 +1,14 @@
-// components/CustomerForm.tsx
+// components/CustomerForm.tsx - Updated with tip functionality
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Reservation } from '../../types.ts';
 
 interface CustomerFormProps {
-  formData: Partial<Reservation>;
+  formData: Partial<Reservation> & { tip_amount?: number };
   onChange: (name: string, value: string | number | boolean) => void;
   onSubmit: () => void;
   isProcessing: boolean;
-  availableCapacity?: number; // Add availableCapacity prop
+  availableCapacity?: number;
 }
 
 // Animation variants
@@ -40,20 +40,41 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
   onChange, 
   onSubmit,
   isProcessing,
-  availableCapacity = 10 // Default to 10 if not provided
+  availableCapacity = 10
 }) => {
+  // Predefined tip amounts in cents - factors of 10
+  const tipAmounts = [1000, 2000, 3000, 4000, 5000]; // $10, $20, $30, $40, $50
+  
+  // Local state for custom tip input to avoid input conflicts
+  const [customTipInput, setCustomTipInput] = React.useState('');
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target as any;
     
     if (type === 'checkbox') {
       const checked = (e.target as any).checked;
       onChange(name, checked);
-    } else if (type === 'number' || name === 'number_of_people' || name === 'riders' || name === 'tshirts') {
+    } else if (type === 'number' || name === 'number_of_people' || name === 'riders' || name === 'tshirts' || name === 'tip_amount') {
       // Always convert these fields to numbers, even from select elements
       onChange(name, parseInt(value, 10) || 0);
     } else {
       onChange(name, value);
     }
+  };
+
+  const handleTipSelect = (amount: number) => {
+    onChange('tip_amount', amount);
+    // Clear custom input when predefined amount is selected
+    setCustomTipInput('');
+  };
+
+  const handleCustomTipChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCustomTipInput(value);
+    
+    // Convert to cents and update form data
+    const numValue = parseFloat(value) || 0;
+    onChange('tip_amount', Math.round(numValue * 100));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -310,6 +331,81 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
               $50 each - High-quality souvenir
             </div>
           </div>
+        </motion.div>
+
+        {/* NEW: Tip Section */}
+        <motion.div className="bg-white rounded-lg p-5 mb-6 shadow-sm" variants={inputVariants}>
+          <h5 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center">
+            <span className="text-lg mr-2">🚤</span>
+            Tip Your Crew (Optional)
+          </h5>
+          <p className="text-sm text-gray-600 mb-4">
+            Show appreciation for exceptional service with a tip for your crew!
+          </p>
+          
+          {/* Tip Amount Buttons */}
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mb-4">
+            <button
+              type="button"
+              onClick={() => handleTipSelect(0)}
+              className={`p-3 rounded-lg border-2 transition-all font-medium ${
+                (formData.tip_amount || 0) === 0
+                  ? 'border-gray-400 bg-gray-50 text-gray-700'
+                  : 'border-gray-300 hover:border-green-300 bg-white text-gray-900'
+              }`}
+            >
+              No Tip
+            </button>
+            {tipAmounts.map((amount) => (
+              <button
+                key={amount}
+                type="button"
+                onClick={() => handleTipSelect(amount)}
+                className={`p-3 rounded-lg border-2 transition-all font-medium ${
+                  formData.tip_amount === amount
+                    ? 'border-green-500 bg-green-50 text-green-700'
+                    : 'border-gray-300 hover:border-green-300 bg-white text-gray-900'
+                }`}
+              >
+                ${(amount / 100).toFixed(0)}
+              </button>
+            ))}
+          </div>
+
+          {/* Custom Tip Amount */}
+          <div className="relative">
+            <label htmlFor="custom_tip" className="block text-sm font-medium text-gray-700 mb-1">
+              Custom Tip Amount
+            </label>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+              <input
+                id="custom_tip"
+                type="number"
+                placeholder="Enter custom amount"
+                min="0"
+                step="0.01"
+                value={customTipInput}
+                onChange={handleCustomTipChange}
+                className="w-full pl-8 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 bg-white text-gray-900 placeholder-gray-500"
+              />
+            </div>
+          </div>
+
+          {/* Tip Summary */}
+          {formData.tip_amount && formData.tip_amount > 0 && (
+            <div className="mt-4 bg-green-50 p-3 rounded-lg">
+              <div className="flex items-center">
+                <svg className="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                </svg>
+                <span className="text-sm font-semibold text-green-800">
+                  Crew Tip: ${(formData.tip_amount / 100).toFixed(2)}
+                </span>
+              </div>
+              <p className="text-xs text-green-700 mt-1">Your crew will greatly appreciate this!</p>
+            </div>
+          )}
         </motion.div>
       </div>
       

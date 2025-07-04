@@ -48,7 +48,7 @@ const SocialIcons = () => {
           whileTap={{ scale: 0.95 }}
         >
           <img
-            src="/yelp-logo.png"
+            src="https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//yelp-logo.png"
             alt="Yelp"
             className="w-full h-full object-cover"
           />

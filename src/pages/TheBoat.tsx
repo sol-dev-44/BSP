@@ -206,7 +206,7 @@ const ParasailBoat = () => {
       <motion.header
         className="relative h-96 bg-cover bg-center flex items-center justify-center"
         style={{
-            backgroundImage: 'url("/cloudDancerInclineDock.jpg")',
+            backgroundImage: 'url("https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//cloudDancerInclineDock.jpg")',
             
         }}
         initial={{ opacity: 0 }}
@@ -301,7 +301,7 @@ const ParasailBoat = () => {
                   </div>
                   <div className="bg-gray-100 rounded-lg p-4">
                     <img
-                      src="/cloudDancerTransom.png"
+                      src="https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//cloudDancerTransom.png"
                       alt="Cloud Dancer boat"
                       className="w-full h-auto rounded-lg shadow"
                     />
