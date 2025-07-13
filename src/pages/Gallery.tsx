@@ -9,7 +9,8 @@ const galleryPageStructuredData = {
   "description":
     "Browse stunning photos and videos from parasailing adventures on Flathead Lake, Montana. See breathtaking aerial views and happy customers.",
   "url": "https://www.montanaparasail.com/gallery",
-  "image": "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//WhiteFishSmiles.jpg",
+  "image":
+    "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//WhiteFishSmiles.jpg",
   "provider": {
     "@type": "Organization",
     "name": "Big Sky Parasail",
@@ -36,9 +37,21 @@ interface GalleryItem {
 const galleryItems: GalleryItem[] = [
   // Featured Items
   {
+    id: "0",
+    type: "image",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//threeKids.jpg",
+    title: "Smile for the camera… or scream into the void. Either works! 📸🪂",
+    description: `Parasailing: where friendship meets fear at 500 feet.
+#BigSkyParasail #AltitudeAttitude #MontanaAirMoments #flatheadlake`,
+    category: "aerial",
+    featured: true,
+  },
+  {
     id: "1",
     type: "image",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//HighAerial.jpeg",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//HighAerial.jpeg",
     title: "Soaring Above Flathead Lake",
     description:
       "Breathtaking aerial view of parasailers high above the crystal waters",
@@ -48,7 +61,8 @@ const galleryItems: GalleryItem[] = [
   {
     id: "2",
     type: "image",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//WhiteFishSmiles.jpg",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//WhiteFishSmiles.jpg",
     title: "Happy Adventurers",
     description: "Smiling faces after an incredible parasailing experience",
     category: "customers",
@@ -57,7 +71,8 @@ const galleryItems: GalleryItem[] = [
   {
     id: "3",
     type: "image",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//cloudDancerInclineDock.jpg",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//cloudDancerInclineDock.jpg",
     title: "Cloud Dancer at Marina",
     description: "Our professional parasail vessel ready for adventure",
     category: "boat",
@@ -68,51 +83,59 @@ const galleryItems: GalleryItem[] = [
   {
     id: "4",
     type: "image",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//FlatheadWithShadow.jpg",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//FlatheadWithShadow.jpg",
     title: "Mountain Shadows on Flathead Lake",
     category: "scenery",
   },
   {
     id: "5",
     type: "image",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//FlatheadAerial.jpg",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//FlatheadAerial.jpg",
     title: "Aerial Lake View",
     category: "aerial",
   },
   {
     id: "6",
     type: "image",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//DaytonaImage.png",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//DaytonaImage.png",
     title: "Perfect Parasailing Weather",
     category: "customers",
   },
   {
     id: "7",
     type: "image",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//fourthJuly.jpg",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//fourthJuly.jpg",
     title: "4th of July Celebration",
     category: "events",
   },
   {
     id: "8",
     type: "image",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wildHorseIsland.jpeg",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wildHorseIsland.jpeg",
     title: "Wild Horse Island Adventure",
     category: "scenery",
   },
 
-    {
-      id: '9',
-      type: 'image',
-      src: 'https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//girlwake.jpeg',
-      title: 'Wakeboarding Fun',
-      category: 'watersports'
-    },
+  {
+    id: "9",
+    type: "image",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//girlwake.jpeg",
+    title: "Wakeboarding Fun",
+    category: "watersports",
+  },
   {
     id: "10",
     type: "video",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//ownBusiness.mp4",
-    thumbnail: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//ownBusiness.mp4",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//ownBusiness.mp4",
+    thumbnail:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//ownBusiness.mp4",
     title: "Parasailing Adventure Video",
     description:
       "Amazing first-person view of parasailing high above Flathead Lake",
@@ -152,7 +175,8 @@ const galleryItems: GalleryItem[] = [
   {
     id: "14",
     type: "image",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfdip1.JPG",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfdip1.JPG",
     title: "Dips are optional and fun!",
     description: "A little splash never hurt anyone.",
     category: "customers",
@@ -160,7 +184,8 @@ const galleryItems: GalleryItem[] = [
   {
     id: "15",
     type: "image",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfdip2.JPG",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfdip2.JPG",
     title: "How low can you go?",
     description: "Getting close to the water surface.",
     category: "customers",
@@ -168,7 +193,8 @@ const galleryItems: GalleryItem[] = [
   {
     id: "16",
     type: "image",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfdip3.JPG",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfdip3.JPG",
     title: "Making a splash!",
     description: "Enjoying the thrill of parasailing with a fun dip.",
     category: "customers",
@@ -176,7 +202,8 @@ const galleryItems: GalleryItem[] = [
   {
     id: "17",
     type: "image",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfladies2.JPG",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfladies2.JPG",
     title: "Ladies Day Out",
     description:
       "A group of friends enjoying a sunny day parasailing in Montana.",
@@ -185,7 +212,8 @@ const galleryItems: GalleryItem[] = [
   {
     id: "19",
     type: "image",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//tripFam.JPG",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//tripFam.JPG",
     title: "Three People, One Adventure",
     description:
       "A trio of parasailers taking in the stunning views of Flathead Lake.",
@@ -194,7 +222,8 @@ const galleryItems: GalleryItem[] = [
   {
     id: "20",
     type: "image",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfLineView.JPG",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfLineView.JPG",
     title: "I walk the line",
     description:
       "Parasailors enjoying the serene views while being towed by the boat.",
@@ -203,7 +232,8 @@ const galleryItems: GalleryItem[] = [
   {
     id: "21",
     type: "image",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfTripFar.JPG",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfTripFar.JPG",
     title: "Far and Wide",
     description:
       "A group of parasailers exploring the vast expanse of the Lake from above.",
@@ -212,12 +242,21 @@ const galleryItems: GalleryItem[] = [
   {
     id: "22",
     type: "image",
-    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfSunset.JPG",
+    src:
+      "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfSunset.JPG",
     title: "Golden Hour Flight",
     description:
       "Soaring high during the golden hour, capturing the beauty of Flathead Lake at sunset.",
     category: "scenery",
   },
+  {
+    id: "23",
+    type: "image",
+    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//DeadLogo.png",
+    title: "Keep on Truckin",
+    description: "Ripple in still water, When there is no pebble tossed, Nor wind to blow ",
+    category: "scenery",
+  }
   // {
   //     id: '23',
   //     type: 'image',
