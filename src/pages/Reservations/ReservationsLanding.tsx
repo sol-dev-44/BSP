@@ -145,13 +145,26 @@ const ReservationsLanding = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <motion.div 
               variants={fadeIn}
-              className="bg-white rounded-lg shadow-lg overflow-hidden"
+              className="bg-white rounded-lg shadow-lg overflow-hidden relative"
             >
+              {/* Sale Badge */}
+              <div className="absolute top-0 right-0 bg-red-500 text-white px-4 py-2 rounded-bl-lg font-bold text-sm z-10 animate-pulse">
+                SAVE $10+
+              </div>
+              
               <div className="bg-blue-600 px-6 py-4 text-white">
                 <h3 className="text-lg font-bold">Parasailing Flight</h3>
               </div>
               <div className="px-6 py-8">
-                <div className="text-4xl font-bold text-gray-900 mb-2">$99<span className="text-lg text-gray-600">/person</span></div>
+                <div className="mb-4">
+                  <span className="text-2xl text-gray-400 line-through">$99</span>
+                  <span className="text-xs text-gray-500">/person</span>
+                  <div className="text-4xl font-bold text-gray-900">$89<span className="text-lg text-gray-600">/person</span></div>
+                </div>
+                <div className="bg-green-100 border border-green-300 rounded-lg p-3 mb-4">
+                  <p className="text-green-800 font-bold">💰 Group Deal: 2+ riders only $75/person!</p>
+                  <p className="text-green-700 text-sm">Book 2 people for just $150 total</p>
+                </div>
                 <p className="text-gray-600 mb-6">Ultimate Flathead Lake adventure</p>
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-start">

@@ -558,7 +558,16 @@ const ReservationCalendar: React.FC = () => {
                       </dt>
                       <dd className="text-sm text-gray-900 col-span-2">
                         {formData.number_of_people}{" "}
-                        (${Number(formData.number_of_people) * 99})
+                        {Number(formData.number_of_people) >= 2 ? (
+                          <span>
+                            (${Number(formData.number_of_people) * 75} at $75/person)
+                            <span className="text-green-600 font-medium ml-2">Group rate!</span>
+                          </span>
+                        ) : (
+                          <span>
+                            ($89) <span className="line-through text-gray-400">$99</span>
+                          </span>
+                        )}
                       </dd>
                     </div>
 
@@ -604,8 +613,8 @@ const ReservationCalendar: React.FC = () => {
                       )
                       : null}
 
-                    {/* T-Shirts */}
-                    {formData.tshirts && Number(formData.tshirts) > 0
+                    {/* T-Shirts - Hidden */}
+                    {false && formData.tshirts && Number(formData.tshirts) > 0
                       ? (
                         <div className="py-3 grid grid-cols-3 gap-4">
                           <dt className="text-sm font-medium text-gray-500">
