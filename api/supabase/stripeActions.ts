@@ -42,8 +42,14 @@ const calculateTotalAmount = (data: ReservationData): number => {
     tip_amount = 0 // 🔥 CRITICAL: Include tip amount
   } = data;
 
-  // All amounts in cents for Stripe
-  const parasailingCost = number_of_people * 9900; // $99 per person
+  // NEW PRICING STRUCTURE: $89 for 1 person, $75 per person for 2+
+  let parasailingCost = 0;
+  if (number_of_people === 1) {
+    parasailingCost = 8900; // $89 in cents
+  } else if (number_of_people >= 2) {
+    parasailingCost = number_of_people * 7500; // $75 per person in cents
+  }
+  
   const ridersCost = riders * 3000; // $30 per rider
   const photoCost = photo_package ? 3000 : 0; // $30 for photo package
   const goproCost = go_pro_package ? 3000 : 0; // $30 for GoPro package
@@ -53,8 +59,9 @@ const calculateTotalAmount = (data: ReservationData): number => {
   const totalAmount = parasailingCost + ridersCost + photoCost + goproCost + tshirtCost + tipCost;
 
   // 🔍 Debug logging
+  const pricePerPerson = number_of_people === 1 ? 89 : 75;
   console.log('💰 Payment calculation breakdown:', {
-    parasailing: `$${parasailingCost / 100} (${number_of_people} × $99)`,
+    parasailing: `$${parasailingCost / 100} (${number_of_people} × $${pricePerPerson})`,
     riders: `$${ridersCost / 100} (${riders} × $30)`,
     photo: `$${photoCost / 100}`,
     gopro: `$${goproCost / 100}`,
@@ -80,7 +87,7 @@ export const createPaymentIntent = async (
     const paymentIntent = await stripe.paymentIntents.create({
       amount: totalAmount, // 🔥 Now includes tip!
       currency: "usd",
-      description: `Parasailing reservation for ${reservationData.customer_name}`,
+      description: `Parasailing reservation for ${reservationData.customer_name} (${reservationData.number_of_people} ${reservationData.number_of_people === 1 ? 'person' : 'people'})`,
       metadata: {
         time_slot_id: reservationData.time_slot_id,
         customer_name: reservationData.customer_name,

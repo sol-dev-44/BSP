@@ -42,6 +42,11 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
   isProcessing,
   availableCapacity = 10
 }) => {
+  // Calculate dynamic pricing based on number of people
+  const numberOfPeople = Number(formData.number_of_people) || 1;
+  const pricePerPerson = numberOfPeople >= 2 ? 75 : 89;
+  const totalParasailingPrice = numberOfPeople * pricePerPerson;
+  
   // Predefined tip amounts in cents - factors of 10
   const tipAmounts = [1000, 2000, 3000, 4000, 5000]; // $10, $20, $30, $40, $50
   
@@ -193,6 +198,19 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
       <div className="bg-blue-50 px-6 py-5 border-t border-blue-100">
         <h4 className="text-lg font-bold text-blue-900 mb-4">Booking Options</h4>
         
+        {/* Sale promotion banner */}
+        <div className="mb-4 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg p-4 text-white shadow-lg animate-pulse">
+          <div className="flex items-center justify-center">
+            <span className="text-2xl mr-2">🎉</span>
+            <div className="text-center">
+              <p className="font-bold text-lg">LIMITED TIME OFFER!</p>
+              <p className="text-sm">Was <span className="line-through">$99</span> → Now only <span className="text-xl font-bold">$89</span>/person</p>
+              <p className="text-sm font-semibold">2+ riders just $75/person!</p>
+            </div>
+            <span className="text-2xl ml-2">🎉</span>
+          </div>
+        </div>
+        
         {/* Show available capacity info */}
         <div className="mb-4 bg-blue-100 rounded-md p-3 text-blue-800 text-sm">
           <p className="font-medium">Available capacity: {availableCapacity} {availableCapacity === 1 ? 'spot' : 'spots'}</p>
@@ -223,8 +241,22 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
                 <svg className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                $99 per person
+                {numberOfPeople === 1 ? (
+                  <>
+                    <span className="line-through text-gray-400 mr-2">$99</span>
+                    <span className="text-green-600 font-bold">$89 per person</span>
+                  </>
+                ) : (
+                  <span className="text-green-600 font-bold">
+                    ${pricePerPerson} per person × {numberOfPeople} = ${totalParasailingPrice} total
+                  </span>
+                )}
               </div>
+              {numberOfPeople === 1 && (
+                <div className="mt-2 bg-green-100 rounded-md p-2 text-green-800 text-sm font-medium">
+                  💰 Add another person and save! 2+ riders only $75/person
+                </div>
+              )}
             </div>
           </motion.div>
           
@@ -303,7 +335,7 @@ const CustomerForm: React.FC<CustomerFormProps> = ({
           </div>
         </div>
         
-        <motion.div className="mb-6" variants={inputVariants}>
+        <motion.div className="mb-6" variants={inputVariants} style={{ display: 'none' }}>
           <label htmlFor="tshirts" className="block text-sm font-medium text-gray-700 mb-1">
             Big Sky Parasail T-Shirts
           </label>

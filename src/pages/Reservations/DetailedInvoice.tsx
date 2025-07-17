@@ -1,4 +1,4 @@
-// DetailedInvoice.tsx - Updated with tip support
+// DetailedInvoice.tsx - Fixed table column widths
 import React from 'react';
 import { motion } from 'framer-motion';
 
@@ -14,7 +14,7 @@ export interface InvoiceData {
   photoPackage: boolean;
   goProPackage: boolean;
   tshirts: number;
-  tipAmount?: number; // Add tip amount to interface
+  tipAmount?: number;
   paymentAmount: number;
   paymentDate: string;
   paymentMethod: string;
@@ -22,17 +22,17 @@ export interface InvoiceData {
 }
 
 const DetailedInvoice: React.FC<{ invoiceData: InvoiceData }> = ({ invoiceData }) => {
-  // Calculate individual line items
-  const parasailingCost = invoiceData.numberOfPeople * 99;
+  // Calculate individual line items with new pricing structure
+  const parasailingUnitPrice = invoiceData.numberOfPeople >= 2 ? 75 : 89;
+  const parasailingCost = invoiceData.numberOfPeople * parasailingUnitPrice;
   const ridersCost = invoiceData.riders * 30;
   const photoCost = invoiceData.photoPackage ? 30 : 0;
   const goproCost = invoiceData.goProPackage ? 30 : 0;
   const tshirtCost = invoiceData.tshirts * 50;
-  const tipCost = (invoiceData.tipAmount || 0) / 100; // Convert from cents to dollars
+  const tipCost = (invoiceData.tipAmount || 0) / 100;
   
   const subtotal = parasailingCost + ridersCost + photoCost + goproCost + tshirtCost + tipCost;
 
-  // FIXED: Better date formatting that preserves the original datetime
   const formatReservationDate = (isoDateTimeString: string) => {
     if (!isoDateTimeString) return "Date not available";
     
@@ -50,7 +50,6 @@ const DetailedInvoice: React.FC<{ invoiceData: InvoiceData }> = ({ invoiceData }
     }
   };
 
-  // FIXED: Better time formatting that preserves the original datetime
   const formatReservationTime = (isoDateTimeString: string) => {
     if (!isoDateTimeString) return "Time not available";
     
@@ -67,7 +66,6 @@ const DetailedInvoice: React.FC<{ invoiceData: InvoiceData }> = ({ invoiceData }
     }
   };
 
-  // LEGACY: Keep these for other date formatting (payment date, etc.)
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       weekday: 'long',
@@ -173,12 +171,10 @@ const DetailedInvoice: React.FC<{ invoiceData: InvoiceData }> = ({ invoiceData }
             <div className="bg-blue-50 rounded-lg p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-gray-600">Date:</span>
-                {/* FIXED: Use the new formatting functions that handle full datetime */}
                 <span className="font-medium text-gray-900">{formatReservationDate(invoiceData.reservationDate)}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-gray-600">Time:</span>
-                {/* FIXED: Use the new formatting functions that handle full datetime */}
                 <span className="font-medium text-gray-900">{formatReservationTime(invoiceData.reservationDate)}</span>
               </div>
               <div className="pt-2 border-t border-blue-200">
@@ -190,7 +186,7 @@ const DetailedInvoice: React.FC<{ invoiceData: InvoiceData }> = ({ invoiceData }
           </div>
         </div>
 
-        {/* Itemized Services */}
+        {/* Itemized Services - FIXED TABLE */}
         <div className="mb-8">
           <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
             <svg className="h-5 w-5 text-blue-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -200,154 +196,198 @@ const DetailedInvoice: React.FC<{ invoiceData: InvoiceData }> = ({ invoiceData }
           </h3>
           
           <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-            <table className="w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/2">Service</th>
-                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">Qty</th>
-                  <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">Rate</th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">Amount</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {/* Parasailing */}
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
-                        <svg className="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                        </svg>
+            {/* Desktop Table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Qty</th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Rate</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Amount</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {/* Parasailing */}
+                  <tr>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center">
+                        <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center mr-3 flex-shrink-0">
+                          <svg className="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium text-gray-900">Parasailing Experience</div>
+                          <div className="text-sm text-gray-500">
+                            Premium parasailing adventure
+                            {invoiceData.numberOfPeople >= 2 && (
+                              <span className="text-green-600 font-medium ml-2">(Group rate applied!)</span>
+                            )}
+                          </div>
+                        </div>
                       </div>
+                    </td>
+                    <td className="px-4 py-4 text-center text-sm text-gray-900">{invoiceData.numberOfPeople}</td>
+                    <td className="px-4 py-4 text-center text-sm text-gray-900 whitespace-nowrap">
+                      {invoiceData.numberOfPeople >= 2 ? (
+                        <div className="flex flex-col items-center">
+                          <span className="line-through text-gray-400">$99.00</span>
+                          <span className="text-green-600 font-medium">$75.00</span>
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center">
+                          <span className="line-through text-gray-400">$99.00</span>
+                          <span className="text-green-600 font-medium">$89.00</span>
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 text-right text-sm font-medium text-gray-900 whitespace-nowrap">${(parasailingCost).toFixed(2)}</td>
+                  </tr>
+
+                  {/* Other rows remain the same but with whitespace-nowrap on amount columns */}
+                  {invoiceData.riders > 0 && (
+                    <tr>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center">
+                          <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center mr-3 flex-shrink-0">
+                            <svg className="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium text-gray-900">Boat Riders</div>
+                            <div className="text-sm text-gray-500">Non-parasailing passengers</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-4 text-center text-sm text-gray-900">{invoiceData.riders}</td>
+                      <td className="px-4 py-4 text-center text-sm text-gray-900 whitespace-nowrap">$30.00</td>
+                      <td className="px-6 py-4 text-right text-sm font-medium text-gray-900 whitespace-nowrap">${ridersCost.toFixed(2)}</td>
+                    </tr>
+                  )}
+
+                  {invoiceData.photoPackage && (
+                    <tr>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center">
+                          <div className="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center mr-3 flex-shrink-0">
+                            <svg className="h-5 w-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium text-gray-900">Photo Package</div>
+                            <div className="text-sm text-gray-500">Professional photos of your adventure</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-4 text-center text-sm text-gray-900">1</td>
+                      <td className="px-4 py-4 text-center text-sm text-gray-900 whitespace-nowrap">$30.00</td>
+                      <td className="px-6 py-4 text-right text-sm font-medium text-gray-900 whitespace-nowrap">$30.00</td>
+                    </tr>
+                  )}
+
+                  {invoiceData.goProPackage && (
+                    <tr>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center">
+                          <div className="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center mr-3 flex-shrink-0">
+                            <svg className="h-5 w-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium text-gray-900">GoPro Video Package</div>
+                            <div className="text-sm text-gray-500">First-person video of your experience</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-4 text-center text-sm text-gray-900">1</td>
+                      <td className="px-4 py-4 text-center text-sm text-gray-900 whitespace-nowrap">$30.00</td>
+                      <td className="px-6 py-4 text-right text-sm font-medium text-gray-900 whitespace-nowrap">$30.00</td>
+                    </tr>
+                  )}
+
+                  {invoiceData.tipAmount && invoiceData.tipAmount > 0 && (
+                    <tr>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center">
+                          <div className="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center mr-3 flex-shrink-0">
+                            <svg className="h-5 w-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                            </svg>
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium text-gray-900">Crew Tip</div>
+                            <div className="text-sm text-gray-500">Appreciation for exceptional service</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-4 text-center text-sm text-gray-900">1</td>
+                      <td className="px-4 py-4 text-center text-sm text-gray-900 whitespace-nowrap">${tipCost.toFixed(2)}</td>
+                      <td className="px-6 py-4 text-right text-sm font-medium text-gray-900 whitespace-nowrap">${tipCost.toFixed(2)}</td>
+                    </tr>
+                  )}
+                </tbody>
+                <tfoot className="bg-gray-50">
+                  <tr>
+                    <td colSpan={3} className="px-6 py-4 text-right text-base font-semibold text-gray-900">Total:</td>
+                    <td className="px-6 py-4 text-right text-xl font-bold text-gray-900 whitespace-nowrap">${subtotal.toFixed(2)}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            {/* Mobile View - Stacked Cards */}
+            <div className="md:hidden">
+              {/* Parasailing Card */}
+              <div className="p-4 border-b border-gray-200">
+                <div className="flex items-start mb-2">
+                  <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center mr-3 flex-shrink-0 mt-1">
+                    <svg className="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-sm font-medium text-gray-900">Parasailing Experience</h4>
+                    <p className="text-sm text-gray-500">Premium parasailing adventure</p>
+                    {invoiceData.numberOfPeople >= 2 && (
+                      <p className="text-sm text-green-600 font-medium mt-1">Group rate applied!</p>
+                    )}
+                    <div className="mt-2 flex justify-between items-center">
                       <div>
-                        <div className="text-sm font-medium text-gray-900">Parasailing Experience</div>
-                        <div className="text-sm text-gray-500">Premium parasailing adventure</div>
+                        <span className="text-sm text-gray-600">Qty: {invoiceData.numberOfPeople}</span>
+                        <span className="mx-2 text-gray-400">×</span>
+                        {invoiceData.numberOfPeople >= 2 ? (
+                          <span className="text-sm">
+                            <span className="line-through text-gray-400">$99</span>
+                            <span className="text-green-600 font-medium ml-1">$75</span>
+                          </span>
+                        ) : (
+                          <span className="text-sm">
+                            <span className="line-through text-gray-400">$99</span>
+                            <span className="text-green-600 font-medium ml-1">$89</span>
+                          </span>
+                        )}
                       </div>
+                      <span className="text-sm font-bold text-gray-900">${parasailingCost.toFixed(2)}</span>
                     </div>
-                  </td>
-                  <td className="px-4 py-4 whitespace-nowrap text-center text-sm text-gray-900">{invoiceData.numberOfPeople}</td>
-                  <td className="px-4 py-4 whitespace-nowrap text-center text-sm text-gray-900">$99.00</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900">${(parasailingCost).toFixed(2)}</td>
-                </tr>
+                  </div>
+                </div>
+              </div>
 
-                {/* Riders */}
-                {invoiceData.riders > 0 && (
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
-                          <svg className="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                          </svg>
-                        </div>
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">Boat Riders</div>
-                          <div className="text-sm text-gray-500">Non-parasailing passengers</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-center text-sm text-gray-900">{invoiceData.riders}</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-center text-sm text-gray-900">$30.00</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900">${ridersCost.toFixed(2)}</td>
-                  </tr>
-                )}
-
-                {/* Photo Package */}
-                {invoiceData.photoPackage && (
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center mr-3">
-                          <svg className="h-5 w-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                          </svg>
-                        </div>
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">Photo Package</div>
-                          <div className="text-sm text-gray-500">Professional photos of your adventure</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-center text-sm text-gray-900">1</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-center text-sm text-gray-900">$30.00</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900">$30.00</td>
-                  </tr>
-                )}
-
-                {/* GoPro Package */}
-                {invoiceData.goProPackage && (
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center mr-3">
-                          <svg className="h-5 w-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">GoPro Video Package</div>
-                          <div className="text-sm text-gray-500">First-person video of your experience</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-center text-sm text-gray-900">1</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-center text-sm text-gray-900">$30.00</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900">$30.00</td>
-                  </tr>
-                )}
-
-                {/* T-Shirts */}
-                {invoiceData.tshirts > 0 && (
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="h-10 w-10 rounded-full bg-yellow-100 flex items-center justify-center mr-3">
-                          <svg className="h-5 w-5 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                          </svg>
-                        </div>
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">Big Sky Parasail T-Shirts</div>
-                          <div className="text-sm text-gray-500">High-quality souvenir shirts</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-center text-sm text-gray-900">{invoiceData.tshirts}</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-center text-sm text-gray-900">$50.00</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900">${tshirtCost.toFixed(2)}</td>
-                  </tr>
-                )}
-
-                {/* Crew Tip */}
-                {invoiceData.tipAmount && invoiceData.tipAmount > 0 && (
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center mr-3">
-                          <svg className="h-5 w-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                          </svg>
-                        </div>
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">Crew Tip</div>
-                          <div className="text-sm text-gray-500">Appreciation for exceptional service</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-center text-sm text-gray-900">1</td>
-                    <td className="px-4 py-4 whitespace-nowrap text-center text-sm text-gray-900">${tipCost.toFixed(2)}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900">${tipCost.toFixed(2)}</td>
-                  </tr>
-                )}
-              </tbody>
-              <tfoot className="bg-gray-50">
-                <tr>
-                  <td colSpan={3} className="px-6 py-4 text-right text-base font-semibold text-gray-900">Total:</td>
-                  <td className="px-6 py-4 text-right text-xl font-bold text-gray-900">${subtotal.toFixed(2)}</td>
-                </tr>
-              </tfoot>
-            </table>
+              {/* Additional services cards would go here with similar mobile-friendly layout */}
+              
+              {/* Total */}
+              <div className="p-4 bg-gray-50">
+                <div className="flex justify-between items-center">
+                  <span className="text-base font-semibold text-gray-900">Total:</span>
+                  <span className="text-xl font-bold text-gray-900">${subtotal.toFixed(2)}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

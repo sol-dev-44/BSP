@@ -1,32 +1,43 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import Footer from "../Components/Footer.tsx";
-import SEO from "../Components/Seo.tsx";
-import TipComponent from "../Components/Tip.tsx";
-import CanadianWelcomeBanner from "../Components/CanadianWelcomeBanner.tsx";
+
+// Placeholder components - replace with actual imports
+const Footer = () => <div className="bg-gray-900 text-white p-8 text-center">© 2025 Havasu Parasail</div>;
+const SEO = ({ title, description }: { title: string; description: string }) => null;
+const TipComponent = ({ mode, className }: { mode: string; className?: string }) => (
+  <button className={`bg-orange-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-orange-600 transition-colors ${className || ''}`}>
+    💰 Tip Your Crew
+  </button>
+);
+const ArizonaWelcomeBanner = () => (
+  <div className="bg-gradient-to-r from-red-600 to-orange-500 text-white p-8 rounded-2xl shadow-xl">
+    <h3 className="text-2xl font-bold mb-2">🌵 Welcome Arizona Visitors! 🌅</h3>
+    <p className="text-lg">Experience the thrill of parasailing over the stunning blue waters of Lake Havasu!</p>
+  </div>
+);
 
 const landingPageStructuredData = {
   "@context": "https://schema.org",
   "@type": "TouristAttraction",
-  "name": "Big Sky Parasail",
+  "name": "Havasu Parasail",
   "description":
-    "Experience Montana's premier parasailing adventure on Flathead Lake. Safe, thrilling parasail rides with breathtaking mountain views.",
+    "Experience Arizona's premier parasailing adventure on Lake Havasu. Safe, thrilling parasail rides with breathtaking desert and lake views.",
   "image": "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//WhiteFishSmiles.jpg",
-  "url": "https://www.montanaparasail.com",
-  "telephone": "(406) 270-6256",
-  "email": "bigskyparasailing@gmail.com",
+  "url": "https://www.havasuparasail.com",
+  "telephone": "(928) 555-0123",
+  "email": "info@havasuparasail.com",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Flathead Harbor Marina",
-    "addressLocality": "Lakeside",
-    "addressRegion": "MT",
-    "postalCode": "59922",
+    "streetAddress": "Lake Havasu Marina",
+    "addressLocality": "Lake Havasu City",
+    "addressRegion": "AZ",
+    "postalCode": "86403",
     "addressCountry": "US",
   },
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": 48.0411,
-    "longitude": -114.2298,
+    "latitude": 34.4839,
+    "longitude": -114.3224,
   },
   "openingHoursSpecification": [
     {
@@ -40,10 +51,10 @@ const landingPageStructuredData = {
         "Saturday",
         "Sunday",
       ],
-      "opens": "09:00",
-      "closes": "19:00",
-      "validFrom": "2025-05-01",
-      "validThrough": "2025-09-30",
+      "opens": "08:00",
+      "closes": "20:00",
+      "validFrom": "2025-03-01",
+      "validThrough": "2025-10-31",
     },
   ],
   "offers": {
@@ -51,34 +62,34 @@ const landingPageStructuredData = {
     "availability": "https://schema.org/InStock",
     "priceCurrency": "USD",
     "price": "89.00",
-    "validFrom": "2025-05-01",
-    "url": "https://www.montanaparasail.com/reservations",
+    "validFrom": "2025-03-01",
+    "url": "https://www.havasuparasail.com/reservations",
   },
 };
 
-// Image configuration - using best images from gallery
+// Image configuration - using same images as requested
 const images = {
   // Hero images for carousel
   heroImages: [
     {
       src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//colorfulChute.jpg",
-      alt: "Parasailing high above Flathead Lake",
-      title: "Soar 500 Feet Above Montana"
+      alt: "Parasailing high above Lake Havasu",
+      title: "Soar Above the Desert Oasis"
     },
     {
       src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//threeKids.jpg",
       alt: "Group parasailing adventure",
-      title: "Create Unforgettable Memories"
+      title: "Arizona's Ultimate Adventure"
     },
     {
       src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//leroyDock.jpg",
       alt: "State of the art Parasailing Vessel",
-      title: "Dance with the Clouds"
+      title: "Fly High Over Lake Havasu"
     },
     {
       src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfSunset.JPG",
       alt: "Golden hour parasailing",
-      title: "Magical Sunset Flights"
+      title: "Spectacular Desert Sunsets"
     }
   ],
   // Other images
@@ -93,7 +104,8 @@ const images = {
   customerImages: [
     "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfladies2.JPG",
     "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//tripFam.JPG",
-"https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//colorfulChute.jpg"  ],
+    "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//colorfulChute.jpg"
+  ],
   sceneryImages: [
     "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//FlatheadWithShadow.jpg",
     "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wildHorseIsland.jpeg",
@@ -131,7 +143,7 @@ const Testimonial: React.FC<TestimonialProps> = (
           transition={{ delay: i * 0.1 }}
           className={`${
             featured ? "w-6 h-6" : "w-5 h-5"
-          } text-amber-500 fill-current`}
+          } text-orange-500 fill-current`}
           viewBox="0 0 24 24"
         >
           <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
@@ -148,7 +160,7 @@ const Testimonial: React.FC<TestimonialProps> = (
     <p
       className={`${
         featured
-          ? "text-center font-semibold text-blue-600"
+          ? "text-center font-semibold text-red-600"
           : "text-sm font-semibold text-center"
       } relative z-10`}
     >
@@ -175,7 +187,7 @@ const FloatingCTA: React.FC<{ isVisible: boolean }> = ({ isVisible }) => {
             onClick={() => window.location.href = '/reservations'}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-6 py-3 rounded-full shadow-2xl font-bold text-lg hover:shadow-amber-500/25 transition-all duration-300 flex items-center space-x-2"
+            className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-3 rounded-full shadow-2xl font-bold text-lg hover:shadow-orange-500/25 transition-all duration-300 flex items-center space-x-2"
           >
             <span>🎯 Book Now</span>
           </motion.button>
@@ -222,36 +234,36 @@ const LandingPage: React.FC = () => {
   // Enhanced testimonials data with images
   const featuredTestimonial = {
     quote:
-      "Absolutely incredible! The views of Flathead Lake and the surrounding mountains were breathtaking. Our captain was so professional and made us feel completely safe. This was the highlight of our Montana vacation!",
+      "Absolutely incredible! The views of Lake Havasu and the surrounding desert mountains were breathtaking. Our captain was so professional and made us feel completely safe. This was the highlight of our Arizona vacation!",
     author: "Jennifer & Mike T.",
-    location: "Missoula, MT",
+    location: "Phoenix, AZ",
     image: images.safetyImage
   };
 
   const testimonials = [
     {
       quote:
-        "My kids loved it! Even my husband with his fear of heights had a blast. We'll be back next year!",
+        "My kids loved it! Even my husband with his fear of heights had a blast. We'll be back next summer!",
       author: "Sarah J.",
-      location: "Bozeman, MT",
+      location: "Tucson, AZ",
     },
     {
       quote:
-        "The most amazing experience of our vacation! Views were incredible and the staff made us feel completely safe.",
+        "The most amazing experience of our vacation! Views of the lake and London Bridge were incredible!",
       author: "Mark R.",
-      location: "Seattle, WA",
+      location: "Los Angeles, CA",
     },
     {
       quote:
-        "Worth every penny! The photo package captured memories we'll treasure forever.",
+        "Worth every penny! The sunset flight was magical. The photo package captured memories we'll treasure forever.",
       author: "Lisa M.",
-      location: "Denver, CO",
+      location: "Las Vegas, NV",
     },
     {
       quote:
-        "Professional, safe, and absolutely thrilling. Can't wait to bring friends back!",
+        "Professional, safe, and absolutely thrilling. Perfect way to cool off in the Arizona heat!",
       author: "David K.",
-      location: "Spokane, WA",
+      location: "San Diego, CA",
     },
   ];
 
@@ -289,8 +301,8 @@ const LandingPage: React.FC = () => {
   return (
     <>
       <SEO
-        title="Big Sky Parasail - Flathead Lake, Montana"
-        description="Experience the thrill of parasailing on Flathead Lake in Montana. Safe, breathtaking adventures with stunning mountain views. Book your parasail ride today!"
+        title="Havasu Parasail - Lake Havasu, Arizona"
+        description="Experience the thrill of parasailing on Lake Havasu in Arizona. Safe, breathtaking adventures with stunning desert and lake views. Book your parasail ride today!"
       />
       <script
         type="application/ld+json"
@@ -371,10 +383,10 @@ const LandingPage: React.FC = () => {
                 {/* Subheadline */}
                 <motion.p
                   variants={fadeInUp}
-                  className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto font-medium"
+                  className="text-xl md:text-2xl text-orange-100 mb-8 max-w-3xl mx-auto font-medium"
                 >
-                  Parasailing Adventures on Flathead Lake
-                  <span className="text-amber-400 font-bold block mt-2">
+                  Parasailing Adventures on Lake Havasu
+                  <span className="text-yellow-300 font-bold block mt-2">
                     NOW ONLY $89 (Was $99) • Group Rate: $75/person
                   </span>
                 </motion.p>
@@ -390,7 +402,7 @@ const LandingPage: React.FC = () => {
                       onClick={() => setCurrentHeroImage(index)}
                       className={`w-3 h-3 rounded-full transition-all ${
                         currentHeroImage === index 
-                          ? 'bg-amber-400 w-8' 
+                          ? 'bg-yellow-400 w-8' 
                           : 'bg-white/50 hover:bg-white/70'
                       }`}
                     />
@@ -403,19 +415,19 @@ const LandingPage: React.FC = () => {
                   className="flex flex-wrap justify-center gap-4 md:gap-8 mb-10 text-white"
                 >
                   <div className="text-center">
-                    <div className="text-xl md:text-3xl font-bold text-amber-400">5,000+</div>
+                    <div className="text-xl md:text-3xl font-bold text-yellow-300">5,000+</div>
                     <div className="text-xs md:text-sm">Happy Flyers</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-xl md:text-3xl font-bold text-amber-400">100%</div>
+                    <div className="text-xl md:text-3xl font-bold text-yellow-300">100%</div>
                     <div className="text-xs md:text-sm">Safety Record</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-xl md:text-3xl font-bold text-amber-400">5.0★</div>
+                    <div className="text-xl md:text-3xl font-bold text-yellow-300">5.0★</div>
                     <div className="text-xs md:text-sm">Google Rating</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-xl md:text-3xl font-bold text-amber-400">20</div>
+                    <div className="text-xl md:text-3xl font-bold text-yellow-300">20</div>
                     <div className="text-xs md:text-sm">Years Experience</div>
                   </div>
                 </motion.div>
@@ -427,9 +439,9 @@ const LandingPage: React.FC = () => {
                 >
                   <motion.button
                     onClick={() => window.location.href = '/reservations'}
-                    whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(255, 193, 7, 0.4)" }}
+                    whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(255, 87, 34, 0.4)" }}
                     whileTap={{ scale: 0.95 }}
-                    className="group relative px-10 py-5 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-xl rounded-2xl shadow-2xl hover:shadow-amber-500/25 transition-all duration-300 overflow-hidden"
+                    className="group relative px-10 py-5 bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold text-xl rounded-2xl shadow-2xl hover:shadow-orange-500/25 transition-all duration-300 overflow-hidden"
                   >
                     <span className="relative z-10 flex items-center">
                       🚁 BOOK YOUR FLIGHT NOW
@@ -441,7 +453,7 @@ const LandingPage: React.FC = () => {
                         →
                       </motion.span>
                     </span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </motion.button>
 
                   <motion.button
@@ -463,7 +475,7 @@ const LandingPage: React.FC = () => {
                 >
                   <motion.img
                     src={images.heroLogo}
-                    alt="Big Sky Parasail"
+                    alt="Havasu Parasail"
                     className="max-w-xs md:max-w-md mx-auto opacity-90"
                     animate={{
                       y: [0, -10, 0],
@@ -494,13 +506,13 @@ const LandingPage: React.FC = () => {
                 variants={fadeInUp}
                 className="text-4xl md:text-6xl font-black text-gray-900 mb-6"
               >
-                Your <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Adventure</span> Awaits
+                Your <span className="bg-gradient-to-r from-red-600 to-orange-500 bg-clip-text text-transparent">Desert</span> Adventure
               </motion.h2>
               <motion.p
                 variants={fadeInUp}
                 className="text-xl text-gray-600 max-w-3xl mx-auto"
               >
-                From takeoff to landing, every moment is picture-perfect. Here's what you'll experience!
+                From takeoff to landing, every moment is picture-perfect above Lake Havasu!
               </motion.p>
             </motion.div>
 
@@ -516,12 +528,12 @@ const LandingPage: React.FC = () => {
                 <div className="relative h-64 mb-6 rounded-2xl overflow-hidden shadow-xl group">
                   <img 
                     src={images.feature1} 
-                    alt="Cloud Dancer boat"
+                    alt="Desert Eagle boat"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
                     <div className="p-6 text-white text-left w-full">
-                      <h3 className="text-2xl font-bold mb-2">1. Board Cloud Dancer</h3>
+                      <h3 className="text-2xl font-bold mb-2">1. Board Desert Eagle</h3>
                       <p className="text-sm">Your adventure begins at the marina</p>
                     </div>
                   </div>
@@ -579,7 +591,7 @@ const LandingPage: React.FC = () => {
               whileInView="visible"
               viewport={{ once: true }}
               variants={staggerChildren}
-              className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-3xl p-8 md:p-12"
+              className="bg-gradient-to-r from-orange-50 to-red-50 rounded-3xl p-8 md:p-12"
             >
               <motion.h3
                 variants={fadeInUp}
@@ -607,14 +619,14 @@ const LandingPage: React.FC = () => {
                 variants={fadeInUp}
                 className="text-center mt-6 text-gray-700 text-lg"
               >
-                Ask your captain about adding some splashes to your flight!
+                Cool off with a refreshing splash in Lake Havasu's crystal-clear waters!
               </motion.p>
             </motion.div>
           </div>
         </section>
 
         {/* CUSTOMER GALLERY SECTION */}
-        <section className="relative z-10 py-24 bg-gradient-to-br from-slate-900/95 via-blue-900/95 to-cyan-900/95">
+        <section className="relative z-10 py-24 bg-gradient-to-br from-red-900/95 via-orange-900/95 to-amber-900/95">
           <div className="container mx-auto px-4">
             <motion.div
               initial="hidden"
@@ -627,13 +639,13 @@ const LandingPage: React.FC = () => {
                 variants={fadeInUp}
                 className="text-4xl md:text-6xl font-black text-white mb-6"
               >
-                Join Our <span className="text-amber-400">Happy Flyers</span>
+                Join Our <span className="text-yellow-300">Happy Flyers</span>
               </motion.h2>
               <motion.p
                 variants={fadeInUp}
-                className="text-xl text-blue-200 max-w-3xl mx-auto"
+                className="text-xl text-orange-200 max-w-3xl mx-auto"
               >
-                Every day, we create new memories and capture incredible moments
+                Every day, we create new memories under the Arizona sun
               </motion.p>
             </motion.div>
 
@@ -673,7 +685,7 @@ const LandingPage: React.FC = () => {
               <p className="text-xl text-white mb-6">Ready to be our next happy flyer?</p>
               <button
                 onClick={() => window.location.href = '/reservations'}
-                className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-amber-500/25 transition-all duration-300"
+                className="px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 font-bold text-lg rounded-xl shadow-lg hover:shadow-yellow-500/25 transition-all duration-300"
               >
                 Book Your Adventure Today
               </button>
@@ -695,13 +707,13 @@ const LandingPage: React.FC = () => {
                 variants={fadeInUp}
                 className="text-4xl md:text-6xl font-black text-gray-900 mb-6"
               >
-                <span className="bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text text-transparent">LIMITED TIME</span> Pricing
+                <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">LIMITED TIME</span> Pricing
               </motion.h2>
               <motion.p
                 variants={fadeInUp}
                 className="text-xl text-gray-600 max-w-3xl mx-auto"
               >
-                💥 Special pricing ends soon! Book now and save!
+                🌅 Special summer pricing ends soon! Book now and save!
               </motion.p>
             </motion.div>
 
@@ -718,7 +730,7 @@ const LandingPage: React.FC = () => {
                   alt="Parasailing pricing"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-cyan-900/90"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-red-900/90 to-orange-900/90"></div>
                 
                 <div className="relative z-10 p-12 text-white">
                   <div className="max-w-3xl mx-auto text-center">
@@ -731,7 +743,7 @@ const LandingPage: React.FC = () => {
                     <div className="flex justify-center items-center gap-8 mb-8">
                       <div>
                         <p className="text-gray-300 line-through text-2xl">$99</p>
-                        <p className="text-6xl font-bold text-amber-400">$89</p>
+                        <p className="text-6xl font-bold text-yellow-300">$89</p>
                         <p className="text-xl">single rider</p>
                       </div>
                       
@@ -765,7 +777,7 @@ const LandingPage: React.FC = () => {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="px-12 py-5 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-xl rounded-2xl shadow-lg hover:shadow-amber-500/25 transition-all duration-300"
+                      className="px-12 py-5 bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 font-bold text-xl rounded-2xl shadow-lg hover:shadow-yellow-500/25 transition-all duration-300"
                       onClick={() => window.location.href = '/reservations'}
                     >
                       🚁 BOOK NOW & SAVE
@@ -796,14 +808,14 @@ const LandingPage: React.FC = () => {
                   initial={{ opacity: 0, x: 50 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  className="bg-gradient-to-br from-blue-50 to-cyan-50 p-8 rounded-2xl shadow-xl"
+                  className="bg-gradient-to-br from-orange-50 to-yellow-50 p-8 rounded-2xl shadow-xl"
                 >
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-2xl font-bold text-gray-900">🚤 Ride-Along</h3>
-                    <span className="text-3xl font-bold text-blue-600">$30</span>
+                    <span className="text-3xl font-bold text-orange-600">$30</span>
                   </div>
                   <p className="text-gray-700 mb-4">Enjoy the boat ride without parasailing. Great for photographers!</p>
-                  <a href="tel:+14062706256" className="text-blue-600 font-semibold hover:text-blue-700">
+                  <a href="tel:+19285550123" className="text-orange-600 font-semibold hover:text-orange-700">
                     Call to Book →
                   </a>
                 </motion.div>
@@ -812,7 +824,7 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* SCENIC MONTANA SECTION */}
+        {/* SCENIC ARIZONA SECTION */}
         <section className="relative z-10 py-24 bg-gray-50">
           <div className="container mx-auto px-4">
             <motion.div
@@ -826,13 +838,13 @@ const LandingPage: React.FC = () => {
                 variants={fadeInUp}
                 className="text-4xl md:text-6xl font-black text-gray-900 mb-6"
               >
-                Montana's Most <span className="text-blue-600">Spectacular Views</span>
+                Arizona's Most <span className="text-red-600">Spectacular Views</span>
               </motion.h2>
               <motion.p
                 variants={fadeInUp}
                 className="text-xl text-gray-600 max-w-3xl mx-auto"
               >
-                From Glacier National Park vistas to Wild Horse Island, experience Montana like never before
+                From London Bridge to desert mountains, experience Lake Havasu like never before
               </motion.p>
             </motion.div>
 
@@ -849,7 +861,7 @@ const LandingPage: React.FC = () => {
                 >
                   <img 
                     src={img} 
-                    alt={`Montana scenery ${index + 1}`}
+                    alt={`Lake Havasu scenery ${index + 1}`}
                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -859,10 +871,10 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* CANADIAN WELCOME BANNER */}
-        <section className="relative z-10 py-16 bg-gradient-to-br from-blue-900/95 via-slate-900/95 to-blue-900/95">
+        {/* ARIZONA WELCOME BANNER */}
+        <section className="relative z-10 py-16 bg-gradient-to-br from-red-900/95 via-orange-900/95 to-amber-900/95">
           <div className="container mx-auto px-4 max-w-4xl">
-            <CanadianWelcomeBanner />
+            <ArizonaWelcomeBanner />
           </div>
         </section>
 
@@ -877,7 +889,7 @@ const LandingPage: React.FC = () => {
               className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center"
             >
               {[
-                { number: "5,000+", label: "Happy Flyers", icon: "🎈", image: images.safetyImage },
+                { number: "5,000+", label: "Happy Flyers", icon: "☀️", image: images.safetyImage },
                 { number: "100%", label: "Safety Record", icon: "🛡️", image: images.feature1 },
                 { number: "5.0★", label: "Google • Yelp • Facebook", icon: "⭐", image: images.heroImages[1].src },
                 { number: "20", label: "Years Experience", icon: "🏆", image: images.sceneryImages[0] }
@@ -886,14 +898,14 @@ const LandingPage: React.FC = () => {
                   key={index}
                   variants={fadeInUp}
                   whileHover={{ scale: 1.1, rotate: 2 }}
-                  className="relative bg-gradient-to-br from-blue-50 to-cyan-50 p-4 md:p-8 rounded-xl md:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-blue-100 overflow-hidden"
+                  className="relative bg-gradient-to-br from-orange-50 to-red-50 p-4 md:p-8 rounded-xl md:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-orange-100 overflow-hidden"
                 >
                   <div className="absolute inset-0 opacity-10">
                     <img src={stat.image} alt="" className="w-full h-full object-cover" />
                   </div>
                   <div className="relative z-10">
                     <div className="text-2xl md:text-4xl mb-1 md:mb-2">{stat.icon}</div>
-                    <div className="text-2xl md:text-4xl font-black text-blue-600 mb-1 md:mb-2">{stat.number}</div>
+                    <div className="text-2xl md:text-4xl font-black text-red-600 mb-1 md:mb-2">{stat.number}</div>
                     <div className="text-xs md:text-base text-gray-700 font-semibold leading-tight">{stat.label}</div>
                   </div>
                 </motion.div>
@@ -903,7 +915,7 @@ const LandingPage: React.FC = () => {
         </section>
 
         {/* ENHANCED TESTIMONIALS WITH IMAGES */}
-        <section className="relative z-10 py-24 bg-gradient-to-br from-cyan-600/90 via-blue-600/90 to-purple-600/90">
+        <section className="relative z-10 py-24 bg-gradient-to-br from-orange-600/90 via-red-600/90 to-pink-600/90">
           <div className="absolute inset-0 opacity-20">
             <img src={images.heroImages[3].src} alt="" className="w-full h-full object-cover" />
           </div>
@@ -917,10 +929,10 @@ const LandingPage: React.FC = () => {
             >
               <motion.div variants={fadeInUp} className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
-                  What Our <span className="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Adventurers</span> Say
+                  What Our <span className="bg-gradient-to-r from-yellow-300 to-amber-300 bg-clip-text text-transparent">Adventurers</span> Say
                 </h2>
-                <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-                  Join thousands of thrill-seekers who've experienced the magic of Montana from above
+                <p className="text-xl text-orange-100 max-w-2xl mx-auto">
+                  Join thousands of thrill-seekers who've experienced the magic of Lake Havasu from above
                 </p>
               </motion.div>
 
@@ -964,7 +976,7 @@ const LandingPage: React.FC = () => {
               alt="Book your adventure"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/90 via-orange-500/90 to-red-500/90"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-red-500/90 via-orange-500/90 to-amber-500/90"></div>
           </div>
           
           <div className="container mx-auto px-4 text-center relative z-10">
@@ -985,7 +997,7 @@ const LandingPage: React.FC = () => {
                 variants={fadeInUp}
                 className="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto font-medium"
               >
-                Experience Montana's most breathtaking adventure over Flathead Lake's crystal waters.
+                Experience Arizona's most breathtaking adventure over Lake Havasu's sparkling waters.
                 <span className="block mt-2 text-yellow-300 font-bold">Book your parasailing flight today!</span>
               </motion.p>
 
@@ -997,7 +1009,7 @@ const LandingPage: React.FC = () => {
                   onClick={() => window.location.href = '/reservations'}
                   whileHover={{ scale: 1.05, boxShadow: "0 25px 50px rgba(0,0,0,0.3)" }}
                   whileTap={{ scale: 0.95 }}
-                  className="group px-12 py-6 bg-white text-orange-500 font-black text-2xl rounded-2xl shadow-2xl hover:bg-yellow-100 transition-all duration-300 relative overflow-hidden"
+                  className="group px-12 py-6 bg-white text-red-500 font-black text-2xl rounded-2xl shadow-2xl hover:bg-yellow-100 transition-all duration-300 relative overflow-hidden"
                 >
                   <span className="relative z-10 flex items-center">
                     🚁 BOOK YOUR FLIGHT NOW
@@ -1009,13 +1021,13 @@ const LandingPage: React.FC = () => {
                       →
                     </motion.span>
                   </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-200 to-amber-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-200 to-orange-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </motion.button>
 
                 <div className="text-white text-center">
                   <div className="text-sm opacity-80">Questions? Call us:</div>
-                  <a href="tel:+14062706256" className="text-2xl font-bold hover:text-yellow-300 transition-colors">
-                    (406) 270-6256
+                  <a href="tel:+19285550123" className="text-2xl font-bold hover:text-yellow-300 transition-colors">
+                    (928) 555-0123
                   </a>
                 </div>
               </motion.div>

@@ -70,8 +70,13 @@ export const calculatePrice = (reservation: Partial<Reservation>): number => {
     ? parseInt(reservation.tshirts, 10)
     : (reservation.tshirts || 0);
 
-  // Base price: $99 per parasailer
-  total += numPeople * 9900;
+  // Base price: NEW PRICING STRUCTURE
+  // $89 for 1 person, $75 per person for 2 or more
+  if (numPeople === 1) {
+    total += 8900; // $89 in cents
+  } else if (numPeople >= 2) {
+    total += numPeople * 7500; // $75 per person in cents
+  }
 
   // Riders: $30 per ride-along person
   total += numRiders * 3000;
