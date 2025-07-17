@@ -81,6 +81,13 @@ const galleryItems: GalleryItem[] = [
 
   // Regular Gallery Items
   {
+    id: "3c",
+    type: "image",
+    src: "https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//leroyDock.jpg",
+    title: "After an extensive background check (he's a good boy), Leroy has been appointed Chief of Dock Security. Current threat level: YELLOW (a leaf blew by).",
+    category: "boat"
+  },
+  {
     id: "4",
     type: "image",
     src:
