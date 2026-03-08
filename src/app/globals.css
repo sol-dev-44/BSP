@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Retro Sunset Theme */
+  --color-deep-red: #B5383B;
+  --color-coral: #D4605A;
+  --color-burnt-orange: #E07840;
+  --color-golden-amber: #E5A832;
+  --color-blue-accent: #3B6BA5;
+  --color-cream: #FDF6E3;
+  --color-saddle-brown: #6B4226;
+  --color-rich-brown: #8B4513;
+  --color-warm-tan: #D2B48C;
+  --color-deep-earth: #3E2723;
+
+  /* Semantic color mappings */
+  --color-primary: #D4605A;
+  --color-secondary: #E5A832;
+  --color-accent: #3B6BA5;
+  --color-success: #6B7F3B;
+  --color-dark: #3E2723;
+  --color-muted: #A89F91;
+
+  /* Brand aliases */
+  --color-brand-red: #B5383B;
+  --color-brand-coral: #D4605A;
+  --color-brand-orange: #E07840;
+  --color-brand-gold: #E5A832;
+  --color-brand-blue: #3B6BA5;
+  --color-brand-dark: #3E2723;
+  --color-brand-cream: #FDF6E3;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+:root {
+  --background: #FDF6E3;
+  --foreground: #3E2723;
+  --border: #D2B48C;
+}
+
+.dark {
+  --background: #2C1810;
+  --foreground: #FDF6E3;
+  --border: #5D4037;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(212, 96, 90, 0.4), 0 0 10px rgba(229, 168, 50, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(212, 96, 90, 0.6), 0 0 30px rgba(229, 168, 50, 0.4);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+  background-size: 200% 100%;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Glassmorphism Utilities */
+.glass {
+  background: rgba(253, 246, 227, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(210, 180, 140, 0.3);
+}
+
+.glass-dark {
+  background: rgba(44, 24, 16, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(93, 64, 55, 0.3);
+}
+
+/* Retro Utility */
+.retro-shadow {
+  box-shadow: 4px 4px 0px #6B4226;
+}
