@@ -23,7 +23,7 @@ export function Footer() {
 
                     {/* Brand */}
                     <div>
-                        <h3 className="text-5xl font-black bg-gradient-to-r from-[#D4605A] to-[#E5A832] bg-clip-text text-transparent mb-6">
+                        <h3 className="text-5xl font-black bg-gradient-to-r from-[#D4605A] to-[#E5A832] bg-clip-text text-transparent mb-6 pb-1 leading-normal">
                             Big Sky Parasail
                         </h3>
                         <p className="text-gray-300 text-xl leading-relaxed mb-6">
