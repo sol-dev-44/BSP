@@ -40,27 +40,27 @@ export function Navbar() {
             }}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-24">
-                    <Link href="/" className="flex items-center space-x-3">
+                <div className="flex items-center justify-between h-28">
+                    <Link href="/" className="flex items-center space-x-4">
                         <img
                             src="/bsplogo.png"
                             alt="Big Sky Parasail logo"
-                            className="h-16 w-auto"
+                            className="h-20 w-auto"
                         />
-                        <h1 className="text-xl sm:text-2xl md:text-3xl font-black bg-gradient-to-r from-[#D4605A] to-[#E5A832] bg-clip-text text-transparent hover:scale-105 transition-transform duration-200 whitespace-nowrap">
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl font-black bg-gradient-to-r from-[#D4605A] to-[#E5A832] bg-clip-text text-transparent hover:scale-105 transition-transform duration-200 whitespace-nowrap">
                             Big Sky Parasail
                         </h1>
                     </Link>
 
                     {/* Desktop Menu */}
-                    <div className="hidden md:block">
-                        <div className="ml-6 flex items-center space-x-4">
+                    <div className="hidden lg:block">
+                        <div className="ml-8 flex items-center space-x-6">
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    className={`px-3 py-2 rounded-md text-sm font-semibold transition-all duration-200 ${link.cta
-                                        ? 'bg-gradient-to-r from-[#D4605A] to-[#E5A832] text-white hover:shadow-lg shadow-[#D4605A]/50 transform hover:-translate-y-0.5'
+                                    className={`px-4 py-2.5 rounded-lg text-base font-bold tracking-wide transition-all duration-200 ${link.cta
+                                        ? 'bg-gradient-to-r from-[#D4605A] to-[#E5A832] text-white hover:shadow-lg shadow-[#D4605A]/50 transform hover:-translate-y-0.5 px-6'
                                         : isActive(link.href)
                                             ? 'text-[#D4605A] border-b-2 border-[#D4605A]'
                                             : 'text-[#FDF6E3] hover:text-[#E5A832]'
@@ -74,7 +74,7 @@ export function Navbar() {
                     </div>
 
                     {/* Mobile menu button */}
-                    <div className="md:hidden flex items-center space-x-4">
+                    <div className="lg:hidden flex items-center space-x-4">
                         <ThemeToggle />
                         <button
                             onClick={() => setIsOpen(!isOpen)}
@@ -97,7 +97,7 @@ export function Navbar() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden"
+                        className="lg:hidden"
                         style={{
                             backgroundColor: '#3D2B1F'
                         }}
