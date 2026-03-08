@@ -69,7 +69,7 @@ export const BUSINESS_INFO = {
     // Sister Site
     sisterSite: {
         name: 'Havasu Parasail',
-        url: 'https://www.havasuparasail.com',
+        url: 'https://www.parasailhavasu.com',
     },
 
     // Pricing Constants
