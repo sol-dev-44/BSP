@@ -24,8 +24,8 @@ const playfairDisplay = Playfair_Display({
 export const metadata: Metadata = {
   ...BASE_METADATA,
   icons: {
-    icon: "/MM-Logo-1.png",
-    apple: "/MM-Logo-1.png",
+    icon: "/bsplogo.png",
+    apple: "/bsplogo.png",
   },
 };
 

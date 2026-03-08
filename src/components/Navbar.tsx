@@ -43,7 +43,7 @@ export function Navbar() {
                 <div className="flex items-center justify-between h-24">
                     <Link href="/" className="flex items-center space-x-3">
                         <img
-                            src="/MM-Logo-1.png"
+                            src="/bsplogo.png"
                             alt="Big Sky Parasail logo"
                             className="h-16 w-auto"
                         />
