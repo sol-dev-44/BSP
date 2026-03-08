@@ -17,10 +17,29 @@ export default function BSPChat() {
     const [input, setInput] = useState('');
     const [loading, setLoading] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const chatContainerRef = useRef<HTMLDivElement>(null);
+    const userScrolledRef = useRef(false);
 
+    // Only auto-scroll if user hasn't scrolled up
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+        if (!userScrolledRef.current) {
+            messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+        }
     }, [messages]);
+
+    // Reset scroll lock when user sends a new message
+    useEffect(() => {
+        if (loading) {
+            userScrolledRef.current = false;
+        }
+    }, [loading]);
+
+    const handleScroll = () => {
+        const el = chatContainerRef.current;
+        if (!el) return;
+        const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+        userScrolledRef.current = distanceFromBottom > 100;
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -130,7 +149,7 @@ export default function BSPChat() {
                 {/* Chat Interface */}
                 <div className="bg-white dark:bg-[#2A1F17] rounded-2xl border-2 border-[#E5A832]/20 dark:border-[#6B4226] shadow-2xl overflow-hidden">
                     {/* Messages */}
-                    <div className="h-[600px] overflow-y-auto p-6 space-y-4">
+                    <div ref={chatContainerRef} onScroll={handleScroll} className="h-[600px] overflow-y-auto p-6 space-y-4">
                         {messages.length === 0 ? (
                             <div className="h-full flex flex-col items-center justify-center text-center">
                                 <motion.div
