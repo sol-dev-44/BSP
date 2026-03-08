@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Facebook, Instagram, Star, MapPin as TripAdvisorIcon, Phone, Mail, ExternalLink } from 'lucide-react'
+import { Facebook, Instagram, Star, MapPin as TripAdvisorIcon, Phone, Mail, ExternalLink, MapPinned } from 'lucide-react'
 import { BUSINESS_INFO } from '@/config/business'
 
 export function Footer() {
@@ -122,6 +122,16 @@ export function Footer() {
                                 title="Review us on TripAdvisor"
                             >
                                 <TripAdvisorIcon className="h-7 w-7" />
+                            </a>
+                            <a
+                                href={BUSINESS_INFO.social.google}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-3 rounded-full bg-white/10 hover:bg-gradient-to-r hover:from-[#D4605A] hover:to-[#E5A832] transition-all duration-300 hover:scale-110"
+                                aria-label="Google Maps"
+                                title="Find us on Google Maps"
+                            >
+                                <MapPinned className="h-7 w-7" />
                             </a>
                         </div>
                         <div className="mt-8">

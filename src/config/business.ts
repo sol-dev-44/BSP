@@ -60,6 +60,7 @@ export const BUSINESS_INFO = {
         instagram: 'https://www.instagram.com/bigskyparasail/',
         yelp: 'https://www.yelp.com/biz/big-sky-parasail-lakeside',
         tripadvisor: 'https://www.tripadvisor.com/Attraction_Review-g45275-d26456090-Reviews-Big_Sky_Parasail-Lakeside_Montana.html',
+        google: 'https://www.google.com/maps/place/Big+Sky+Parasail+Co./@48.023707,-114.228428,795m/data=!3m2!1e3!4b1!4m6!3m5!1s0xfe4f7653a52c97:0xa7eb4a92583459e9!8m2!3d48.023707!4d-114.2258531!16s%2Fg%2F11t9mpnt0d?entry=ttu&g_ep=EgoyMDI2MDMwNC4xIKXMDSoASAFQAw%3D%3D',
     },
 
     // Website
