@@ -54,12 +54,12 @@ export function Stats() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="font-[family-name:var(--font-headline)] text-sm font-black uppercase tracking-[0.3em] text-[#a58b88] text-center mb-10"
+                    className="font-[family-name:var(--font-headline)] text-sm font-black uppercase tracking-widest sm:tracking-[0.3em] text-[#a58b88] text-center mb-6 sm:mb-10"
                 >
                     Trusted by Thousands
                 </motion.p>
 
-                <div className="flex flex-wrap items-start justify-center gap-8 sm:gap-12 md:gap-16 lg:gap-24">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 md:gap-12 lg:gap-16">
                     {stats.map((stat, index) => (
                         <motion.div
                             key={index}
@@ -69,7 +69,7 @@ export function Stats() {
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                             className="flex flex-col items-center text-center"
                         >
-                            <div className="font-[family-name:var(--font-headline)] text-5xl md:text-6xl font-black text-[#fbddca]">
+                            <div className="font-[family-name:var(--font-headline)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#fbddca]">
                                 {stat.suffix === '.0' ? (
                                     <span>
                                         <AnimatedCounter value={stat.value} suffix="" />.0

@@ -30,14 +30,14 @@ export function Navbar() {
             className="fixed w-full z-50 bg-[#1e1006]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(251,221,202,0.06)] transition-all duration-300"
         >
             <div className="w-full mx-auto px-4 sm:px-6 lg:px-10">
-                <div className="flex items-center justify-between h-28">
+                <div className="flex items-center justify-between h-16 sm:h-20 lg:h-28">
                     <Link href="/" className="flex items-center space-x-4">
                         <img
                             src="/bsplogo.png"
                             alt="Big Sky Parasail logo"
-                            className="h-20 w-auto"
+                            className="h-10 sm:h-14 lg:h-20 w-auto"
                         />
-                        <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-widest font-[family-name:var(--font-headline)] text-[#fbddca] hover:scale-105 transition-transform duration-200 whitespace-nowrap uppercase">
+                        <h1 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-black tracking-widest font-[family-name:var(--font-headline)] text-[#fbddca] hover:scale-105 transition-transform duration-200 whitespace-nowrap uppercase">
                             Big Sky Parasail
                         </h1>
                     </Link>

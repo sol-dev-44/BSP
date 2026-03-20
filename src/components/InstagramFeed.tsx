@@ -73,7 +73,7 @@ const INSTAGRAM_POSTS = [
 
 export function InstagramFeed() {
     return (
-        <div className="py-28 bg-[#1e1006]">
+        <div className="py-16 sm:py-20 md:py-28 bg-[#1e1006]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <motion.div
@@ -81,24 +81,24 @@ export function InstagramFeed() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="text-center mb-16"
+                    className="text-center mb-8 sm:mb-12 md:mb-16"
                 >
-                    <div className="inline-flex items-center gap-2 bg-[#433124] text-[#ffb3ad] px-6 py-3 rounded-full mb-6">
+                    <div className="inline-flex items-center gap-2 bg-[#433124] text-[#ffb3ad] px-4 py-2 mb-4 sm:px-6 sm:py-3 sm:mb-6 rounded-full">
                         <Instagram className="h-5 w-5" />
                         <span className="font-bold uppercase tracking-widest text-sm">Follow Our Adventures</span>
                     </div>
 
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tighter text-[#fbddca] mb-6">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tighter text-[#fbddca] mb-6">
                         See It On Instagram
                     </h2>
 
-                    <p className="text-xl md:text-2xl text-[#a58b88] max-w-3xl mx-auto">
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#a58b88] max-w-3xl mx-auto">
                         Daily adventures, customer photos, and stunning Flathead Lake views
                     </p>
                 </motion.div>
 
                 {/* Instagram Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-12">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8 sm:mb-12">
                     {INSTAGRAM_POSTS.map((post, index) => (
                         <motion.a
                             key={post.id}
@@ -142,7 +142,7 @@ export function InstagramFeed() {
                         href="https://www.instagram.com/bigskyparasail/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 bg-[#ffb3ad] text-[#640c0f] rounded-full font-bold uppercase tracking-widest px-8 py-3 text-lg shadow-[0_0_40px_rgba(255,179,173,0.3)] hover:scale-105 transition-all duration-300"
+                        className="inline-flex items-center gap-3 bg-[#ffb3ad] text-[#640c0f] rounded-full font-bold uppercase tracking-widest px-6 py-3 text-sm sm:px-8 sm:text-base md:text-lg shadow-[0_0_40px_rgba(255,179,173,0.3)] hover:scale-105 transition-all duration-300"
                     >
                         <Instagram className="w-5 h-5" />
                         Follow @bigskyparasail

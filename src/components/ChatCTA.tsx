@@ -11,7 +11,7 @@ export function ChatCTA() {
     return (
         <Link href="/bsp-chat">
             <motion.div
-                className="fixed bottom-6 right-6 z-40 group"
+                className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 group"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 whileHover={{ scale: 1.1 }}
@@ -47,10 +47,10 @@ export function ChatCTA() {
                         }}
                     />
 
-                    <div className="relative w-16 h-16 rounded-full bg-[#ffb3ad] shadow-2xl flex items-center justify-center cursor-pointer hover:shadow-[#ffb3ad]/50 transition-shadow duration-300">
-                        <MessageCircle className="w-8 h-8 text-[#190b03]" strokeWidth={2.5} />
+                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-[#ffb3ad] shadow-2xl flex items-center justify-center cursor-pointer hover:shadow-[#ffb3ad]/50 transition-shadow duration-300">
+                        <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#190b03]" strokeWidth={2.5} />
 
-                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#f4ba96] rounded-full border-2 border-[#190b03] animate-pulse" />
+                        <div className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-[#f4ba96] rounded-full border-2 border-[#190b03] animate-pulse" />
                     </div>
                 </div>
             </motion.div>

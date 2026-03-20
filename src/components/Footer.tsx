@@ -15,15 +15,15 @@ export function Footer() {
                 <div className="absolute bottom-10 right-10 w-64 h-64 bg-[#fbbb45] rounded-full blur-3xl" />
             </div>
 
-            <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+            <div className="max-w-7xl mx-auto py-10 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12 text-center md:text-left">
 
                     {/* Brand */}
                     <div>
-                        <h3 className="text-5xl font-black uppercase tracking-tighter font-[family-name:var(--font-headline)] text-[#ffb3ad] mb-6 pb-1 leading-normal">
+                        <h3 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tighter font-[family-name:var(--font-headline)] text-[#ffb3ad] mb-6 pb-1 leading-normal">
                             Big Sky Parasail
                         </h3>
-                        <p className="text-[#ddc0bd] text-xl leading-relaxed mb-6">
+                        <p className="text-[#ddc0bd] text-base sm:text-lg md:text-xl leading-relaxed mb-6">
                             Making memories on Flathead Lake since 2022. Safe, fun, and family-friendly parasailing adventures in Montana.
                         </p>
                         <p className="text-[#fbbb45] font-bold text-lg">
@@ -49,8 +49,8 @@ export function Footer() {
 
                     {/* Contact */}
                     <div>
-                        <h3 className="text-3xl font-black uppercase tracking-tighter font-[family-name:var(--font-headline)] text-[#fbddca] mb-6">Contact Us</h3>
-                        <ul className="space-y-4 text-[#ddc0bd] text-xl">
+                        <h3 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tighter font-[family-name:var(--font-headline)] text-[#fbddca] mb-6">Contact Us</h3>
+                        <ul className="space-y-4 text-[#ddc0bd] text-base sm:text-lg md:text-xl">
                             <li className="flex items-start justify-center md:justify-start gap-3">
                                 <TripAdvisorIcon className="h-6 w-6 text-[#ffb3ad] flex-shrink-0 mt-1" />
                                 <div>
@@ -62,7 +62,7 @@ export function Footer() {
                             <li className="flex items-start justify-center md:justify-start gap-3">
                                 <Phone className="h-6 w-6 text-[#ffb3ad] flex-shrink-0 mt-1" />
                                 <div className="flex flex-col items-start">
-                                    <a href={`tel:${BUSINESS_INFO.phone.replace(/-/g, '')}`} className="hover:text-[#fbbb45] transition-colors font-bold text-xl leading-none">
+                                    <a href={`tel:${BUSINESS_INFO.phone.replace(/-/g, '')}`} className="hover:text-[#fbbb45] transition-colors font-bold text-base sm:text-lg md:text-xl leading-none">
                                         {BUSINESS_INFO.displayPhone}
                                     </a>
                                 </div>
@@ -78,7 +78,7 @@ export function Footer() {
 
                     {/* Social & CTA */}
                     <div>
-                        <h3 className="text-3xl font-black uppercase tracking-tighter font-[family-name:var(--font-headline)] text-[#fbddca] mb-6">Follow Us</h3>
+                        <h3 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tighter font-[family-name:var(--font-headline)] text-[#fbddca] mb-6">Follow Us</h3>
                         <div className="flex justify-center md:justify-start space-x-4 mb-8">
                             <a
                                 href={BUSINESS_INFO.social.facebook}
@@ -88,7 +88,7 @@ export function Footer() {
                                 aria-label="Facebook"
                                 title="Follow us on Facebook"
                             >
-                                <Facebook className="h-7 w-7" />
+                                <Facebook className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" />
                             </a>
                             <a
                                 href={BUSINESS_INFO.social.instagram}
@@ -98,7 +98,7 @@ export function Footer() {
                                 aria-label="Instagram"
                                 title="Follow us on Instagram"
                             >
-                                <Instagram className="h-7 w-7" />
+                                <Instagram className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" />
                             </a>
                             <a
                                 href={BUSINESS_INFO.social.yelp}
@@ -108,7 +108,7 @@ export function Footer() {
                                 aria-label="Yelp"
                                 title="Review us on Yelp"
                             >
-                                <Star className="h-7 w-7" />
+                                <Star className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" />
                             </a>
                             <a
                                 href={BUSINESS_INFO.social.tripadvisor}
@@ -118,7 +118,7 @@ export function Footer() {
                                 aria-label="TripAdvisor"
                                 title="Review us on TripAdvisor"
                             >
-                                <TripAdvisorIcon className="h-7 w-7" />
+                                <TripAdvisorIcon className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" />
                             </a>
                             <a
                                 href={BUSINESS_INFO.social.google}
@@ -128,13 +128,13 @@ export function Footer() {
                                 aria-label="Google Maps"
                                 title="Find us on Google Maps"
                             >
-                                <MapPinned className="h-7 w-7" />
+                                <MapPinned className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" />
                             </a>
                         </div>
                         <div className="mt-8">
                             <Link
                                 href="/book"
-                                className="inline-block px-12 py-5 text-2xl font-bold rounded-full bg-[#ffb3ad] text-[#190b03] hover:shadow-2xl hover:shadow-[#ffb3ad]/30 transition-all duration-300 hover:scale-105 uppercase tracking-widest font-[family-name:var(--font-headline)]"
+                                className="inline-block px-8 py-3 text-base sm:px-10 sm:py-4 sm:text-lg md:px-12 md:py-5 md:text-2xl font-bold rounded-full bg-[#ffb3ad] text-[#190b03] hover:shadow-2xl hover:shadow-[#ffb3ad]/30 transition-all duration-300 hover:scale-105 uppercase tracking-widest font-[family-name:var(--font-headline)]"
                             >
                                 Book Your Adventure
                             </Link>
@@ -143,8 +143,8 @@ export function Footer() {
                 </div>
 
                 {/* Bottom bar */}
-                <div className="mt-16 pt-8 border-t border-[#564240]/50">
-                    <p className="text-center text-[#a58b88] text-xl">
+                <div className="mt-10 pt-6 sm:mt-16 sm:pt-8 border-t border-[#564240]/50">
+                    <p className="text-center text-[#a58b88] text-sm sm:text-base md:text-xl">
                         &copy; {currentYear} Big Sky Parasail. All rights reserved.
                     </p>
                 </div>

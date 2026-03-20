@@ -107,7 +107,7 @@ export function ExperienceGallery() {
     }
 
     return (
-        <section className="py-28 lg:py-32 bg-[#28180d] relative overflow-hidden">
+        <section className="py-16 sm:py-20 md:py-28 lg:py-32 bg-[#28180d] relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Editorial section header */}
                 <motion.div
@@ -115,9 +115,9 @@ export function ExperienceGallery() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="mb-16"
+                    className="mb-8 sm:mb-12 md:mb-16"
                 >
-                    <h2 className="font-[family-name:var(--font-headline)] text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter uppercase text-[#fbddca]">
+                    <h2 className="font-[family-name:var(--font-headline)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tighter uppercase text-[#fbddca]">
                         Experience the<br />Adventure
                     </h2>
                     <p className="text-lg md:text-xl text-[#a58b88] max-w-2xl mt-4">
@@ -164,9 +164,9 @@ export function ExperienceGallery() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8, delay: 0.3 }}
-                    className="text-center mt-16"
+                    className="text-center mt-10 sm:mt-16"
                 >
-                    <Link href="/gallery" className="inline-block px-8 py-4 rounded-xl bg-[#ffb3ad] text-[#190b03] font-bold text-lg hover:bg-[#fbddca] hover:scale-105 transition-all duration-300">
+                    <Link href="/gallery" className="inline-block px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg rounded-xl bg-[#ffb3ad] text-[#190b03] font-bold hover:bg-[#fbddca] hover:scale-105 transition-all duration-300">
                         View Full Gallery
                     </Link>
                 </motion.div>

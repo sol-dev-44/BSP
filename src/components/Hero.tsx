@@ -43,7 +43,7 @@ export function Hero() {
                     className="flex flex-col items-start"
                 >
                     <h1
-                        className="font-[family-name:var(--font-headline)] text-7xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter leading-[0.9] text-[#fbddca] mb-6"
+                        className="font-[family-name:var(--font-headline)] text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black uppercase tracking-tighter leading-[0.9] text-[#fbddca] mb-6"
                     >
                         Soar Above
                         <br />
@@ -75,13 +75,13 @@ export function Hero() {
                 >
                     <Link
                         href="/book"
-                        className="px-10 py-4 rounded-full bg-[#e46c65] text-white font-bold text-lg shadow-lg hover:shadow-[#e46c65]/30 hover:bg-[#ffb3ad] hover:text-[#190b03] transform hover:scale-105 transition-all duration-300 inline-block"
+                        className="w-full sm:w-auto text-center px-10 py-4 rounded-full bg-[#e46c65] text-white font-bold text-base sm:text-lg shadow-lg hover:shadow-[#e46c65]/30 hover:bg-[#ffb3ad] hover:text-[#190b03] transform hover:scale-105 transition-all duration-300 inline-block"
                     >
                         Book Your Flight
                     </Link>
                     <Link
                         href="#about"
-                        className="px-10 py-4 rounded-full border border-[#fbddca]/30 bg-white/5 backdrop-blur-sm text-[#fbddca] font-bold text-lg hover:bg-white/10 hover:border-[#fbddca]/50 transform hover:scale-105 transition-all duration-300 inline-block"
+                        className="w-full sm:w-auto text-center px-10 py-4 rounded-full border border-[#fbddca]/30 bg-white/5 backdrop-blur-sm text-[#fbddca] font-bold text-base sm:text-lg hover:bg-white/10 hover:border-[#fbddca]/50 transform hover:scale-105 transition-all duration-300 inline-block"
                     >
                         Learn More
                     </Link>

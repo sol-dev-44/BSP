@@ -39,7 +39,7 @@ export function VesselShowcase() {
     ]
 
     return (
-        <section className="relative py-28 lg:py-32 overflow-hidden bg-[#1e1006]">
+        <section className="relative py-16 sm:py-20 md:py-28 lg:py-32 overflow-hidden bg-[#1e1006]">
             {/* Subtle ambient glow */}
             <div className="absolute inset-0 overflow-hidden opacity-10">
                 <motion.div
@@ -67,10 +67,10 @@ export function VesselShowcase() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-16"
+                    className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 sm:mb-12 md:mb-16"
                 >
                     <div>
-                        <h2 className="font-[family-name:var(--font-headline)] text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter uppercase text-[#fbddca]">
+                        <h2 className="font-[family-name:var(--font-headline)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tighter uppercase text-[#fbddca]">
                             The Cloud Dancer
                         </h2>
                         <p className="text-lg md:text-xl text-[#a58b88] max-w-2xl mt-4">
@@ -96,7 +96,7 @@ export function VesselShowcase() {
                         <img
                             src={`${IMAGE_BASE}cloudDancerInclineDock.jpg`}
                             alt="Cloud Dancer vessel docked at Flathead Harbor Marina"
-                            className="w-full h-full object-cover min-h-[400px] group-hover:scale-110 transition-transform duration-700"
+                            className="w-full h-full object-cover min-h-[250px] sm:min-h-[300px] md:min-h-[400px] group-hover:scale-110 transition-transform duration-700"
                         />
                         {/* Text overlay at bottom */}
                         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#190b03]/90 via-[#190b03]/60 to-transparent p-6 md:p-8">
@@ -116,7 +116,7 @@ export function VesselShowcase() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                                className="bg-[#433124] rounded-xl p-8"
+                                className="bg-[#433124] rounded-xl p-5 sm:p-6 md:p-8"
                             >
                                 <div className="mb-4">
                                     <Icon className="h-8 w-8 text-[#ffb3ad]" />
@@ -144,7 +144,7 @@ export function VesselShowcase() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: 0.1 * index }}
-                                className="bg-[#433124] rounded-xl p-8"
+                                className="bg-[#433124] rounded-xl p-5 sm:p-6 md:p-8"
                             >
                                 <div className="mb-4">
                                     <Icon className="h-8 w-8 text-[#fbbb45]" />
@@ -186,7 +186,7 @@ export function VesselShowcase() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.4 }}
-                        className="bg-[#433124] rounded-xl p-8"
+                        className="bg-[#433124] rounded-xl p-5 sm:p-6 md:p-8"
                     >
                         <h3 className="font-[family-name:var(--font-headline)] text-lg font-bold text-[#fbddca] mb-4 flex items-center gap-2 uppercase tracking-tight">
                             <Gauge className="h-5 w-5 text-[#ffb3ad]" />
@@ -209,11 +209,11 @@ export function VesselShowcase() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8, delay: 0.5 }}
-                    className="mt-16 text-center"
+                    className="mt-10 sm:mt-16 text-center"
                 >
-                    <div className="inline-flex items-center gap-3 bg-[#433124] px-8 py-4 rounded-xl">
+                    <div className="inline-flex items-center gap-3 bg-[#433124] px-4 py-3 sm:px-6 sm:py-4 md:px-8 rounded-xl">
                         <Shield className="h-6 w-6 text-[#f4ba96]" />
-                        <p className="text-lg font-bold text-[#fbddca]">
+                        <p className="text-sm sm:text-base md:text-lg font-bold text-[#fbddca]">
                             Safety-First Operations Since Day One
                         </p>
                     </div>

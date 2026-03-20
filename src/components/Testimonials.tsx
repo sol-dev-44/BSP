@@ -111,11 +111,11 @@ export function Testimonials() {
     }, [currentIndex])
 
     return (
-        <div className="py-28 bg-[#28180d] relative overflow-hidden">
+        <div className="py-16 sm:py-20 md:py-28 bg-[#28180d] relative overflow-hidden">
             {/* Background decoration */}
             <div className="absolute inset-0 opacity-[0.03]">
-                <Quote className="absolute top-20 left-10 h-64 w-64 text-[#ffb3ad]" />
-                <Quote className="absolute bottom-20 right-10 h-64 w-64 text-[#fbbb45] rotate-180" />
+                <Quote className="absolute top-20 left-10 h-32 w-32 sm:h-48 sm:w-48 md:h-64 md:w-64 text-[#ffb3ad]" />
+                <Quote className="absolute bottom-20 right-10 h-32 w-32 sm:h-48 sm:w-48 md:h-64 md:w-64 text-[#fbbb45] rotate-180" />
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -124,19 +124,19 @@ export function Testimonials() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="text-center mb-16"
+                    className="text-center mb-8 sm:mb-12 md:mb-16"
                 >
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tighter text-[#fbddca] mb-4">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tighter text-[#fbddca] mb-4">
                         What Our Guests Say
                     </h2>
-                    <p className="text-xl md:text-2xl text-[#a58b88] max-w-3xl mx-auto">
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#a58b88] max-w-3xl mx-auto">
                         Don&apos;t just take our word for it. Hear from the adventurers who&apos;ve soared above Flathead Lake.
                     </p>
                 </motion.div>
 
                 <div className="relative max-w-4xl mx-auto">
                     {/* Testimonial Cards */}
-                    <div className="relative h-[400px] md:h-[350px] flex items-center justify-center">
+                    <div className="relative h-[320px] sm:h-[350px] md:h-[300px] flex items-center justify-center">
                         <AnimatePresence initial={false} custom={direction}>
                             <motion.div
                                 key={currentIndex}
@@ -163,16 +163,16 @@ export function Testimonials() {
                                 }}
                                 className="absolute w-full"
                             >
-                                <div className="bg-[#2c1c11] rounded-xl p-8 md:p-12 shadow-2xl">
-                                    <Quote className="h-12 w-12 text-[#fbbb45] mb-6 opacity-50" />
+                                <div className="bg-[#2c1c11] rounded-xl p-5 sm:p-6 md:p-8 lg:p-12 shadow-2xl">
+                                    <Quote className="h-8 w-8 mb-4 sm:h-10 sm:w-10 sm:mb-5 md:h-12 md:w-12 md:mb-6 text-[#fbbb45] opacity-50" />
 
-                                    <p className="text-lg md:text-xl text-[#ddc0bd] mb-8 leading-relaxed italic">
+                                    <p className="text-base sm:text-lg md:text-xl text-[#ddc0bd] mb-6 sm:mb-8 leading-relaxed italic">
                                         &ldquo;{testimonials[currentIndex].text}&rdquo;
                                     </p>
 
                                     <div className="flex items-center justify-between">
                                         <div>
-                                            <p className="font-bold text-xl text-[#fbddca]">
+                                            <p className="font-bold text-base sm:text-lg md:text-xl text-[#fbddca]">
                                                 {testimonials[currentIndex].name}
                                             </p>
                                             <p className="text-[#a58b88]">
