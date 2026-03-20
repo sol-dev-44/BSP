@@ -9,6 +9,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/reservations",
+        destination: "/book",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
