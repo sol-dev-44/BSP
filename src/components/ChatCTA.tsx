@@ -24,10 +24,10 @@ export function ChatCTA() {
                             initial={{ opacity: 0, x: 10 }}
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: 10 }}
-                            className="absolute right-full mr-4 top-1/2 -translate-y-1/2 whitespace-nowrap bg-[#3D2B1F] dark:bg-[#2A1F17] text-[#FDF6E3] px-4 py-2 rounded-lg shadow-xl"
+                            className="absolute right-full mr-4 top-1/2 -translate-y-1/2 whitespace-nowrap bg-[#2c1c11] text-[#fbddca] px-4 py-2 rounded-lg shadow-xl"
                         >
                             <span className="font-semibold">Ask us anything!</span>
-                            <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full border-8 border-transparent border-l-[#3D2B1F] dark:border-l-[#2A1F17]" />
+                            <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full border-8 border-transparent border-l-[#2c1c11]" />
                         </motion.div>
                     )}
                 </AnimatePresence>
@@ -35,7 +35,7 @@ export function ChatCTA() {
                 {/* Chat Button */}
                 <div className="relative">
                     <motion.div
-                        className="absolute inset-0 rounded-full bg-gradient-to-r from-[#D4605A] to-[#E5A832] opacity-75"
+                        className="absolute inset-0 rounded-full bg-[#ffb3ad] opacity-75"
                         animate={{
                             scale: [1, 1.2, 1],
                             opacity: [0.75, 0.5, 0.75],
@@ -47,10 +47,10 @@ export function ChatCTA() {
                         }}
                     />
 
-                    <div className="relative w-16 h-16 rounded-full bg-gradient-to-r from-[#D4605A] to-[#E5A832] shadow-2xl flex items-center justify-center cursor-pointer hover:shadow-[#D4605A]/50 transition-shadow duration-300">
-                        <MessageCircle className="w-8 h-8 text-white" strokeWidth={2.5} />
+                    <div className="relative w-16 h-16 rounded-full bg-[#ffb3ad] shadow-2xl flex items-center justify-center cursor-pointer hover:shadow-[#ffb3ad]/50 transition-shadow duration-300">
+                        <MessageCircle className="w-8 h-8 text-[#190b03]" strokeWidth={2.5} />
 
-                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#3B6BA5] rounded-full border-2 border-white dark:border-[#1A0F0A] animate-pulse" />
+                        <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#f4ba96] rounded-full border-2 border-[#190b03] animate-pulse" />
                     </div>
                 </div>
             </motion.div>

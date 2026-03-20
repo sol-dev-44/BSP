@@ -1,9 +1,4 @@
-'use client'
-
-import { RetroStripes } from './RetroStripes'
-
 interface SectionDividerProps {
-    withStripes?: boolean
     spacing?: 'sm' | 'md' | 'lg'
     className?: string
 }
@@ -11,31 +6,24 @@ interface SectionDividerProps {
 /**
  * SectionDivider Component
  *
- * Provides consistent visual separation between major page sections.
- * Can optionally include retro stripe pattern.
+ * Provides consistent vertical spacing between major page sections.
+ * The Elevated Horizon design uses background color shifts between
+ * sections rather than visual divider elements.
  *
- * @param withStripes - Whether to include the retro stripe pattern (default: true)
- * @param spacing - Vertical spacing around divider: 'sm' | 'md' | 'lg' (default: 'md')
+ * @param spacing - Vertical spacing: 'sm' | 'md' | 'lg' (default: 'md')
  * @param className - Additional CSS classes
  */
 export function SectionDivider({
-    withStripes = true,
     spacing = 'md',
     className = ''
 }: SectionDividerProps) {
     const spacingClasses = {
         sm: 'py-8',
-        md: 'py-12',
-        lg: 'py-16',
+        md: 'py-16',
+        lg: 'py-24',
     }
 
     return (
-        <div className={`${spacingClasses[spacing]} ${className}`}>
-            {withStripes && (
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <RetroStripes />
-                </div>
-            )}
-        </div>
+        <div className={`${spacingClasses[spacing]} ${className}`} />
     )
 }

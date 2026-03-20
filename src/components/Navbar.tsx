@@ -4,10 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
-import { ThemeToggle } from './ThemeToggle'
-import RetroStripes from './RetroStripes'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useTheme } from 'next-themes'
 
 const navLinks: { name: string; href: string; cta?: boolean }[] = [
     { name: 'Home', href: '/' },
@@ -22,9 +19,6 @@ const navLinks: { name: string; href: string; cta?: boolean }[] = [
 export function Navbar() {
     const [isOpen, setIsOpen] = useState(false)
     const pathname = usePathname()
-    const { theme, systemTheme } = useTheme()
-
-    const currentTheme = theme === 'system' ? systemTheme : theme
 
     const isActive = (href: string) => {
         if (href === '/') return pathname === '/'
@@ -33,11 +27,7 @@ export function Navbar() {
 
     return (
         <nav
-            className="fixed w-full z-50 backdrop-blur-md border-b shadow-sm transition-all duration-300"
-            style={{
-                backgroundColor: '#3D2B1F',
-                borderColor: '#6B4226'
-            }}
+            className="fixed w-full z-50 bg-[#1e1006]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(251,221,202,0.06)] transition-all duration-300"
         >
             <div className="w-full mx-auto px-4 sm:px-6 lg:px-10">
                 <div className="flex items-center justify-between h-28">
@@ -47,7 +37,7 @@ export function Navbar() {
                             alt="Big Sky Parasail logo"
                             className="h-20 w-auto"
                         />
-                        <h1 className="text-2xl sm:text-3xl md:text-4xl font-black bg-gradient-to-r from-[#D4605A] to-[#E5A832] bg-clip-text text-transparent hover:scale-105 transition-transform duration-200 whitespace-nowrap">
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-widest font-[family-name:var(--font-headline)] text-[#fbddca] hover:scale-105 transition-transform duration-200 whitespace-nowrap uppercase">
                             Big Sky Parasail
                         </h1>
                     </Link>
@@ -59,26 +49,25 @@ export function Navbar() {
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    className={`px-4 py-2.5 rounded-lg text-base font-bold tracking-wide transition-all duration-200 ${link.cta
-                                        ? 'bg-gradient-to-r from-[#D4605A] to-[#E5A832] text-white hover:shadow-lg shadow-[#D4605A]/50 transform hover:-translate-y-0.5 px-6'
-                                        : isActive(link.href)
-                                            ? 'text-[#D4605A] border-b-2 border-[#D4605A]'
-                                            : 'text-[#FDF6E3] hover:text-[#E5A832]'
-                                        }`}
+                                    className={`${link.cta
+                                        ? 'bg-[#ffb3ad] text-[#190b03] px-8 py-3 rounded-full font-bold uppercase tracking-widest hover:scale-105 active:scale-95 transition-all duration-300 font-[family-name:var(--font-headline)]'
+                                        : `font-[family-name:var(--font-headline)] tracking-widest uppercase text-sm font-bold transition-all duration-200 px-4 py-2.5 ${isActive(link.href)
+                                            ? 'text-[#ffb3ad]'
+                                            : 'text-[#fbddca] hover:text-[#fbbb45]'
+                                        }`
+                                    }`}
                                 >
                                     {link.name}
                                 </Link>
                             ))}
-                            <ThemeToggle />
                         </div>
                     </div>
 
                     {/* Mobile menu button */}
                     <div className="lg:hidden flex items-center space-x-4">
-                        <ThemeToggle />
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className="inline-flex items-center justify-center p-2 rounded-md text-[#FDF6E3] hover:text-[#E5A832] focus:outline-none"
+                            className="inline-flex items-center justify-center p-2 rounded-md text-[#fbddca] hover:text-[#fbbb45] focus:outline-none"
                             aria-label="Toggle menu"
                         >
                             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -87,9 +76,6 @@ export function Navbar() {
                 </div>
             </div>
 
-            {/* Retro Stripes Bottom Border */}
-            <RetroStripes orientation="horizontal" className="w-full" />
-
             {/* Mobile Menu */}
             <AnimatePresence>
                 {isOpen && (
@@ -97,22 +83,19 @@ export function Navbar() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="lg:hidden"
-                        style={{
-                            backgroundColor: '#3D2B1F'
-                        }}
+                        className="lg:hidden bg-[#1e1006]/95 backdrop-blur-xl"
                     >
                         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    className={`block px-3 py-2 rounded-md text-base font-medium ${link.cta
-                                        ? 'bg-gradient-to-r from-[#D4605A] to-[#E5A832] text-white'
+                                    className={`block px-3 py-2 rounded-md text-base font-[family-name:var(--font-headline)] uppercase tracking-widest font-bold ${link.cta
+                                        ? 'bg-[#ffb3ad] text-[#190b03]'
                                         : isActive(link.href)
-                                            ? 'text-[#D4605A] bg-[#2A1F17]'
-                                            : 'text-[#FDF6E3] hover:text-[#E5A832] hover:bg-[#2A1F17]'
-                                        }`}
+                                            ? 'text-[#ffb3ad] bg-[#2c1c11]'
+                                            : 'text-[#fbddca] hover:text-[#fbbb45] hover:bg-[#2c1c11]'
+                                    }`}
                                     onClick={() => setIsOpen(false)}
                                 >
                                     {link.name}

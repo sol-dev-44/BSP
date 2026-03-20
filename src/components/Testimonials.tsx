@@ -56,8 +56,8 @@ function StarRating({ rating }: { rating: number }) {
                 >
                     <Star
                         className={`h-5 w-5 ${i < rating
-                            ? 'fill-[#E5A832] text-[#E5A832]'
-                            : 'text-gray-300 dark:text-gray-600'
+                            ? 'fill-[#fbbb45] text-[#fbbb45]'
+                            : 'text-[#564240]'
                             }`}
                     />
                 </motion.div>
@@ -111,11 +111,11 @@ export function Testimonials() {
     }, [currentIndex])
 
     return (
-        <div className="py-24 bg-gradient-to-b from-background to-[#FDF6E3]/10 relative overflow-hidden">
+        <div className="py-28 bg-[#28180d] relative overflow-hidden">
             {/* Background decoration */}
-            <div className="absolute inset-0 opacity-5">
-                <Quote className="absolute top-20 left-10 h-64 w-64 text-[#D4605A]" />
-                <Quote className="absolute bottom-20 right-10 h-64 w-64 text-[#E5A832] rotate-180" />
+            <div className="absolute inset-0 opacity-[0.03]">
+                <Quote className="absolute top-20 left-10 h-64 w-64 text-[#ffb3ad]" />
+                <Quote className="absolute bottom-20 right-10 h-64 w-64 text-[#fbbb45] rotate-180" />
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -126,11 +126,11 @@ export function Testimonials() {
                     transition={{ duration: 0.8 }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground mb-4">
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tighter text-[#fbddca] mb-4">
                         What Our Guests Say
                     </h2>
-                    <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                        Don't just take our word for it. Hear from the adventurers who've soared above Flathead Lake.
+                    <p className="text-xl md:text-2xl text-[#a58b88] max-w-3xl mx-auto">
+                        Don&apos;t just take our word for it. Hear from the adventurers who&apos;ve soared above Flathead Lake.
                     </p>
                 </motion.div>
 
@@ -163,19 +163,19 @@ export function Testimonials() {
                                 }}
                                 className="absolute w-full"
                             >
-                                <div className="bg-[#FDF6E3]/90 dark:bg-[#2A1F17]/90 backdrop-blur-lg p-8 md:p-12 rounded-3xl shadow-2xl border border-[#E5A832]/20 dark:border-[#6B4226]/30">
-                                    <Quote className="h-12 w-12 text-[#E5A832] mb-6 opacity-50" />
+                                <div className="bg-[#2c1c11] rounded-xl p-8 md:p-12 shadow-2xl">
+                                    <Quote className="h-12 w-12 text-[#fbbb45] mb-6 opacity-50" />
 
-                                    <p className="text-lg md:text-xl text-foreground/80 mb-8 leading-relaxed italic">
-                                        "{testimonials[currentIndex].text}"
+                                    <p className="text-lg md:text-xl text-[#ddc0bd] mb-8 leading-relaxed italic">
+                                        &ldquo;{testimonials[currentIndex].text}&rdquo;
                                     </p>
 
                                     <div className="flex items-center justify-between">
                                         <div>
-                                            <p className="font-bold text-xl text-foreground">
+                                            <p className="font-bold text-xl text-[#fbddca]">
                                                 {testimonials[currentIndex].name}
                                             </p>
-                                            <p className="text-gray-600 dark:text-gray-400">
+                                            <p className="text-[#a58b88]">
                                                 {testimonials[currentIndex].location}
                                             </p>
                                         </div>
@@ -192,10 +192,10 @@ export function Testimonials() {
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                             onClick={() => paginate(-1)}
-                            className="p-3 rounded-full bg-[#FDF6E3]/80 dark:bg-[#2A1F17]/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow border border-[#E5A832]/20 dark:border-[#6B4226]"
+                            className="p-3 rounded-full bg-[#433124] shadow-lg hover:shadow-xl transition-shadow"
                             aria-label="Previous testimonial"
                         >
-                            <ChevronLeft className="h-6 w-6 text-foreground" />
+                            <ChevronLeft className="h-6 w-6 text-[#fbddca]" />
                         </motion.button>
 
                         {/* Dots indicator */}
@@ -208,8 +208,8 @@ export function Testimonials() {
                                         setCurrentIndex(index)
                                     }}
                                     className={`h-2 rounded-full transition-all duration-300 ${index === currentIndex
-                                        ? 'w-8 bg-gradient-to-r from-[#D4605A] to-[#E5A832]'
-                                        : 'w-2 bg-gray-300 dark:bg-gray-600'
+                                        ? 'w-8 bg-[#ffb3ad]'
+                                        : 'w-2 bg-[#564240]'
                                         }`}
                                     aria-label={`Go to testimonial ${index + 1}`}
                                 />
@@ -220,10 +220,10 @@ export function Testimonials() {
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                             onClick={() => paginate(1)}
-                            className="p-3 rounded-full bg-[#FDF6E3]/80 dark:bg-[#2A1F17]/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-shadow border border-[#E5A832]/20 dark:border-[#6B4226]"
+                            className="p-3 rounded-full bg-[#433124] shadow-lg hover:shadow-xl transition-shadow"
                             aria-label="Next testimonial"
                         >
-                            <ChevronRight className="h-6 w-6 text-foreground" />
+                            <ChevronRight className="h-6 w-6 text-[#fbddca]" />
                         </motion.button>
                     </div>
                 </div>

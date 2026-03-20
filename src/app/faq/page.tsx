@@ -24,7 +24,7 @@ export default function FAQPage() {
     ]
 
     return (
-        <main className="min-h-screen bg-background text-foreground">
+        <main className="min-h-screen bg-surface text-on-surface">
             <StructuredData data={generateBreadcrumbSchema(breadcrumbs)} />
             <StructuredData data={generateFAQSchema(faqSchemaData)} />
             <Navbar />

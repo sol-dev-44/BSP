@@ -1,51 +1,52 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
-@variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* Retro Sunset Theme */
-  --color-deep-red: #B5383B;
-  --color-coral: #D4605A;
-  --color-burnt-orange: #E07840;
-  --color-golden-amber: #E5A832;
-  --color-blue-accent: #3B6BA5;
-  --color-cream: #FDF6E3;
-  --color-saddle-brown: #6B4226;
-  --color-rich-brown: #8B4513;
-  --color-warm-tan: #D2B48C;
-  --color-deep-earth: #3E2723;
+  /* Elevated Horizon Theme - Stitch Design System */
 
-  /* Semantic color mappings */
-  --color-primary: #D4605A;
-  --color-secondary: #E5A832;
-  --color-accent: #3B6BA5;
-  --color-success: #6B7F3B;
-  --color-dark: #3E2723;
-  --color-muted: #A89F91;
+  /* Primary */
+  --color-primary: #ffb3ad;
+  --color-on-primary: #640c0f;
+  --color-primary-container: #e46c65;
 
-  /* Brand aliases */
-  --color-brand-red: #B5383B;
-  --color-brand-coral: #D4605A;
-  --color-brand-orange: #E07840;
-  --color-brand-gold: #E5A832;
-  --color-brand-blue: #3B6BA5;
-  --color-brand-dark: #3E2723;
-  --color-brand-cream: #FDF6E3;
+  /* Secondary */
+  --color-secondary: #fbbb45;
+  --color-on-secondary: #3a2600;
+  --color-secondary-container: #be8607;
 
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-}
+  /* Tertiary */
+  --color-tertiary: #f4ba96;
+  --color-tertiary-container: #b98564;
 
-:root {
-  --background: #FDF6E3;
-  --foreground: #3E2723;
-  --border: #D2B48C;
-}
+  /* Surface Hierarchy */
+  --color-surface: #1e1006;
+  --color-surface-dim: #1e1006;
+  --color-surface-bright: #483529;
+  --color-surface-container-lowest: #190b03;
+  --color-surface-container-low: #28180d;
+  --color-surface-container: #2c1c11;
+  --color-surface-container-high: #38261a;
+  --color-surface-container-highest: #433124;
 
-.dark {
-  --background: #2C1810;
-  --foreground: #FDF6E3;
-  --border: #5D4037;
+  /* Text */
+  --color-on-surface: #fbddca;
+  --color-on-surface-variant: #ddc0bd;
+
+  /* Outline */
+  --color-outline: #a58b88;
+  --color-outline-variant: #564240;
+
+  /* Error */
+  --color-error: #ffb4ab;
+
+  /* Semantic mappings */
+  --color-background: #1e1006;
+  --color-foreground: #fbddca;
+
+  /* Font families */
+  --font-headline: 'Space Grotesk', sans-serif;
+  --font-body: 'Be Vietnam Pro', sans-serif;
+  --font-label: 'Space Grotesk', sans-serif;
 }
 
 * {
@@ -53,10 +54,35 @@
 }
 
 body {
-  font-family: 'DM Sans', sans-serif;
-  background-color: var(--background);
-  color: var(--foreground);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* Glass Panel */
+.glass-panel {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(67, 49, 36, 0.6);
+}
+
+/* Text Effects */
+.text-stroke {
+  -webkit-text-stroke: 1px #ffb3ad;
+  color: transparent;
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(255, 179, 173, 0.3);
+}
+
+.text-shadow-hero {
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+/* Hero Gradient Overlay */
+.hero-gradient {
+  background: linear-gradient(to bottom, rgba(30, 16, 6, 0.4) 0%, rgba(30, 16, 6, 1) 100%);
 }
 
 /* Custom Animations */
@@ -80,10 +106,10 @@ body {
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 5px rgba(212, 96, 90, 0.4), 0 0 10px rgba(229, 168, 50, 0.2);
+    box-shadow: 0 0 5px rgba(255, 179, 173, 0.4), 0 0 10px rgba(251, 187, 69, 0.2);
   }
   50% {
-    box-shadow: 0 0 15px rgba(212, 96, 90, 0.6), 0 0 30px rgba(229, 168, 50, 0.4);
+    box-shadow: 0 0 15px rgba(255, 179, 173, 0.6), 0 0 30px rgba(251, 187, 69, 0.4);
   }
 }
 
@@ -98,24 +124,4 @@ body {
 
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
-}
-
-/* Glassmorphism Utilities */
-.glass {
-  background: rgba(253, 246, 227, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(210, 180, 140, 0.3);
-}
-
-.glass-dark {
-  background: rgba(44, 24, 16, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(93, 64, 55, 0.3);
-}
-
-/* Retro Utility */
-.retro-shadow {
-  box-shadow: 4px 4px 0px #6B4226;
 }

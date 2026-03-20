@@ -230,10 +230,10 @@ export default function BookingClient() {
     const selectedSlotType = availableSlots.find(s => s.time === selectedTime)?.type || 'standard';
 
     return (
-        <div className="min-h-screen bg-background text-foreground flex flex-col">
+        <div className="min-h-screen bg-[#1e1006] text-[#fbddca] flex flex-col">
             <Navbar />
 
-            <main className="flex-grow pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-[#FDF6E3] dark:bg-[#2A1F17]">
+            <main className="flex-grow pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-[#1e1006]">
                 <div className="max-w-7xl mx-auto">
                     {/* Header Section with Trust Badges */}
                     <div className="text-center mb-12 relative z-10">
@@ -241,7 +241,7 @@ export default function BookingClient() {
                             initial={{ opacity: 0, scale: 0 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.5, type: "spring" }}
-                            className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4605A] to-[#E5A832] text-white px-6 py-2.5 rounded-full mb-6 shadow-lg hover:shadow-[#D4605A]/25 transition-shadow"
+                            className="inline-flex items-center gap-2 bg-gradient-to-r from-[#ffb3ad] to-[#fbbb45] text-[#640c0f] px-6 py-2.5 rounded-full mb-6 shadow-lg hover:shadow-[#ffb3ad]/25 transition-shadow"
                         >
                             <Calendar className="h-5 w-5" />
                             <span className="font-bold">Book Your Flight</span>
@@ -251,8 +251,7 @@ export default function BookingClient() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8 }}
-                            className="text-5xl md:text-6xl font-black text-foreground mb-6"
-                            style={{ fontFamily: "'Playfair Display', serif" }}
+                            className="text-5xl md:text-6xl font-black uppercase tracking-tighter text-[#fbddca] mb-6 font-[family-name:var(--font-headline)]"
                         >
                             Secure Your Spot
                         </motion.h1>
@@ -264,15 +263,15 @@ export default function BookingClient() {
                             transition={{ delay: 0.3 }}
                             className="flex flex-wrap justify-center gap-4 mb-8"
                         >
-                            <div className="flex items-center gap-2 bg-[#D4605A]/10 text-[#D4605A] px-4 py-2 rounded-lg border border-[#D4605A]/20">
+                            <div className="flex items-center gap-2 bg-[#ffb3ad]/10 text-[#ffb3ad] px-4 py-2 rounded-lg">
                                 <Anchor className="w-5 h-5" />
                                 <span className="font-semibold text-sm">Weather Guarantee</span>
                             </div>
-                            <div className="flex items-center gap-2 bg-[#3B6BA5]/10 text-[#3B6BA5] px-4 py-2 rounded-lg border border-[#3B6BA5]/20">
+                            <div className="flex items-center gap-2 bg-[#f4ba96]/10 text-[#f4ba96] px-4 py-2 rounded-lg">
                                 <ShieldCheck className="w-5 h-5" />
                                 <span className="font-semibold text-sm">Satisfaction Guaranteed</span>
                             </div>
-                            <div className="flex items-center gap-2 bg-[#E5A832]/10 text-[#E5A832] px-4 py-2 rounded-lg border border-[#E5A832]/20">
+                            <div className="flex items-center gap-2 bg-[#fbbb45]/10 text-[#fbbb45] px-4 py-2 rounded-lg">
                                 <CreditCard className="w-5 h-5" />
                                 <span className="font-semibold text-sm">Secure Payment</span>
                             </div>
@@ -289,15 +288,15 @@ export default function BookingClient() {
                             <div key={s.step} className="flex items-center">
                                 <div className={`
                                     flex flex-col items-center gap-2
-                                    ${step >= s.step ? 'text-[#D4605A]' : 'text-gray-400'}
+                                    ${step >= s.step ? 'text-[#ffb3ad]' : 'text-[#a58b88]'}
                                 `}>
-                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg transition-all duration-300 ${step >= s.step ? 'bg-[#D4605A] text-white shadow-lg shadow-[#D4605A]/30' : 'bg-gray-200'}`}>
+                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg transition-all duration-300 ${step >= s.step ? 'bg-[#ffb3ad] text-[#640c0f] shadow-lg shadow-[#ffb3ad]/30' : 'bg-[#38261a]'}`}>
                                         {s.step}
                                     </div>
                                     <span className="text-xs font-bold uppercase tracking-wider hidden sm:block">{s.label}</span>
                                 </div>
                                 {s.step < 3 && (
-                                    <div className={`w-12 h-0.5 mx-4 transition-colors duration-300 -translate-y-3 ${step > s.step ? 'bg-[#D4605A]' : 'bg-gray-200'}`} />
+                                    <div className={`w-12 h-0.5 mx-4 transition-colors duration-300 -translate-y-3 ${step > s.step ? 'bg-[#ffb3ad]' : 'bg-[#38261a]'}`} />
                                 )}
                             </div>
                         ))}
@@ -321,9 +320,9 @@ export default function BookingClient() {
                                 </div>
 
                                 <div className="lg:col-span-7 space-y-8">
-                                    <div className="bg-white dark:bg-[#2A1F17] rounded-2xl shadow-xl border border-[#E5A832]/20 p-8">
-                                        <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-foreground">
-                                            <span className="bg-[#D4605A]/10 text-[#D4605A] p-2 rounded-xl">&#9201;</span>
+                                    <div className="bg-[#2c1c11] rounded-xl shadow-xl p-8">
+                                        <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-[#fbddca]">
+                                            <span className="bg-[#ffb3ad]/10 text-[#ffb3ad] p-2 rounded-xl">&#9201;</span>
                                             Select Time
                                         </h3>
                                         <TimeSlotPicker
@@ -339,15 +338,15 @@ export default function BookingClient() {
                                         <motion.div
                                             initial={{ opacity: 0, y: 10 }}
                                             animate={{ opacity: 1, y: 0 }}
-                                            className="mt-6 bg-gradient-to-r from-[#D4605A]/10 via-[#E5A832]/10 to-[#3B6BA5]/10 border border-[#E5A832]/30 rounded-xl p-5"
+                                            className="mt-6 bg-[#2c1c11] rounded-xl p-5"
                                         >
                                             <div className="flex items-start gap-3">
                                                 <span className="text-2xl">{selectedSlotType === 'earlybird' ? '\u2600\uFE0F' : selectedSlotType === 'sunset' ? '\uD83C\uDF05' : '\u26F5'}</span>
                                                 <div>
-                                                    <h4 className="font-bold text-foreground text-lg">
+                                                    <h4 className="font-bold text-[#fbddca] text-lg">
                                                         {selectedSlotType === 'earlybird' ? 'Early Bird Flight' : selectedSlotType === 'sunset' ? 'Sunset Flight' : 'Standard Flight'} -- ${currentPricePerPerson}/person
                                                     </h4>
-                                                    <p className="text-sm text-foreground/70 mt-1">
+                                                    <p className="text-sm text-[#ddc0bd] mt-1">
                                                         {selectedSlotType === 'earlybird'
                                                             ? 'Catch the calm morning waters! Best value at $99/person with smooth conditions and serene mountain views.'
                                                             : selectedSlotType === 'sunset'
@@ -355,9 +354,9 @@ export default function BookingClient() {
                                                             : 'Soar 400 feet above Flathead Lake at $119/person with breathtaking mountain views.'}
                                                     </p>
                                                     <div className="flex flex-wrap gap-2 mt-3">
-                                                        <span className="inline-flex items-center gap-1 text-xs font-semibold bg-[#D4605A]/10 text-[#D4605A] px-2.5 py-1 rounded-full">400ft altitude</span>
-                                                        <span className="inline-flex items-center gap-1 text-xs font-semibold bg-[#3B6BA5]/10 text-[#3B6BA5] px-2.5 py-1 rounded-full">Mountain views</span>
-                                                        <span className="inline-flex items-center gap-1 text-xs font-semibold bg-[#E5A832]/10 text-[#E5A832] px-2.5 py-1 rounded-full">USCG certified</span>
+                                                        <span className="inline-flex items-center gap-1 text-xs font-semibold bg-[#ffb3ad]/10 text-[#ffb3ad] px-2.5 py-1 rounded-full">400ft altitude</span>
+                                                        <span className="inline-flex items-center gap-1 text-xs font-semibold bg-[#f4ba96]/10 text-[#f4ba96] px-2.5 py-1 rounded-full">Mountain views</span>
+                                                        <span className="inline-flex items-center gap-1 text-xs font-semibold bg-[#fbbb45]/10 text-[#fbbb45] px-2.5 py-1 rounded-full">USCG certified</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -368,7 +367,7 @@ export default function BookingClient() {
                                         <button
                                             onClick={() => setStep(2)}
                                             disabled={!selectedTime}
-                                            className="bg-gradient-to-r from-[#D4605A] to-[#E5A832] hover:from-[#A14E28] hover:to-[#C8951A] text-white text-lg font-bold px-10 py-4 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-[#D4605A]/25 hover:scale-105"
+                                            className="bg-[#ffb3ad] hover:bg-[#ff9e96] text-[#640c0f] text-lg font-bold px-10 py-4 rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-[#ffb3ad]/25 hover:scale-105"
                                         >
                                             Continue to Details
                                         </button>
@@ -386,10 +385,10 @@ export default function BookingClient() {
                                 className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12"
                             >
                                 <div className="lg:col-span-7 space-y-8">
-                                    <div className="bg-white dark:bg-[#2A1F17] rounded-2xl shadow-xl border border-[#E5A832]/20 overflow-hidden">
+                                    <div className="bg-[#2c1c11] rounded-xl shadow-xl overflow-hidden">
                                         <div className="p-8">
-                                            <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-foreground">
-                                                <span className="bg-[#D4605A]/10 text-[#D4605A] p-2 rounded-xl">&#128100;</span>
+                                            <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-[#fbddca]">
+                                                <span className="bg-[#ffb3ad]/10 text-[#ffb3ad] p-2 rounded-xl">&#128100;</span>
                                                 Guest Details
                                             </h3>
                                             <GuestForm
@@ -405,14 +404,14 @@ export default function BookingClient() {
                                     <div className="flex justify-between items-center pt-4">
                                         <button
                                             onClick={() => setStep(1)}
-                                            className="text-foreground/60 hover:text-foreground px-6 py-3 font-semibold transition-colors"
+                                            className="text-[#a58b88] hover:text-[#fbddca] px-6 py-3 font-semibold transition-colors"
                                         >
                                             &larr; Back
                                         </button>
                                         <button
                                             onClick={handleProceedToPayment}
                                             disabled={!isFormValid()}
-                                            className="bg-gradient-to-r from-[#D4605A] to-[#E5A832] hover:from-[#A14E28] hover:to-[#C8951A] disabled:opacity-50 disabled:cursor-not-allowed text-white text-lg px-10 py-4 rounded-xl transition-all font-bold shadow-lg hover:shadow-[#D4605A]/25 hover:scale-105"
+                                            className="bg-[#ffb3ad] hover:bg-[#ff9e96] disabled:opacity-50 disabled:cursor-not-allowed text-[#640c0f] text-lg px-10 py-4 rounded-full transition-all font-bold shadow-lg hover:shadow-[#ffb3ad]/25 hover:scale-105"
                                         >
                                             Proceed to Payment
                                         </button>
@@ -427,7 +426,7 @@ export default function BookingClient() {
                                             basePricePerPerson={currentPricePerPerson}
                                             slotType={selectedSlotType}
                                         />
-                                        <p className="text-center text-xs text-foreground/40 mt-4">
+                                        <p className="text-center text-xs text-[#a58b88] mt-4">
                                             You won&apos;t be charged until the next step.
                                         </p>
                                     </div>
@@ -444,11 +443,11 @@ export default function BookingClient() {
                                 className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12"
                             >
                                 <div className="lg:col-span-7">
-                                    <div className="bg-white dark:bg-[#2A1F17] p-8 rounded-2xl shadow-xl border border-[#E5A832]/20 relative overflow-hidden">
-                                        <div className="absolute top-0 right-0 w-32 h-32 bg-[#D4605A]/5 rounded-bl-full -mr-10 -mt-10" />
+                                    <div className="bg-[#2c1c11] p-8 rounded-xl shadow-xl relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 w-32 h-32 bg-[#ffb3ad]/5 rounded-bl-full -mr-10 -mt-10" />
 
-                                        <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-foreground relative z-10">
-                                            <span className="bg-[#3B6BA5]/10 text-[#3B6BA5] p-2 rounded-xl">&#128274;</span>
+                                        <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-[#fbddca] relative z-10">
+                                            <span className="bg-[#f4ba96]/10 text-[#f4ba96] p-2 rounded-xl">&#128274;</span>
                                             Secure Payment
                                         </h3>
 
@@ -459,10 +458,10 @@ export default function BookingClient() {
                                                 onError={(err) => alert(err)}
                                             />
                                         </Elements>
-                                        <div className="mt-6 pt-6 border-t border-[#E5A832]/20">
+                                        <div className="mt-6 pt-6 border-t border-[#564240]/30">
                                             <button
                                                 onClick={() => setStep(2)}
-                                                className="text-foreground/60 hover:text-foreground text-sm font-medium transition-colors flex items-center gap-2"
+                                                className="text-[#a58b88] hover:text-[#fbddca] text-sm font-medium transition-colors flex items-center gap-2"
                                             >
                                                 &larr; Back to Details
                                             </button>
@@ -478,13 +477,13 @@ export default function BookingClient() {
                                             basePricePerPerson={currentPricePerPerson}
                                             slotType={selectedSlotType}
                                         />
-                                        <div className="mt-4 bg-[#3B6BA5]/10 p-4 rounded-xl border border-[#3B6BA5]/20 flex items-start gap-3">
-                                            <ShieldCheck className="w-5 h-5 text-[#3B6BA5] mt-0.5 shrink-0" />
+                                        <div className="mt-4 bg-[#f4ba96]/10 p-4 rounded-xl flex items-start gap-3">
+                                            <ShieldCheck className="w-5 h-5 text-[#f4ba96] mt-0.5 shrink-0" />
                                             <div>
-                                                <p className="text-sm font-bold text-foreground">
+                                                <p className="text-sm font-bold text-[#fbddca]">
                                                     Payment Protection
                                                 </p>
-                                                <p className="text-xs text-foreground/70 mt-1">
+                                                <p className="text-xs text-[#ddc0bd] mt-1">
                                                     All transactions are secure and encrypted. You&apos;ll receive an instant confirmation email.
                                                 </p>
                                             </div>

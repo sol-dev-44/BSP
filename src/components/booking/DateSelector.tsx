@@ -66,14 +66,14 @@ export default function DateSelector({ selectedDate, onSelectDate, minDate }: Da
                     onClick={() => onSelectDate(dateString)}
                     className={`
                         relative h-14 w-full flex items-center justify-center rounded-lg transition-all duration-200
-                        ${!isSameMonth(day, monthStart) ? "text-stone-400 opacity-50" : ""}
-                        ${isDisabled ? "text-stone-300 dark:text-[#5D4037] cursor-not-allowed bg-stone-50 dark:bg-[#1A130E]" : "hover:bg-[#D4605A]/10 cursor-pointer text-foreground font-medium"}
-                        ${isSelected ? "!bg-[#D4605A] !text-white shadow-lg shadow-[#D4605A]/30 scale-105 z-10 font-bold" : ""}
+                        ${!isSameMonth(day, monthStart) ? "text-[#564240] opacity-50" : ""}
+                        ${isDisabled ? "text-[#564240] cursor-not-allowed bg-[#190b03]" : "hover:bg-[#ffb3ad]/10 cursor-pointer text-[#fbddca] font-medium"}
+                        ${isSelected ? "!bg-[#ffb3ad] !text-[#640c0f] shadow-lg shadow-[#ffb3ad]/30 scale-105 z-10 font-bold" : ""}
                     `}
                 >
                     {formattedDate}
                     {isAllowedDay && !isDisabled && !isSelected && (
-                        <span className="absolute bottom-2 w-1 h-1 bg-[#D4605A] rounded-full"></span>
+                        <span className="absolute bottom-2 w-1 h-1 bg-[#ffb3ad] rounded-full"></span>
                     )}
                 </button>
             );
@@ -89,16 +89,16 @@ export default function DateSelector({ selectedDate, onSelectDate, minDate }: Da
 
     return (
         <div className="w-full max-w-md mx-auto space-y-6">
-            <div className="bg-white rounded-2xl shadow-xl border border-stone-200 dark:border-[#5D4037] p-6">
+            <div className="bg-[#2c1c11] rounded-2xl shadow-xl border border-[#564240] p-6">
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-xl font-bold text-foreground capitalize font-serif">
+                    <h2 className="text-xl font-bold text-[#fbddca] capitalize font-serif">
                         {format(currentMonth, "MMMM yyyy")}
                     </h2>
                     <div className="flex gap-2">
-                        <button onClick={prevMonth} className="p-2 hover:bg-stone-100 dark:bg-[#2A1F17] rounded-full text-foreground transition-colors">
+                        <button onClick={prevMonth} className="p-2 hover:bg-[#38261a] bg-[#2c1c11] rounded-full text-[#fbddca] transition-colors">
                             <ChevronLeft className="w-5 h-5" />
                         </button>
-                        <button onClick={nextMonth} className="p-2 hover:bg-stone-100 dark:bg-[#2A1F17] rounded-full text-foreground transition-colors">
+                        <button onClick={nextMonth} className="p-2 hover:bg-[#38261a] bg-[#2c1c11] rounded-full text-[#fbddca] transition-colors">
                             <ChevronRight className="w-5 h-5" />
                         </button>
                     </div>
@@ -106,7 +106,7 @@ export default function DateSelector({ selectedDate, onSelectDate, minDate }: Da
 
                 <div className="grid grid-cols-7 mb-4 text-center">
                     {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((dayName) => (
-                        <div key={dayName} className="text-xs font-semibold uppercase text-foreground/50 tracking-wider">
+                        <div key={dayName} className="text-xs font-semibold uppercase text-[#a58b88] tracking-wider">
                             {dayName}
                         </div>
                     ))}
@@ -116,16 +116,16 @@ export default function DateSelector({ selectedDate, onSelectDate, minDate }: Da
             </div>
 
             {/* Location & Schedule Notice */}
-            <div className="bg-[#E5A832]/10 rounded-xl p-4 border border-[#E5A832]/30 text-sm">
-                <p className="font-semibold text-foreground mb-2">Season Schedule:</p>
-                <div className="space-y-1 text-foreground/70">
+            <div className="bg-[#fbbb45]/10 rounded-xl p-4 border border-[#fbbb45]/30 text-sm">
+                <p className="font-semibold text-[#fbddca] mb-2">Season Schedule:</p>
+                <div className="space-y-1 text-[#ddc0bd]">
                     {BOOKING_CONFIG.locationSchedule.map((schedule, idx) => (
                         <p key={idx}>
                             {schedule.location}: {format(new Date(schedule.startDate + 'T12:00:00'), 'MMM d')} - {format(new Date(schedule.endDate + 'T12:00:00'), 'MMM d')}
                         </p>
                     ))}
                 </div>
-                <p className="mt-3 text-xs text-foreground/50">
+                <p className="mt-3 text-xs text-[#a58b88]">
                     Available 7 days a week during season
                 </p>
             </div>

@@ -1,7 +1,6 @@
 import { Navbar } from '@/components/Navbar'
 import { Hero } from '@/components/Hero'
 import { Stats } from '@/components/Stats'
-import { SectionDivider } from '@/components/SectionDivider'
 import { VesselShowcase } from '@/components/VesselShowcase'
 import { ExperienceGallery } from '@/components/ExperienceGallery'
 import { Testimonials } from '@/components/Testimonials'
@@ -24,20 +23,15 @@ export default function Home() {
   ]
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-surface text-on-surface">
       <StructuredData data={generateBreadcrumbSchema(breadcrumbs)} />
       <Navbar />
       <Hero />
       <Stats />
-      <SectionDivider spacing="md" />
       <VesselShowcase />
-      <SectionDivider spacing="md" />
       <ExperienceGallery />
-      <SectionDivider spacing="md" />
       <Testimonials />
-      <SectionDivider spacing="md" />
       <InstagramFeed />
-      <SectionDivider spacing="md" />
       <LocationHighlights />
       <Footer />
       <ChatCTA />

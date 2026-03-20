@@ -39,9 +39,9 @@ export default function PriceBreakdown({
     const grandTotal = flightTotal + boatRiderTotal + observerTotal + comboTotal + photoTotal + goproTotal + tipTotal;
 
     return (
-        <div className="bg-white dark:bg-[#2A1F17] rounded-xl shadow-lg border-2 border-[#D4605A]/20 overflow-hidden">
-            <div className="bg-[#6B4226] dark:bg-[#3D2B1F] px-6 py-4">
-                <h3 className="font-bold text-lg flex items-center gap-2 text-white font-serif">
+        <div className="bg-[#2c1c11] rounded-xl shadow-lg border-2 border-[#ffb3ad]/20 overflow-hidden">
+            <div className="bg-[#38261a] px-6 py-4">
+                <h3 className="font-bold text-lg flex items-center gap-2 text-[#fbddca] font-serif">
                     Order Summary
                 </h3>
             </div>
@@ -49,25 +49,25 @@ export default function PriceBreakdown({
             <div className="p-6 space-y-3">
                 {/* Flights */}
                 <div className="flex justify-between items-center text-sm">
-                    <span className="text-foreground/70">
+                    <span className="text-[#ddc0bd]">
                         Parasail Flight x {size}
-                        <span className="text-foreground/40 ml-1 text-xs">
+                        <span className="text-[#a58b88] ml-1 text-xs">
                             (${pricePerPerson}/ea {slotTypeLabel.toLowerCase()})
                         </span>
                     </span>
-                    <span className="font-medium text-foreground">${flightTotal}</span>
+                    <span className="font-medium text-[#fbddca]">${flightTotal}</span>
                 </div>
 
                 {/* Early bird savings note */}
                 {slotType === 'earlybird' && size > 0 && (
-                    <div className="text-xs text-amber-700 bg-amber-50 rounded-lg px-3 py-2 border border-amber-200">
+                    <div className="text-xs text-[#fbbb45] bg-[#fbbb45]/10 rounded-lg px-3 py-2 border border-[#fbbb45]/20">
                         Early Bird rate -- saving ${(BUSINESS_INFO.pricing.parasail - BUSINESS_INFO.pricing.earlyBird) * size} vs standard pricing
                     </div>
                 )}
 
                 {/* Sunset premium note */}
                 {slotType === 'sunset' && size > 0 && (
-                    <div className="text-xs text-orange-700 bg-orange-50 rounded-lg px-3 py-2 border border-orange-200">
+                    <div className="text-xs text-[#ffb3ad] bg-[#ffb3ad]/10 rounded-lg px-3 py-2 border border-[#ffb3ad]/20">
                         Sunset premium flight -- golden hour experience
                     </div>
                 )}
@@ -75,68 +75,68 @@ export default function PriceBreakdown({
                 {/* Boat Riders */}
                 {boatRiders > 0 && (
                     <div className="flex justify-between items-center text-sm">
-                        <span className="text-foreground/70">
+                        <span className="text-[#ddc0bd]">
                             Boat Riders x {boatRiders}
-                            <span className="text-foreground/40 ml-1 text-xs">
+                            <span className="text-[#a58b88] ml-1 text-xs">
                                 ($49/ea)
                             </span>
                         </span>
-                        <span className="font-medium text-foreground">${boatRiderTotal}</span>
+                        <span className="font-medium text-[#fbddca]">${boatRiderTotal}</span>
                     </div>
                 )}
 
                 {/* Observers */}
                 {(addOns.observer_package || 0) > 0 && (
                     <div className="flex justify-between items-center text-sm">
-                        <span className="text-foreground/70">
+                        <span className="text-[#ddc0bd]">
                             Observer Pass x {addOns.observer_package}
-                            <span className="text-foreground/40 ml-1 text-xs">
+                            <span className="text-[#a58b88] ml-1 text-xs">
                                 ($49/ea)
                             </span>
                         </span>
-                        <span className="font-medium text-foreground">${observerTotal}</span>
+                        <span className="font-medium text-[#fbddca]">${observerTotal}</span>
                     </div>
                 )}
 
                 {/* Add-ons */}
                 {(addOns.combo_package || 0) > 0 && (
                     <div className="flex justify-between items-center text-sm">
-                        <span className="text-foreground/70">
+                        <span className="text-[#ddc0bd]">
                             Media Combo ({addOns.combo_package})
-                            <span className="text-[#D4605A] ml-1 text-xs font-semibold">Save $15</span>
+                            <span className="text-[#ffb3ad] ml-1 text-xs font-semibold">Save $15</span>
                         </span>
-                        <span className="font-medium text-foreground">${comboTotal}</span>
+                        <span className="font-medium text-[#fbddca]">${comboTotal}</span>
                     </div>
                 )}
                 {addOns.photo_package > 0 && (
                     <div className="flex justify-between items-center text-sm">
-                        <span className="text-foreground/70">
+                        <span className="text-[#ddc0bd]">
                             Photo Package ({addOns.photo_package})
                         </span>
-                        <span className="font-medium text-foreground">${photoTotal}</span>
+                        <span className="font-medium text-[#fbddca]">${photoTotal}</span>
                     </div>
                 )}
                 {addOns.gopro_package > 0 && (
                     <div className="flex justify-between items-center text-sm">
-                        <span className="text-foreground/70">
+                        <span className="text-[#ddc0bd]">
                             GoPro Package ({addOns.gopro_package})
                         </span>
-                        <span className="font-medium text-foreground">${goproTotal}</span>
+                        <span className="font-medium text-[#fbddca]">${goproTotal}</span>
                     </div>
                 )}
 
                 {/* Tip */}
                 {tipTotal > 0 && (
-                    <div className="flex justify-between items-center text-sm text-[#D4605A]">
+                    <div className="flex justify-between items-center text-sm text-[#ffb3ad]">
                         <span>Crew Gratuity</span>
                         <span className="font-medium">${tipTotal}</span>
                     </div>
                 )}
 
-                <div className="h-px bg-[#E5A832]/30 my-4" />
+                <div className="h-px bg-[#564240]/30 my-4" />
 
                 {/* Total */}
-                <div className="flex justify-between items-center text-xl font-bold text-foreground">
+                <div className="flex justify-between items-center text-xl font-black text-[#ffb3ad]">
                     <span className="font-serif">Total</span>
                     <span>${grandTotal}</span>
                 </div>

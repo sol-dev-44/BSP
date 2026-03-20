@@ -34,7 +34,7 @@ const highlights = [
 
 export function LocationHighlights() {
     return (
-        <div className="py-24 bg-gradient-to-b from-background to-[#FDF6E3]/5 relative overflow-hidden">
+        <div className="py-32 bg-[#2c1c11] relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -43,10 +43,10 @@ export function LocationHighlights() {
                     transition={{ duration: 0.8 }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground mb-4">
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tighter text-[#fbddca] mb-4">
                         Why Flathead Lake?
                     </h2>
-                    <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    <p className="text-xl md:text-2xl text-[#a58b88] max-w-3xl mx-auto">
                         The perfect combination of natural beauty and ideal conditions for parasailing.
                     </p>
                 </motion.div>
@@ -61,7 +61,7 @@ export function LocationHighlights() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: index * 0.15 }}
                             whileHover={{ y: -5 }}
-                            className="group relative rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300"
+                            className="group relative rounded-xl overflow-hidden"
                         >
                             {/* Background Image */}
                             <div className="relative h-[350px]">
@@ -70,21 +70,21 @@ export function LocationHighlights() {
                                     alt={highlight.title}
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#1A0F0A]/90 via-[#1A0F0A]/50 to-transparent" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#190b03] via-[#190b03]/50 to-transparent" />
 
                                 {/* Content overlay */}
                                 <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                                     <div className="flex items-start gap-4">
                                         <div className="flex-shrink-0">
-                                            <div className="p-3 rounded-xl bg-gradient-to-br from-[#D4605A] to-[#6B4226] shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
-                                                <highlight.icon className="h-6 w-6 text-white" />
+                                            <div className="bg-[#ffb3ad] text-[#640c0f] p-3 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
+                                                <highlight.icon className="h-6 w-6" />
                                             </div>
                                         </div>
                                         <div>
-                                            <h3 className="text-2xl font-bold text-[#FDF6E3] mb-2 group-hover:text-[#E5A832] transition-colors">
+                                            <h3 className="text-2xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tighter text-[#fbddca] mb-2 group-hover:text-[#fbbb45] transition-colors">
                                                 {highlight.title}
                                             </h3>
-                                            <p className="text-gray-300 leading-relaxed">
+                                            <p className="text-[#ddc0bd] leading-relaxed">
                                                 {highlight.description}
                                             </p>
                                         </div>
@@ -100,11 +100,11 @@ export function LocationHighlights() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8, delay: 0.5 }}
-                    className="text-center mt-12"
+                    className="text-center mt-16"
                 >
                     <a
                         href="/location"
-                        className="inline-block px-8 py-4 rounded-full bg-gradient-to-r from-[#D4605A] to-[#E5A832] text-white font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                        className="inline-block bg-[#ffb3ad] text-[#640c0f] rounded-full font-bold uppercase tracking-widest px-8 py-3 text-lg shadow-[0_0_40px_rgba(255,179,173,0.3)] hover:scale-105 transition-all duration-300"
                     >
                         Learn More About Our Location
                     </a>

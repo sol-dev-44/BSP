@@ -1,72 +1,65 @@
 /**
  * Theme Configuration
  *
- * Retro Sunset Theme
- * Deep reds, corals, burnt orange, golden amber + blue accent.
+ * Elevated Horizon Theme
+ * Deep earthy browns, warm peachy pink primary, golden secondary.
+ * Inspired by atmospheric kineticism and editorial design.
  *
  * This is the single source of truth for all brand colors and theme settings.
- * To rebrand for a sister site, simply update the colors in this file.
- *
- * Usage:
- * - Import this config in components that need theme colors
- * - CSS variables are generated from these values in globals.css
- * - Tailwind classes are generated from these values in tailwind.config.ts
  */
 
 export const themeConfig = {
     brand: {
         name: 'Big Sky Parasail',
         colors: {
-            // Retro Sunset Color Palette
-            stripe1: '#B5383B', // Deep Red - First stripe color
-            stripe2: '#D4605A', // Coral - Second stripe color
-            stripe3: '#E07840', // Burnt Orange - Third stripe color
-            stripe4: '#E5A832', // Golden Amber - Fourth stripe color
-            accent: '#3B6BA5', // Blue Accent
+            primary: '#ffb3ad',
+            primaryContainer: '#e46c65',
+            secondary: '#fbbb45',
+            secondaryContainer: '#be8607',
+            tertiary: '#f4ba96',
+            tertiaryContainer: '#b98564',
+            surface: '#1e1006',
+            surfaceContainerLowest: '#190b03',
+            surfaceContainerLow: '#28180d',
+            surfaceContainer: '#2c1c11',
+            surfaceContainerHigh: '#38261a',
+            surfaceContainerHighest: '#433124',
+            onSurface: '#fbddca',
+            onSurfaceVariant: '#ddc0bd',
+            outline: '#a58b88',
+            outlineVariant: '#564240',
         },
-    },
-
-    stripes: {
-        height: '3px',
-        spacing: '0px',
     },
 
     gradients: {
         primary: {
-            from: 'stripe2',  // Coral
-            to: 'stripe4',    // Golden Amber
+            from: '#ffb3ad',
+            to: '#e46c65',
             direction: 'to-r'
         },
-        heading: {
-            from: 'stripe1',  // Deep Red
-            to: 'stripe4',    // Golden Amber
+        secondary: {
+            from: '#fbbb45',
+            to: '#be8607',
             direction: 'to-r'
         },
-        accent: {
-            from: 'stripe4',  // Golden Amber
-            to: 'stripe2',    // Coral
+        cta: {
+            from: '#ffb3ad',
+            to: '#fbbb45',
             direction: 'to-r'
         }
     },
 
     semantic: {
-        primary: '#D4605A',      // Coral
-        secondary: '#E5A832',    // Golden Amber
-        accent: '#3B6BA5',       // Blue Accent
-        highlight: '#B5383B',    // Deep Red
+        primary: '#ffb3ad',
+        secondary: '#fbbb45',
+        tertiary: '#f4ba96',
+        surface: '#1e1006',
+        onSurface: '#fbddca',
     },
 } as const
 
-// Type-safe color access
 export type ThemeColors = typeof themeConfig.brand.colors
 export type SemanticColors = typeof themeConfig.semantic
 
-// Helper function to get CSS variable name
-export const getCSSVar = (colorKey: keyof ThemeColors | keyof SemanticColors) => {
-    return `var(--color-${colorKey.replace(/([A-Z])/g, '-$1').toLowerCase()})`
-}
-
-// Export individual colors for convenience
 export const colors = themeConfig.brand.colors
 export const semanticColors = themeConfig.semantic
-export const stripeConfig = themeConfig.stripes

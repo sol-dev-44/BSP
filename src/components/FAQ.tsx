@@ -99,7 +99,7 @@ export function FAQ() {
     }, [searchTerm, selectedCategory])
 
     return (
-        <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#1e1006]">
             <div className="max-w-4xl mx-auto">
                 {/* Header */}
                 <motion.div
@@ -107,17 +107,17 @@ export function FAQ() {
                     animate={{ opacity: 1, y: 0 }}
                     className="text-center mb-12"
                 >
-                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4605A] to-[#6B4226] text-white px-6 py-3 rounded-full mb-6 shadow-lg">
+                    <div className="inline-flex items-center gap-2 bg-[#38261a] text-[#ffb3ad] px-6 py-3 rounded-full mb-6 border border-[#564240]/30">
                         <HelpCircle className="h-5 w-5" />
                         <span className="font-bold">Got Questions?</span>
                     </div>
-                    <h1 className="text-5xl md:text-6xl font-black text-foreground mb-6">
+                    <h1 className="text-5xl md:text-6xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tighter text-[#fbddca] mb-6">
                         Frequently Asked{' '}
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#D4605A] to-[#E5A832]">
+                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#ffb3ad] to-[#fbbb45]">
                             Questions
                         </span>
                     </h1>
-                    <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                    <p className="text-xl text-[#a58b88] max-w-2xl mx-auto">
                         Everything you need to know about parasailing on Flathead Lake
                     </p>
                 </motion.div>
@@ -130,13 +130,13 @@ export function FAQ() {
                     className="mb-8"
                 >
                     <div className="relative">
-                        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#a58b88] w-5 h-5" />
                         <input
                             type="text"
                             placeholder="Search questions..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-12 pr-4 py-4 rounded-2xl border border-[#E5A832]/30 dark:border-[#6B4226] bg-[#FDF6E3] dark:bg-[#2A1F17] text-foreground placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D4605A] focus:border-transparent text-lg"
+                            className="w-full pl-12 pr-4 py-4 rounded-2xl border border-[#564240]/30 bg-[#2c1c11] text-[#fbddca] placeholder-[#a58b88] focus:outline-none focus:ring-2 focus:ring-[#ffb3ad] focus:border-transparent text-lg"
                         />
                     </div>
                 </motion.div>
@@ -151,8 +151,8 @@ export function FAQ() {
                     <button
                         onClick={() => setSelectedCategory(null)}
                         className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${!selectedCategory
-                                ? 'bg-[#D4605A] text-white shadow-lg'
-                                : 'bg-[#FDF6E3] dark:bg-[#2A1F17] text-foreground/70 hover:bg-[#E5A832]/20 dark:hover:bg-[#6B4226]/50'
+                                ? 'bg-[#ffb3ad] text-[#640c0f] shadow-lg'
+                                : 'bg-[#38261a] text-[#ddc0bd] hover:bg-[#564240]/30'
                             }`}
                     >
                         All
@@ -162,8 +162,8 @@ export function FAQ() {
                             key={category}
                             onClick={() => setSelectedCategory(category)}
                             className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${selectedCategory === category
-                                    ? 'bg-[#D4605A] text-white shadow-lg'
-                                    : 'bg-[#FDF6E3] dark:bg-[#2A1F17] text-foreground/70 hover:bg-[#E5A832]/20 dark:hover:bg-[#6B4226]/50'
+                                    ? 'bg-[#ffb3ad] text-[#640c0f] shadow-lg'
+                                    : 'bg-[#38261a] text-[#ddc0bd] hover:bg-[#564240]/30'
                                 }`}
                         >
                             {category}
@@ -183,19 +183,19 @@ export function FAQ() {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.05 }}
-                                className="bg-[#FDF6E3] dark:bg-[#2A1F17] rounded-2xl border border-[#E5A832]/20 dark:border-[#6B4226] overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                                className="bg-[#2c1c11] rounded-xl overflow-hidden"
                             >
                                 <button
                                     onClick={() => setOpenIndex(isOpen ? null : globalIndex)}
                                     className="w-full px-6 py-5 text-left flex items-center justify-between gap-4"
                                 >
-                                    <span className="text-lg font-bold text-foreground">
+                                    <span className="text-lg font-bold text-[#fbddca]">
                                         {faq.question}
                                     </span>
                                     {isOpen ? (
-                                        <ChevronUp className="w-5 h-5 text-[#D4605A] flex-shrink-0" />
+                                        <ChevronUp className="w-5 h-5 text-[#ffb3ad] flex-shrink-0" />
                                     ) : (
-                                        <ChevronDown className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                                        <ChevronDown className="w-5 h-5 text-[#a58b88] flex-shrink-0" />
                                     )}
                                 </button>
                                 <AnimatePresence>
@@ -207,7 +207,7 @@ export function FAQ() {
                                             transition={{ duration: 0.3 }}
                                             className="overflow-hidden"
                                         >
-                                            <div className="px-6 pb-5 text-gray-600 dark:text-gray-300 leading-relaxed border-t border-[#E5A832]/10 dark:border-[#6B4226] pt-4">
+                                            <div className="px-6 pb-5 text-[#ddc0bd] leading-relaxed border-t border-[#564240]/30 pt-4">
                                                 {faq.answer}
                                             </div>
                                         </motion.div>
@@ -224,8 +224,8 @@ export function FAQ() {
                         animate={{ opacity: 1 }}
                         className="text-center py-12"
                     >
-                        <p className="text-xl text-gray-500">No matching questions found.</p>
-                        <p className="text-gray-400 mt-2">Try a different search term or category.</p>
+                        <p className="text-xl text-[#a58b88]">No matching questions found.</p>
+                        <p className="text-[#a58b88]/70 mt-2">Try a different search term or category.</p>
                     </motion.div>
                 )}
 
@@ -234,22 +234,22 @@ export function FAQ() {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mt-16 text-center bg-gradient-to-r from-[#D4605A] to-[#6B4226] rounded-3xl p-10 text-white"
+                    className="mt-16 text-center bg-[#ffb3ad] rounded-3xl p-10"
                 >
-                    <h3 className="text-3xl font-black mb-4">Still Have Questions?</h3>
-                    <p className="text-lg mb-6 text-[#FDF6E3]/80">
+                    <h3 className="text-3xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tighter mb-4 text-[#190b03]">Still Have Questions?</h3>
+                    <p className="text-lg mb-6 text-[#190b03]/70">
                         Our team is here to help you plan your perfect parasailing adventure on Flathead Lake!
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
                         <Link
                             href="/book"
-                            className="px-8 py-4 bg-[#FDF6E3] text-[#D4605A] rounded-full font-bold text-lg hover:bg-white transition-colors shadow-xl"
+                            className="px-8 py-4 bg-[#190b03] text-[#ffb3ad] rounded-full font-bold text-lg uppercase hover:bg-[#2c1c11] transition-colors shadow-xl"
                         >
                             Book Now
                         </Link>
                         <a
                             href="tel:4062706256"
-                            className="px-8 py-4 bg-[#6B4226] text-white rounded-full font-bold text-lg hover:bg-[#3D2B1F] transition-colors shadow-xl border border-[#E5A832]/30"
+                            className="px-8 py-4 bg-[#640c0f] text-[#ffb3ad] rounded-full font-bold text-lg uppercase hover:bg-[#190b03] transition-colors shadow-xl"
                         >
                             Call (406) 270-6256
                         </a>

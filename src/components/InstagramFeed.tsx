@@ -73,7 +73,7 @@ const INSTAGRAM_POSTS = [
 
 export function InstagramFeed() {
     return (
-        <div className="py-20 bg-gradient-to-b from-background to-[#FDF6E3]/10 dark:to-[#1A0F0A]">
+        <div className="py-28 bg-[#1e1006]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <motion.div
@@ -81,24 +81,24 @@ export function InstagramFeed() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="text-center mb-12"
+                    className="text-center mb-16"
                 >
-                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4605A] to-[#E5A832] text-white px-6 py-3 rounded-full mb-6 shadow-lg">
+                    <div className="inline-flex items-center gap-2 bg-[#433124] text-[#ffb3ad] px-6 py-3 rounded-full mb-6">
                         <Instagram className="h-5 w-5" />
-                        <span className="font-bold">Follow Our Adventures</span>
+                        <span className="font-bold uppercase tracking-widest text-sm">Follow Our Adventures</span>
                     </div>
 
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground mb-6">
-                        See It On <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#D4605A] to-[#E5A832]">Instagram</span>
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tighter text-[#fbddca] mb-6">
+                        See It On Instagram
                     </h2>
 
-                    <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    <p className="text-xl md:text-2xl text-[#a58b88] max-w-3xl mx-auto">
                         Daily adventures, customer photos, and stunning Flathead Lake views
                     </p>
                 </motion.div>
 
                 {/* Instagram Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-12">
                     {INSTAGRAM_POSTS.map((post, index) => (
                         <motion.a
                             key={post.id}
@@ -109,24 +109,22 @@ export function InstagramFeed() {
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            whileHover={{ scale: 1.05 }}
-                            className="group relative aspect-square rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
+                            className="group relative aspect-square rounded-xl overflow-hidden"
                         >
                             <img
                                 src={post.image}
                                 alt={post.alt}
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                             />
 
                             {/* Overlay on hover */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#1A0F0A]/80 via-[#1A0F0A]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4">
+                            <div className="absolute inset-0 bg-[#190b03]/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                 <div className="flex items-center gap-2 text-white">
-                                    <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                    <svg className="w-6 h-6 fill-[#ffb3ad]" viewBox="0 0 24 24">
                                         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                                     </svg>
-                                    <span className="font-semibold">{post.likes}</span>
+                                    <span className="font-semibold text-[#fbddca] text-lg">{post.likes}</span>
                                 </div>
-                                <Instagram className="w-6 h-6 text-white" />
                             </div>
                         </motion.a>
                     ))}
@@ -144,11 +142,11 @@ export function InstagramFeed() {
                         href="https://www.instagram.com/bigskyparasail/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-gradient-to-r from-[#D4605A] to-[#E5A832] text-white font-bold text-xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                        className="inline-flex items-center gap-3 bg-[#ffb3ad] text-[#640c0f] rounded-full font-bold uppercase tracking-widest px-8 py-3 text-lg shadow-[0_0_40px_rgba(255,179,173,0.3)] hover:scale-105 transition-all duration-300"
                     >
-                        <Instagram className="w-6 h-6" />
+                        <Instagram className="w-5 h-5" />
                         Follow @bigskyparasail
-                        <ExternalLink className="w-5 h-5" />
+                        <ExternalLink className="w-4 h-4" />
                     </a>
                 </motion.div>
             </div>

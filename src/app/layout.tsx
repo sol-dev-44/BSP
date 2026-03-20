@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Playfair_Display } from "next/font/google";
+import { Space_Grotesk, Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 import { BASE_METADATA } from "@/config/seo";
@@ -9,16 +9,16 @@ import {
   generateOrganizationSchema
 } from "@/config/structured-data";
 
-const dmSans = DM_Sans({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
-  weight: ["400", "500", "600", "700"],
+  variable: "--font-headline",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
-const playfairDisplay = Playfair_Display({
+const beVietnamPro = Be_Vietnam_Pro({
   subsets: ["latin"],
-  variable: "--font-playfair",
-  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-body",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -35,13 +35,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <StructuredData data={generateLocalBusinessSchema()} />
         <StructuredData data={generateOrganizationSchema()} />
       </head>
       <body
-        className={`${dmSans.variable} ${playfairDisplay.variable} font-sans antialiased`}
+        className={`${spaceGrotesk.variable} ${beVietnamPro.variable} font-body antialiased bg-surface text-on-surface`}
       >
         <Providers>{children}</Providers>
       </body>
