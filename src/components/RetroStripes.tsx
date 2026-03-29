@@ -8,9 +8,9 @@ interface RetroStripesProps {
 // Retro sunset stripe colors
 const STRIPE_COLORS = {
     stripe1: '#B5383B', // Deep red
-    stripe2: '#D4605A', // Coral
+    stripe2: '#00f0ff', // Coral
     stripe3: '#E07840', // Burnt orange
-    stripe4: '#E5A832', // Golden amber
+    stripe4: '#ff00ff', // Golden amber
 }
 
 const STRIPE_HEIGHT = '6px'

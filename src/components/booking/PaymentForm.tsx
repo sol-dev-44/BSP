@@ -43,9 +43,9 @@ export default function PaymentForm({ amount, onSuccess, onError }: PaymentFormP
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="bg-[#2c1c11] p-6 rounded-xl border border-[#564240]">
-                <h3 className="text-xl font-semibold mb-4 text-[#fbddca] font-serif">Payment Details</h3>
-                <p className="text-[#a58b88] mb-6">Total to pay: <span className="font-bold text-[#ffb3ad] text-lg">${amount.toFixed(2)}</span></p>
+            <div className="bg-[#111128] p-6 rounded-xl border border-[#2a2a4a]">
+                <h3 className="text-xl font-semibold mb-4 text-[#e0f0ff] font-serif">Payment Details</h3>
+                <p className="text-[#5a6a8a] mb-6">Total to pay: <span className="font-bold text-[#00f0ff] text-lg">${amount.toFixed(2)}</span></p>
 
                 <PaymentElement
                     options={{
@@ -61,10 +61,10 @@ export default function PaymentForm({ amount, onSuccess, onError }: PaymentFormP
             <button
                 type="submit"
                 disabled={!stripe || isProcessing || !isReady}
-                className="w-full bg-gradient-to-r from-[#ffb3ad] to-[#fbbb45] hover:opacity-90 text-[#640c0f] font-bold py-4 rounded-xl transition-all shadow-lg shadow-[#ffb3ad]/30 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center uppercase tracking-wider"
+                className="w-full bg-gradient-to-r from-[#00f0ff] to-[#ff00ff] hover:opacity-90 text-[#001a1f] font-bold py-4 rounded-xl transition-all shadow-lg shadow-[#00f0ff]/30 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center uppercase tracking-wider"
             >
                 {isProcessing ? (
-                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#640c0f]"></div>
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#001a1f]"></div>
                 ) : (
                     `Pay $${amount.toFixed(2)}`
                 )}

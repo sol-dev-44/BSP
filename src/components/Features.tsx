@@ -27,7 +27,7 @@ export function Features() {
     ]
 
     return (
-        <div className="py-24 bg-gradient-to-b from-background to-[#FDF6E3]/10" id="services">
+        <div className="py-24 bg-gradient-to-b from-background to-[#0d0d1f]/10" id="services">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -60,11 +60,11 @@ export function Features() {
                         >
                             {/* Image Placeholder - Circular with gradient */}
                             <div className="flex justify-center mb-6">
-                                <div className="relative w-40 h-40 rounded-full overflow-hidden shadow-2xl group-hover:shadow-[#D4605A]/50 transition-shadow duration-300">
+                                <div className="relative w-40 h-40 rounded-full overflow-hidden shadow-2xl group-hover:shadow-[#00f0ff]/50 transition-shadow duration-300">
                                     {/* Gradient placeholder simulating feature image */}
-                                    <div className={`absolute inset-0 bg-gradient-to-br ${index === 0 ? 'from-[#3B6BA5] via-[#D4605A] to-[#6B4226]' :
-                                        index === 1 ? 'from-[#E5A832] via-[#D4605A] to-[#6B4226]' :
-                                            'from-[#D4605A] via-[#E5A832] to-[#3B6BA5]'
+                                    <div className={`absolute inset-0 bg-gradient-to-br ${index === 0 ? 'from-[#3B6BA5] via-[#00f0ff] to-[#7b2dff]' :
+                                        index === 1 ? 'from-[#ff00ff] via-[#00f0ff] to-[#7b2dff]' :
+                                            'from-[#00f0ff] via-[#ff00ff] to-[#3B6BA5]'
                                         } opacity-80`} />
 
                                     {/* Overlay pattern */}
@@ -81,11 +81,11 @@ export function Features() {
                             </div>
 
                             {/* Card content with glassmorphism */}
-                            <div className="relative bg-[#FDF6E3]/80 dark:bg-[#2A1F17]/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl group-hover:shadow-2xl group-hover:shadow-[#D4605A]/20 transition-all duration-300 border border-[#E5A832]/20 dark:border-[#6B4226]/50">
+                            <div className="relative bg-[#0d0d1f]/80 dark:bg-[#111128]/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl group-hover:shadow-2xl group-hover:shadow-[#00f0ff]/20 transition-all duration-300 border border-[#ff00ff]/20 dark:border-[#7b2dff]/50">
                                 {/* Gradient accent on top */}
-                                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#D4605A] via-[#E5A832] to-[#3B6BA5] rounded-t-2xl" />
+                                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#00f0ff] via-[#ff00ff] to-[#3B6BA5] rounded-t-2xl" />
 
-                                <h3 className="text-2xl font-bold text-foreground text-center mb-4 group-hover:text-[#D4605A] transition-colors duration-300">
+                                <h3 className="text-2xl font-bold text-foreground text-center mb-4 group-hover:text-[#00f0ff] transition-colors duration-300">
                                     {feature.name}
                                 </h3>
                                 <p className="text-lg text-gray-700 dark:text-gray-300 text-center leading-relaxed">
@@ -94,7 +94,7 @@ export function Features() {
 
                                 {/* Decorative bottom accent */}
                                 <div className="mt-6 flex justify-center">
-                                    <div className="w-16 h-1 bg-gradient-to-r from-transparent via-[#E5A832] to-transparent rounded-full" />
+                                    <div className="w-16 h-1 bg-gradient-to-r from-transparent via-[#ff00ff] to-transparent rounded-full" />
                                 </div>
                             </div>
                         </motion.div>

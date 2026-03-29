@@ -32,7 +32,9 @@ export function Hero() {
                 </video>
 
                 {/* Gradient overlay - top transparent to bottom solid */}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#1e1006]/40 to-[#1e1006]" />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a14]/30 via-[#0a0a14]/60 to-[#0a0a14]" />
+                {/* Cyberpunk color tint overlay */}
+                <div className="absolute inset-0 bg-[#0a0a14]/40 mix-blend-multiply" />
             </motion.div>
 
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 pb-16 sm:pb-24">
@@ -43,17 +45,17 @@ export function Hero() {
                     className="flex flex-col items-start"
                 >
                     <h1
-                        className="font-[family-name:var(--font-headline)] text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black uppercase tracking-tighter leading-[0.9] text-[#fbddca] mb-6"
+                        className="font-[family-name:var(--font-headline)] text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black uppercase tracking-tighter leading-[0.9] text-[#e0f0ff] mb-6 text-shadow-hero"
                     >
                         Soar Above
                         <br />
-                        Flathead Lake
+                        <span className="text-[#00f0ff]">Flathead Lake</span>
                     </h1>
                     <motion.p
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1, delay: 0.5 }}
-                        className="text-lg sm:text-xl md:text-2xl text-[#ddc0bd] max-w-2xl mb-2"
+                        className="text-lg sm:text-xl md:text-2xl text-[#b0c4de] max-w-2xl mb-2"
                     >
                         400+ Feet Above Montana's Largest Natural Freshwater Lake
                     </motion.p>
@@ -61,7 +63,7 @@ export function Hero() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1, delay: 0.7 }}
-                        className="text-base sm:text-lg text-[#a58b88] mb-10"
+                        className="text-base sm:text-lg text-[#5a6a8a] mb-10"
                     >
                         Up to 10 passengers per trip
                     </motion.p>
@@ -75,13 +77,13 @@ export function Hero() {
                 >
                     <Link
                         href="/book"
-                        className="w-full sm:w-auto text-center px-10 py-4 rounded-full bg-[#e46c65] text-white font-bold text-base sm:text-lg shadow-lg hover:shadow-[#e46c65]/30 hover:bg-[#ffb3ad] hover:text-[#190b03] transform hover:scale-105 transition-all duration-300 inline-block"
+                        className="w-full sm:w-auto text-center px-10 py-4 rounded-full bg-[#00f0ff] text-[#050510] font-bold text-base sm:text-lg shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:shadow-[0_0_50px_rgba(0,240,255,0.6)] hover:bg-[#00f0ff] transform hover:scale-105 transition-all duration-300 inline-block"
                     >
                         Book Your Flight
                     </Link>
                     <Link
                         href="#about"
-                        className="w-full sm:w-auto text-center px-10 py-4 rounded-full border border-[#fbddca]/30 bg-white/5 backdrop-blur-sm text-[#fbddca] font-bold text-base sm:text-lg hover:bg-white/10 hover:border-[#fbddca]/50 transform hover:scale-105 transition-all duration-300 inline-block"
+                        className="w-full sm:w-auto text-center px-10 py-4 rounded-full border border-[#ff00ff]/40 bg-[#ff00ff]/5 backdrop-blur-sm text-[#ff00ff] font-bold text-base sm:text-lg hover:bg-[#ff00ff]/15 hover:border-[#ff00ff]/70 hover:shadow-[0_0_30px_rgba(255,0,255,0.3)] transform hover:scale-105 transition-all duration-300 inline-block"
                     >
                         Learn More
                     </Link>

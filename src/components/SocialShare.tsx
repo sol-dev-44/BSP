@@ -33,7 +33,7 @@ export function SocialShare({
     }
 
     return (
-        <div className="bg-gradient-to-br from-[#D4605A]/5 to-[#E5A832]/5 rounded-2xl p-8 border border-[#E5A832]/20 dark:border-[#6B4226]">
+        <div className="bg-gradient-to-br from-[#00f0ff]/5 to-[#ff00ff]/5 rounded-2xl p-8 border border-[#ff00ff]/20 dark:border-[#7b2dff]">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -73,7 +73,7 @@ export function SocialShare({
                     {/* Copy Link */}
                     <button
                         onClick={copyToClipboard}
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#6B4226] hover:bg-[#3D2B1F] text-white font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#7b2dff] hover:bg-[#3D2B1F] text-white font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                     >
                         {copied ? (
                             <>
@@ -90,7 +90,7 @@ export function SocialShare({
                 </div>
 
                 <p className="text-sm text-gray-500 dark:text-gray-400 mt-6">
-                    Tag us <span className="font-bold text-[#D4605A]">@bigskyparasail</span> in your posts!
+                    Tag us <span className="font-bold text-[#00f0ff]">@bigskyparasail</span> in your posts!
                 </p>
             </motion.div>
         </div>

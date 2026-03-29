@@ -27,7 +27,7 @@ export function Navbar() {
 
     return (
         <nav
-            className="fixed w-full z-50 bg-[#1e1006]/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(251,221,202,0.06)] transition-all duration-300"
+            className="fixed w-full z-50 bg-[#0a0a14]/80 backdrop-blur-xl border-b border-[#00f0ff]/10 shadow-[0_0_30px_rgba(0,240,255,0.05)] transition-all duration-300"
         >
             <div className="w-full mx-auto px-4 sm:px-6 lg:px-10">
                 <div className="flex items-center justify-between h-16 sm:h-20 lg:h-28">
@@ -37,7 +37,7 @@ export function Navbar() {
                             alt="Big Sky Parasail logo"
                             className="h-10 sm:h-14 lg:h-20 w-auto"
                         />
-                        <h1 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-black tracking-widest font-[family-name:var(--font-headline)] text-[#fbddca] hover:scale-105 transition-transform duration-200 whitespace-nowrap uppercase">
+                        <h1 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-black tracking-widest font-[family-name:var(--font-headline)] text-[#e0f0ff] hover:scale-105 transition-transform duration-200 whitespace-nowrap uppercase">
                             Big Sky Parasail
                         </h1>
                     </Link>
@@ -50,10 +50,10 @@ export function Navbar() {
                                     key={link.name}
                                     href={link.href}
                                     className={`${link.cta
-                                        ? 'bg-[#ffb3ad] text-[#190b03] px-8 py-3 rounded-full font-bold uppercase tracking-widest hover:scale-105 active:scale-95 transition-all duration-300 font-[family-name:var(--font-headline)]'
+                                        ? 'bg-[#00f0ff] text-[#050510] px-8 py-3 rounded-full font-bold uppercase tracking-widest hover:scale-105 active:scale-95 transition-all duration-300 font-[family-name:var(--font-headline)] shadow-[0_0_20px_rgba(0,240,255,0.3)] hover:shadow-[0_0_30px_rgba(0,240,255,0.5)]'
                                         : `font-[family-name:var(--font-headline)] tracking-widest uppercase text-sm font-bold transition-all duration-200 px-4 py-2.5 ${isActive(link.href)
-                                            ? 'text-[#ffb3ad]'
-                                            : 'text-[#fbddca] hover:text-[#fbbb45]'
+                                            ? 'text-[#00f0ff]'
+                                            : 'text-[#e0f0ff] hover:text-[#ff00ff]'
                                         }`
                                     }`}
                                 >
@@ -67,7 +67,7 @@ export function Navbar() {
                     <div className="lg:hidden flex items-center space-x-4">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className="inline-flex items-center justify-center p-2 rounded-md text-[#fbddca] hover:text-[#fbbb45] focus:outline-none"
+                            className="inline-flex items-center justify-center p-2 rounded-md text-[#e0f0ff] hover:text-[#ff00ff] focus:outline-none"
                             aria-label="Toggle menu"
                         >
                             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -83,7 +83,7 @@ export function Navbar() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="lg:hidden bg-[#1e1006]/95 backdrop-blur-xl"
+                        className="lg:hidden bg-[#0a0a14]/95 backdrop-blur-xl"
                     >
                         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                             {navLinks.map((link) => (
@@ -91,10 +91,10 @@ export function Navbar() {
                                     key={link.name}
                                     href={link.href}
                                     className={`block px-3 py-2 rounded-md text-base font-[family-name:var(--font-headline)] uppercase tracking-widest font-bold ${link.cta
-                                        ? 'bg-[#ffb3ad] text-[#190b03]'
+                                        ? 'bg-[#00f0ff] text-[#050510]'
                                         : isActive(link.href)
-                                            ? 'text-[#ffb3ad] bg-[#2c1c11]'
-                                            : 'text-[#fbddca] hover:text-[#fbbb45] hover:bg-[#2c1c11]'
+                                            ? 'text-[#00f0ff] bg-[#111128]'
+                                            : 'text-[#e0f0ff] hover:text-[#ff00ff] hover:bg-[#111128]'
                                     }`}
                                     onClick={() => setIsOpen(false)}
                                 >

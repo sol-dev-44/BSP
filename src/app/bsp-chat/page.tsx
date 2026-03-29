@@ -88,7 +88,7 @@ export default function BSPChat() {
     };
 
     return (
-        <div className="min-h-screen bg-[#1e1006] text-[#fbddca]">
+        <div className="min-h-screen bg-[#0a0a14] text-[#e0f0ff]">
             <Navbar />
 
             <div className="w-full max-w-5xl mx-auto py-32 px-4 sm:px-6">
@@ -98,7 +98,7 @@ export default function BSPChat() {
                         initial={{ opacity: 0, scale: 0 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5, type: 'spring' }}
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-[#ffb3ad] to-[#fbbb45] text-[#640c0f] px-6 py-3 rounded-full mb-6 shadow-lg"
+                        className="inline-flex items-center gap-2 bg-gradient-to-r from-[#00f0ff] to-[#ff00ff] text-[#001a1f] px-6 py-3 rounded-full mb-6 shadow-lg"
                     >
                         <MessageCircle className="h-5 w-5" />
                         <span className="font-bold">AI Assistant</span>
@@ -108,7 +108,7 @@ export default function BSPChat() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="text-5xl md:text-6xl font-black uppercase tracking-tighter text-[#fbddca] mb-6 font-[family-name:var(--font-headline)]"
+                        className="text-5xl md:text-6xl font-black uppercase tracking-tighter text-[#e0f0ff] mb-6 font-[family-name:var(--font-headline)]"
                     >
                         Ask Anything
                     </motion.h1>
@@ -117,14 +117,14 @@ export default function BSPChat() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="text-xl md:text-2xl text-[#ddc0bd] max-w-2xl mx-auto"
+                        className="text-xl md:text-2xl text-[#b0c4de] max-w-2xl mx-auto"
                     >
                         Instant answers about flights, weather, pricing, and Montana.
                     </motion.p>
                 </div>
 
                 {/* Chat Interface */}
-                <div className="bg-[#2c1c11] rounded-xl shadow-2xl overflow-hidden">
+                <div className="bg-[#111128] rounded-xl shadow-2xl overflow-hidden">
                     {/* Messages */}
                     <div className="h-[600px] overflow-y-auto p-6 space-y-4">
                         {messages.length === 0 ? (
@@ -132,17 +132,17 @@ export default function BSPChat() {
                                 <motion.div
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
-                                    className="w-20 h-20 bg-gradient-to-br from-[#ffb3ad] via-[#f4ba96] to-[#fbbb45] rounded-2xl flex items-center justify-center mb-6 shadow-xl"
+                                    className="w-20 h-20 bg-gradient-to-br from-[#00f0ff] via-[#b8ff00] to-[#ff00ff] rounded-2xl flex items-center justify-center mb-6 shadow-xl"
                                 >
-                                    <MessageCircle className="w-10 h-10 text-[#640c0f]" />
+                                    <MessageCircle className="w-10 h-10 text-[#001a1f]" />
                                 </motion.div>
-                                <h3 className="text-3xl font-bold mb-2 text-[#fbddca]">
+                                <h3 className="text-3xl font-bold mb-2 text-[#e0f0ff]">
                                     Welcome to Big Sky Parasail!
                                 </h3>
-                                <p className="text-[#ddc0bd] mb-4 max-w-md text-xl">
+                                <p className="text-[#b0c4de] mb-4 max-w-md text-xl">
                                     Ask me anything about parasailing on Flathead Lake! I&apos;m here to help you plan your adventure.
                                 </p>
-                                <p className="text-base text-[#a58b88]">
+                                <p className="text-base text-[#5a6a8a]">
                                     Try: &quot;What should I bring?&quot; or &quot;How high do we go?&quot;
                                 </p>
                             </div>
@@ -158,14 +158,14 @@ export default function BSPChat() {
                                         <div
                                             className={`max-w-[80%] px-5 py-4 rounded-2xl shadow-lg ${
                                                 msg.role === 'user'
-                                                    ? 'bg-gradient-to-r from-[#ffb3ad] to-[#fbbb45] text-[#640c0f] rounded-tr-sm'
-                                                    : 'bg-[#38261a] text-[#fbddca] border border-[#564240]/30 rounded-tl-sm'
+                                                    ? 'bg-gradient-to-r from-[#00f0ff] to-[#ff00ff] text-[#001a1f] rounded-tr-sm'
+                                                    : 'bg-[#1a1a3e] text-[#e0f0ff] border border-[#2a2a4a]/30 rounded-tl-sm'
                                             }`}
                                         >
                                             {msg.role === 'assistant' && (
-                                                <div className="flex items-center gap-2 mb-2 pb-2 border-b border-[#564240]/30">
-                                                    <Sparkles className="w-4 h-4 text-[#ffb3ad]" />
-                                                    <span className="font-semibold text-base text-[#fbddca]">Assistant</span>
+                                                <div className="flex items-center gap-2 mb-2 pb-2 border-b border-[#2a2a4a]/30">
+                                                    <Sparkles className="w-4 h-4 text-[#00f0ff]" />
+                                                    <span className="font-semibold text-base text-[#e0f0ff]">Assistant</span>
                                                 </div>
                                             )}
                                             <div className="prose-base max-w-none">
@@ -175,8 +175,8 @@ export default function BSPChat() {
                                                             p: (props) => <p className="mb-2 last:mb-0 leading-relaxed" {...props} />,
                                                             ul: (props) => <ul className="list-disc pl-4 mb-2 space-y-1" {...props} />,
                                                             li: (props) => <li className="pl-1" {...props} />,
-                                                            strong: (props) => <strong className="font-bold text-[#ffb3ad]" {...props} />,
-                                                            a: (props) => <a className="text-[#f4ba96] hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
+                                                            strong: (props) => <strong className="font-bold text-[#00f0ff]" {...props} />,
+                                                            a: (props) => <a className="text-[#b8ff00] hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
                                                         }}
                                                     >
                                                         {msg.content}
@@ -195,10 +195,10 @@ export default function BSPChat() {
                                         animate={{ opacity: 1 }}
                                         className="flex justify-start"
                                     >
-                                        <div className="bg-[#38261a] rounded-2xl rounded-tl-sm px-5 py-4 shadow-lg border border-[#564240]/30">
+                                        <div className="bg-[#1a1a3e] rounded-2xl rounded-tl-sm px-5 py-4 shadow-lg border border-[#2a2a4a]/30">
                                             <div className="flex items-center gap-2">
-                                                <Loader2 className="w-5 h-5 animate-spin text-[#ffb3ad]" />
-                                                <span className="text-[#fbddca]">Thinking...</span>
+                                                <Loader2 className="w-5 h-5 animate-spin text-[#00f0ff]" />
+                                                <span className="text-[#e0f0ff]">Thinking...</span>
                                             </div>
                                         </div>
                                     </motion.div>
@@ -210,14 +210,14 @@ export default function BSPChat() {
                     </div>
 
                     {/* Input */}
-                    <div className="border-t border-[#564240]/30 p-4 bg-[#190b03]/50">
+                    <div className="border-t border-[#2a2a4a]/30 p-4 bg-[#050510]/50">
                         <form onSubmit={handleSubmit} className="flex gap-2 w-full">
                             <input
                                 type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 placeholder="Ask about your parasailing adventure..."
-                                className="flex-1 min-w-0 px-4 py-3 bg-[#2c1c11] border border-[#564240] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#ffb3ad] text-[#fbddca] placeholder-[#a58b88]"
+                                className="flex-1 min-w-0 px-4 py-3 bg-[#111128] border border-[#2a2a4a] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00f0ff] text-[#e0f0ff] placeholder-[#5a6a8a]"
                                 disabled={loading}
                                 maxLength={500}
                             />
@@ -226,13 +226,13 @@ export default function BSPChat() {
                                 disabled={!input.trim() || loading}
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="flex-shrink-0 px-3 sm:px-6 py-3 bg-gradient-to-r from-[#ffb3ad] to-[#fbbb45] text-[#640c0f] rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all flex items-center gap-2"
+                                className="flex-shrink-0 px-3 sm:px-6 py-3 bg-gradient-to-r from-[#00f0ff] to-[#ff00ff] text-[#001a1f] rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all flex items-center gap-2"
                             >
                                 {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
                                 <span className="hidden sm:inline">Send</span>
                             </motion.button>
                         </form>
-                        <div className="mt-2 text-xs text-[#a58b88]">
+                        <div className="mt-2 text-xs text-[#5a6a8a]">
                             {input.length}/500 characters
                         </div>
                     </div>

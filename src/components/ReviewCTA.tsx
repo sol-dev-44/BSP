@@ -37,14 +37,14 @@ export function ReviewCTA() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4605A] to-[#6B4226] text-white px-6 py-3 rounded-full mb-6 shadow-lg">
+                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#00f0ff] to-[#7b2dff] text-white px-6 py-3 rounded-full mb-6 shadow-lg">
                         <Star className="h-5 w-5 fill-current" />
                         <span className="font-bold">We Value Your Feedback</span>
                     </div>
 
                     <h2 className="text-5xl md:text-6xl font-black text-foreground mb-6">
                         Loved Your{' '}
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#D4605A] to-[#E5A832]">
+                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#00f0ff] to-[#ff00ff]">
                             Experience?
                         </span>
                     </h2>
@@ -56,7 +56,7 @@ export function ReviewCTA() {
                     {/* Social Proof */}
                     <div className="flex items-center justify-center gap-1 mb-12">
                         {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="w-8 h-8 text-[#E5A832] fill-current" />
+                            <Star key={i} className="w-8 h-8 text-[#ff00ff] fill-current" />
                         ))}
                         <span className="ml-3 text-2xl font-bold text-foreground">
                             5.0
@@ -78,7 +78,7 @@ export function ReviewCTA() {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.15 }}
-                            className="group bg-[#FDF6E3] dark:bg-[#2A1F17] rounded-2xl p-8 border border-[#E5A832]/20 dark:border-[#6B4226] hover:shadow-xl transition-all duration-300 hover:scale-105"
+                            className="group bg-[#0d0d1f] dark:bg-[#111128] rounded-2xl p-8 border border-[#ff00ff]/20 dark:border-[#7b2dff] hover:shadow-xl transition-all duration-300 hover:scale-105"
                         >
                             <div className="text-5xl mb-4">{platform.icon}</div>
                             <h3 className="text-2xl font-bold mb-2">{platform.name}</h3>
