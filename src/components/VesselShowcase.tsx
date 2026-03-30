@@ -39,11 +39,11 @@ export function VesselShowcase() {
     ]
 
     return (
-        <section className="relative py-16 sm:py-20 md:py-28 lg:py-32 overflow-hidden bg-[#0a0a14] scanlines">
+        <section className="relative py-16 sm:py-20 md:py-28 lg:py-32 overflow-hidden bg-[#3D1C00]">
             {/* Subtle ambient glow */}
             <div className="absolute inset-0 overflow-hidden opacity-10">
                 <motion.div
-                    className="absolute top-20 right-20 w-96 h-96 bg-[#00f0ff] rounded-full blur-3xl"
+                    className="absolute top-20 right-20 w-96 h-96 bg-[#FF9500] rounded-full blur-3xl"
                     animate={{
                         scale: [1, 1.2, 1],
                         opacity: [0.3, 0.5, 0.3],
@@ -51,7 +51,7 @@ export function VesselShowcase() {
                     transition={{ repeat: Infinity, duration: 8 }}
                 />
                 <motion.div
-                    className="absolute bottom-20 left-20 w-96 h-96 bg-[#ff00ff] rounded-full blur-3xl"
+                    className="absolute bottom-20 left-20 w-96 h-96 bg-[#FFD700] rounded-full blur-3xl"
                     animate={{
                         scale: [1.2, 1, 1.2],
                         opacity: [0.5, 0.3, 0.5],
@@ -70,14 +70,14 @@ export function VesselShowcase() {
                     className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 sm:mb-12 md:mb-16"
                 >
                     <div>
-                        <h2 className="font-[family-name:var(--font-headline)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tighter uppercase text-[#e0f0ff] text-glow">
+                        <h2 className="font-[family-name:var(--font-headline)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight uppercase text-[#FF9500]">
                             The Cloud Dancer
                         </h2>
-                        <p className="text-lg md:text-xl text-[#5a6a8a] max-w-2xl mt-4">
+                        <p className="text-lg md:text-xl text-white/70 max-w-2xl mt-4">
                             Your adventure begins aboard our Ocean Pro 31 &mdash; a USCG certified parasailing vessel
                         </p>
                     </div>
-                    <div className="flex items-center gap-2 text-[#b8ff00] shrink-0">
+                    <div className="flex items-center gap-2 text-[#FFD700] shrink-0">
                         <Anchor className="h-5 w-5" />
                         <span className="font-[family-name:var(--font-headline)] text-sm font-bold uppercase tracking-wider">Meet Our Vessel</span>
                     </div>
@@ -99,9 +99,9 @@ export function VesselShowcase() {
                             className="w-full h-full object-cover min-h-[250px] sm:min-h-[300px] md:min-h-[400px] group-hover:scale-110 transition-transform duration-700"
                         />
                         {/* Text overlay at bottom */}
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#050510]/90 via-[#050510]/60 to-transparent p-6 md:p-8">
-                            <p className="text-[#e0f0ff] text-lg md:text-xl font-medium leading-relaxed">
-                                The <span className="font-bold text-[#ff00ff]">Cloud Dancer</span> &mdash; our 31-foot Ocean Pro commercial parasail vessel, powered by Volvo Penta diesel with a professional hydraulic winch system.
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#3D1C00]/95 via-[#3D1C00]/70 to-transparent p-6 md:p-8">
+                            <p className="text-white text-lg md:text-xl font-medium leading-relaxed">
+                                The <span className="font-bold text-[#FFD700]">Cloud Dancer</span> &mdash; our 31-foot Ocean Pro commercial parasail vessel, powered by Volvo Penta diesel with a professional hydraulic winch system.
                             </p>
                         </div>
                     </motion.div>
@@ -116,15 +116,15 @@ export function VesselShowcase() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                                className="bg-[#1e1e45] rounded-xl p-5 sm:p-6 md:p-8 border border-[#00f0ff]/10 hover:border-[#00f0ff]/30 hover:shadow-[0_0_20px_rgba(0,240,255,0.08)] transition-all duration-500"
+                                className="bg-[#5A3010] rounded-xl p-5 sm:p-6 md:p-8 border border-[#FF9500]/20 hover:border-[#FF9500]/40 transition-all duration-500"
                             >
                                 <div className="mb-4">
-                                    <Icon className="h-8 w-8 text-[#00f0ff]" />
+                                    <Icon className="h-8 w-8 text-[#FF9500]" />
                                 </div>
-                                <h3 className="font-[family-name:var(--font-headline)] text-xl font-bold text-[#e0f0ff] mb-2 uppercase tracking-tight">
+                                <h3 className="font-[family-name:var(--font-headline)] text-xl font-bold text-white mb-2 uppercase tracking-wide">
                                     {highlight.title}
                                 </h3>
-                                <p className="text-[#5a6a8a] leading-relaxed">
+                                <p className="text-white/70 leading-relaxed">
                                     {highlight.description}
                                 </p>
                             </motion.div>
@@ -144,15 +144,15 @@ export function VesselShowcase() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: 0.1 * index }}
-                                className="bg-[#1e1e45] rounded-xl p-5 sm:p-6 md:p-8 border border-[#00f0ff]/10 hover:border-[#00f0ff]/30 hover:shadow-[0_0_20px_rgba(0,240,255,0.08)] transition-all duration-500"
+                                className="bg-[#5A3010] rounded-xl p-5 sm:p-6 md:p-8 border border-[#FF9500]/20 hover:border-[#FF9500]/40 transition-all duration-500"
                             >
                                 <div className="mb-4">
-                                    <Icon className="h-8 w-8 text-[#ff00ff]" />
+                                    <Icon className="h-8 w-8 text-[#FF9500]" />
                                 </div>
-                                <h3 className="font-[family-name:var(--font-headline)] text-xl font-bold text-[#e0f0ff] mb-2 uppercase tracking-tight">
+                                <h3 className="font-[family-name:var(--font-headline)] text-xl font-bold text-white mb-2 uppercase tracking-wide">
                                     {highlight.title}
                                 </h3>
-                                <p className="text-[#5a6a8a] leading-relaxed">
+                                <p className="text-white/70 leading-relaxed">
                                     {highlight.description}
                                 </p>
                             </motion.div>
@@ -172,11 +172,11 @@ export function VesselShowcase() {
                             alt="Leroy the dog mascot at the dock"
                             className="w-full h-full object-cover min-h-[250px] group-hover:scale-110 transition-transform duration-700"
                         />
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#050510]/90 to-transparent p-4">
-                            <p className="text-[#e0f0ff] font-bold text-lg">
-                                Meet <span className="text-[#ff00ff]">Leroy</span>
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#3D1C00]/95 to-transparent p-4">
+                            <p className="text-white font-bold text-lg">
+                                Meet <span className="text-[#FFD700]">Leroy</span>
                             </p>
-                            <p className="text-[#b0c4de] text-sm">Our official dock mascot</p>
+                            <p className="text-white/80 text-sm">Our official dock mascot</p>
                         </div>
                     </motion.div>
 
@@ -186,16 +186,16 @@ export function VesselShowcase() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.4 }}
-                        className="bg-[#1e1e45] rounded-xl p-5 sm:p-6 md:p-8 border border-[#00f0ff]/10 hover:border-[#00f0ff]/30 hover:shadow-[0_0_20px_rgba(0,240,255,0.08)] transition-all duration-500"
+                        className="bg-[#5A3010] rounded-xl p-5 sm:p-6 md:p-8 border border-[#FF9500]/20 hover:border-[#FF9500]/40 transition-all duration-500"
                     >
-                        <h3 className="font-[family-name:var(--font-headline)] text-lg font-bold text-[#e0f0ff] mb-4 flex items-center gap-2 uppercase tracking-tight">
-                            <Gauge className="h-5 w-5 text-[#00f0ff]" />
+                        <h3 className="font-[family-name:var(--font-headline)] text-lg font-bold text-white mb-4 flex items-center gap-2 uppercase tracking-wide">
+                            <Gauge className="h-5 w-5 text-[#FF9500]" />
                             Vessel Specs
                         </h3>
                         <ul className="space-y-2">
                             {specs.map((spec, i) => (
-                                <li key={i} className="flex items-center gap-2 text-sm text-[#b0c4de]">
-                                    <CheckCircle className="h-4 w-4 text-[#b8ff00] flex-shrink-0" />
+                                <li key={i} className="flex items-center gap-2 text-sm text-white/80">
+                                    <CheckCircle className="h-4 w-4 text-[#FFD700] flex-shrink-0" />
                                     {spec}
                                 </li>
                             ))}
@@ -211,9 +211,9 @@ export function VesselShowcase() {
                     transition={{ duration: 0.8, delay: 0.5 }}
                     className="mt-10 sm:mt-16 text-center"
                 >
-                    <div className="inline-flex items-center gap-3 bg-[#1e1e45] px-4 py-3 sm:px-6 sm:py-4 md:px-8 rounded-xl border border-[#b8ff00]/20 shadow-[0_0_20px_rgba(184,255,0,0.1)]">
-                        <Shield className="h-6 w-6 text-[#b8ff00]" />
-                        <p className="text-sm sm:text-base md:text-lg font-bold text-[#e0f0ff]">
+                    <div className="inline-flex items-center gap-3 bg-[#FF9500] px-4 py-3 sm:px-6 sm:py-4 md:px-8 rounded-xl shadow-lg">
+                        <Shield className="h-6 w-6 text-white" />
+                        <p className="text-sm sm:text-base md:text-lg font-bold text-white">
                             Safety-First Operations Since Day One
                         </p>
                     </div>

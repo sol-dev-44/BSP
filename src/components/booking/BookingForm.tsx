@@ -187,9 +187,9 @@ export default function BookingForm({ className }: BookingFormProps) {
     // Step 4: Success
     if (step === 4) {
         return (
-            <div className="bg-white rounded-2xl shadow-xl p-8 text-center max-w-lg mx-auto border-2 border-[#00f0ff]">
-                <div className="w-20 h-20 bg-[#00f0ff]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <ShieldCheck className="w-10 h-10 text-[#00f0ff]" />
+            <div className="bg-white rounded-2xl shadow-xl p-8 text-center max-w-lg mx-auto border-2 border-[#FF9500]">
+                <div className="w-20 h-20 bg-[#FF9500]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <ShieldCheck className="w-10 h-10 text-[#FF9500]" />
                 </div>
                 <h3 className="text-2xl font-bold text-foreground mb-2 font-serif">Booking Confirmed!</h3>
                 <p className="text-foreground/70 mb-6">
@@ -198,7 +198,7 @@ export default function BookingForm({ className }: BookingFormProps) {
                 </p>
                 <button
                     onClick={() => window.location.reload()}
-                    className="bg-[#00f0ff] hover:bg-[#A84E28] text-white font-bold py-3 px-6 rounded-lg transition-colors uppercase tracking-wider"
+                    className="bg-[#FF9500] hover:bg-[#E07B00] text-white font-bold py-3 px-6 rounded-lg transition-colors uppercase tracking-wider"
                 >
                     Book Another
                 </button>
@@ -212,15 +212,15 @@ export default function BookingForm({ className }: BookingFormProps) {
             <div className="flex justify-center items-center space-x-4 mb-8">
                 {[1, 2, 3].map((s) => (
                     <div key={s} className="flex items-center">
-                        <div className={`flex flex-col items-center gap-2 ${step >= s ? 'text-[#00f0ff]' : 'text-stone-300'}`}>
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${step >= s ? 'bg-[#00f0ff] text-white' : 'bg-stone-200'}`}>
+                        <div className={`flex flex-col items-center gap-2 ${step >= s ? 'text-[#FF9500]' : 'text-stone-300'}`}>
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${step >= s ? 'bg-[#FF9500] text-white' : 'bg-stone-200'}`}>
                                 {s}
                             </div>
                             <span className="text-xs font-bold uppercase tracking-wider hidden sm:block">
                                 {s === 1 ? 'Date & Time' : s === 2 ? 'Details' : 'Payment'}
                             </span>
                         </div>
-                        {s < 3 && <div className={`w-12 h-0.5 mx-2 ${step > s ? 'bg-[#00f0ff]' : 'bg-stone-200'}`} />}
+                        {s < 3 && <div className={`w-12 h-0.5 mx-2 ${step > s ? 'bg-[#FF9500]' : 'bg-stone-200'}`} />}
                     </div>
                 ))}
             </div>
@@ -239,7 +239,7 @@ export default function BookingForm({ className }: BookingFormProps) {
                             >
                                 <div className="bg-white rounded-2xl shadow-xl p-6 border border-stone-200">
                                     <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-foreground font-serif">
-                                        <Calendar className="text-[#00f0ff]" /> Select Date
+                                        <Calendar className="text-[#FF9500]" /> Select Date
                                     </h3>
                                     <DateSelector
                                         selectedDate={selectedDate}
@@ -263,7 +263,7 @@ export default function BookingForm({ className }: BookingFormProps) {
                                     <button
                                         onClick={() => setStep(2)}
                                         disabled={!selectedTime}
-                                        className="bg-[#00f0ff] hover:bg-[#A84E28] text-white font-bold px-8 py-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-[#00f0ff]/20 uppercase tracking-wider"
+                                        className="bg-[#FF9500] hover:bg-[#E07B00] text-white font-bold px-8 py-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-[#FF9500]/20 uppercase tracking-wider"
                                     >
                                         Continue
                                     </button>
@@ -293,7 +293,7 @@ export default function BookingForm({ className }: BookingFormProps) {
                                     <button
                                         onClick={handleProceedToPayment}
                                         disabled={!isFormValid() || loading}
-                                        className="bg-[#00f0ff] hover:bg-[#A84E28] text-white font-bold px-8 py-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-[#00f0ff]/20 flex items-center gap-2 uppercase tracking-wider"
+                                        className="bg-[#FF9500] hover:bg-[#E07B00] text-white font-bold px-8 py-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-[#FF9500]/20 flex items-center gap-2 uppercase tracking-wider"
                                     >
                                         {loading && <Loader2 className="animate-spin w-4 h-4" />}
                                         Proceed to Payment
@@ -334,8 +334,8 @@ export default function BookingForm({ className }: BookingFormProps) {
                             slotType={selectedDate && selectedTime ? getSlotType(selectedDate, selectedTime) : 'standard'}
                             addOns={formData.add_ons}
                         />
-                        <div className="bg-[#00f0ff]/10 p-4 rounded-xl border border-[#00f0ff]/20 flex items-start gap-3">
-                            <ShieldCheck className="w-5 h-5 text-[#00f0ff] mt-0.5 shrink-0" />
+                        <div className="bg-[#FF9500]/10 p-4 rounded-xl border border-[#FF9500]/20 flex items-start gap-3">
+                            <ShieldCheck className="w-5 h-5 text-[#FF9500] mt-0.5 shrink-0" />
                             <div>
                                 <p className="text-sm font-bold text-foreground">
                                     Payment Protection

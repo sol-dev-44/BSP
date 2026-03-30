@@ -43,15 +43,15 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
     const pricePerPerson = BUSINESS_INFO.pricing.parasail; // $119 standard default for tip calc
     const baseFlightCost = formData.party_size * pricePerPerson;
 
-    const inputBaseClass = "w-full bg-[#1a1a3e] border rounded-xl px-4 py-3 text-[#e0f0ff] focus:outline-none transition-colors placeholder-[#2a2a4a]";
-    const inputValidClass = "border-[#2a2a4a] focus:border-[#00f0ff] focus:ring-1 focus:ring-[#00f0ff]";
+    const inputBaseClass = "w-full bg-[#FFD699] border rounded-xl px-4 py-3 text-[#2D1600] focus:outline-none transition-colors placeholder-[#DCC8A0]";
+    const inputValidClass = "border-[#DCC8A0] focus:border-[#FF9500] focus:ring-1 focus:ring-[#FF9500]";
     const inputErrorClass = "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500";
 
     return (
         <div className="space-y-8">
-            <div className="bg-[#ff00ff]/10 border border-[#ff00ff]/30 rounded-xl p-6 mb-8 text-center">
-                <p className="text-[#5a6a8a] text-sm uppercase tracking-wider font-semibold mb-1">Booking For</p>
-                <div className="text-2xl font-bold text-[#e0f0ff] font-serif">
+            <div className="bg-[#FFD700]/10 border border-[#FFD700]/30 rounded-xl p-6 mb-8 text-center">
+                <p className="text-[#8B6914] text-sm uppercase tracking-wider font-semibold mb-1">Booking For</p>
+                <div className="text-2xl font-bold text-[#2D1600] font-serif">
                     {new Date(selectedDate + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
                     <span className="mx-2">&bull;</span>
                     {selectedTime}
@@ -59,11 +59,11 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
             </div>
 
             <div className="space-y-6">
-                <h3 className="text-xl font-semibold mb-4 text-[#e0f0ff] font-serif">Your Details</h3>
+                <h3 className="text-xl font-semibold mb-4 text-[#2D1600] font-serif">Your Details</h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label className="block text-sm font-semibold text-[#b0c4de] mb-2">Full Name</label>
+                        <label className="block text-sm font-semibold text-[#614020] mb-2">Full Name</label>
                         <input
                             type="text"
                             name="customer_name"
@@ -80,7 +80,7 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
                     </div>
 
                     <div>
-                        <label className="block text-sm font-semibold text-[#b0c4de] mb-2">Email Address</label>
+                        <label className="block text-sm font-semibold text-[#614020] mb-2">Email Address</label>
                         <input
                             type="email"
                             name="customer_email"
@@ -97,7 +97,7 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
                     </div>
 
                     <div>
-                        <label className="block text-sm font-semibold text-[#b0c4de] mb-2">Phone Number</label>
+                        <label className="block text-sm font-semibold text-[#614020] mb-2">Phone Number</label>
                         <input
                             type="tel"
                             name="customer_phone"
@@ -114,8 +114,8 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
                     </div>
 
                     <div>
-                        <label className="block text-sm font-semibold text-[#b0c4de] mb-2">
-                            Number of Parasailers <span className="text-xs text-[#5a6a8a]">(Max {maxPartySize})</span>
+                        <label className="block text-sm font-semibold text-[#614020] mb-2">
+                            Number of Parasailers <span className="text-xs text-[#8B6914]">(Max {maxPartySize})</span>
                         </label>
                         <input
                             type="number"
@@ -131,7 +131,7 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
                         {touched.party_size && !isPartySizeValid && (
                             <p className="text-red-500 text-xs mt-1">Please enter a valid number (1-{maxPartySize}).</p>
                         )}
-                        <p className="text-xs text-[#5a6a8a] mt-1">
+                        <p className="text-xs text-[#8B6914] mt-1">
                             Price per person depends on your selected time slot (Early Bird $99, Standard $119, Sunset $159)
                         </p>
                     </div>
@@ -139,8 +139,8 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
 
                 {/* Boat Riders / Observers */}
                 <div>
-                    <label className="block text-sm font-semibold text-[#b0c4de] mb-2">
-                        Boat Riders / Observers <span className="text-xs text-[#5a6a8a]">($49 each)</span>
+                    <label className="block text-sm font-semibold text-[#614020] mb-2">
+                        Boat Riders / Observers <span className="text-xs text-[#8B6914]">($49 each)</span>
                     </label>
                     <input
                         type="number"
@@ -151,13 +151,13 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
                         onChange={onChange}
                         className={`${inputBaseClass} ${inputValidClass} max-w-xs`}
                     />
-                    <p className="text-xs text-[#5a6a8a] mt-1">
+                    <p className="text-xs text-[#8B6914] mt-1">
                         Friends or family who want to ride the boat without flying.
                     </p>
                 </div>
 
                 <div>
-                    <label className="block text-sm font-semibold text-[#b0c4de] mb-2">Special Requests / Notes</label>
+                    <label className="block text-sm font-semibold text-[#614020] mb-2">Special Requests / Notes</label>
                     <textarea
                         name="notes"
                         value={formData.notes}
@@ -170,21 +170,21 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
             </div>
 
             {/* Add-ons Section */}
-            <div className="bg-[#1a1a3e] p-6 rounded-xl border border-[#2a2a4a]/30">
-                <h3 className="text-lg font-semibold mb-4 text-[#e0f0ff] font-serif flex items-center gap-2">
+            <div className="bg-[#FFD699] p-6 rounded-xl border border-[#DCC8A0]/30">
+                <h3 className="text-lg font-semibold mb-4 text-[#2D1600] font-serif flex items-center gap-2">
                     Upgrade Your Experience
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Media Combo Package */}
-                    <div className="bg-[#111128] p-4 rounded-xl border-2 border-[#00f0ff]/30 shadow-sm hover:border-[#00f0ff]/50 transition-colors relative">
-                        <span className="absolute -top-2.5 right-3 bg-[#00f0ff] text-[#001a1f] text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Save $15</span>
-                        <label className="block text-sm font-bold text-[#e0f0ff] mb-2">Media Combo (${BUSINESS_INFO.pricing.combo})</label>
-                        <p className="text-xs text-[#5a6a8a] mb-3">Photos + GoPro video. Save $15 vs buying separately!</p>
+                    <div className="bg-[#FFEACC] p-4 rounded-xl border-2 border-[#FF9500]/30 shadow-sm hover:border-[#FF9500]/50 transition-colors relative">
+                        <span className="absolute -top-2.5 right-3 bg-[#FF9500] text-[#FFFFFF] text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Save $15</span>
+                        <label className="block text-sm font-bold text-[#2D1600] mb-2">Media Combo (${BUSINESS_INFO.pricing.combo})</label>
+                        <p className="text-xs text-[#8B6914] mb-3">Photos + GoPro video. Save $15 vs buying separately!</p>
                         <select
                             name="add_ons.combo_package"
                             value={(formData.add_ons as any)?.combo_package || 0}
                             onChange={onChange}
-                            className="w-full bg-[#050510] border border-[#2a2a4a] rounded-xl px-3 py-2 text-sm text-[#e0f0ff] focus:ring-[#00f0ff] focus:border-[#00f0ff] cursor-pointer"
+                            className="w-full bg-[#FFFFFF] border border-[#DCC8A0] rounded-xl px-3 py-2 text-sm text-[#2D1600] focus:ring-[#FF9500] focus:border-[#FF9500] cursor-pointer"
                         >
                             <option value="0">None</option>
                             <option value="1">1 combo ($75)</option>
@@ -193,14 +193,14 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
                     </div>
 
                     {/* Photo Package */}
-                    <div className="bg-[#111128] p-4 rounded-xl border border-[#2a2a4a] shadow-sm hover:border-[#00f0ff]/50 transition-colors">
-                        <label className="block text-sm font-bold text-[#e0f0ff] mb-2">Photo Package (${BUSINESS_INFO.pricing.photos})</label>
-                        <p className="text-xs text-[#5a6a8a] mb-3">Professional crew photos on SD card.</p>
+                    <div className="bg-[#FFEACC] p-4 rounded-xl border border-[#DCC8A0] shadow-sm hover:border-[#FF9500]/50 transition-colors">
+                        <label className="block text-sm font-bold text-[#2D1600] mb-2">Photo Package (${BUSINESS_INFO.pricing.photos})</label>
+                        <p className="text-xs text-[#8B6914] mb-3">Professional crew photos on SD card.</p>
                         <select
                             name="add_ons.photo_package"
                             value={formData.add_ons?.photo_package}
                             onChange={onChange}
-                            className="w-full bg-[#050510] border border-[#2a2a4a] rounded-xl px-3 py-2 text-sm text-[#e0f0ff] focus:ring-[#00f0ff] focus:border-[#00f0ff] cursor-pointer"
+                            className="w-full bg-[#FFFFFF] border border-[#DCC8A0] rounded-xl px-3 py-2 text-sm text-[#2D1600] focus:ring-[#FF9500] focus:border-[#FF9500] cursor-pointer"
                         >
                             <option value="0">None</option>
                             <option value="1">1 package ($40)</option>
@@ -209,14 +209,14 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
                     </div>
 
                     {/* GoPro Package */}
-                    <div className="bg-[#111128] p-4 rounded-xl border border-[#2a2a4a] shadow-sm hover:border-[#00f0ff]/50 transition-colors">
-                        <label className="block text-sm font-bold text-[#e0f0ff] mb-2">GoPro Package (${BUSINESS_INFO.pricing.gopro})</label>
-                        <p className="text-xs text-[#5a6a8a] mb-3">Immersive aerial flight footage.</p>
+                    <div className="bg-[#FFEACC] p-4 rounded-xl border border-[#DCC8A0] shadow-sm hover:border-[#FF9500]/50 transition-colors">
+                        <label className="block text-sm font-bold text-[#2D1600] mb-2">GoPro Package (${BUSINESS_INFO.pricing.gopro})</label>
+                        <p className="text-xs text-[#8B6914] mb-3">Immersive aerial flight footage.</p>
                         <select
                             name="add_ons.gopro_package"
                             value={formData.add_ons?.gopro_package}
                             onChange={onChange}
-                            className="w-full bg-[#050510] border border-[#2a2a4a] rounded-xl px-3 py-2 text-sm text-[#e0f0ff] focus:ring-[#00f0ff] focus:border-[#00f0ff] cursor-pointer"
+                            className="w-full bg-[#FFFFFF] border border-[#DCC8A0] rounded-xl px-3 py-2 text-sm text-[#2D1600] focus:ring-[#FF9500] focus:border-[#FF9500] cursor-pointer"
                         >
                             <option value="0">None</option>
                             <option value="1">1 package ($50)</option>
@@ -227,11 +227,11 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
             </div>
 
             {/* Gratuity Section */}
-            <div className="bg-[#111128] p-6 rounded-xl border border-[#2a2a4a] shadow-sm">
-                <h3 className="text-lg font-semibold mb-4 text-[#e0f0ff] font-serif flex items-center gap-2">
+            <div className="bg-[#FFEACC] p-6 rounded-xl border border-[#DCC8A0] shadow-sm">
+                <h3 className="text-lg font-semibold mb-4 text-[#2D1600] font-serif flex items-center gap-2">
                     Show Some Love to the Crew
                 </h3>
-                <p className="text-sm text-[#5a6a8a] mb-6">Gratuity is greatly appreciated! 100% goes to your captain and crew.</p>
+                <p className="text-sm text-[#8B6914] mb-6">Gratuity is greatly appreciated! 100% goes to your captain and crew.</p>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {[0, 15, 20, 25].map((percent) => {
@@ -245,8 +245,8 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
                                     onChange({ target: { name: 'add_ons.tip_amount', value: tipForPercent.toString() } } as any);
                                 }}
                                 className={`py-3 rounded-xl text-sm font-bold border transition-all ${isActive
-                                    ? 'bg-[#00f0ff] text-[#001a1f] border-[#00f0ff]'
-                                    : 'bg-[#1a1a3e] border-[#2a2a4a] hover:border-[#00f0ff] text-[#b0c4de]'
+                                    ? 'bg-[#FF9500] text-[#FFFFFF] border-[#FF9500]'
+                                    : 'bg-[#FFD699] border-[#DCC8A0] hover:border-[#FF9500] text-[#614020]'
                                     }`}
                             >
                                 {percent === 0 ? 'No Tip' : `${percent}% ($${tipForPercent})`}
@@ -256,7 +256,7 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
                 </div>
 
                 <div className="mt-4">
-                    <label className="block text-xs font-semibold text-[#5a6a8a] mb-1">Custom Amount ($)</label>
+                    <label className="block text-xs font-semibold text-[#8B6914] mb-1">Custom Amount ($)</label>
                     <input
                         type="number"
                         min="0"
@@ -264,7 +264,7 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
                         value={formData.add_ons.tip_amount || ''}
                         onChange={(e) => onChange(e)}
                         placeholder="Enter custom amount"
-                        className="w-full bg-[#050510] border border-[#2a2a4a] rounded-xl px-4 py-2 text-sm text-[#e0f0ff] focus:ring-[#00f0ff] focus:border-[#00f0ff] placeholder-[#2a2a4a]"
+                        className="w-full bg-[#FFFFFF] border border-[#DCC8A0] rounded-xl px-4 py-2 text-sm text-[#2D1600] focus:ring-[#FF9500] focus:border-[#FF9500] placeholder-[#DCC8A0]"
                     />
                 </div>
             </div>

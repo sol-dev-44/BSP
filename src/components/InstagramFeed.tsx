@@ -73,7 +73,7 @@ const INSTAGRAM_POSTS = [
 
 export function InstagramFeed() {
     return (
-        <div className="py-16 sm:py-20 md:py-28 bg-[#0a0a14]">
+        <div className="py-16 sm:py-20 md:py-28 bg-[#FFF8EE]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <motion.div
@@ -83,16 +83,16 @@ export function InstagramFeed() {
                     transition={{ duration: 0.8 }}
                     className="text-center mb-8 sm:mb-12 md:mb-16"
                 >
-                    <div className="inline-flex items-center gap-2 bg-[#1e1e45] text-[#00f0ff] px-4 py-2 mb-4 sm:px-6 sm:py-3 sm:mb-6 rounded-full border border-[#00f0ff]/20 shadow-[0_0_15px_rgba(0,240,255,0.1)]">
+                    <div className="inline-flex items-center gap-2 bg-[#FF9500] text-white px-4 py-2 mb-4 sm:px-6 sm:py-3 sm:mb-6 rounded-full shadow-[0_4px_15px_rgba(255,149,0,0.3)]">
                         <Instagram className="h-5 w-5" />
                         <span className="font-bold uppercase tracking-widest text-sm">Follow Our Adventures</span>
                     </div>
 
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tighter text-[#e0f0ff] mb-6">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tight text-[#2D1600] mb-6">
                         See It On Instagram
                     </h2>
 
-                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#5a6a8a] max-w-3xl mx-auto">
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#8B6914] max-w-3xl mx-auto">
                         Daily adventures, customer photos, and stunning Flathead Lake views
                     </p>
                 </motion.div>
@@ -109,7 +109,7 @@ export function InstagramFeed() {
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="group relative aspect-square rounded-xl overflow-hidden border border-[#ff00ff]/5 hover:border-[#ff00ff]/30 hover:shadow-[0_0_15px_rgba(255,0,255,0.1)] transition-all duration-500"
+                            className="group relative aspect-square rounded-xl overflow-hidden border border-[#FF9500]/10 hover:border-[#FF9500]/40 hover:shadow-[0_4px_20px_rgba(255,149,0,0.15)] transition-all duration-500"
                         >
                             <img
                                 src={post.image}
@@ -118,12 +118,12 @@ export function InstagramFeed() {
                             />
 
                             {/* Overlay on hover */}
-                            <div className="absolute inset-0 bg-[#050510]/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            <div className="absolute inset-0 bg-[#3D1C00]/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                 <div className="flex items-center gap-2 text-white">
-                                    <svg className="w-6 h-6 fill-[#00f0ff]" viewBox="0 0 24 24">
+                                    <svg className="w-6 h-6 fill-[#FF9500]" viewBox="0 0 24 24">
                                         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                                     </svg>
-                                    <span className="font-semibold text-[#e0f0ff] text-lg">{post.likes}</span>
+                                    <span className="font-semibold text-white text-lg">{post.likes}</span>
                                 </div>
                             </div>
                         </motion.a>
@@ -142,7 +142,7 @@ export function InstagramFeed() {
                         href="https://www.instagram.com/bigskyparasail/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 bg-[#00f0ff] text-[#001a1f] rounded-full font-bold uppercase tracking-widest px-6 py-3 text-sm sm:px-8 sm:text-base md:text-lg shadow-[0_0_30px_rgba(0,240,255,0.3)] hover:shadow-[0_0_50px_rgba(0,240,255,0.5)] hover:scale-105 transition-all duration-300"
+                        className="inline-flex items-center gap-3 bg-[#FF9500] text-white rounded-full font-bold uppercase tracking-widest px-6 py-3 text-sm sm:px-8 sm:text-base md:text-lg shadow-[0_4px_20px_rgba(255,149,0,0.3)] hover:shadow-[0_6px_30px_rgba(255,149,0,0.5)] hover:scale-105 transition-all duration-300"
                     >
                         <Instagram className="w-5 h-5" />
                         Follow @bigskyparasail

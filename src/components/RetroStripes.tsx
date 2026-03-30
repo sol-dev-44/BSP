@@ -5,12 +5,12 @@ interface RetroStripesProps {
     className?: string
 }
 
-// Retro sunset stripe colors
+// Montana '95 throwback stripe colors
 const STRIPE_COLORS = {
-    stripe1: '#B5383B', // Deep red
-    stripe2: '#00f0ff', // Coral
-    stripe3: '#E07840', // Burnt orange
-    stripe4: '#ff00ff', // Golden amber
+    stripe1: '#FF9500', // Vivid Orange
+    stripe2: '#FFD700', // Bright Gold
+    stripe3: '#FFFFFF', // White
+    stripe4: '#8B4513', // Saddle Brown
 }
 
 const STRIPE_HEIGHT = '6px'
@@ -18,8 +18,8 @@ const STRIPE_HEIGHT = '6px'
 /**
  * RetroStripes Component
  *
- * Renders the signature three-stripe pattern using '74 Montana retro colors.
- * Burnt orange, mustard gold, and saddle brown.
+ * Renders the signature stripe pattern using Montana '95 throwback colors.
+ * Vivid orange, bright gold, white, and saddle brown.
  *
  * @param orientation - 'horizontal' (default) or 'vertical'
  * @param className - Additional CSS classes to apply
@@ -34,22 +34,22 @@ export function RetroStripes({ orientation = 'horizontal', className = '' }: Ret
                 [isHorizontal ? 'height' : 'width']: STRIPE_HEIGHT,
             }}
         >
-            {/* First stripe - Deep Red */}
+            {/* First stripe - Vivid Orange */}
             <div
                 className="flex-1"
                 style={{ backgroundColor: STRIPE_COLORS.stripe1 }}
             />
-            {/* Second stripe - Coral */}
+            {/* Second stripe - Bright Gold */}
             <div
                 className="flex-1"
                 style={{ backgroundColor: STRIPE_COLORS.stripe2 }}
             />
-            {/* Third stripe - Burnt Orange */}
+            {/* Third stripe - White */}
             <div
                 className="flex-1"
                 style={{ backgroundColor: STRIPE_COLORS.stripe3 }}
             />
-            {/* Fourth stripe - Golden Amber */}
+            {/* Fourth stripe - Saddle Brown */}
             <div
                 className="flex-1"
                 style={{ backgroundColor: STRIPE_COLORS.stripe4 }}

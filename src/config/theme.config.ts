@@ -1,9 +1,9 @@
 /**
  * Theme Configuration
  *
- * Cyberpunk Neon Theme
- * Deep dark blue-black surfaces, neon cyan primary, magenta secondary, lime accents.
- * Glowing neon effects, futuristic typography, high contrast.
+ * Montana '95 Throwback Theme
+ * Bright warm cream surfaces, vivid orange primary, bright gold secondary, white accents.
+ * Bold collegiate typography, retro warmth, high energy.
  *
  * This is the single source of truth for all brand colors and theme settings.
  */
@@ -12,49 +12,49 @@ export const themeConfig = {
     brand: {
         name: 'Big Sky Parasail',
         colors: {
-            primary: '#00f0ff',
-            primaryContainer: '#0099bb',
-            secondary: '#ff00ff',
-            secondaryContainer: '#aa00aa',
-            tertiary: '#b8ff00',
-            tertiaryContainer: '#7acc00',
-            surface: '#0a0a14',
-            surfaceContainerLowest: '#050510',
-            surfaceContainerLow: '#0d0d1f',
-            surfaceContainer: '#111128',
-            surfaceContainerHigh: '#1a1a3e',
-            surfaceContainerHighest: '#1e1e45',
-            onSurface: '#e0f0ff',
-            onSurfaceVariant: '#b0c4de',
-            outline: '#5a6a8a',
-            outlineVariant: '#2a2a4a',
+            primary: '#FF9500',
+            primaryContainer: '#E07B00',
+            secondary: '#FFD700',
+            secondaryContainer: '#B8860B',
+            tertiary: '#FFFFFF',
+            tertiaryContainer: '#F0E6D3',
+            surface: '#FFF8EE',
+            surfaceContainerLowest: '#FFFFFF',
+            surfaceContainerLow: '#FFFBF5',
+            surfaceContainer: '#FFEACC',
+            surfaceContainerHigh: '#FFD699',
+            surfaceContainerHighest: '#FFCC80',
+            onSurface: '#2D1600',
+            onSurfaceVariant: '#614020',
+            outline: '#A07840',
+            outlineVariant: '#DCC8A0',
         },
     },
 
     gradients: {
         primary: {
-            from: '#00f0ff',
-            to: '#0099bb',
+            from: '#FF9500',
+            to: '#E07B00',
             direction: 'to-r'
         },
         secondary: {
-            from: '#ff00ff',
-            to: '#aa00aa',
+            from: '#FFD700',
+            to: '#B8860B',
             direction: 'to-r'
         },
         cta: {
-            from: '#00f0ff',
-            to: '#ff00ff',
+            from: '#FF9500',
+            to: '#FFD700',
             direction: 'to-r'
         }
     },
 
     semantic: {
-        primary: '#00f0ff',
-        secondary: '#ff00ff',
-        tertiary: '#b8ff00',
-        surface: '#0a0a14',
-        onSurface: '#e0f0ff',
+        primary: '#FF9500',
+        secondary: '#FFD700',
+        tertiary: '#FFFFFF',
+        surface: '#FFF8EE',
+        onSurface: '#2D1600',
     },
 } as const
 

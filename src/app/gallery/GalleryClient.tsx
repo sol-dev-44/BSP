@@ -123,18 +123,18 @@ export default function GalleryClient() {
     }
 
     return (
-        <main className="min-h-screen bg-[#0a0a14] text-[#e0f0ff]">
+        <main className="min-h-screen bg-[#FFF8EE] text-[#2D1600]">
             <Navbar />
 
             {/* Hero Section */}
             <div className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
                 {/* Background gradient */}
-                <div className="absolute inset-0 bg-gradient-to-b from-[#00f0ff]/10 via-[#ff00ff]/5 to-[#0a0a14]" />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#FF9500]/10 via-[#FFD700]/5 to-[#FFF8EE]" />
 
                 {/* Animated background elements */}
                 <div className="absolute inset-0 overflow-hidden opacity-10">
                     <motion.div
-                        className="absolute top-20 right-20 w-96 h-96 bg-[#00f0ff] rounded-full blur-3xl"
+                        className="absolute top-20 right-20 w-96 h-96 bg-[#FF9500] rounded-full blur-3xl"
                         animate={{
                             scale: [1, 1.2, 1],
                             opacity: [0.3, 0.5, 0.3],
@@ -142,7 +142,7 @@ export default function GalleryClient() {
                         transition={{ repeat: Infinity, duration: 8 }}
                     />
                     <motion.div
-                        className="absolute bottom-20 left-20 w-96 h-96 bg-[#ff00ff] rounded-full blur-3xl"
+                        className="absolute bottom-20 left-20 w-96 h-96 bg-[#FFD700] rounded-full blur-3xl"
                         animate={{
                             scale: [1.2, 1, 1.2],
                             opacity: [0.5, 0.3, 0.5],
@@ -156,7 +156,7 @@ export default function GalleryClient() {
                         initial={{ opacity: 0, scale: 0 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5, type: "spring" }}
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-[#00f0ff] to-[#ff00ff] text-[#001a1f] px-6 py-3 rounded-full mb-6 shadow-lg"
+                        className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FF9500] to-[#FFD700] text-[#FFFFFF] px-6 py-3 rounded-full mb-6 shadow-lg"
                     >
                         <Camera className="h-5 w-5" />
                         <span className="font-bold">Photo Gallery</span>
@@ -166,7 +166,7 @@ export default function GalleryClient() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="font-[family-name:var(--font-headline)] text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter text-[#e0f0ff] mb-6"
+                        className="font-[family-name:var(--font-headline)] text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight text-[#2D1600] mb-6"
                     >
                         Captured Moments
                     </motion.h1>
@@ -175,7 +175,7 @@ export default function GalleryClient() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="text-2xl md:text-3xl text-[#b0c4de] max-w-3xl mx-auto font-semibold"
+                        className="text-2xl md:text-3xl text-[#614020] max-w-3xl mx-auto font-semibold"
                     >
                         Adventures. Mountains. Memories.
                     </motion.p>
@@ -196,8 +196,8 @@ export default function GalleryClient() {
                                 key={category}
                                 onClick={() => setSelectedCategory(category)}
                                 className={`px-6 py-3 rounded-full font-bold transition-all duration-300 ${selectedCategory === category
-                                    ? 'bg-[#00f0ff] text-[#001a1f] shadow-lg scale-110'
-                                    : 'bg-[#1a1a3e] text-[#b0c4de] hover:scale-105 hover:shadow-md'
+                                    ? 'bg-[#FF9500] text-[#FFFFFF] shadow-lg scale-110'
+                                    : 'bg-[#FFD699] text-[#614020] hover:scale-105 hover:shadow-md'
                                     }`}
                             >
                                 {category}
@@ -254,15 +254,15 @@ export default function GalleryClient() {
                                         )}
 
                                         {/* Hover Overlay */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-[rgba(25,11,3,0.8)] via-[rgba(25,11,3,0.2)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[rgba(61,28,0,0.8)] via-[rgba(61,28,0,0.2)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                             <div className="absolute bottom-0 left-0 right-0 p-6">
                                                 <div className="flex items-center gap-2 mb-2">
-                                                    <Sparkles className="h-4 w-4 text-[#ff00ff]" />
-                                                    <span className="text-xs font-semibold text-[#ff00ff] uppercase tracking-wide">
+                                                    <Sparkles className="h-4 w-4 text-[#FFD700]" />
+                                                    <span className="text-xs font-semibold text-[#FFD700] uppercase tracking-wide">
                                                         {image.category}
                                                     </span>
                                                 </div>
-                                                <p className="text-[#e0f0ff] font-bold text-lg">{image.alt}</p>
+                                                <p className="text-[#FFFFFF] font-bold text-lg">{image.alt}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -278,8 +278,8 @@ export default function GalleryClient() {
                             animate={{ opacity: 1 }}
                             className="text-center py-20"
                         >
-                            <Camera className="h-16 w-16 text-[#5a6a8a] mx-auto mb-4" />
-                            <p className="text-xl text-[#5a6a8a]">
+                            <Camera className="h-16 w-16 text-[#8B6914] mx-auto mb-4" />
+                            <p className="text-xl text-[#8B6914]">
                                 No images in this category yet
                             </p>
                         </motion.div>
@@ -294,7 +294,7 @@ export default function GalleryClient() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 bg-[#050510]/95 z-50 flex items-center justify-center p-4"
+                        className="fixed inset-0 bg-[#3D1C00]/95 z-50 flex items-center justify-center p-4"
                         onClick={() => setSelectedImage(null)}
                     >
                         {/* Close Button */}
@@ -303,7 +303,7 @@ export default function GalleryClient() {
                             className="absolute top-4 right-4 p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors z-10"
                             aria-label="Close"
                         >
-                            <X className="h-6 w-6 text-[#e0f0ff]" />
+                            <X className="h-6 w-6 text-[#FFFFFF]" />
                         </button>
 
                         {/* Previous Button */}
@@ -315,7 +315,7 @@ export default function GalleryClient() {
                             className="absolute left-4 p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors z-10"
                             aria-label="Previous"
                         >
-                            <ChevronLeft className="h-8 w-8 text-[#e0f0ff]" />
+                            <ChevronLeft className="h-8 w-8 text-[#FFFFFF]" />
                         </button>
 
                         {/* Image */}
@@ -349,17 +349,17 @@ export default function GalleryClient() {
                             )}
 
                             {/* Image Info */}
-                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#050510]/90 to-transparent p-6 rounded-b-lg">
+                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#3D1C00]/90 to-transparent p-6 rounded-b-lg">
                                 <div className="flex items-center gap-2 mb-2">
-                                    <Sparkles className="h-5 w-5 text-[#ff00ff]" />
-                                    <span className="text-[#ff00ff] font-semibold text-sm uppercase tracking-wide">
+                                    <Sparkles className="h-5 w-5 text-[#FFD700]" />
+                                    <span className="text-[#FFD700] font-semibold text-sm uppercase tracking-wide">
                                         {filteredImages[selectedImage].category}
                                     </span>
                                 </div>
-                                <p className="text-[#e0f0ff] text-xl font-bold">
+                                <p className="text-[#FFFFFF] text-xl font-bold">
                                     {filteredImages[selectedImage].alt}
                                 </p>
-                                <p className="text-[#e0f0ff]/60 text-sm mt-2">
+                                <p className="text-[#FFFFFF]/60 text-sm mt-2">
                                     {selectedImage + 1} of {filteredImages.length}
                                 </p>
                             </div>
@@ -374,7 +374,7 @@ export default function GalleryClient() {
                             className="absolute right-4 p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors z-10"
                             aria-label="Next"
                         >
-                            <ChevronRight className="h-8 w-8 text-[#e0f0ff]" />
+                            <ChevronRight className="h-8 w-8 text-[#FFFFFF]" />
                         </button>
                     </motion.div>
                 )}

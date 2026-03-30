@@ -107,7 +107,7 @@ export function ExperienceGallery() {
     }
 
     return (
-        <section className="py-16 sm:py-20 md:py-28 lg:py-32 bg-[#0d0d1f] relative overflow-hidden">
+        <section className="py-16 sm:py-20 md:py-28 lg:py-32 bg-[#FFF0D6] relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Editorial section header */}
                 <motion.div
@@ -117,10 +117,10 @@ export function ExperienceGallery() {
                     transition={{ duration: 0.8 }}
                     className="mb-8 sm:mb-12 md:mb-16"
                 >
-                    <h2 className="font-[family-name:var(--font-headline)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tighter uppercase text-[#e0f0ff] text-glow">
-                        Experience the<br /><span className="text-[#ff00ff] text-glow-magenta">Adventure</span>
+                    <h2 className="font-[family-name:var(--font-headline)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight uppercase text-[#2D1600]">
+                        Experience the<br /><span className="text-[#FF9500]">Adventure</span>
                     </h2>
-                    <p className="text-lg md:text-xl text-[#5a6a8a] max-w-2xl mt-4">
+                    <p className="text-lg md:text-xl text-[#8B6914] max-w-2xl mt-4">
                         See what awaits you high above Flathead Lake's pristine waters.
                     </p>
                 </motion.div>
@@ -134,7 +134,7 @@ export function ExperienceGallery() {
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.05 }}
-                            className={`relative group cursor-pointer rounded-xl overflow-hidden border border-[#00f0ff]/5 hover:border-[#00f0ff]/30 hover:shadow-[0_0_15px_rgba(0,240,255,0.1)] transition-all duration-500 ${getGridSpan(
+                            className={`relative group cursor-pointer rounded-xl overflow-hidden border border-[#FF9500]/10 hover:border-[#FF9500]/40 hover:shadow-[0_4px_20px_rgba(255,149,0,0.15)] transition-all duration-500 ${getGridSpan(
                                 image.span
                             )}`}
                             onClick={() => setSelectedImage(index)}
@@ -146,12 +146,12 @@ export function ExperienceGallery() {
                             />
 
                             {/* Hover overlay with gradient from bottom */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#050510]/80 via-[#050510]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#3D1C00]/80 via-[#3D1C00]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <div className="absolute bottom-0 left-0 right-0 p-3 md:p-6">
-                                    <p className="text-[9px] md:text-xs font-semibold text-[#ff00ff] mb-0.5 md:mb-1 uppercase tracking-wide">
+                                    <p className="text-[9px] md:text-xs font-semibold text-[#FFD700] mb-0.5 md:mb-1 uppercase tracking-wide">
                                         {image.category}
                                     </p>
-                                    <p className="text-[#e0f0ff] font-bold text-[11px] leading-tight md:text-lg md:leading-normal">{image.alt}</p>
+                                    <p className="text-white font-bold text-[11px] leading-tight md:text-lg md:leading-normal">{image.alt}</p>
                                 </div>
                             </div>
                         </motion.div>
@@ -166,7 +166,7 @@ export function ExperienceGallery() {
                     transition={{ duration: 0.8, delay: 0.3 }}
                     className="text-center mt-10 sm:mt-16"
                 >
-                    <Link href="/gallery" className="inline-block px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg rounded-xl bg-[#00f0ff] text-[#050510] font-bold hover:bg-[#e0f0ff] hover:scale-105 transition-all duration-300 shadow-[0_0_25px_rgba(0,240,255,0.3)] hover:shadow-[0_0_40px_rgba(0,240,255,0.5)]">
+                    <Link href="/gallery" className="inline-block px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg rounded-xl bg-[#FF9500] text-white font-bold hover:bg-[#E07B00] hover:scale-105 transition-all duration-300 shadow-[0_4px_20px_rgba(255,149,0,0.3)] hover:shadow-[0_6px_30px_rgba(255,149,0,0.5)]">
                         View Full Gallery
                     </Link>
                 </motion.div>
@@ -178,15 +178,15 @@ export function ExperienceGallery() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed inset-0 bg-[#050510]/95 z-50 flex items-center justify-center p-4"
+                    className="fixed inset-0 bg-[#3D1C00]/95 z-50 flex items-center justify-center p-4"
                     onClick={() => setSelectedImage(null)}
                 >
                     <button
                         onClick={() => setSelectedImage(null)}
-                        className="absolute top-4 right-4 p-2 rounded-full bg-[#1e1e45]/80 backdrop-blur-sm hover:bg-[#2a2a4a] transition-colors"
+                        className="absolute top-4 right-4 p-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors"
                         aria-label="Close lightbox"
                     >
-                        <X className="h-6 w-6 text-[#e0f0ff]" />
+                        <X className="h-6 w-6 text-white" />
                     </button>
 
                     <button
@@ -194,10 +194,10 @@ export function ExperienceGallery() {
                             e.stopPropagation()
                             navigateImage(-1)
                         }}
-                        className="absolute left-4 p-3 rounded-full bg-[#1e1e45]/80 backdrop-blur-sm hover:bg-[#2a2a4a] transition-colors"
+                        className="absolute left-4 p-3 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors"
                         aria-label="Previous image"
                     >
-                        <ChevronLeft className="h-8 w-8 text-[#e0f0ff]" />
+                        <ChevronLeft className="h-8 w-8 text-white" />
                     </button>
 
                     <motion.div
@@ -211,11 +211,11 @@ export function ExperienceGallery() {
                             alt={images[selectedImage].alt}
                             className="max-w-full max-h-[90vh] object-contain rounded-xl"
                         />
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#050510]/90 to-transparent p-6 rounded-b-xl">
-                            <p className="text-[#ff00ff] font-semibold text-sm mb-1 uppercase">
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#3D1C00]/90 to-transparent p-6 rounded-b-xl">
+                            <p className="text-[#FFD700] font-semibold text-sm mb-1 uppercase">
                                 {images[selectedImage].category}
                             </p>
-                            <p className="text-[#e0f0ff] text-xl font-bold">
+                            <p className="text-white text-xl font-bold">
                                 {images[selectedImage].alt}
                             </p>
                         </div>
@@ -226,10 +226,10 @@ export function ExperienceGallery() {
                             e.stopPropagation()
                             navigateImage(1)
                         }}
-                        className="absolute right-4 p-3 rounded-full bg-[#1e1e45]/80 backdrop-blur-sm hover:bg-[#2a2a4a] transition-colors"
+                        className="absolute right-4 p-3 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors"
                         aria-label="Next image"
                     >
-                        <ChevronRight className="h-8 w-8 text-[#e0f0ff]" />
+                        <ChevronRight className="h-8 w-8 text-white" />
                     </button>
                 </motion.div>
             )}

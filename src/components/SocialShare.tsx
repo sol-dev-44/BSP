@@ -33,7 +33,7 @@ export function SocialShare({
     }
 
     return (
-        <div className="bg-gradient-to-br from-[#00f0ff]/5 to-[#ff00ff]/5 rounded-2xl p-8 border border-[#ff00ff]/20 dark:border-[#7b2dff]">
+        <div className="bg-gradient-to-br from-[#FF9500]/5 to-[#FFD700]/5 rounded-2xl p-8 border border-[#FFD700]/20">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -43,7 +43,7 @@ export function SocialShare({
                 <h3 className="text-2xl font-black text-foreground mb-4">
                     Share Your Experience
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">
+                <p className="text-[#614020] mb-6">
                     Let your friends know about your Montana adventure!
                 </p>
 
@@ -73,7 +73,7 @@ export function SocialShare({
                     {/* Copy Link */}
                     <button
                         onClick={copyToClipboard}
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#7b2dff] hover:bg-[#3D2B1F] text-white font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#B8860B] hover:bg-[#3D2B1F] text-white font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                     >
                         {copied ? (
                             <>
@@ -89,8 +89,8 @@ export function SocialShare({
                     </button>
                 </div>
 
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-6">
-                    Tag us <span className="font-bold text-[#00f0ff]">@bigskyparasail</span> in your posts!
+                <p className="text-sm text-[#8B6914] mt-6">
+                    Tag us <span className="font-bold text-[#FF9500]">@bigskyparasail</span> in your posts!
                 </p>
             </motion.div>
         </div>

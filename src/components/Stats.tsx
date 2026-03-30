@@ -30,7 +30,7 @@ function StarRating() {
     return (
         <div className="flex items-center gap-1 mt-1">
             {[...Array(5)].map((_, i) => (
-                <svg key={i} className="w-4 h-4 text-[#ff00ff] fill-current" viewBox="0 0 20 20">
+                <svg key={i} className="w-4 h-4 text-[#FFD700] fill-current" viewBox="0 0 20 20">
                     <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
                 </svg>
             ))}
@@ -47,14 +47,14 @@ export function Stats() {
     ]
 
     return (
-        <div className="py-16 bg-[#111128] relative cyber-grid border-y border-[#00f0ff]/10">
+        <div className="py-16 bg-[#3D1C00] relative border-y-4 border-[#FFD700]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.p
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="font-[family-name:var(--font-headline)] text-sm font-black uppercase tracking-widest sm:tracking-[0.3em] text-[#5a6a8a] text-center mb-6 sm:mb-10"
+                    className="font-[family-name:var(--font-headline)] text-sm font-black uppercase tracking-widest sm:tracking-[0.3em] text-white/50 text-center mb-6 sm:mb-10"
                 >
                     Trusted by Thousands
                 </motion.p>
@@ -69,7 +69,7 @@ export function Stats() {
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                             className="flex flex-col items-center text-center"
                         >
-                            <div className="font-[family-name:var(--font-headline)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#00f0ff] text-glow">
+                            <div className="font-[family-name:var(--font-headline)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#FF9500] text-glow">
                                 {stat.suffix === '.0' ? (
                                     <span>
                                         <AnimatedCounter value={stat.value} suffix="" />.0
@@ -79,7 +79,7 @@ export function Stats() {
                                 )}
                             </div>
                             {stat.showStars && <StarRating />}
-                            <p className="text-sm text-[#5a6a8a] mt-2 uppercase tracking-wider font-medium">
+                            <p className="text-sm text-white/50 mt-2 uppercase tracking-wider font-medium">
                                 {stat.label}
                             </p>
                         </motion.div>

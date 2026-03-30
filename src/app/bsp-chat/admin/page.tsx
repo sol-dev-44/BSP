@@ -173,14 +173,14 @@ export default function BSPChatAdmin() {
 
     if (!isUnlocked) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#B5383B] via-[#00f0ff] to-[#3B6BA5] p-6">
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#B5383B] via-[#FF9500] to-[#3B6BA5] p-6">
                 <motion.div
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="bg-white dark:bg-[#111128] rounded-2xl shadow-2xl p-8 max-w-md w-full"
+                    className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full"
                 >
                     <div className="flex items-center justify-center mb-6">
-                        <div className="w-16 h-16 bg-gradient-to-br from-[#00f0ff] to-[#ff00ff] rounded-2xl flex items-center justify-center">
+                        <div className="w-16 h-16 bg-gradient-to-br from-[#FF9500] to-[#FFD700] rounded-2xl flex items-center justify-center">
                             <Lock className="w-8 h-8 text-white" />
                         </div>
                     </div>
@@ -196,7 +196,7 @@ export default function BSPChatAdmin() {
                             value={pinInput}
                             onChange={(e) => setPinInput(e.target.value)}
                             placeholder="Enter PIN"
-                            className={`w-full px-4 py-3 bg-[#0d0d1f] dark:bg-[#1A0F0A] border ${pinError ? 'border-red-500' : 'border-[#ff00ff]/30 dark:border-[#7b2dff]'} rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00f0ff] text-center text-2xl tracking-widest mb-4 text-foreground`}
+                            className={`w-full px-4 py-3 bg-[#FFF0D6] border ${pinError ? 'border-red-500' : 'border-[#FFD700]/30'} rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF9500] text-center text-2xl tracking-widest mb-4 text-foreground`}
                             maxLength={4}
                             autoFocus
                         />
@@ -214,7 +214,7 @@ export default function BSPChatAdmin() {
                         </AnimatePresence>
                         <button
                             type="submit"
-                            className="w-full py-3 bg-gradient-to-r from-[#00f0ff] to-[#ff00ff] text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+                            className="w-full py-3 bg-gradient-to-r from-[#FF9500] to-[#FFD700] text-white rounded-xl font-semibold hover:shadow-lg transition-all"
                         >
                             Unlock
                         </button>
@@ -230,7 +230,7 @@ export default function BSPChatAdmin() {
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
                     <div>
-                        <h1 className="text-3xl font-bold bg-gradient-to-r from-[#00f0ff] to-[#ff00ff] bg-clip-text text-transparent">
+                        <h1 className="text-3xl font-bold bg-gradient-to-r from-[#FF9500] to-[#FFD700] bg-clip-text text-transparent">
                             BSP Document Management
                         </h1>
                         <p className="text-foreground/60 mt-1">
@@ -239,11 +239,11 @@ export default function BSPChatAdmin() {
                     </div>
                     <div className="flex items-center gap-3">
                         <Link href="/" className="text-sm text-foreground/60 hover:text-foreground">Home</Link>
-                        <Link href="/bsp-chat" className="text-sm text-[#00f0ff] hover:text-[#ff00ff]">Chat</Link>
+                        <Link href="/bsp-chat" className="text-sm text-[#FF9500] hover:text-[#FFD700]">Chat</Link>
                         <ThemeToggle />
                         <button
                             onClick={handleLock}
-                            className="flex items-center gap-2 px-4 py-2 bg-[#0d0d1f] dark:bg-[#111128] text-foreground rounded-lg hover:bg-[#ff00ff]/20 transition-colors"
+                            className="flex items-center gap-2 px-4 py-2 bg-[#FFF0D6] text-foreground rounded-lg hover:bg-[#FFD700]/20 transition-colors"
                         >
                             <Unlock className="w-4 h-4" />
                             Lock
@@ -253,23 +253,23 @@ export default function BSPChatAdmin() {
 
                 <div className="grid lg:grid-cols-2 gap-6">
                     {/* Upload */}
-                    <div className="bg-white dark:bg-[#111128] rounded-2xl border border-[#ff00ff]/20 dark:border-[#7b2dff] shadow-lg p-6">
+                    <div className="bg-white rounded-2xl border border-[#FFD700]/20 shadow-lg p-6">
                         <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-                            <Upload className="w-5 h-5 text-[#00f0ff]" />
+                            <Upload className="w-5 h-5 text-[#FF9500]" />
                             Upload Document
                         </h2>
 
                         <div className="flex gap-2 mb-6">
                             <button
                                 onClick={() => setUploadMethod('file')}
-                                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all ${uploadMethod === 'file' ? 'bg-[#00f0ff] text-white' : 'bg-[#0d0d1f] dark:bg-[#1A0F0A] text-foreground'}`}
+                                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all ${uploadMethod === 'file' ? 'bg-[#FF9500] text-white' : 'bg-[#FFF0D6] text-foreground'}`}
                             >
                                 <FileUp className="w-4 h-4 inline mr-2" />
                                 File
                             </button>
                             <button
                                 onClick={() => setUploadMethod('text')}
-                                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all ${uploadMethod === 'text' ? 'bg-[#00f0ff] text-white' : 'bg-[#0d0d1f] dark:bg-[#1A0F0A] text-foreground'}`}
+                                className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all ${uploadMethod === 'text' ? 'bg-[#FF9500] text-white' : 'bg-[#FFF0D6] text-foreground'}`}
                             >
                                 <ClipboardPaste className="w-4 h-4 inline mr-2" />
                                 Paste Text
@@ -284,7 +284,7 @@ export default function BSPChatAdmin() {
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                     placeholder="Document title"
-                                    className="w-full px-4 py-2 bg-[#0d0d1f] dark:bg-[#1A0F0A] border border-[#ff00ff]/30 dark:border-[#7b2dff] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00f0ff] text-foreground"
+                                    className="w-full px-4 py-2 bg-[#FFF0D6] border border-[#FFD700]/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF9500] text-foreground"
                                     required
                                 />
                             </div>
@@ -294,7 +294,7 @@ export default function BSPChatAdmin() {
                                 <select
                                     value={category}
                                     onChange={(e) => setCategory(e.target.value)}
-                                    className="w-full px-4 py-2 bg-[#0d0d1f] dark:bg-[#1A0F0A] border border-[#ff00ff]/30 dark:border-[#7b2dff] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00f0ff] text-foreground"
+                                    className="w-full px-4 py-2 bg-[#FFF0D6] border border-[#FFD700]/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF9500] text-foreground"
                                 >
                                     {CATEGORIES.map((cat) => (
                                         <option key={cat.value} value={cat.value}>{cat.label}</option>
@@ -309,7 +309,7 @@ export default function BSPChatAdmin() {
                                         type="file"
                                         accept=".pdf,.txt"
                                         onChange={handleFileSelect}
-                                        className="w-full px-4 py-2 bg-[#0d0d1f] dark:bg-[#1A0F0A] border border-[#ff00ff]/30 dark:border-[#7b2dff] rounded-lg text-foreground file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#00f0ff]/10 file:text-[#00f0ff]"
+                                        className="w-full px-4 py-2 bg-[#FFF0D6] border border-[#FFD700]/30 rounded-lg text-foreground file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#FF9500]/10 file:text-[#FF9500]"
                                     />
                                     {selectedFile && (
                                         <p className="mt-2 text-sm text-foreground/60">Selected: {selectedFile.name}</p>
@@ -325,7 +325,7 @@ export default function BSPChatAdmin() {
                                         onChange={(e) => setTextInput(e.target.value)}
                                         placeholder="Paste or type your text here..."
                                         rows={8}
-                                        className="w-full px-4 py-2 bg-[#0d0d1f] dark:bg-[#1A0F0A] border border-[#ff00ff]/30 dark:border-[#7b2dff] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00f0ff] resize-none text-foreground"
+                                        className="w-full px-4 py-2 bg-[#FFF0D6] border border-[#FFD700]/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF9500] resize-none text-foreground"
                                     />
                                 </div>
                             )}
@@ -333,7 +333,7 @@ export default function BSPChatAdmin() {
                             <button
                                 type="submit"
                                 disabled={uploading}
-                                className="w-full py-3 bg-gradient-to-r from-[#00f0ff] to-[#ff00ff] text-white rounded-lg font-semibold hover:shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                                className="w-full py-3 bg-gradient-to-r from-[#FF9500] to-[#FFD700] text-white rounded-lg font-semibold hover:shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                             >
                                 {uploading ? (
                                     <><Loader2 className="w-5 h-5 animate-spin" /> Uploading...</>
@@ -348,7 +348,7 @@ export default function BSPChatAdmin() {
                                         initial={{ opacity: 0, y: -10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0 }}
-                                        className={`p-4 rounded-lg flex items-center gap-2 ${uploadStatus.type === 'success' ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400'}`}
+                                        className={`p-4 rounded-lg flex items-center gap-2 ${uploadStatus.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}
                                     >
                                         {uploadStatus.type === 'success' ? <CheckCircle className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
                                         {uploadStatus.message}
@@ -359,16 +359,16 @@ export default function BSPChatAdmin() {
                     </div>
 
                     {/* Documents List */}
-                    <div className="bg-white dark:bg-[#111128] rounded-2xl border border-[#ff00ff]/20 dark:border-[#7b2dff] shadow-lg p-6">
+                    <div className="bg-white rounded-2xl border border-[#FFD700]/20 shadow-lg p-6">
                         <div className="flex items-center justify-between mb-4">
                             <h2 className="text-xl font-bold flex items-center gap-2">
-                                <FolderOpen className="w-5 h-5 text-[#00f0ff]" />
+                                <FolderOpen className="w-5 h-5 text-[#FF9500]" />
                                 Uploaded Documents
                             </h2>
                             <button
                                 onClick={loadDocuments}
                                 disabled={loadingDocs}
-                                className="text-sm text-[#00f0ff] hover:text-[#ff00ff] disabled:opacity-50"
+                                className="text-sm text-[#FF9500] hover:text-[#FFD700] disabled:opacity-50"
                             >
                                 {loadingDocs ? 'Loading...' : 'Refresh'}
                             </button>
@@ -387,13 +387,13 @@ export default function BSPChatAdmin() {
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: i * 0.05 }}
-                                        className="p-4 bg-[#0d0d1f] dark:bg-[#1A0F0A] rounded-lg border border-[#ff00ff]/20 dark:border-[#7b2dff] hover:border-[#00f0ff] transition-all group"
+                                        className="p-4 bg-[#FFF0D6] rounded-lg border border-[#FFD700]/20 hover:border-[#FF9500] transition-all group"
                                     >
                                         <div className="flex items-start justify-between">
                                             <div className="flex-1">
                                                 <h3 className="font-semibold mb-1">{doc.title}</h3>
                                                 <div className="flex items-center gap-2 text-sm text-foreground/60">
-                                                    <span className="px-2 py-0.5 bg-[#00f0ff]/10 text-[#00f0ff] rounded-full text-xs font-medium">
+                                                    <span className="px-2 py-0.5 bg-[#FF9500]/10 text-[#FF9500] rounded-full text-xs font-medium">
                                                         {CATEGORIES.find((c) => c.value === doc.category)?.label}
                                                     </span>
                                                     <span>{doc.total_chunks} chunks</span>

@@ -2,12 +2,8 @@
 
 import { Shield, Eye, Users } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { useTheme } from 'next-themes'
 
 export function Features() {
-    const { theme, systemTheme } = useTheme()
-    const currentTheme = theme === 'system' ? systemTheme : theme
-
     const features = [
         {
             name: 'Safety First',
@@ -27,7 +23,7 @@ export function Features() {
     ]
 
     return (
-        <div className="py-24 bg-gradient-to-b from-background to-[#0d0d1f]/10" id="services">
+        <div className="py-24 bg-gradient-to-b from-[#FFF8EE] to-[#FFEACC]/30" id="services">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -36,13 +32,10 @@ export function Features() {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-5xl md:text-6xl font-black text-foreground mb-6">
+                    <h2 className="text-5xl md:text-6xl font-black text-[#2D1600] mb-6 font-[family-name:var(--font-headline)] uppercase tracking-tight">
                         Why Choose Us
                     </h2>
-                    <p
-                        className="text-xl md:text-2xl text-gray-600 dark:text-gray-200 max-w-3xl mx-auto"
-                        style={{ color: currentTheme === 'dark' ? '#e5e7eb' : undefined }}
-                    >
+                    <p className="text-xl md:text-2xl text-[#614020] max-w-3xl mx-auto">
                         Experience the perfect blend of adventure and safety with Flathead Lake's premier parasailing service.
                     </p>
                 </motion.div>
@@ -60,11 +53,11 @@ export function Features() {
                         >
                             {/* Image Placeholder - Circular with gradient */}
                             <div className="flex justify-center mb-6">
-                                <div className="relative w-40 h-40 rounded-full overflow-hidden shadow-2xl group-hover:shadow-[#00f0ff]/50 transition-shadow duration-300">
+                                <div className="relative w-40 h-40 rounded-full overflow-hidden shadow-2xl group-hover:shadow-[#FF9500]/30 transition-shadow duration-300">
                                     {/* Gradient placeholder simulating feature image */}
-                                    <div className={`absolute inset-0 bg-gradient-to-br ${index === 0 ? 'from-[#3B6BA5] via-[#00f0ff] to-[#7b2dff]' :
-                                        index === 1 ? 'from-[#ff00ff] via-[#00f0ff] to-[#7b2dff]' :
-                                            'from-[#00f0ff] via-[#ff00ff] to-[#3B6BA5]'
+                                    <div className={`absolute inset-0 bg-gradient-to-br ${index === 0 ? 'from-[#FF9500] via-[#FFD700] to-[#E07B00]' :
+                                        index === 1 ? 'from-[#FFD700] via-[#FF9500] to-[#B8860B]' :
+                                            'from-[#FF9500] via-[#FFD700] to-[#CD853F]'
                                         } opacity-80`} />
 
                                     {/* Overlay pattern */}
@@ -80,21 +73,21 @@ export function Features() {
                                 </div>
                             </div>
 
-                            {/* Card content with glassmorphism */}
-                            <div className="relative bg-[#0d0d1f]/80 dark:bg-[#111128]/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl group-hover:shadow-2xl group-hover:shadow-[#00f0ff]/20 transition-all duration-300 border border-[#ff00ff]/20 dark:border-[#7b2dff]/50">
+                            {/* Card content */}
+                            <div className="relative bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl group-hover:shadow-2xl group-hover:shadow-[#FF9500]/15 transition-all duration-300 border border-[#FF9500]/15">
                                 {/* Gradient accent on top */}
-                                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#00f0ff] via-[#ff00ff] to-[#3B6BA5] rounded-t-2xl" />
+                                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FF9500] via-[#FFD700] to-[#FF9500] rounded-t-2xl" />
 
-                                <h3 className="text-2xl font-bold text-foreground text-center mb-4 group-hover:text-[#00f0ff] transition-colors duration-300">
+                                <h3 className="text-2xl font-bold text-[#2D1600] text-center mb-4 group-hover:text-[#FF9500] transition-colors duration-300">
                                     {feature.name}
                                 </h3>
-                                <p className="text-lg text-gray-700 dark:text-gray-300 text-center leading-relaxed">
+                                <p className="text-lg text-[#614020] text-center leading-relaxed">
                                     {feature.description}
                                 </p>
 
                                 {/* Decorative bottom accent */}
                                 <div className="mt-6 flex justify-center">
-                                    <div className="w-16 h-1 bg-gradient-to-r from-transparent via-[#ff00ff] to-transparent rounded-full" />
+                                    <div className="w-16 h-1 bg-gradient-to-r from-transparent via-[#FFD700] to-transparent rounded-full" />
                                 </div>
                             </div>
                         </motion.div>

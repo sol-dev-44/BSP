@@ -70,7 +70,7 @@ const staggerChildren = {
 
 export default function LocationClient() {
     return (
-        <main className="min-h-screen bg-[#0a0a14] text-[#e0f0ff] overflow-x-hidden">
+        <main className="min-h-screen bg-[#FFF8EE] text-[#2D1600] overflow-x-hidden">
             <Navbar />
 
             {/* Hero with Marina Aerial */}
@@ -83,7 +83,7 @@ export default function LocationClient() {
                         className="object-cover"
                         priority
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a14]/70 via-[#0a0a14]/50 to-[#0a0a14]" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#3D1C00]/70 via-[#3D1C00]/50 to-[#FFF8EE]" />
                 </div>
 
                 <div className="max-w-7xl mx-auto text-center relative z-10 py-20 md:py-32 px-4 sm:px-6 lg:px-8">
@@ -91,7 +91,7 @@ export default function LocationClient() {
                         initial={{ opacity: 0, scale: 0 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5, type: 'spring' }}
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-[#00f0ff] to-[#ff00ff] text-[#001a1f] px-6 py-3 rounded-full mb-6 shadow-lg"
+                        className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FF9500] to-[#FFD700] text-[#FFFFFF] px-6 py-3 rounded-full mb-6 shadow-lg"
                     >
                         <MapPin className="h-5 w-5" />
                         <span className="font-bold tracking-widest text-sm uppercase">Find Us Here</span>
@@ -101,7 +101,7 @@ export default function LocationClient() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="font-[family-name:var(--font-headline)] text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter text-[#e0f0ff] mb-6 drop-shadow-lg"
+                        className="font-[family-name:var(--font-headline)] text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight text-[#FFFFFF] mb-6 drop-shadow-lg"
                     >
                         Our Location
                     </motion.h1>
@@ -110,7 +110,7 @@ export default function LocationClient() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="text-xl md:text-2xl text-[#b0c4de] max-w-3xl mx-auto drop-shadow"
+                        className="text-xl md:text-2xl text-[#FFFFFF]/80 max-w-3xl mx-auto drop-shadow"
                     >
                         Experience the thrill of parasailing at the beautiful Flathead Harbor Marina
                     </motion.p>
@@ -125,22 +125,22 @@ export default function LocationClient() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
-                        className="bg-[#111128] rounded-xl shadow-2xl overflow-hidden"
+                        className="bg-[#FFEACC] rounded-xl shadow-2xl overflow-hidden"
                     >
                         <div className="grid grid-cols-1 lg:grid-cols-2">
                             {/* Left: Contact Info */}
                             <div className="p-8 md:p-10">
-                                <h2 className="font-[family-name:var(--font-headline)] text-3xl font-black uppercase tracking-tighter text-[#e0f0ff] mb-2">
+                                <h2 className="font-[family-name:var(--font-headline)] text-3xl font-black uppercase tracking-tight text-[#2D1600] mb-2">
                                     Our Marina Location
                                 </h2>
-                                <p className="text-[#b0c4de] mb-6">
+                                <p className="text-[#614020] mb-6">
                                     We&apos;re located at the beautiful Flathead Harbor Marina in Lakeside, Montana. Find us at Slip E4 and get ready for an unforgettable parasailing adventure!
                                 </p>
 
                                 {/* Address Block */}
-                                <div className="bg-[#1a1a3e] p-5 rounded-xl mb-6">
-                                    <h3 className="text-lg font-bold text-[#00f0ff] mb-2">Address:</h3>
-                                    <p className="text-[#e0f0ff] font-semibold">
+                                <div className="bg-[#FFD699] p-5 rounded-xl mb-6">
+                                    <h3 className="text-lg font-bold text-[#FF9500] mb-2">Address:</h3>
+                                    <p className="text-[#2D1600] font-semibold">
                                         Big Sky Parasail<br />
                                         Flathead Harbor Marina - Slip E4<br />
                                         7007 US Highway 93 S<br />
@@ -151,37 +151,37 @@ export default function LocationClient() {
                                 {/* Contact Details */}
                                 <div className="space-y-4">
                                     <div className="flex items-start gap-3">
-                                        <div className="bg-[#00f0ff]/10 p-2 rounded-full shrink-0">
-                                            <Phone className="w-5 h-5 text-[#00f0ff]" />
+                                        <div className="bg-[#FF9500]/10 p-2 rounded-full shrink-0">
+                                            <Phone className="w-5 h-5 text-[#FF9500]" />
                                         </div>
                                         <div>
-                                            <p className="text-sm font-semibold text-[#e0f0ff]">Phone</p>
-                                            <a href={`tel:${BUSINESS_INFO.phone}`} className="text-[#00f0ff] font-bold hover:underline">
+                                            <p className="text-sm font-semibold text-[#2D1600]">Phone</p>
+                                            <a href={`tel:${BUSINESS_INFO.phone}`} className="text-[#FF9500] font-bold hover:underline">
                                                 {BUSINESS_INFO.displayPhone}
                                             </a>
                                         </div>
                                     </div>
 
                                     <div className="flex items-start gap-3">
-                                        <div className="bg-[#00f0ff]/10 p-2 rounded-full shrink-0">
-                                            <Mail className="w-5 h-5 text-[#00f0ff]" />
+                                        <div className="bg-[#FF9500]/10 p-2 rounded-full shrink-0">
+                                            <Mail className="w-5 h-5 text-[#FF9500]" />
                                         </div>
                                         <div>
-                                            <p className="text-sm font-semibold text-[#e0f0ff]">Email</p>
-                                            <a href={`mailto:${BUSINESS_INFO.email}`} className="text-[#00f0ff] font-bold hover:underline">
+                                            <p className="text-sm font-semibold text-[#2D1600]">Email</p>
+                                            <a href={`mailto:${BUSINESS_INFO.email}`} className="text-[#FF9500] font-bold hover:underline">
                                                 {BUSINESS_INFO.email}
                                             </a>
                                         </div>
                                     </div>
 
                                     <div className="flex items-start gap-3">
-                                        <div className="bg-[#00f0ff]/10 p-2 rounded-full shrink-0">
-                                            <Clock className="w-5 h-5 text-[#00f0ff]" />
+                                        <div className="bg-[#FF9500]/10 p-2 rounded-full shrink-0">
+                                            <Clock className="w-5 h-5 text-[#FF9500]" />
                                         </div>
                                         <div>
-                                            <p className="text-sm font-semibold text-[#e0f0ff]">Operating Hours</p>
-                                            <p className="text-[#b0c4de]">May - September: 9:00 AM - 7:00 PM</p>
-                                            <p className="text-[#5a6a8a] text-sm">Weather permitting</p>
+                                            <p className="text-sm font-semibold text-[#2D1600]">Operating Hours</p>
+                                            <p className="text-[#614020]">May - September: 9:00 AM - 7:00 PM</p>
+                                            <p className="text-[#8B6914] text-sm">Weather permitting</p>
                                         </div>
                                     </div>
                                 </div>
@@ -203,19 +203,19 @@ export default function LocationClient() {
                         </div>
 
                         {/* Action Buttons Bar */}
-                        <div className="bg-[#1a1a3e] p-6 flex flex-wrap justify-center gap-4">
+                        <div className="bg-[#FFD699] p-6 flex flex-wrap justify-center gap-4">
                             <a
                                 href={getMapLink()}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="px-6 py-3 bg-[#00f0ff] hover:bg-[#00f0ff]/80 text-[#001a1f] font-bold rounded-xl shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2"
+                                className="px-6 py-3 bg-[#FF9500] hover:bg-[#FF9500]/80 text-[#FFFFFF] font-bold rounded-xl shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2"
                             >
                                 <MapPin className="w-5 h-5" />
                                 Get Directions
                             </a>
                             <a
                                 href={`tel:${BUSINESS_INFO.phone}`}
-                                className="px-6 py-3 bg-[#ff00ff] hover:bg-[#ff00ff]/80 text-[#001a1f] font-bold rounded-xl shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2"
+                                className="px-6 py-3 bg-[#FFD700] hover:bg-[#FFD700]/80 text-[#FFFFFF] font-bold rounded-xl shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2"
                             >
                                 <Phone className="w-5 h-5" />
                                 Call Now
@@ -224,7 +224,7 @@ export default function LocationClient() {
                                 href="https://www.flatheadharbor.com/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="px-6 py-3 bg-[#2a2a4a] hover:bg-[#2a2a4a]/80 text-[#e0f0ff] font-bold rounded-xl transition-all inline-flex items-center gap-2"
+                                className="px-6 py-3 bg-[#DCC8A0] hover:bg-[#DCC8A0]/80 text-[#2D1600] font-bold rounded-xl transition-all inline-flex items-center gap-2"
                             >
                                 <ExternalLink className="w-5 h-5" />
                                 Visit Marina Website
@@ -233,7 +233,7 @@ export default function LocationClient() {
                                 href="https://weather.com/weather/today/l/912c192e9edb73daba6c77c580cc41bad61ec696c76cc2ba7247573bf7d67e38"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="px-6 py-3 bg-[#2a2a4a] hover:bg-[#2a2a4a]/80 text-[#00f0ff] font-bold rounded-xl transition-all inline-flex items-center gap-2"
+                                className="px-6 py-3 bg-[#DCC8A0] hover:bg-[#DCC8A0]/80 text-[#FF9500] font-bold rounded-xl transition-all inline-flex items-center gap-2"
                             >
                                 <CloudSun className="w-5 h-5" />
                                 Check Weather
@@ -244,14 +244,14 @@ export default function LocationClient() {
             </section>
 
             {/* Getting Here Section */}
-            <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#0d0d1f]">
+            <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#FFF0D6]">
                 <div className="max-w-6xl mx-auto">
                     <motion.h2
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true }}
                         variants={fadeInUp}
-                        className="font-[family-name:var(--font-headline)] text-4xl font-black uppercase tracking-tighter text-center text-[#e0f0ff] mb-12"
+                        className="font-[family-name:var(--font-headline)] text-4xl font-black uppercase tracking-tight text-center text-[#2D1600] mb-12"
                     >
                         Getting Here
                     </motion.h2>
@@ -263,16 +263,16 @@ export default function LocationClient() {
                             whileInView="visible"
                             viewport={{ once: true }}
                             variants={fadeInUp}
-                            className="bg-[#111128] p-8 rounded-xl shadow-lg"
+                            className="bg-[#FFEACC] p-8 rounded-xl shadow-lg"
                         >
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="bg-[#00f0ff]/10 w-12 h-12 rounded-xl flex items-center justify-center">
-                                    <Navigation className="w-6 h-6 text-[#00f0ff]" />
+                                <div className="bg-[#FF9500]/10 w-12 h-12 rounded-xl flex items-center justify-center">
+                                    <Navigation className="w-6 h-6 text-[#FF9500]" />
                                 </div>
-                                <h3 className="text-2xl font-bold text-[#e0f0ff]">Driving Directions</h3>
+                                <h3 className="text-2xl font-bold text-[#2D1600]">Driving Directions</h3>
                             </div>
 
-                            <p className="text-[#b0c4de] mb-6">
+                            <p className="text-[#614020] mb-6">
                                 Flathead Harbor Marina is easily accessible via US Highway 93, which runs along the western shore of Flathead Lake.
                             </p>
 
@@ -302,42 +302,42 @@ export default function LocationClient() {
                             whileInView="visible"
                             viewport={{ once: true }}
                             variants={fadeInUp}
-                            className="bg-[#111128] p-8 rounded-xl shadow-lg"
+                            className="bg-[#FFEACC] p-8 rounded-xl shadow-lg"
                         >
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="bg-[#ff00ff]/10 w-12 h-12 rounded-xl flex items-center justify-center">
-                                    <MapPin className="w-6 h-6 text-[#ff00ff]" />
+                                <div className="bg-[#FFD700]/10 w-12 h-12 rounded-xl flex items-center justify-center">
+                                    <MapPin className="w-6 h-6 text-[#FFD700]" />
                                 </div>
-                                <h3 className="text-2xl font-bold text-[#e0f0ff]">Key Distances</h3>
+                                <h3 className="text-2xl font-bold text-[#2D1600]">Key Distances</h3>
                             </div>
 
                             <div className="space-y-3">
                                 {keyDistances.map((item) => (
-                                    <div key={item.place} className="flex justify-between items-center bg-[#00f0ff]/10 p-4 rounded-xl">
+                                    <div key={item.place} className="flex justify-between items-center bg-[#FF9500]/10 p-4 rounded-xl">
                                         <div>
-                                            <p className="font-bold text-[#e0f0ff]">{item.place}</p>
-                                            <p className="text-sm text-[#5a6a8a]">{item.detail}</p>
+                                            <p className="font-bold text-[#2D1600]">{item.place}</p>
+                                            <p className="text-sm text-[#8B6914]">{item.detail}</p>
                                         </div>
-                                        <div className="bg-[#00f0ff]/10 px-4 py-1.5 rounded-full">
-                                            <p className="font-bold text-[#00f0ff] text-sm">{item.distance}</p>
+                                        <div className="bg-[#FF9500]/10 px-4 py-1.5 rounded-full">
+                                            <p className="font-bold text-[#FF9500] text-sm">{item.distance}</p>
                                         </div>
                                     </div>
                                 ))}
                             </div>
 
-                            <div className="mt-6 bg-[#1a1a3e] p-4 rounded-xl">
+                            <div className="mt-6 bg-[#FFD699] p-4 rounded-xl">
                                 <div className="flex items-center gap-2 mb-2">
-                                    <Plane className="w-5 h-5 text-[#00f0ff]" />
-                                    <p className="font-bold text-[#e0f0ff]">Flying In?</p>
+                                    <Plane className="w-5 h-5 text-[#FF9500]" />
+                                    <p className="font-bold text-[#2D1600]">Flying In?</p>
                                 </div>
-                                <p className="text-sm text-[#b0c4de]">
+                                <p className="text-sm text-[#614020]">
                                     Glacier Park International Airport (FCA) is just 30 miles away in Kalispell, with service from major airlines.
                                 </p>
                             </div>
 
-                            <div className="mt-4 bg-[#ff00ff]/10 p-4 rounded-xl">
-                                <p className="text-[#b0c4de] text-sm">
-                                    <span className="font-bold text-[#00f0ff]">Pro Tip:</span> Look for the Flathead Harbor sign on Highway 93. The marina entrance is well-marked and there&apos;s plenty of free parking available. Arrive 15 minutes early to park and check in.
+                            <div className="mt-4 bg-[#FFD700]/10 p-4 rounded-xl">
+                                <p className="text-[#614020] text-sm">
+                                    <span className="font-bold text-[#FF9500]">Pro Tip:</span> Look for the Flathead Harbor sign on Highway 93. The marina entrance is well-marked and there&apos;s plenty of free parking available. Arrive 15 minutes early to park and check in.
                                 </p>
                             </div>
                         </motion.div>
@@ -346,14 +346,14 @@ export default function LocationClient() {
             </section>
 
             {/* About The Marina Section */}
-            <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#0a0a14]">
+            <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#FFF8EE]">
                 <div className="max-w-6xl mx-auto">
                     <motion.h2
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true }}
                         variants={fadeInUp}
-                        className="font-[family-name:var(--font-headline)] text-4xl font-black uppercase tracking-tighter text-center text-[#e0f0ff] mb-4"
+                        className="font-[family-name:var(--font-headline)] text-4xl font-black uppercase tracking-tight text-center text-[#2D1600] mb-4"
                     >
                         About Flathead Harbor Marina
                     </motion.h2>
@@ -362,7 +362,7 @@ export default function LocationClient() {
                         whileInView="visible"
                         viewport={{ once: true }}
                         variants={fadeInUp}
-                        className="text-center text-[#b0c4de] max-w-3xl mx-auto mb-12 text-lg"
+                        className="text-center text-[#614020] max-w-3xl mx-auto mb-12 text-lg"
                     >
                         Flathead Harbor Marina offers a full-service facility on the western shore of Flathead Lake with seasonal slip rentals, boat services, and easy lake access.
                     </motion.p>
@@ -374,16 +374,16 @@ export default function LocationClient() {
                             whileInView="visible"
                             viewport={{ once: true }}
                             variants={fadeInUp}
-                            className="bg-[#111128] p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow"
+                            className="bg-[#FFEACC] p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow"
                         >
-                            <div className="bg-[#00f0ff]/10 w-14 h-14 rounded-2xl flex items-center justify-center mb-6">
-                                <Anchor className="w-7 h-7 text-[#00f0ff]" />
+                            <div className="bg-[#FF9500]/10 w-14 h-14 rounded-2xl flex items-center justify-center mb-6">
+                                <Anchor className="w-7 h-7 text-[#FF9500]" />
                             </div>
-                            <h3 className="text-2xl font-bold text-[#e0f0ff] mb-4">Marina Services</h3>
+                            <h3 className="text-2xl font-bold text-[#2D1600] mb-4">Marina Services</h3>
                             <ul className="space-y-3">
                                 {marinaServices.map((s) => (
-                                    <li key={s.label} className="flex items-center gap-3 text-[#b0c4de]">
-                                        <span className="text-[#ff00ff]">{s.icon}</span>
+                                    <li key={s.label} className="flex items-center gap-3 text-[#614020]">
+                                        <span className="text-[#FFD700]">{s.icon}</span>
                                         <span>{s.label}</span>
                                     </li>
                                 ))}
@@ -396,16 +396,16 @@ export default function LocationClient() {
                             whileInView="visible"
                             viewport={{ once: true }}
                             variants={fadeInUp}
-                            className="bg-[#111128] p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow"
+                            className="bg-[#FFEACC] p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow"
                         >
-                            <div className="bg-[#ff00ff]/10 w-14 h-14 rounded-2xl flex items-center justify-center mb-6">
-                                <UtensilsCrossed className="w-7 h-7 text-[#ff00ff]" />
+                            <div className="bg-[#FFD700]/10 w-14 h-14 rounded-2xl flex items-center justify-center mb-6">
+                                <UtensilsCrossed className="w-7 h-7 text-[#FFD700]" />
                             </div>
-                            <h3 className="text-2xl font-bold text-[#e0f0ff] mb-4">Marina Amenities</h3>
+                            <h3 className="text-2xl font-bold text-[#2D1600] mb-4">Marina Amenities</h3>
                             <ul className="space-y-3">
                                 {marinaAmenities.map((a) => (
-                                    <li key={a.label} className="flex items-center gap-3 text-[#b0c4de]">
-                                        <span className="text-[#ff00ff]">{a.icon}</span>
+                                    <li key={a.label} className="flex items-center gap-3 text-[#614020]">
+                                        <span className="text-[#FFD700]">{a.icon}</span>
                                         <span>{a.label}</span>
                                     </li>
                                 ))}
@@ -418,19 +418,19 @@ export default function LocationClient() {
                             whileInView="visible"
                             viewport={{ once: true }}
                             variants={fadeInUp}
-                            className="bg-[#111128] p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow"
+                            className="bg-[#FFEACC] p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow"
                         >
-                            <div className="bg-[#2a2a4a]/30 w-14 h-14 rounded-2xl flex items-center justify-center mb-6">
-                                <Mountain className="w-7 h-7 text-[#b8ff00]" />
+                            <div className="bg-[#DCC8A0]/30 w-14 h-14 rounded-2xl flex items-center justify-center mb-6">
+                                <Mountain className="w-7 h-7 text-[#FFFFFF]" />
                             </div>
-                            <h3 className="text-2xl font-bold text-[#e0f0ff] mb-4">Why We&apos;re Here</h3>
-                            <p className="text-[#b0c4de] mb-4 text-sm">
+                            <h3 className="text-2xl font-bold text-[#2D1600] mb-4">Why We&apos;re Here</h3>
+                            <p className="text-[#614020] mb-4 text-sm">
                                 We chose Flathead Harbor Marina for our parasailing operation because it offers:
                             </p>
                             <ul className="space-y-3">
                                 {['Easy lake access for safe takeoffs', 'Stunning mountain views', 'Great amenities for our customers', 'Central location on Flathead Lake'].map((item) => (
-                                    <li key={item} className="flex items-center gap-3 text-[#b0c4de]">
-                                        <CheckCircle className="w-4 h-4 text-[#00f0ff] shrink-0" />
+                                    <li key={item} className="flex items-center gap-3 text-[#614020]">
+                                        <CheckCircle className="w-4 h-4 text-[#FF9500] shrink-0" />
                                         <span className="text-sm">{item}</span>
                                     </li>
                                 ))}
@@ -441,14 +441,14 @@ export default function LocationClient() {
             </section>
 
             {/* Nearby Attractions with Images */}
-            <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#0d0d1f]">
+            <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#FFF0D6]">
                 <div className="max-w-6xl mx-auto">
                     <motion.h2
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true }}
                         variants={fadeInUp}
-                        className="font-[family-name:var(--font-headline)] text-4xl font-black uppercase tracking-tighter text-center text-[#e0f0ff] mb-4"
+                        className="font-[family-name:var(--font-headline)] text-4xl font-black uppercase tracking-tight text-center text-[#2D1600] mb-4"
                     >
                         Explore Nearby Attractions
                     </motion.h2>
@@ -457,7 +457,7 @@ export default function LocationClient() {
                         whileInView="visible"
                         viewport={{ once: true }}
                         variants={fadeInUp}
-                        className="text-center text-[#b0c4de] max-w-3xl mx-auto mb-12 text-lg"
+                        className="text-center text-[#614020] max-w-3xl mx-auto mb-12 text-lg"
                     >
                         Flathead Lake and the surrounding area offer countless adventures beyond parasailing. Here are some must-visit attractions nearby.
                     </motion.p>
@@ -475,7 +475,7 @@ export default function LocationClient() {
                                 variants={fadeInUp}
                                 whileHover={{ y: -8 }}
                                 transition={{ duration: 0.3 }}
-                                className="bg-[#111128] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow group"
+                                className="bg-[#FFEACC] rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow group"
                             >
                                 <div className="h-44 overflow-hidden relative">
                                     <Image
@@ -484,13 +484,13 @@ export default function LocationClient() {
                                         fill
                                         className="object-cover group-hover:scale-110 transition-transform duration-500"
                                     />
-                                    <div className="absolute top-3 right-3 bg-[#00f0ff] text-[#001a1f] text-xs font-bold px-3 py-1 rounded-full shadow">
+                                    <div className="absolute top-3 right-3 bg-[#FF9500] text-[#FFFFFF] text-xs font-bold px-3 py-1 rounded-full shadow">
                                         {attraction.distance}
                                     </div>
                                 </div>
                                 <div className="p-5">
-                                    <h3 className="text-xl font-bold text-[#e0f0ff] mb-2">{attraction.title}</h3>
-                                    <p className="text-[#b0c4de] text-sm leading-relaxed">{attraction.description}</p>
+                                    <h3 className="text-xl font-bold text-[#2D1600] mb-2">{attraction.title}</h3>
+                                    <p className="text-[#614020] text-sm leading-relaxed">{attraction.description}</p>
                                 </div>
                             </motion.div>
                         ))}
@@ -504,22 +504,22 @@ export default function LocationClient() {
                         variants={fadeInUp}
                         className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto"
                     >
-                        <div className="bg-[#111128] p-5 rounded-xl shadow flex items-center gap-4">
-                            <div className="bg-[#ff00ff]/10 w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
-                                <MapPin className="w-6 h-6 text-[#ff00ff]" />
+                        <div className="bg-[#FFEACC] p-5 rounded-xl shadow flex items-center gap-4">
+                            <div className="bg-[#FFD700]/10 w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
+                                <MapPin className="w-6 h-6 text-[#FFD700]" />
                             </div>
                             <div>
-                                <h4 className="font-bold text-[#e0f0ff]">Kalispell</h4>
-                                <p className="text-sm text-[#5a6a8a]">15 miles -- Shopping, dining, and gateway to Glacier</p>
+                                <h4 className="font-bold text-[#2D1600]">Kalispell</h4>
+                                <p className="text-sm text-[#8B6914]">15 miles -- Shopping, dining, and gateway to Glacier</p>
                             </div>
                         </div>
-                        <div className="bg-[#111128] p-5 rounded-xl shadow flex items-center gap-4">
-                            <div className="bg-[#00f0ff]/10 w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
-                                <Plane className="w-6 h-6 text-[#00f0ff]" />
+                        <div className="bg-[#FFEACC] p-5 rounded-xl shadow flex items-center gap-4">
+                            <div className="bg-[#FF9500]/10 w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
+                                <Plane className="w-6 h-6 text-[#FF9500]" />
                             </div>
                             <div>
-                                <h4 className="font-bold text-[#e0f0ff]">Glacier Park Int&apos;l Airport</h4>
-                                <p className="text-sm text-[#5a6a8a]">30 miles -- Major airline service (FCA)</p>
+                                <h4 className="font-bold text-[#2D1600]">Glacier Park Int&apos;l Airport</h4>
+                                <p className="text-sm text-[#8B6914]">30 miles -- Major airline service (FCA)</p>
                             </div>
                         </div>
                     </motion.div>
@@ -527,7 +527,7 @@ export default function LocationClient() {
             </section>
 
             {/* CTA Section */}
-            <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#00f0ff]">
+            <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#FF9500]">
                 <div className="max-w-4xl mx-auto text-center">
                     <motion.div
                         initial="hidden"
@@ -537,13 +537,13 @@ export default function LocationClient() {
                     >
                         <motion.h2
                             variants={fadeInUp}
-                            className="font-[family-name:var(--font-headline)] text-4xl font-black uppercase tracking-tighter mb-6 text-[#001a1f]"
+                            className="font-[family-name:var(--font-headline)] text-4xl font-black uppercase tracking-tight mb-6 text-[#FFFFFF]"
                         >
                             Ready to Soar Above Flathead Lake?
                         </motion.h2>
                         <motion.p
                             variants={fadeInUp}
-                            className="text-lg mb-8 text-[#001a1f]/80 max-w-2xl mx-auto"
+                            className="text-lg mb-8 text-[#FFFFFF]/80 max-w-2xl mx-auto"
                         >
                             Make parasailing the highlight of your Flathead Lake vacation! Contact us today to book your adventure at Flathead Harbor Marina.
                         </motion.p>
@@ -553,14 +553,14 @@ export default function LocationClient() {
                         >
                             <a
                                 href={`tel:${BUSINESS_INFO.phone}`}
-                                className="px-8 py-4 bg-[#001a1f] text-[#00f0ff] hover:bg-[#001a1f]/80 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
+                                className="px-8 py-4 bg-[#FFFFFF] text-[#FF9500] hover:bg-[#FFFFFF]/80 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
                             >
                                 <Phone className="w-5 h-5" />
                                 {BUSINESS_INFO.displayPhone}
                             </a>
                             <a
                                 href={`mailto:${BUSINESS_INFO.email}`}
-                                className="px-8 py-4 bg-[#050510] hover:bg-[#050510]/80 text-[#e0f0ff] font-bold rounded-xl shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
+                                className="px-8 py-4 bg-[#3D1C00] hover:bg-[#3D1C00]/80 text-[#FFFFFF] font-bold rounded-xl shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
                             >
                                 <Mail className="w-5 h-5" />
                                 Send Email
@@ -578,9 +578,9 @@ export default function LocationClient() {
 
 function DirectionCard({ from, detail }: { from: string; detail: string }) {
     return (
-        <div className="bg-[#1a1a3e] p-4 rounded-xl">
-            <p className="font-bold text-[#00f0ff] mb-1">{from}</p>
-            <p className="text-sm text-[#b0c4de]">{detail}</p>
+        <div className="bg-[#FFD699] p-4 rounded-xl">
+            <p className="font-bold text-[#FF9500] mb-1">{from}</p>
+            <p className="text-sm text-[#614020]">{detail}</p>
         </div>
     )
 }

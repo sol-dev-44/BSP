@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Orbitron, Rajdhani } from "next/font/google";
+import { Oswald, Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 import { BASE_METADATA } from "@/config/seo";
@@ -9,16 +9,16 @@ import {
   generateOrganizationSchema
 } from "@/config/structured-data";
 
-const orbitron = Orbitron({
+const oswald = Oswald({
   subsets: ["latin"],
   variable: "--font-headline",
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const rajdhani = Rajdhani({
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-body",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -35,13 +35,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <StructuredData data={generateLocalBusinessSchema()} />
         <StructuredData data={generateOrganizationSchema()} />
       </head>
       <body
-        className={`${orbitron.variable} ${rajdhani.variable} font-body antialiased bg-surface text-on-surface`}
+        className={`${oswald.variable} ${inter.variable} font-body antialiased bg-surface text-on-surface`}
       >
         <Providers>{children}</Providers>
       </body>
