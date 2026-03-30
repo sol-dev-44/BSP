@@ -8,7 +8,7 @@ import { motion } from 'framer-motion'
 import { BUSINESS_INFO, getMapLink } from '@/config/business'
 import Image from 'next/image'
 
-const SUPABASE_BASE = 'https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images/'
+const SUPABASE_BASE = 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images/'
 
 const attractions = [
     {
@@ -366,6 +366,23 @@ export default function LocationClient() {
                     >
                         Flathead Harbor Marina offers a full-service facility on the western shore of Flathead Lake with seasonal slip rentals, boat services, and easy lake access.
                     </motion.p>
+
+                    {/* Marina Waiting Area Image */}
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        variants={fadeInUp}
+                        className="mb-12 rounded-xl overflow-hidden shadow-lg max-w-4xl mx-auto"
+                    >
+                        <Image
+                            src={`${SUPABASE_BASE}waitingAreaAnchorBar.jpg`}
+                            alt="The Anchor Bar waiting area at Flathead Harbor Marina"
+                            width={1200}
+                            height={600}
+                            className="w-full h-auto object-cover"
+                        />
+                    </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {/* Marina Services */}

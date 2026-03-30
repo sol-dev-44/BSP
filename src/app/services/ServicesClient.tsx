@@ -8,6 +8,8 @@ import { Check, Camera, Video, Users, Package, Eye, Sparkles, Shield, HelpCircle
 import Link from 'next/link'
 import { BUSINESS_INFO } from '@/config/business'
 
+const IMAGE_BASE = 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images/'
+
 const iconMap: Record<string, any> = {
     'earlybird': Sparkles,
     'parasail': Users,
@@ -222,6 +224,20 @@ export default function ServicesClient() {
                         <p className="text-xl text-[#8B6914] max-w-2xl mx-auto">
                             We use top-of-the-line equipment to ensure your memories are crystal clear
                         </p>
+                    </motion.div>
+
+                    {/* Crew photo image */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="mb-12 rounded-xl overflow-hidden shadow-lg max-w-2xl mx-auto"
+                    >
+                        <img
+                            src={`${IMAGE_BASE}DaytonaImage.png`}
+                            alt="Crew member capturing photos from the boat"
+                            className="w-full h-auto object-cover"
+                        />
                     </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">

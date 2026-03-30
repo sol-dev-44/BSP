@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 
-const IMAGE_BASE = 'https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images/'
+const IMAGE_BASE = 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images/'
 
 interface GalleryImage {
     src: string
@@ -15,73 +15,18 @@ interface GalleryImage {
 }
 
 const images: GalleryImage[] = [
-    {
-        src: `${IMAGE_BASE}WhiteFishSmiles.jpg`,
-        alt: 'Happy customers over Flathead Lake',
-        category: 'Happy Customers',
-        span: 'large',
-    },
-    {
-        src: `${IMAGE_BASE}threeKids.jpg`,
-        alt: 'Kids enjoying parasailing',
-        category: 'Family Fun',
-        span: 'tall',
-    },
-    {
-        src: `${IMAGE_BASE}HighAerial.jpeg`,
-        alt: 'Aerial view from 400 feet',
-        category: 'Aerial Views',
-    },
-    {
-        src: `${IMAGE_BASE}cloudDancerInclineDock.jpg`,
-        alt: 'Cloud Dancer at the dock',
-        category: 'The Boat',
-        span: 'wide',
-    },
-    {
-        src: `${IMAGE_BASE}wfSunset.JPG`,
-        alt: 'Sunset over Flathead Lake',
-        category: 'Scenic',
-        span: 'tall',
-    },
-    {
-        src: `${IMAGE_BASE}wfdip1.JPG`,
-        alt: 'Water dip experience',
-        category: 'Adventures',
-    },
-    {
-        src: `${IMAGE_BASE}tripFam.JPG`,
-        alt: 'Family parasailing adventure',
-        category: 'Family Fun',
-        span: 'wide',
-    },
-    {
-        src: `${IMAGE_BASE}FlatheadAerial.jpg`,
-        alt: 'Flathead Lake from above',
-        category: 'Aerial Views',
-    },
-    {
-        src: `${IMAGE_BASE}girlwake.jpeg`,
-        alt: 'Flying over the wake',
-        category: 'Adventures',
-        span: 'wide',
-    },
-    {
-        src: `${IMAGE_BASE}fourthJuly.jpg`,
-        alt: '4th of July celebration',
-        category: 'Events',
-        span: 'tall',
-    },
-    {
-        src: `${IMAGE_BASE}wildHorseIsland.jpeg`,
-        alt: 'Wild Horse Island views',
-        category: 'Scenic',
-    },
-    {
-        src: `${IMAGE_BASE}alignedAerial.jpg`,
-        alt: 'Aerial parasail shot',
-        category: 'Aerial Views',
-    },
+    { src: `${IMAGE_BASE}WhiteFishSmiles.jpg`, alt: 'Smiling parasailers over Flathead Lake', category: 'Happy Customers', span: 'large' },
+    { src: `${IMAGE_BASE}wfdip3.JPG`, alt: 'Skimming the water for a thrilling dip', category: 'Adventures', span: 'tall' },
+    { src: `${IMAGE_BASE}HighAerial.jpeg`, alt: '400 feet above Flathead Lake', category: 'Aerial Views' },
+    { src: `${IMAGE_BASE}tubing.jpg`, alt: 'Tubing fun on Flathead Lake', category: 'Adventures', span: 'wide' },
+    { src: `${IMAGE_BASE}wfSunset.JPG`, alt: 'Golden sunset parasailing', category: 'Scenic', span: 'tall' },
+    { src: `${IMAGE_BASE}colorfulChute.jpg`, alt: 'Colorful chute against blue Montana sky', category: 'Adventures' },
+    { src: `${IMAGE_BASE}threeKids.jpg`, alt: 'Three kids having the time of their lives', category: 'Family Fun', span: 'wide' },
+    { src: `${IMAGE_BASE}leroyDock.jpg`, alt: 'Leroy the dock dog ready to greet you', category: 'The Boat' },
+    { src: `${IMAGE_BASE}WFishHappyFar.jpg`, alt: 'Soaring high above Flathead Lake', category: 'Aerial Views', span: 'wide' },
+    { src: `${IMAGE_BASE}fourthJuly.jpg`, alt: '4th of July fireworks over the lake', category: 'Events', span: 'tall' },
+    { src: `${IMAGE_BASE}waitingAreaAnchorBar.jpg`, alt: 'The Anchor Bar at Flathead Harbor', category: 'The Marina' },
+    { src: `${IMAGE_BASE}DaytonaImage.png`, alt: 'Our crew capturing every moment', category: 'Behind the Scenes' },
 ]
 
 export function ExperienceGallery() {

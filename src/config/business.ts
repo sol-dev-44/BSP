@@ -90,7 +90,7 @@ export const BUSINESS_INFO = {
             id: 'earlybird',
             name: 'Early Bird Special',
             price: 99,
-            image: 'https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//WhiteFishSmiles.jpg',
+            image: 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images//WhiteFishSmiles.jpg',
             tagline: 'Start your day soaring over Flathead Lake',
             description: 'Catch the calm morning waters on Flathead Lake with our 9 AM flight. Enjoy smooth conditions and serene mountain views before the afternoon winds pick up.',
             features: [
@@ -106,7 +106,7 @@ export const BUSINESS_INFO = {
             id: 'parasail',
             name: 'Parasailing Adventure',
             price: 119,
-            image: 'https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//colorfulChute.jpg',
+            image: 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images//colorfulChute.jpg',
             tagline: 'Soar 400+ feet above Flathead Lake',
             description: 'Soar over 400 feet above Flathead Lake with breathtaking views of the Mission Mountains, Glacier National Park, and the Flathead Valley. An unforgettable Montana adventure.',
             features: [
@@ -122,7 +122,7 @@ export const BUSINESS_INFO = {
             id: 'sunset',
             name: 'Sunset Cruise',
             price: 159,
-            image: 'https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//wfSunset.JPG',
+            image: 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images//wfSunset.JPG',
             tagline: 'Golden hour over the mountains',
             description: 'Experience the magic of a Montana sunset from the water. Enjoy a relaxing cruise on Flathead Lake during golden hour with a complimentary drink and appetizer included.',
             features: [
@@ -138,7 +138,7 @@ export const BUSINESS_INFO = {
             id: 'combo',
             name: 'Media Combo Package',
             price: 75,
-            image: 'https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//FlatheadAerial.jpg',
+            image: 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images//FlatheadAerial.jpg',
             tagline: 'Photos + Video - Save $15',
             description: 'Get the best of both worlds with our combo media package. Includes professional HD photos and GoPro video of your flight over Flathead Lake. Save $15 versus buying separately.',
             features: [
@@ -154,7 +154,7 @@ export const BUSINESS_INFO = {
             id: 'gopro',
             name: 'GoPro 360 Experience',
             price: 50,
-            image: 'https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//HighAerial.jpeg',
+            image: 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images//HighAerial.jpeg',
             tagline: 'Immersive 360 flight footage',
             description: 'Capture your flight in immersive 360 video with stunning aerial footage over Flathead Lake and the surrounding Montana mountains.',
             features: [
@@ -169,7 +169,7 @@ export const BUSINESS_INFO = {
             id: 'photos',
             name: 'HD Photo Package',
             price: 40,
-            image: 'https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//threeKids.jpg',
+            image: 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images//threeKids.jpg',
             tagline: 'Professional HD crew photos',
             description: 'Professional HD photos captured by our crew from the boat. Take home stunning memories of your Flathead Lake parasailing adventure.',
             features: [
@@ -184,7 +184,7 @@ export const BUSINESS_INFO = {
             id: 'observer',
             name: 'Observer Pass',
             price: 49,
-            image: 'https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//leroyDock.jpg',
+            image: 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images//leroyDock.jpg',
             tagline: 'Ride along without flying',
             description: 'Ride along on the boat without flying. Enjoy the cruise on Flathead Lake and watch your friends and family soar above the water with mountain views all around.',
             features: [

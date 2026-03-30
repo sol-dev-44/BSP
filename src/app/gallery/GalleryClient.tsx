@@ -16,97 +16,42 @@ interface GalleryImage {
     isVideo?: boolean
 }
 
-const IMAGE_BASE = 'https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images/'
+const IMAGE_BASE = 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images/'
 
 const images: GalleryImage[] = [
-    // Adventures
-    {
-        src: `${IMAGE_BASE}WhiteFishSmiles.jpg`,
-        alt: 'Happy customers soaring over Flathead Lake',
-        category: 'Adventures',
-        orientation: 'landscape',
-    },
-    {
-        src: `${IMAGE_BASE}HighAerial.jpeg`,
-        alt: 'Aerial view from 400 feet above the lake',
-        category: 'Adventures',
-        orientation: 'landscape',
-    },
-    {
-        src: `${IMAGE_BASE}wfdip1.JPG`,
-        alt: 'Water dip experience on Flathead Lake',
-        category: 'Adventures',
-        orientation: 'landscape',
-    },
-    {
-        src: `${IMAGE_BASE}girlwake.jpeg`,
-        alt: 'Flying over the wake',
-        category: 'Adventures',
-        orientation: 'landscape',
-    },
-
-    // Views
-    {
-        src: `${IMAGE_BASE}FlatheadAerial.jpg`,
-        alt: 'Panoramic view of the Mission Mountains from 400 feet',
-        category: 'Views',
-        orientation: 'landscape',
-    },
-    {
-        src: `${IMAGE_BASE}wfSunset.JPG`,
-        alt: 'Sunset over Flathead Lake',
-        category: 'Views',
-        orientation: 'portrait',
-    },
-    {
-        src: `${IMAGE_BASE}alignedAerial.jpg`,
-        alt: 'Aerial parasail shot over clear waters',
-        category: 'Views',
-        orientation: 'landscape',
-    },
-    {
-        src: `${IMAGE_BASE}wildHorseIsland.jpeg`,
-        alt: 'Wild Horse Island views from above',
-        category: 'Views',
-        orientation: 'landscape',
-    },
-
-    // Boat
-    {
-        src: `${IMAGE_BASE}cloudDancerInclineDock.jpg`,
-        alt: 'Cloud Dancer -- our Ocean Pro 31 parasail boat on Flathead Lake',
-        category: 'Boat',
-        orientation: 'landscape',
-    },
-
-    // The Lake
-    {
-        src: `${IMAGE_BASE}FlatheadMarinaAerial.jpg`,
-        alt: 'Flathead Harbor Marina from the air',
-        category: 'The Lake',
-        orientation: 'landscape',
-    },
-    {
-        src: `${IMAGE_BASE}threeKids.jpg`,
-        alt: 'Kids enjoying a parasailing adventure',
-        category: 'Adventures',
-        orientation: 'portrait',
-    },
-    {
-        src: `${IMAGE_BASE}tripFam.JPG`,
-        alt: 'Family parasailing adventure on Flathead Lake',
-        category: 'Adventures',
-        orientation: 'landscape',
-    },
-    {
-        src: `${IMAGE_BASE}fourthJuly.jpg`,
-        alt: '4th of July celebration on the lake',
-        category: 'The Lake',
-        orientation: 'portrait',
-    },
+    { src: `${IMAGE_BASE}WhiteFishSmiles.jpg`, alt: 'Smiling parasailers soaring over Flathead Lake', category: 'Adventures', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}HighAerial.jpeg`, alt: '400 feet above crystal-clear Flathead Lake', category: 'Aerial Views', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}wfdip1.JPG`, alt: 'Touching down for a refreshing lake dip', category: 'Adventures', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}wfdip2.JPG`, alt: 'Coming in for a splash on Flathead Lake', category: 'Adventures', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}wfdip3.JPG`, alt: 'Skimming the water with mountain views', category: 'Adventures', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}girlwake.jpeg`, alt: 'Wake surfing on Flathead Lake', category: 'Adventures', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}colorfulChute.jpg`, alt: 'Colorful parasail chute against blue sky', category: 'Adventures', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}tubing.jpg`, alt: 'Tubing fun on Flathead Lake', category: 'Adventures', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}wfLadies1.JPG`, alt: 'Ladies day out parasailing over the lake', category: 'Adventures', orientation: 'portrait' as const },
+    { src: `${IMAGE_BASE}wfladies2.JPG`, alt: 'Best friends adventure above Flathead Lake', category: 'Adventures', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}threeKids.jpg`, alt: 'Three kids having the time of their lives', category: 'Family Fun', orientation: 'portrait' as const },
+    { src: `${IMAGE_BASE}tripFam.JPG`, alt: 'Family parasailing adventure', category: 'Family Fun', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}FlatheadAerial.jpg`, alt: 'Panoramic aerial view of Flathead Lake', category: 'Aerial Views', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}alignedAerial.jpg`, alt: 'Parasail boat cutting through crystal waters', category: 'Aerial Views', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}WFishHappyFar.jpg`, alt: 'Soaring high with mountain views', category: 'Aerial Views', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}wfTripFar.JPG`, alt: 'Parasailing against the Mission Mountains', category: 'Aerial Views', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}wfLineView.JPG`, alt: 'View from the boat as guests fly high', category: 'Aerial Views', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}FlatheadWithShadow.jpg`, alt: 'Parasail shadow over crystal-clear water', category: 'The Lake', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}wfSunset.JPG`, alt: 'Golden sunset parasailing on Flathead Lake', category: 'The Lake', orientation: 'portrait' as const },
+    { src: `${IMAGE_BASE}wildHorseIsland.jpeg`, alt: 'Wild Horse Island from above', category: 'The Lake', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}fourthJuly.jpg`, alt: '4th of July fireworks over the lake', category: 'The Lake', orientation: 'portrait' as const },
+    { src: `${IMAGE_BASE}glacierPark.jpg`, alt: 'Glacier National Park — just a short drive away', category: 'The Lake', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}wildHorse.jpg`, alt: 'Wild horses on Wild Horse Island', category: 'The Lake', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}cloudDancerInclineDock.jpg`, alt: 'Cloud Dancer docked at Flathead Harbor Marina', category: 'The Boat', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}cloudDancerTransom.png`, alt: 'Cloud Dancer — our Ocean Pro 31 parasail vessel', category: 'The Boat', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}leroyDock.jpg`, alt: 'Leroy the dock dog ready to greet you', category: 'The Boat', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}thumbAction.png`, alt: 'Action shot from the parasail boat', category: 'The Boat', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}DaytonaImage.png`, alt: 'Our crew capturing every moment', category: 'The Boat', orientation: 'portrait' as const },
+    { src: `${IMAGE_BASE}FlatheadMarinaAerial.jpg`, alt: 'Flathead Harbor Marina from the air', category: 'The Marina', orientation: 'landscape' as const },
+    { src: `${IMAGE_BASE}waitingAreaAnchorBar.jpg`, alt: 'The Anchor Bar at Flathead Harbor Marina', category: 'The Marina', orientation: 'landscape' as const },
 ]
 
-const categories = ['All', 'Adventures', 'Views', 'Boat', 'The Lake']
+const categories = ['All', 'Adventures', 'Family Fun', 'Aerial Views', 'The Lake', 'The Boat', 'The Marina']
 
 export default function GalleryClient() {
     const [selectedCategory, setSelectedCategory] = useState('All')

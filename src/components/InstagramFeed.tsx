@@ -3,72 +3,18 @@
 import { motion } from 'framer-motion'
 import { Instagram, ExternalLink } from 'lucide-react'
 
-const IMAGE_BASE = 'https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images/'
+const IMAGE_BASE = 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images/'
 
 const INSTAGRAM_POSTS = [
-    {
-        id: 1,
-        image: `${IMAGE_BASE}wfladies2.JPG`,
-        alt: 'Ladies day out parasailing over Flathead Lake',
-        likes: 187,
-        url: 'https://www.instagram.com/bigskyparasail/'
-    },
-    {
-        id: 2,
-        image: `${IMAGE_BASE}threeKids.jpg`,
-        alt: 'Kids having the time of their lives parasailing',
-        likes: 221,
-        url: 'https://www.instagram.com/bigskyparasail/'
-    },
-    {
-        id: 3,
-        image: `${IMAGE_BASE}wfSunset.JPG`,
-        alt: 'Golden sunset over Flathead Lake',
-        likes: 203,
-        url: 'https://www.instagram.com/bigskyparasail/'
-    },
-    {
-        id: 4,
-        image: `${IMAGE_BASE}leroyDock.jpg`,
-        alt: 'Leroy the dog mascot at the dock',
-        likes: 256,
-        url: 'https://www.instagram.com/bigskyparasail/'
-    },
-    {
-        id: 5,
-        image: `${IMAGE_BASE}FlatheadWithShadow.jpg`,
-        alt: 'Parasail shadow over crystal clear Flathead Lake',
-        likes: 198,
-        url: 'https://www.instagram.com/bigskyparasail/'
-    },
-    {
-        id: 6,
-        image: `${IMAGE_BASE}HighAerial.jpeg`,
-        alt: 'High above Flathead Lake with mountain views',
-        likes: 178,
-        url: 'https://www.instagram.com/bigskyparasail/'
-    },
-    {
-        id: 7,
-        image: `${IMAGE_BASE}wfdip2.JPG`,
-        alt: 'Splashing down for a water dip',
-        likes: 192,
-        url: 'https://www.instagram.com/bigskyparasail/'
-    },
-    {
-        id: 8,
-        image: `${IMAGE_BASE}fourthJuly.jpg`,
-        alt: '4th of July parasailing celebration',
-        likes: 167,
-        url: 'https://www.instagram.com/bigskyparasail/'
-    },
-    {
-        id: 9,
-        image: `${IMAGE_BASE}tripFam.JPG`,
-        alt: 'Family adventure on Flathead Lake',
-        likes: 145,
-        url: 'https://www.instagram.com/bigskyparasail/'
-    }
+    { id: 1, image: `${IMAGE_BASE}wfLadies1.JPG`, alt: 'Ladies day out parasailing over the lake', likes: 234, url: 'https://www.instagram.com/bigskyparasail/' },
+    { id: 2, image: `${IMAGE_BASE}tripFam.JPG`, alt: 'Family parasailing adventure', likes: 221, url: 'https://www.instagram.com/bigskyparasail/' },
+    { id: 3, image: `${IMAGE_BASE}wfTripFar.JPG`, alt: 'Parasailing against the Mission Mountains', likes: 203, url: 'https://www.instagram.com/bigskyparasail/' },
+    { id: 4, image: `${IMAGE_BASE}wfladies2.JPG`, alt: 'Best friends adventure above Flathead Lake', likes: 256, url: 'https://www.instagram.com/bigskyparasail/' },
+    { id: 5, image: `${IMAGE_BASE}FlatheadWithShadow.jpg`, alt: 'Parasail shadow over crystal-clear water', likes: 198, url: 'https://www.instagram.com/bigskyparasail/' },
+    { id: 6, image: `${IMAGE_BASE}wfLineView.JPG`, alt: 'View from the boat as guests fly high', likes: 178, url: 'https://www.instagram.com/bigskyparasail/' },
+    { id: 7, image: `${IMAGE_BASE}wfdip2.JPG`, alt: 'Coming in for a splash on the lake', likes: 192, url: 'https://www.instagram.com/bigskyparasail/' },
+    { id: 8, image: `${IMAGE_BASE}cloudDancerTransom.png`, alt: 'Cloud Dancer ready for another adventure', likes: 167, url: 'https://www.instagram.com/bigskyparasail/' },
+    { id: 9, image: `${IMAGE_BASE}thumbAction.png`, alt: 'Action shot from the parasail boat', likes: 210, url: 'https://www.instagram.com/bigskyparasail/' },
 ]
 
 export function InstagramFeed() {

@@ -20,14 +20,14 @@ export function Hero() {
                     loop
                     muted
                     playsInline
-                    className="absolute inset-0 w-full h-full object-cover object-[40%_center] sm:object-center"
+                    className="absolute inset-x-0 w-full object-cover -top-[350px] h-[calc(100%+350px)] sm:inset-0 sm:h-full"
                 >
-                    <source src="https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//ownBusiness.mp4" type="video/mp4" />
+                    <source src="https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images//ownBusiness.mp4" type="video/mp4" />
                     {/* Fallback image if video doesn't load */}
                     <img
-                        src="https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images//FlatheadWithShadow.jpg"
+                        src="https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images//FlatheadWithShadow.jpg"
                         alt="Parasailing over Flathead Lake with mountain views"
-                        className="absolute inset-0 w-full h-full object-cover object-[40%_center] sm:object-center"
+                        className="absolute inset-x-0 w-full object-cover -top-[350px] h-[calc(100%+350px)] sm:inset-0 sm:h-full"
                     />
                 </video>
 

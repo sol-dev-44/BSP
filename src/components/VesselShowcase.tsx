@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { Shield, Anchor, Users, Waves, Gauge, CheckCircle } from 'lucide-react'
 
-const IMAGE_BASE = 'https://yginjzlfezyalgosdjtl.supabase.co/storage/v1/object/public/bsp-images/'
+const IMAGE_BASE = 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images/'
 
 export function VesselShowcase() {
     const highlights = [
