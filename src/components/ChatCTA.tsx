@@ -47,8 +47,8 @@ export function ChatCTA() {
                         }}
                     />
 
-                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-[#FF9500] shadow-[0_4px_20px_rgba(255,149,0,0.5)] flex items-center justify-center cursor-pointer hover:shadow-[0_6px_30px_rgba(255,149,0,0.7)] transition-shadow duration-300">
-                        <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" strokeWidth={2.5} />
+                    <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full shadow-[0_4px_20px_rgba(255,149,0,0.5)] flex items-center justify-center cursor-pointer hover:shadow-[0_6px_30px_rgba(255,149,0,0.7)] transition-shadow duration-300 overflow-hidden">
+                        <img src="/JerryBearLogo.png" alt="Chat with Jerry Bear" className="w-full h-full object-cover" />
 
                         <div className="absolute -top-1 -right-1 w-3 h-3 sm:w-4 sm:h-4 bg-[#FFD700] rounded-full border-2 border-white animate-pulse" />
                     </div>

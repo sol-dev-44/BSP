@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Loader2, Sparkles, MessageCircle } from 'lucide-react';
+import { Send, Loader2, MessageCircle } from 'lucide-react';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import ReactMarkdown from 'react-markdown';
@@ -132,12 +132,12 @@ export default function BSPChat() {
                                 <motion.div
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
-                                    className="w-20 h-20 bg-gradient-to-br from-[#FF9500] via-[#FFFFFF] to-[#FFD700] rounded-2xl flex items-center justify-center mb-6 shadow-xl"
+                                    className="mb-6"
                                 >
-                                    <MessageCircle className="w-10 h-10 text-[#FFFFFF]" />
+                                    <img src="/JerryBearLogo.png" alt="Jerry Bear" className="w-24 h-24 rounded-2xl shadow-xl object-contain" />
                                 </motion.div>
                                 <h3 className="text-3xl font-bold mb-2 text-[#2D1600]">
-                                    Welcome to Big Sky Parasail!
+                                    Hey, I&apos;m Jerry Bear!
                                 </h3>
                                 <p className="text-[#614020] mb-4 max-w-md text-xl">
                                     Ask me anything about parasailing on Flathead Lake! I&apos;m here to help you plan your adventure.
@@ -164,8 +164,8 @@ export default function BSPChat() {
                                         >
                                             {msg.role === 'assistant' && (
                                                 <div className="flex items-center gap-2 mb-2 pb-2 border-b border-[#DCC8A0]/30">
-                                                    <Sparkles className="w-4 h-4 text-[#FF9500]" />
-                                                    <span className="font-semibold text-base text-[#2D1600]">Assistant</span>
+                                                    <img src="/JerryBearLogo.png" alt="Jerry Bear" className="w-6 h-6 rounded-full object-contain" />
+                                                    <span className="font-semibold text-base text-[#2D1600]">Jerry Bear</span>
                                                 </div>
                                             )}
                                             <div className="prose-base max-w-none">
@@ -197,8 +197,8 @@ export default function BSPChat() {
                                     >
                                         <div className="bg-[#FFD699] rounded-2xl rounded-tl-sm px-5 py-4 shadow-lg border border-[#DCC8A0]/30">
                                             <div className="flex items-center gap-2">
-                                                <Loader2 className="w-5 h-5 animate-spin text-[#FF9500]" />
-                                                <span className="text-[#2D1600]">Thinking...</span>
+                                                <img src="/JerryBearLogo.png" alt="Jerry Bear" className="w-5 h-5 rounded-full object-contain animate-bounce" />
+                                                <span className="text-[#2D1600]">Jerry Bear is thinking...</span>
                                             </div>
                                         </div>
                                     </motion.div>
