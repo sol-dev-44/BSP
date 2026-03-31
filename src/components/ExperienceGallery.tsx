@@ -27,6 +27,8 @@ const images: GalleryImage[] = [
     { src: `${IMAGE_BASE}fourthJuly.jpg`, alt: '4th of July fireworks over the lake', category: 'Events', span: 'tall' },
     { src: `${IMAGE_BASE}waitingAreaAnchorBar.jpg`, alt: 'The Anchor Bar at Flathead Harbor', category: 'The Marina' },
     { src: `${IMAGE_BASE}DaytonaImage.png`, alt: 'Our crew capturing every moment', category: 'Behind the Scenes' },
+    { src: '/JerryBearLogo.png', alt: 'Big Sky Parasail — Jerry Bear Logo', category: 'Our Brand' },
+    { src: '/noirlogo.png', alt: 'Big Sky Parasail — Noir Logo', category: 'Our Brand' },
 ]
 
 export function ExperienceGallery() {

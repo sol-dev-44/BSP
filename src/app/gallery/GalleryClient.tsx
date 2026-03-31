@@ -49,9 +49,11 @@ const images: GalleryImage[] = [
     { src: `${IMAGE_BASE}DaytonaImage.png`, alt: 'Our crew capturing every moment', category: 'The Boat', orientation: 'portrait' as const },
     { src: `${IMAGE_BASE}FlatheadMarinaAerial.jpg`, alt: 'Flathead Harbor Marina from the air', category: 'The Marina', orientation: 'landscape' as const },
     { src: `${IMAGE_BASE}waitingAreaAnchorBar.jpg`, alt: 'The Anchor Bar at Flathead Harbor Marina', category: 'The Marina', orientation: 'landscape' as const },
+    { src: '/JerryBearLogo.png', alt: 'Big Sky Parasail — Jerry Bear Logo', category: 'Our Brand', orientation: 'square' as const },
+    { src: '/noirlogo.png', alt: 'Big Sky Parasail — Noir Logo', category: 'Our Brand', orientation: 'square' as const },
 ]
 
-const categories = ['All', 'Adventures', 'Family Fun', 'Aerial Views', 'The Lake', 'The Boat', 'The Marina']
+const categories = ['All', 'Adventures', 'Family Fun', 'Aerial Views', 'The Lake', 'The Boat', 'The Marina', 'Our Brand']
 
 export default function GalleryClient() {
     const [selectedCategory, setSelectedCategory] = useState('All')

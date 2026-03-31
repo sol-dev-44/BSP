@@ -24,8 +24,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   ...BASE_METADATA,
   icons: {
-    icon: "/bsplogo.png",
-    apple: "/bsplogo.png",
+    icon: "/JerryBearLogo.png",
+    apple: "/JerryBearLogo.png",
   },
 };
 

@@ -20,9 +20,16 @@ export function Footer() {
 
                     {/* Brand */}
                     <div>
-                        <h3 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight font-[family-name:var(--font-headline)] text-[#FF9500] mb-6 pb-1 leading-normal">
-                            Big Sky Parasail
-                        </h3>
+                        <div className="flex items-center justify-center md:justify-start gap-4 mb-6">
+                            <img
+                                src="/JerryBearLogo.png"
+                                alt="Big Sky Parasail logo"
+                                className="h-16 sm:h-20 md:h-24 w-auto"
+                            />
+                            <h3 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight font-[family-name:var(--font-headline)] text-[#FF9500] pb-1 leading-normal">
+                                Big Sky Parasail
+                            </h3>
+                        </div>
                         <p className="text-white/70 text-base sm:text-lg md:text-xl leading-relaxed mb-6">
                             Making memories on Flathead Lake since 2022. Safe, fun, and family-friendly parasailing adventures in Montana.
                         </p>

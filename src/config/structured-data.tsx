@@ -112,7 +112,7 @@ export function generateOrganizationSchema() {
         name: BUSINESS_INFO.name,
         legalName: BUSINESS_INFO.legalName,
         url: BUSINESS_INFO.url,
-        logo: `${BUSINESS_INFO.url}/logo.png`,
+        logo: `${BUSINESS_INFO.url}/JerryBearLogo.png`,
         description: BUSINESS_INFO.description,
         telephone: BUSINESS_INFO.phone,
         email: BUSINESS_INFO.email,
@@ -175,7 +175,7 @@ export function generateArticleSchema(article: {
             name: BUSINESS_INFO.name,
             logo: {
                 '@type': 'ImageObject',
-                url: `${BUSINESS_INFO.url}/logo.png`,
+                url: `${BUSINESS_INFO.url}/JerryBearLogo.png`,
             },
         },
         mainEntityOfPage: {
