@@ -99,7 +99,7 @@ export function FAQ() {
     }, [searchTerm, selectedCategory])
 
     return (
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#FFF8EE]">
+        <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-[#FFF8EE]">
             <div className="max-w-4xl mx-auto">
                 {/* Header */}
                 <motion.div

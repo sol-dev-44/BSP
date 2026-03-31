@@ -74,7 +74,7 @@ export default function LocationClient() {
             <Navbar />
 
             {/* Hero with Marina Aerial */}
-            <div className="relative pt-24 pb-0 overflow-hidden">
+            <div className="relative pt-32 pb-0 overflow-hidden">
                 <div className="absolute inset-0 z-0">
                     <Image
                         src={`${SUPABASE_BASE}/FlatheadMarinaAerial.jpg`}

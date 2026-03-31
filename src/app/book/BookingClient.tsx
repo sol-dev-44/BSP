@@ -69,6 +69,11 @@ export default function BookingClient() {
     });
     const [clientSecret, setClientSecret] = useState<string | null>(null);
 
+    // Scroll to top on step change
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [step]);
+
     // Availability
     const [availableSlots, setAvailableSlots] = useState<{ time: string, remaining: number, type: string, price: number }[]>([]);
     const [isLoadingSlots, setIsLoadingSlots] = useState(false);
