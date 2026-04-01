@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-02-PLAN.md
-last_updated: "2026-04-01T10:45:05.250Z"
+stopped_at: Completed 02-05-PLAN.md
+last_updated: "2026-04-01T10:49:03.344Z"
 last_activity: 2026-04-01
 progress:
   total_phases: 3
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 8
-  completed_plans: 6
+  completed_plans: 8
   percent: 0
 ---
 
@@ -56,6 +56,8 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-pricing-integrity P03 | 3min | 2 tasks | 2 files |
 | Phase 02-discount-codes P03 | 3min | 2 tasks | 2 files |
 | Phase 02-discount-codes P02 | 12min | 2 tasks | 7 files |
+| Phase 02-discount-codes P05 | 8min | 2 tasks | 2 files |
+| Phase 02-discount-codes P04 | 8min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -74,6 +76,8 @@ Recent decisions affecting current work:
 - [Phase 02-discount-codes]: Discount amount floored at 0 with Math.max to prevent negative Stripe charges
 - [Phase 02-discount-codes]: code_name normalized to uppercase at API write layer for consistent discount code matching
 - [Phase 02-discount-codes]: Status toggle implemented as clickable Active/Inactive badge in discount codes admin UI
+- [Phase 02-discount-codes]: Discount row ordered after tip row in email and success receipt for consistent display
+- [Phase 02-discount-codes]: Discount code UI placed between GuestForm and nav buttons in step 2; discountAmount defaults to 0 in PriceBreakdown for backwards-compatibility; grandTotal floored at Math.max(0, ...) to prevent negative charges
 
 ### Pending Todos
 
@@ -85,6 +89,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-01T10:45:05.248Z
-Stopped at: Completed 02-02-PLAN.md
+Last session: 2026-04-01T10:48:53.130Z
+Stopped at: Completed 02-05-PLAN.md
 Resume file: None

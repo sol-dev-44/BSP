@@ -13,7 +13,7 @@ Three phases address the core gaps in Milestone 2: first, guarantee price integr
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: Pricing Integrity** - Correct price flows from slot selection through Stripe charge, email, and success page
-- [ ] **Phase 2: Discount Codes** - Admin can manage discount codes; customers can apply them at checkout
+- [x] **Phase 2: Discount Codes** - Admin can manage discount codes; customers can apply them at checkout (completed 2026-04-01)
 - [ ] **Phase 3: Admin & Scheduling** - Admin panel cleaned up, cancellation revenue fixed, sunset and Monday scheduling corrected
 
 ## Phase Details
@@ -49,8 +49,8 @@ Plans:
 - [x] 02-01-PLAN.md — Create bsp_discount_codes table and add discount columns to bsp_bookings (schema + human SQL)
 - [x] 02-02-PLAN.md — Admin CRUD UI and API routes for discount codes (RTK Query pattern)
 - [x] 02-03-PLAN.md — Discount validation endpoint and payment-intent discount application
-- [ ] 02-04-PLAN.md — Booking form discount code input and PriceBreakdown display
-- [ ] 02-05-PLAN.md — Store discount on booking record; show in success page and confirmation email
+- [x] 02-04-PLAN.md — Booking form discount code input and PriceBreakdown display
+- [x] 02-05-PLAN.md — Store discount on booking record; show in success page and confirmation email
 **UI hint**: yes
 
 ### Phase 3: Admin & Scheduling
@@ -73,5 +73,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Pricing Integrity | 1/3 | In Progress|  |
-| 2. Discount Codes | 3/5 | In Progress|  |
+| 2. Discount Codes | 5/5 | Complete   | 2026-04-01 |
 | 3. Admin & Scheduling | 0/? | Not started | - |
