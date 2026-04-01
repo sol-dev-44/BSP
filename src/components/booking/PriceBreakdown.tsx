@@ -5,6 +5,8 @@ interface PriceBreakdownProps {
     boatRiders?: number;
     basePricePerPerson?: number;
     slotType?: string;
+    discountAmount?: number;
+    discountCode?: string;
     addOns: {
         photo_package: number;
         gopro_package: number;
@@ -19,6 +21,8 @@ export default function PriceBreakdown({
     boatRiders = 0,
     basePricePerPerson,
     slotType = 'standard',
+    discountAmount = 0,
+    discountCode,
     addOns,
 }: PriceBreakdownProps) {
     const size = typeof partySize === 'number' ? partySize : 0;
@@ -36,7 +40,7 @@ export default function PriceBreakdown({
     const goproTotal = (addOns.gopro_package || 0) * BUSINESS_INFO.pricing.gopro;
     const tipTotal = addOns.tip_amount || 0;
 
-    const grandTotal = flightTotal + boatRiderTotal + observerTotal + comboTotal + photoTotal + goproTotal + tipTotal;
+    const grandTotal = Math.max(0, flightTotal + boatRiderTotal + observerTotal + comboTotal + photoTotal + goproTotal + tipTotal - discountAmount);
 
     return (
         <div className="bg-[#FFEACC] rounded-xl shadow-lg border-2 border-[#FF9500]/20 overflow-hidden">
@@ -130,6 +134,16 @@ export default function PriceBreakdown({
                     <div className="flex justify-between items-center text-sm text-[#FF9500]">
                         <span>Crew Gratuity</span>
                         <span className="font-medium">${tipTotal}</span>
+                    </div>
+                )}
+
+                {/* Discount */}
+                {discountAmount > 0 && (
+                    <div className="flex justify-between items-center text-[#16a34a]">
+                        <span className="text-sm font-medium">
+                            Discount {discountCode ? `(${discountCode})` : ''}
+                        </span>
+                        <span className="font-bold">-${discountAmount.toFixed(2)}</span>
                     </div>
                 )}
 
