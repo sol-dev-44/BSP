@@ -19,9 +19,10 @@ interface GuestFormProps {
     maxPartySize: number;
     selectedDate: string;
     selectedTime: string | null;
+    pricePerPerson: number;
 }
 
-export default function GuestForm({ formData, onChange, maxPartySize, selectedDate, selectedTime }: GuestFormProps) {
+export default function GuestForm({ formData, onChange, maxPartySize, selectedDate, selectedTime, pricePerPerson }: GuestFormProps) {
     const [touched, setTouched] = useState({
         customer_name: false,
         customer_email: false,
@@ -39,8 +40,7 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
     const isPhoneValid = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(formData.customer_phone);
     const isPartySizeValid = formData.party_size > 0 && formData.party_size <= maxPartySize;
 
-    // Price per person - uses the slot-based price passed from parent context
-    const pricePerPerson = BUSINESS_INFO.pricing.parasail; // $119 standard default for tip calc
+    // Price per person comes from the slot-based price passed via props
     const baseFlightCost = formData.party_size * pricePerPerson;
 
     const inputBaseClass = "w-full bg-[#FFD699] border rounded-xl px-4 py-3 text-[#2D1600] focus:outline-none transition-colors placeholder-[#DCC8A0]";
