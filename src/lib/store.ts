@@ -4,6 +4,7 @@ import { todosApi } from './api/todosApi'
 import { expensesApi } from './api/expensesApi'
 import { maintenanceApi } from './api/maintenanceApi'
 import { suppliesApi } from './api/suppliesApi'
+import { discountCodesApi } from './api/discountCodesApi'
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     [expensesApi.reducerPath]: expensesApi.reducer,
     [maintenanceApi.reducerPath]: maintenanceApi.reducer,
     [suppliesApi.reducerPath]: suppliesApi.reducer,
+    [discountCodesApi.reducerPath]: discountCodesApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -19,7 +21,8 @@ export const store = configureStore({
       todosApi.middleware,
       expensesApi.middleware,
       maintenanceApi.middleware,
-      suppliesApi.middleware
+      suppliesApi.middleware,
+      discountCodesApi.middleware
     ),
 })
 
