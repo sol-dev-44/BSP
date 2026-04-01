@@ -104,3 +104,20 @@ None - no external service configuration required. Database columns slot_type an
 ---
 *Phase: 01-pricing-integrity*
 *Completed: 2026-04-01*
+
+## Self-Check: PASSED
+
+- FOUND: src/app/api/bookings/route.ts
+- FOUND: src/app/book/success/page.tsx
+- FOUND: .planning/phases/01-pricing-integrity/01-03-SUMMARY.md
+- FOUND: commit 955e07b (Task 1)
+- FOUND: commit 314a7d0 (Task 2)
+- VERIFIED: `const slotType = getSlotType` appears exactly 1 time in route.ts
+- VERIFIED: `slot_type: slotType` in insert object
+- VERIFIED: `per_person_rate: perPerson` in insert object
+- VERIFIED: `per_person_rate: number | null` in BookingDetails interface
+- VERIFIED: `booking.per_person_rate ??` replaces hardcoded $119
+- VERIFIED: `slotTypeLabel` computed and used in rate card
+- VERIFIED: `comboTotal` computed and rendered as line item
+- VERIFIED: `booking.total_amount` still used for Total Paid
+- VERIFIED: hardcoded `const perPerson = BUSINESS_INFO.pricing.parasail` removed
