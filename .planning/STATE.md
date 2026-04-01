@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-04-PLAN.md
-last_updated: "2026-04-01T10:54:12.114Z"
+stopped_at: Completed 03-01-PLAN.md
+last_updated: "2026-04-01T11:00:46.314Z"
 last_activity: 2026-04-01
 progress:
   total_phases: 3
   completed_phases: 2
-  total_plans: 8
-  completed_plans: 8
+  total_plans: 10
+  completed_plans: 9
   percent: 0
 ---
 
@@ -58,6 +58,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-discount-codes P02 | 12min | 2 tasks | 7 files |
 | Phase 02-discount-codes P05 | 8min | 2 tasks | 2 files |
 | Phase 02-discount-codes P04 | 8min | 2 tasks | 2 files |
+| Phase 03-admin-scheduling P01 | 5min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -78,6 +79,8 @@ Recent decisions affecting current work:
 - [Phase 02-discount-codes]: Status toggle implemented as clickable Active/Inactive badge in discount codes admin UI
 - [Phase 02-discount-codes]: Discount row ordered after tip row in email and success receipt for consistent display
 - [Phase 02-discount-codes]: Discount code UI placed between GuestForm and nav buttons in step 2; discountAmount defaults to 0 in PriceBreakdown for backwards-compatibility; grandTotal floored at Math.max(0, ...) to prevent negative charges
+- [Phase 03-admin-scheduling]: Resend has no usage/analytics API endpoints — ADMIN-02 email monitoring is out of scope, documented via inline comment
+- [Phase 03-admin-scheduling]: totalBookings now derived from activeBookings.length so Transactions stat excludes cancelled bookings (ADMIN-03)
 
 ### Pending Todos
 
@@ -89,6 +92,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-01T10:49:06.982Z
-Stopped at: Completed 02-04-PLAN.md
+Last session: 2026-04-01T11:00:46.311Z
+Stopped at: Completed 03-01-PLAN.md
 Resume file: None

@@ -23,9 +23,9 @@
 
 ### Admin Panel
 
-- [ ] **ADMIN-01**: Remove all Twilio/SMS balance and usage references from admin dashboard
-- [ ] **ADMIN-02**: Add Resend email usage/monitoring widget if Resend API supports it
-- [ ] **ADMIN-03**: When a booking is cancelled, revenue totals and booking counts update correctly in the dashboard
+- [x] **ADMIN-01**: Remove all Twilio/SMS balance and usage references from admin dashboard
+- [x] **ADMIN-02**: Add Resend email usage/monitoring widget if Resend API supports it
+- [x] **ADMIN-03**: When a booking is cancelled, revenue totals and booking counts update correctly in the dashboard
 
 ### Scheduling
 
@@ -72,9 +72,9 @@
 | DISC-04 | Phase 2 | Complete |
 | DISC-05 | Phase 2 | Complete |
 | DISC-06 | Phase 2 | Complete |
-| ADMIN-01 | Phase 3 | Pending |
-| ADMIN-02 | Phase 3 | Pending |
-| ADMIN-03 | Phase 3 | Pending |
+| ADMIN-01 | Phase 3 | Complete |
+| ADMIN-02 | Phase 3 | Complete |
+| ADMIN-03 | Phase 3 | Complete |
 | SCHED-01 | Phase 3 | Pending |
 | SCHED-02 | Phase 3 | Pending |
 | SCHED-03 | Phase 3 | Pending |
