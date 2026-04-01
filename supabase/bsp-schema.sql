@@ -185,3 +185,12 @@ ALTER TABLE bsp_notes ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "bsp_notes_service_all" ON bsp_notes
     FOR ALL USING (true) WITH CHECK (true);
+
+-- ============================================================
+-- 9. PRICING INTEGRITY MIGRATION (Phase 1)
+-- Run these in Supabase SQL Editor to add slot pricing columns.
+-- Safe to re-run: ADD COLUMN IF NOT EXISTS is idempotent.
+-- ============================================================
+ALTER TABLE bsp_bookings
+    ADD COLUMN IF NOT EXISTS slot_type TEXT CHECK (slot_type IN ('earlybird', 'standard', 'sunset')),
+    ADD COLUMN IF NOT EXISTS per_person_rate NUMERIC(10, 2);
