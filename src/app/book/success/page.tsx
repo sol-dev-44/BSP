@@ -26,6 +26,8 @@ interface BookingDetails {
         tip_amount?: number;
     };
     created_at: string;
+    discount_code?: string | null;
+    discount_amount?: number | null;
 }
 
 /** Format 24h DB time "20:00:00" to "8:00 PM" */
@@ -95,6 +97,8 @@ function BookingContent() {
     }
 
     const { add_ons } = booking;
+    const discountAmount = booking.discount_amount || 0;
+    const discountCode = booking.discount_code || null;
     const perPerson = booking.per_person_rate ?? BUSINESS_INFO.pricing.parasail;
     const slotType = booking.slot_type ?? 'standard';
     const slotTypeLabel = slotType === 'earlybird' ? 'Early Bird' : slotType === 'sunset' ? 'Sunset' : 'Standard';
@@ -212,6 +216,12 @@ function BookingContent() {
                             <div className="flex justify-between text-[#FFFFFF] font-medium">
                                 <span>Crew Gratuity</span>
                                 <span>${tipTotal.toFixed(2)}</span>
+                            </div>
+                        )}
+                        {discountAmount > 0 && (
+                            <div className="flex justify-between text-[#16a34a] font-medium">
+                                <span>Discount {discountCode ? `(${discountCode})` : ''}</span>
+                                <span>-${discountAmount.toFixed(2)}</span>
                             </div>
                         )}
 
