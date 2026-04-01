@@ -237,6 +237,8 @@ export default function BookingClient() {
                     payment_intent_id: paymentIntentId,
                     party_size: Number(formData.party_size),
                     add_ons: formData.add_ons,
+                    discount_code: discountCode || null,
+                    discount_amount: discountAmount || 0,
                 }),
             });
 
