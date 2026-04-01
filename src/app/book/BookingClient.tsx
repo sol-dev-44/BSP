@@ -69,6 +69,13 @@ export default function BookingClient() {
     });
     const [clientSecret, setClientSecret] = useState<string | null>(null);
 
+    // Discount code state
+    const [discountCode, setDiscountCode] = useState<string>('');
+    const [discountInput, setDiscountInput] = useState<string>('');
+    const [discountAmount, setDiscountAmount] = useState<number>(0);
+    const [discountError, setDiscountError] = useState<string>('');
+    const [isValidatingDiscount, setIsValidatingDiscount] = useState<boolean>(false);
+
     // Scroll to top on step change
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -154,6 +161,34 @@ export default function BookingClient() {
         );
     };
 
+    // Apply discount code
+    const handleApplyDiscount = async () => {
+        if (!discountInput.trim()) return;
+        setIsValidatingDiscount(true);
+        setDiscountError('');
+        try {
+            const res = await fetch('/api/discount-codes/validate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: discountInput.trim() }),
+            });
+            const data = await res.json();
+            if (data.valid) {
+                setDiscountCode(data.code_name);
+                setDiscountAmount(data.amount);
+                setDiscountError('');
+            } else {
+                setDiscountCode('');
+                setDiscountAmount(0);
+                setDiscountError(data.error || 'Invalid discount code');
+            }
+        } catch {
+            setDiscountError('Could not validate code. Please try again.');
+        } finally {
+            setIsValidatingDiscount(false);
+        }
+    };
+
     // Prepare payment when moving to step 3
     const handleProceedToPayment = async () => {
         if (!isFormValid()) {
@@ -171,7 +206,8 @@ export default function BookingClient() {
                     trip_date: selectedDate,
                     trip_time: selectedTime,
                     party_size: Number(formData.party_size),
-                    add_ons: formData.add_ons
+                    add_ons: formData.add_ons,
+                    discount_code: discountCode || undefined,
                 }),
             });
             const data = await res.json();
@@ -228,7 +264,7 @@ export default function BookingClient() {
         base += (formData.add_ons.observer_package || 0) * BUSINESS_INFO.pricing.observer;
         base += (formData.add_ons.tip_amount || 0);
 
-        return base;
+        return base - discountAmount;
     };
 
     const currentPricePerPerson = getBasePricePerPerson();
@@ -407,6 +443,43 @@ export default function BookingClient() {
                                         </div>
                                     </div>
 
+                                    {/* Discount Code */}
+                                    <div className="bg-[#FFEACC] rounded-xl p-5">
+                                        <h4 className="font-bold text-[#2D1600] mb-3 text-sm uppercase tracking-wide">Discount Code</h4>
+                                        {discountCode ? (
+                                            <div className="flex items-center justify-between bg-[#e8f5e9] border border-[#4caf50]/30 rounded-lg px-4 py-3">
+                                                <span className="text-[#2D1600] font-semibold text-sm">
+                                                    {discountCode} — ${discountAmount.toFixed(2)} off
+                                                </span>
+                                                <button
+                                                    onClick={() => { setDiscountCode(''); setDiscountAmount(0); setDiscountInput(''); }}
+                                                    className="text-[#8B6914] hover:text-red-600 text-xs font-medium ml-4"
+                                                >
+                                                    Remove
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            <div className="flex gap-2">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Enter code"
+                                                    value={discountInput}
+                                                    onChange={e => { setDiscountInput(e.target.value.toUpperCase()); setDiscountError(''); }}
+                                                    onKeyDown={e => e.key === 'Enter' && handleApplyDiscount()}
+                                                    className="flex-1 p-2 rounded-lg border border-[#DCC8A0] bg-white text-[#2D1600] text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9500]/50 uppercase"
+                                                />
+                                                <button
+                                                    onClick={handleApplyDiscount}
+                                                    disabled={isValidatingDiscount || !discountInput.trim()}
+                                                    className="bg-[#FF9500] hover:bg-[#E07B00] text-white text-sm font-bold px-4 py-2 rounded-lg disabled:opacity-50 transition-colors"
+                                                >
+                                                    {isValidatingDiscount ? '...' : 'Apply'}
+                                                </button>
+                                            </div>
+                                        )}
+                                        {discountError && <p className="text-red-500 text-xs mt-2">{discountError}</p>}
+                                    </div>
+
                                     <div className="flex justify-between items-center pt-4">
                                         <button
                                             onClick={() => setStep(1)}
@@ -431,6 +504,8 @@ export default function BookingClient() {
                                             addOns={formData.add_ons}
                                             basePricePerPerson={currentPricePerPerson}
                                             slotType={selectedSlotType}
+                                            discountAmount={discountAmount}
+                                            discountCode={discountCode}
                                         />
                                         <p className="text-center text-xs text-[#8B6914] mt-4">
                                             You won&apos;t be charged until the next step.
@@ -482,6 +557,8 @@ export default function BookingClient() {
                                             addOns={formData.add_ons}
                                             basePricePerPerson={currentPricePerPerson}
                                             slotType={selectedSlotType}
+                                            discountAmount={discountAmount}
+                                            discountCode={discountCode}
                                         />
                                         <div className="mt-4 bg-[#FFFFFF]/10 p-4 rounded-xl flex items-start gap-3">
                                             <ShieldCheck className="w-5 h-5 text-[#FFFFFF] mt-0.5 shrink-0" />
