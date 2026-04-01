@@ -97,9 +97,16 @@ export async function POST(request: Request) {
 
         // 3. Send Confirmation Emails
         const isDev = process.env.NODE_ENV === 'development';
-        const fromAddress = isDev
-            ? 'onboarding@resend.dev'
-            : 'Big Sky Parasail <bookings@montanaparasail.com>';
+        const hasVerifiedDomain = !!process.env.RESEND_VERIFIED_DOMAIN;
+        const fromAddress = (!isDev || hasVerifiedDomain)
+            ? 'Big Sky Parasail <bookings@montanaparasail.com>'
+            : 'Big Sky Parasail <onboarding@resend.dev>';
+        // In dev without a verified domain, Resend only delivers to the account owner email
+        const adminTo = isDev && !hasVerifiedDomain
+            ? (process.env.RESEND_ACCOUNT_EMAIL || BUSINESS_INFO.email)
+            : BUSINESS_INFO.email;
+
+        console.log(`[EMAIL] env=${process.env.NODE_ENV}, from=${fromAddress}, customerTo=${customer_email}, adminTo=${adminTo}`);
 
         // Tiered pricing: Early Bird $99, Standard $119, Sunset $159
         const slotType = getSlotType(trip_date, trip_time || '');
@@ -148,6 +155,9 @@ export async function POST(request: Request) {
         const priceNote = `$${perPerson}/person (${slotTypeLabel.toLowerCase()} rate)`;
 
         // 3a. Customer confirmation email
+        let customerEmailStatus = { sent: false, error: null as string | null, id: null as string | null };
+        let adminEmailStatus = { sent: false, error: null as string | null, id: null as string | null };
+
         try {
             const customerResult = await resend.emails.send({
                 from: fromAddress,
@@ -206,17 +216,19 @@ export async function POST(request: Request) {
                     </div>
                 `,
             });
-            console.log('Customer email sent:', customerResult);
+            customerEmailStatus = { sent: true, error: null, id: customerResult.data?.id || null };
+            console.log('[EMAIL] Customer email sent:', customerResult);
         } catch (emailError: any) {
-            console.error('Customer email error:', emailError?.message || emailError);
-            console.error('Customer email error details:', JSON.stringify(emailError, null, 2));
+            customerEmailStatus = { sent: false, error: emailError?.message || 'Unknown error', id: null };
+            console.error('[EMAIL] Customer email FAILED:', emailError?.message || emailError);
+            console.error('[EMAIL] Customer email error details:', JSON.stringify(emailError, null, 2));
         }
 
         // 3b. Admin notification email
         try {
             const adminResult = await resend.emails.send({
                 from: fromAddress,
-                to: ['bigskyparasailing@gmail.com'],
+                to: [adminTo],
                 subject: `New Booking: ${customer_name} - ${displayDate} at ${displayTime}`,
                 html: `
                     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
@@ -247,13 +259,22 @@ export async function POST(request: Request) {
                     </div>
                 `,
             });
-            console.log('Admin email sent:', adminResult);
+            adminEmailStatus = { sent: true, error: null, id: adminResult.data?.id || null };
+            console.log('[EMAIL] Admin email sent:', adminResult);
         } catch (emailError: any) {
-            console.error('Admin email error:', emailError?.message || emailError);
-            console.error('Admin email error details:', JSON.stringify(emailError, null, 2));
+            adminEmailStatus = { sent: false, error: emailError?.message || 'Unknown error', id: null };
+            console.error('[EMAIL] Admin email FAILED:', emailError?.message || emailError);
+            console.error('[EMAIL] Admin email error details:', JSON.stringify(emailError, null, 2));
         }
 
-        return NextResponse.json({ success: true, booking: data });
+        return NextResponse.json({
+            success: true,
+            booking: data,
+            emails: {
+                customer: customerEmailStatus,
+                admin: adminEmailStatus,
+            },
+        });
 
     } catch (error: any) {
         console.error('API Error:', error);
