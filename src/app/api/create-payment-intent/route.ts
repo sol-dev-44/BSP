@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { BUSINESS_INFO } from '@/config/business';
 import { getSlotType, getSlotPrice } from '@/config/solarSchedule';
+import { supabaseAdmin } from '@/lib/supabaseAdmin';
 
 // Initialize Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -16,7 +17,7 @@ function getPerPersonPrice(tripDate: string, tripTime: string): number {
 
 export async function POST(request: Request) {
     try {
-        const { party_size, trip_date, trip_time, add_ons } = await request.json();
+        const { party_size, trip_date, trip_time, add_ons, discount_code } = await request.json();
 
         if (!party_size || !trip_date) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -48,6 +49,30 @@ export async function POST(request: Request) {
 
         const slotType = getSlotType(trip_date, trip_time || '');
 
+        // Apply discount code if provided
+        let discountAmount = 0;
+        let appliedDiscountCode = '';
+
+        if (discount_code) {
+            const normalizedCode = discount_code.trim().toUpperCase();
+            const { data: discountData, error: discountError } = await supabaseAdmin
+                .from('bsp_discount_codes')
+                .select('amount, is_active, code_name')
+                .eq('code_name', normalizedCode)
+                .single();
+
+            if (discountError || !discountData) {
+                console.warn('[BSP PAYMENT] Discount code not found:', normalizedCode);
+            } else if (!discountData.is_active) {
+                console.warn('[BSP PAYMENT] Discount code inactive:', normalizedCode);
+            } else {
+                discountAmount = discountData.amount;
+                appliedDiscountCode = discountData.code_name;
+                amount = Math.max(0, amount - discountAmount);
+                console.log('[DISCOUNT] Applied discount code', normalizedCode, 'amount', discountAmount);
+            }
+        }
+
         const paymentIntent = await stripe.paymentIntents.create({
             amount: Math.round(amount * 100), // Cents
             currency: 'usd',
@@ -64,12 +89,16 @@ export async function POST(request: Request) {
                 combo_package: add_ons?.combo_package || 0,
                 photo_package: add_ons?.photo_package || 0,
                 gopro_package: add_ons?.gopro_package || 0,
-                tip_amount: add_ons?.tip_amount || 0
+                tip_amount: add_ons?.tip_amount || 0,
+                discount_code: appliedDiscountCode || '',
+                discount_amount: discountAmount || 0,
             },
         });
 
         return NextResponse.json({
             clientSecret: paymentIntent.client_secret,
+            discountApplied: discountAmount > 0,
+            discountAmount: discountAmount || 0,
         });
     } catch (error: any) {
         console.error('Error creating payment intent:', error);
