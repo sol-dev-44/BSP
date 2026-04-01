@@ -1,3 +1,19 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: executing
+stopped_at: Completed 01-02-PLAN.md
+last_updated: "2026-04-01T05:06:24.622Z"
+last_activity: 2026-04-01
+progress:
+  total_phases: 3
+  completed_phases: 0
+  total_plans: 3
+  completed_plans: 1
+  percent: 0
+---
+
 # Project State
 
 ## Project Reference
@@ -5,20 +21,21 @@
 See: .planning/PROJECT.md (updated 2026-03-31)
 
 **Core value:** Customers book and pay for the correct flight at the correct price, and the business owner sees accurate revenue and booking data in the admin dashboard.
-**Current focus:** Phase 1 — Pricing Integrity
+**Current focus:** Phase 01 — pricing-integrity
 
 ## Current Position
 
-Phase: 1 of 3 (Pricing Integrity)
-Plan: 0 of ? in current phase
-Status: Ready to plan
-Last activity: 2026-03-31 — Roadmap created, milestone 2 phases defined
+Phase: 01 (pricing-integrity) — EXECUTING
+Plan: 2 of 3
+Status: Ready to execute
+Last activity: 2026-04-01
 
 Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
 **Velocity:**
+
 - Total plans completed: 0
 - Average duration: —
 - Total execution time: 0 hours
@@ -30,10 +47,12 @@ Progress: [░░░░░░░░░░] 0%
 | - | - | - | - |
 
 **Recent Trend:**
+
 - Last 5 plans: —
 - Trend: —
 
 *Updated after each plan completion*
+| Phase 01-pricing-integrity P02 | 5 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -46,6 +65,7 @@ Recent decisions affecting current work:
 - No usage limits on codes — active or deleted only
 - Remove Twilio/SMS entirely from admin
 - Pricing source of truth: `src/config/business.ts` and `src/config/solarSchedule.ts`
+- [Phase 01-pricing-integrity]: GuestForm receives pricePerPerson as a required prop rather than reading from BUSINESS_INFO directly — fixes tip calculation for all slot types
 
 ### Pending Todos
 
@@ -57,6 +77,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31
-Stopped at: Roadmap written, ready to plan Phase 1
+Last session: 2026-04-01T05:06:24.620Z
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None

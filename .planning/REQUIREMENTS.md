@@ -7,7 +7,7 @@
 
 ### Pricing
 
-- [ ] **PRICE-01**: Booking flow displays correct per-person price ($99/$119/$159) based on selected time slot type throughout all steps
+- [x] **PRICE-01**: Booking flow displays correct per-person price ($99/$119/$159) based on selected time slot type throughout all steps
 - [ ] **PRICE-02**: Stripe payment intent is created with the correct total matching the displayed price
 - [ ] **PRICE-03**: Confirmation email shows correct itemized receipt with accurate per-person rate and slot type label
 - [ ] **PRICE-04**: Success page displays correct itemized receipt matching what was charged
@@ -62,7 +62,7 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PRICE-01 | Phase 1 | Pending |
+| PRICE-01 | Phase 1 | Complete |
 | PRICE-02 | Phase 1 | Pending |
 | PRICE-03 | Phase 1 | Pending |
 | PRICE-04 | Phase 1 | Pending |
