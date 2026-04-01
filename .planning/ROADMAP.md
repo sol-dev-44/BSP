@@ -47,7 +47,7 @@ Plans:
 **Plans**: 5 plans
 Plans:
 - [x] 02-01-PLAN.md — Create bsp_discount_codes table and add discount columns to bsp_bookings (schema + human SQL)
-- [ ] 02-02-PLAN.md — Admin CRUD UI and API routes for discount codes (RTK Query pattern)
+- [x] 02-02-PLAN.md — Admin CRUD UI and API routes for discount codes (RTK Query pattern)
 - [x] 02-03-PLAN.md — Discount validation endpoint and payment-intent discount application
 - [ ] 02-04-PLAN.md — Booking form discount code input and PriceBreakdown display
 - [ ] 02-05-PLAN.md — Store discount on booking record; show in success page and confirmation email
@@ -73,5 +73,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Pricing Integrity | 1/3 | In Progress|  |
-| 2. Discount Codes | 2/5 | In Progress|  |
+| 2. Discount Codes | 3/5 | In Progress|  |
 | 3. Admin & Scheduling | 0/? | Not started | - |

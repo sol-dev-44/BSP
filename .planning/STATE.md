@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-03-PLAN.md
-last_updated: "2026-04-01T10:44:32.232Z"
+stopped_at: Completed 02-02-PLAN.md
+last_updated: "2026-04-01T10:45:05.250Z"
 last_activity: 2026-04-01
 progress:
   total_phases: 3
   completed_phases: 1
   total_plans: 8
-  completed_plans: 5
+  completed_plans: 6
   percent: 0
 ---
 
@@ -55,6 +55,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-pricing-integrity P02 | 5 | 2 tasks | 3 files |
 | Phase 01-pricing-integrity P03 | 3min | 2 tasks | 2 files |
 | Phase 02-discount-codes P03 | 3min | 2 tasks | 2 files |
+| Phase 02-discount-codes P02 | 12min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,8 @@ Recent decisions affecting current work:
 - [Phase 01-pricing-integrity]: Compute slotType/perPerson before the Supabase insert so values are available to store; use nullish coalescing fallback for historical bookings
 - [Phase 02-discount-codes]: Payment intent creation is lenient on invalid discount codes — no rejection, just no discount applied
 - [Phase 02-discount-codes]: Discount amount floored at 0 with Math.max to prevent negative Stripe charges
+- [Phase 02-discount-codes]: code_name normalized to uppercase at API write layer for consistent discount code matching
+- [Phase 02-discount-codes]: Status toggle implemented as clickable Active/Inactive badge in discount codes admin UI
 
 ### Pending Todos
 
@@ -82,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-01T10:44:32.230Z
-Stopped at: Completed 02-03-PLAN.md
+Last session: 2026-04-01T10:45:05.248Z
+Stopped at: Completed 02-02-PLAN.md
 Resume file: None
