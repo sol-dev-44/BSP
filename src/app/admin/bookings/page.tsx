@@ -25,14 +25,10 @@ export default async function AdminBookingsPage({
     // Calculate Stats
     const activeBookings = bookings.filter(b => b.status !== 'cancelled');
 
-    const totalBookings = bookings.length;
+    const totalBookings = activeBookings.length;
     const totalRevenue = activeBookings.reduce((sum, b) => sum + (Number(b.total_amount) || 0), 0);
     const totalPax = activeBookings.reduce((sum, b) => sum + (Number(b.party_size) || 0), 0);
     const confirmedBookings = bookings.filter(b => b.status === 'confirmed').length;
-
-    // SMS / Twilio Stats (optional)
-    const smsUsage = 'N/A';
-    const balance = 'N/A';
 
     let displayedBookings = bookings;
     if (filter === 'active') {
@@ -75,13 +71,12 @@ export default async function AdminBookingsPage({
                 </header>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+                {/* ADMIN-02: Resend has no usage/analytics API — email monitoring is out of scope */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                     <StatCard label="Total Revenue" value={`$${totalRevenue.toLocaleString()}`} color="bg-green-500" />
                     <StatCard label="Confirmed" value={confirmedBookings.toString()} color="bg-sky-500" />
                     <StatCard label="Passengers" value={totalPax.toString()} color="bg-purple-500" />
                     <StatCard label="Transactions" value={totalBookings.toString()} color="bg-orange-500" />
-                    <StatCard label="SMS Usage" value={smsUsage} color="bg-pink-500" />
-                    <StatCard label="Twilio Balance" value={balance} color="bg-emerald-500" />
                 </div>
 
                 {/* Filter Tabs */}
