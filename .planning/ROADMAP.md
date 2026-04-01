@@ -63,7 +63,10 @@ Plans:
   3. Sunset flight time slots start at least 1 hour before actual Montana sunset for each date in the season
   4. Sunset flight times shift earlier or later through the season (May–September) matching real sunset data
   5. Mondays show no available booking slots across all flight types
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 03-01-PLAN.md — Remove Twilio/SMS stat cards and fix Transactions count to exclude cancelled bookings
+- [ ] 03-02-PLAN.md — Expand solar schedule to bi-weekly sunset data and exclude Mondays from booking
 
 ## Progress
 
@@ -74,4 +77,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Pricing Integrity | 1/3 | In Progress|  |
 | 2. Discount Codes | 5/5 | Complete   | 2026-04-01 |
-| 3. Admin & Scheduling | 0/? | Not started | - |
+| 3. Admin & Scheduling | 0/2 | Not started | - |
