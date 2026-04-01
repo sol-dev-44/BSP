@@ -13,33 +13,52 @@
 interface SolarEntry {
     /** Month number 1-12 */
     month: number;
+    /** Day of month (1 = first half, 16 = second half) */
+    day: number;
     /** Approximate sunrise hour (24h, local MDT) */
     sunriseHour: number;
     sunriseMinute: number;
     /** Approximate sunset hour (24h, local MDT) */
     sunsetHour: number;
     sunsetMinute: number;
-    /** Last trip start hour (24h) */
+    /** Last trip start — computed as sunsetHour - 1, floored to :00 */
     lastTripHour: number;
     lastTripMinute: number;
 }
 
 /**
- * Representative mid-month solar data for Flathead Lake, Montana.
- * All times are local (MDT for May-Sep).
+ * Bi-weekly solar data for Flathead Lake, Montana (48.0°N, 114.2°W).
+ * Two entries per month (day 1 and day 16) covering May through September.
+ * All times are local MDT (UTC-6 in summer).
+ * lastTripHour is always sunsetHour - 1 (integer), lastTripMinute is always 0.
  *
- * May:   sunrise ~6:00, sunset ~8:45 PM  -> last trip 7:00 PM
- * Jun:   sunrise ~5:30, sunset ~9:30 PM  -> last trip 7:00 PM
- * Jul:   sunrise ~5:45, sunset ~9:20 PM  -> last trip 7:00 PM
- * Aug:   sunrise ~6:20, sunset ~8:30 PM  -> last trip 7:00 PM
- * Sep:   sunrise ~7:00, sunset ~7:30 PM  -> last trip 6:00 PM
+ * May 1:   sunrise ~6:10, sunset ~8:30 PM  -> last trip 7:00 PM
+ * May 16:  sunrise ~5:50, sunset ~8:50 PM  -> last trip 7:00 PM
+ * Jun 1:   sunrise ~5:35, sunset ~9:10 PM  -> last trip 8:00 PM
+ * Jun 16:  sunrise ~5:28, sunset ~9:30 PM  -> last trip 8:00 PM
+ * Jul 1:   sunrise ~5:32, sunset ~9:28 PM  -> last trip 8:00 PM
+ * Jul 16:  sunrise ~5:52, sunset ~9:10 PM  -> last trip 8:00 PM
+ * Aug 1:   sunrise ~6:15, sunset ~8:45 PM  -> last trip 7:00 PM
+ * Aug 16:  sunrise ~6:40, sunset ~8:15 PM  -> last trip 7:00 PM
+ * Sep 1:   sunrise ~7:05, sunset ~7:45 PM  -> last trip 6:00 PM
+ * Sep 16:  sunrise ~7:30, sunset ~7:10 PM  -> last trip 6:00 PM
  */
 const SOLAR_TABLE: SolarEntry[] = [
-    { month: 5, sunriseHour: 6, sunriseMinute: 0, sunsetHour: 20, sunsetMinute: 45, lastTripHour: 19, lastTripMinute: 0 },
-    { month: 6, sunriseHour: 5, sunriseMinute: 30, sunsetHour: 21, sunsetMinute: 30, lastTripHour: 19, lastTripMinute: 0 },
-    { month: 7, sunriseHour: 5, sunriseMinute: 45, sunsetHour: 21, sunsetMinute: 20, lastTripHour: 19, lastTripMinute: 0 },
-    { month: 8, sunriseHour: 6, sunriseMinute: 20, sunsetHour: 20, sunsetMinute: 30, lastTripHour: 19, lastTripMinute: 0 },
-    { month: 9, sunriseHour: 7, sunriseMinute: 0, sunsetHour: 19, sunsetMinute: 30, lastTripHour: 18, lastTripMinute: 0 },
+    // May — early May sunset ~8:30 PM, mid/late May sunset ~8:45 PM
+    { month: 5, day:  1, sunriseHour: 6, sunriseMinute: 10, sunsetHour: 20, sunsetMinute: 30, lastTripHour: 19, lastTripMinute: 0 },
+    { month: 5, day: 16, sunriseHour: 5, sunriseMinute: 50, sunsetHour: 20, sunsetMinute: 50, lastTripHour: 19, lastTripMinute: 0 },
+    // June — sunset reaches max ~9:30 PM around solstice
+    { month: 6, day:  1, sunriseHour: 5, sunriseMinute: 35, sunsetHour: 21, sunsetMinute: 10, lastTripHour: 20, lastTripMinute: 0 },
+    { month: 6, day: 16, sunriseHour: 5, sunriseMinute: 28, sunsetHour: 21, sunsetMinute: 30, lastTripHour: 20, lastTripMinute: 0 },
+    // July — sunset begins retreating after solstice
+    { month: 7, day:  1, sunriseHour: 5, sunriseMinute: 32, sunsetHour: 21, sunsetMinute: 28, lastTripHour: 20, lastTripMinute: 0 },
+    { month: 7, day: 16, sunriseHour: 5, sunriseMinute: 52, sunsetHour: 21, sunsetMinute: 10, lastTripHour: 20, lastTripMinute: 0 },
+    // August — sunset moves back noticeably
+    { month: 8, day:  1, sunriseHour: 6, sunriseMinute: 15, sunsetHour: 20, sunsetMinute: 45, lastTripHour: 19, lastTripMinute: 0 },
+    { month: 8, day: 16, sunriseHour: 6, sunriseMinute: 40, sunsetHour: 20, sunsetMinute: 15, lastTripHour: 19, lastTripMinute: 0 },
+    // September — sunset drops to ~7:30 PM by end of month
+    { month: 9, day:  1, sunriseHour: 7, sunriseMinute:  5, sunsetHour: 19, sunsetMinute: 45, lastTripHour: 18, lastTripMinute: 0 },
+    { month: 9, day: 16, sunriseHour: 7, sunriseMinute: 30, sunsetHour: 19, sunsetMinute: 10, lastTripHour: 18, lastTripMinute: 0 },
 ];
 
 /**
@@ -48,14 +67,21 @@ const SOLAR_TABLE: SolarEntry[] = [
 const FIRST_TRIP_HOUR = 9;
 
 /**
- * Get the solar entry for a given month (1-12).
- * Falls back to the closest available month if somehow out of season.
+ * Get the solar entry for a given date string (YYYY-MM-DD).
+ * Picks the bi-weekly entry whose (month, day) bracket the given date.
+ * day 1-15 of month -> use the month/day=1 entry
+ * day 16+ of month -> use the month/day=16 entry
  */
-function getSolarEntry(month: number): SolarEntry {
-    const entry = SOLAR_TABLE.find(e => e.month === month);
+function getSolarEntry(dateStr: string): SolarEntry {
+    const parts = dateStr.split('-');
+    const month = parseInt(parts[1]);
+    const dayOfMonth = parseInt(parts[2]);
+    const entryDay = dayOfMonth < 16 ? 1 : 16;
+
+    const entry = SOLAR_TABLE.find(e => e.month === month && e.day === entryDay);
     if (entry) return entry;
 
-    // Fallback: clamp to nearest in-season month
+    // Fallback: clamp to nearest in-season entry
     if (month < 5) return SOLAR_TABLE[0];
     return SOLAR_TABLE[SOLAR_TABLE.length - 1];
 }
@@ -64,8 +90,7 @@ function getSolarEntry(month: number): SolarEntry {
  * Get the approximate sunset time string for a date (e.g. "8:45 PM").
  */
 export function getMontanaSunset(dateStr: string): string {
-    const month = parseInt(dateStr.split('-')[1]);
-    const entry = getSolarEntry(month);
+    const entry = getSolarEntry(dateStr);
     return formatTime(entry.sunsetHour, entry.sunsetMinute);
 }
 
@@ -73,21 +98,19 @@ export function getMontanaSunset(dateStr: string): string {
  * Get the last trip slot label for a date (e.g. "7:00 PM").
  */
 export function getLastTripSlot(dateStr: string): string {
-    const month = parseInt(dateStr.split('-')[1]);
-    const entry = getSolarEntry(month);
+    const entry = getSolarEntry(dateStr);
     return formatTime(entry.lastTripHour, entry.lastTripMinute);
 }
 
 /**
  * Generate the full array of available time slot display strings for a given date.
- * Hourly from 9:00 AM through the last trip time for that month.
+ * Hourly from 9:00 AM through the last trip time for that date.
  *
- * Example for a June date: ["9:00 AM", "10:00 AM", ..., "6:00 PM", "7:00 PM"]
+ * Example for a June date: ["9:00 AM", "10:00 AM", ..., "7:00 PM", "8:00 PM"]
  * Pricing: 9-10 AM = Early Bird ($99), last slot = Sunset ($159), all others = Standard ($119).
  */
 export function getTimeSlotsForDate(dateStr: string): string[] {
-    const month = parseInt(dateStr.split('-')[1]);
-    const entry = getSolarEntry(month);
+    const entry = getSolarEntry(dateStr);
 
     const slots: string[] = [];
 
