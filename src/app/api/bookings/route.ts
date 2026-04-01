@@ -59,6 +59,10 @@ export async function POST(request: Request) {
             paymentStatus = 'confirmed';
         }
 
+        // Compute slot pricing for storage (authoritative values for success page and receipts)
+        const slotType = getSlotType(trip_date, trip_time || '');
+        const perPerson = getSlotPrice(slotType);
+
         // 2. Insert into Supabase (idempotent via Stripe PI ID)
         const { data: existingBooking } = await supabase
             .from('bsp_bookings')
@@ -84,7 +88,9 @@ export async function POST(request: Request) {
                     status: paymentStatus,
                     stripe_payment_intent_id: payment_intent_id,
                     notes,
-                    add_ons
+                    add_ons,
+                    slot_type: slotType,
+                    per_person_rate: perPerson,
                 },
             ])
             .select()
@@ -109,8 +115,6 @@ export async function POST(request: Request) {
         console.log(`[EMAIL] env=${process.env.NODE_ENV}, from=${fromAddress}, customerTo=${customer_email}, adminTo=${adminTo}`);
 
         // Tiered pricing: Early Bird $99, Standard $119, Sunset $159
-        const slotType = getSlotType(trip_date, trip_time || '');
-        const perPerson = getSlotPrice(slotType);
         const flightSubtotal = party_size * perPerson;
         const observerTotal = (add_ons?.observer_count || add_ons?.observer_package || 0) * BUSINESS_INFO.pricing.observer;
         const comboTotal = (add_ons?.combo_package || 0) * BUSINESS_INFO.pricing.combo;
