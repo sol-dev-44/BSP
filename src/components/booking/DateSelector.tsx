@@ -126,7 +126,7 @@ export default function DateSelector({ selectedDate, onSelectDate, minDate }: Da
                     ))}
                 </div>
                 <p className="mt-3 text-xs text-[#8B6914]">
-                    Available 7 days a week during season
+                    Open Tuesday–Sunday during season
                 </p>
             </div>
         </div>

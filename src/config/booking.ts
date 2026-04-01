@@ -12,8 +12,8 @@ export const BOOKING_CONFIG = {
     ],
 
     // Excluded days of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-    // 7 days a week operation
-    excludedDaysOfWeek: [] as number[],
+    // Closed Mondays — open Tuesday through Sunday
+    excludedDaysOfWeek: [1] as number[],
 
     // Max passengers per boat (Cloud Dancer holds 10)
     MAX_PASSENGERS: 10,
