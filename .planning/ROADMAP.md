@@ -44,7 +44,13 @@ Plans:
   3. Admin can delete a code, and deleted codes are rejected when a customer tries to use them
   4. Customer can enter a discount code during booking and see the total price reduced by the code's dollar amount
   5. The discount amount appears in the confirmation email and success page alongside the itemized receipt
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+- [ ] 02-01-PLAN.md — Create bsp_discount_codes table and add discount columns to bsp_bookings (schema + human SQL)
+- [ ] 02-02-PLAN.md — Admin CRUD UI and API routes for discount codes (RTK Query pattern)
+- [ ] 02-03-PLAN.md — Discount validation endpoint and payment-intent discount application
+- [ ] 02-04-PLAN.md — Booking form discount code input and PriceBreakdown display
+- [ ] 02-05-PLAN.md — Store discount on booking record; show in success page and confirmation email
 **UI hint**: yes
 
 ### Phase 3: Admin & Scheduling
@@ -67,5 +73,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Pricing Integrity | 1/3 | In Progress|  |
-| 2. Discount Codes | 0/? | Not started | - |
+| 2. Discount Codes | 0/5 | Not started | - |
 | 3. Admin & Scheduling | 0/? | Not started | - |
