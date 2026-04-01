@@ -29,9 +29,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. The success page shows the same itemized receipt matching what was charged
 **Plans**: 3 plans
 Plans:
-- [ ] 01-01-PLAN.md — Add slot_type and per_person_rate columns to bsp_bookings (schema + human SQL execution)
+- [x] 01-01-PLAN.md — Add slot_type and per_person_rate columns to bsp_bookings (schema + human SQL execution)
 - [x] 01-02-PLAN.md — Fix GuestForm tip calculation prop (BUG A: hardcoded $119 for tips)
-- [ ] 01-03-PLAN.md — Store slot pricing in bookings API and fix success page receipt (BUG B)
+- [x] 01-03-PLAN.md — Store slot pricing in bookings API and fix success page receipt (BUG B)
 **UI hint**: yes
 
 ### Phase 2: Discount Codes
