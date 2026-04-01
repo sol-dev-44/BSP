@@ -402,6 +402,7 @@ export default function BookingClient() {
                                                 maxPartySize={maxPartySize}
                                                 selectedDate={selectedDate}
                                                 selectedTime={selectedTime}
+                                                pricePerPerson={currentPricePerPerson}
                                             />
                                         </div>
                                     </div>

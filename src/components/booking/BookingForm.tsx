@@ -285,6 +285,7 @@ export default function BookingForm({ className }: BookingFormProps) {
                                         maxPartySize={BOOKING_CONFIG.MAX_PASSENGERS}
                                         selectedDate={selectedDate}
                                         selectedTime={selectedTime}
+                                        pricePerPerson={getSelectedSlotPrice()}
                                     />
                                 </div>
 
