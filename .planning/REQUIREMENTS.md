@@ -29,9 +29,9 @@
 
 ### Scheduling
 
-- [ ] **SCHED-01**: Sunset flights are scheduled to start minimum 1 hour before actual sunset time for the given date in Montana
-- [ ] **SCHED-02**: Sunset flight times vary throughout the season (May-September) based on real sunset data
-- [ ] **SCHED-03**: Mondays are excluded from booking availability across all flight types
+- [x] **SCHED-01**: Sunset flights are scheduled to start minimum 1 hour before actual sunset time for the given date in Montana
+- [x] **SCHED-02**: Sunset flight times vary throughout the season (May-September) based on real sunset data
+- [x] **SCHED-03**: Mondays are excluded from booking availability across all flight types
 
 ## v2 Requirements
 
@@ -75,9 +75,9 @@
 | ADMIN-01 | Phase 3 | Complete |
 | ADMIN-02 | Phase 3 | Complete |
 | ADMIN-03 | Phase 3 | Complete |
-| SCHED-01 | Phase 3 | Pending |
-| SCHED-02 | Phase 3 | Pending |
-| SCHED-03 | Phase 3 | Pending |
+| SCHED-01 | Phase 3 | Complete |
+| SCHED-02 | Phase 3 | Complete |
+| SCHED-03 | Phase 3 | Complete |
 
 **Coverage:**
 - v1 requirements: 16 total

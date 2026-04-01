@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: Pricing Integrity** - Correct price flows from slot selection through Stripe charge, email, and success page
 - [x] **Phase 2: Discount Codes** - Admin can manage discount codes; customers can apply them at checkout (completed 2026-04-01)
-- [ ] **Phase 3: Admin & Scheduling** - Admin panel cleaned up, cancellation revenue fixed, sunset and Monday scheduling corrected
+- [x] **Phase 3: Admin & Scheduling** - Admin panel cleaned up, cancellation revenue fixed, sunset and Monday scheduling corrected (completed 2026-04-01)
 
 ## Phase Details
 
@@ -66,7 +66,7 @@ Plans:
 **Plans**: 2 plans
 Plans:
 - [x] 03-01-PLAN.md — Remove Twilio/SMS stat cards and fix Transactions count to exclude cancelled bookings
-- [ ] 03-02-PLAN.md — Expand solar schedule to bi-weekly sunset data and exclude Mondays from booking
+- [x] 03-02-PLAN.md — Expand solar schedule to bi-weekly sunset data and exclude Mondays from booking
 
 ## Progress
 
@@ -77,4 +77,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Pricing Integrity | 1/3 | In Progress|  |
 | 2. Discount Codes | 5/5 | Complete   | 2026-04-01 |
-| 3. Admin & Scheduling | 1/2 | In Progress|  |
+| 3. Admin & Scheduling | 2/2 | Complete   | 2026-04-01 |
