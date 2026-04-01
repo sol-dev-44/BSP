@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-03-PLAN.md
-last_updated: "2026-04-01T05:17:54.506Z"
+stopped_at: Completed 02-03-PLAN.md
+last_updated: "2026-04-01T10:44:32.232Z"
 last_activity: 2026-04-01
 progress:
   total_phases: 3
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 8
+  completed_plans: 5
   percent: 0
 ---
 
@@ -54,6 +54,7 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01-pricing-integrity P02 | 5 | 2 tasks | 3 files |
 | Phase 01-pricing-integrity P03 | 3min | 2 tasks | 2 files |
+| Phase 02-discount-codes P03 | 3min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -68,6 +69,8 @@ Recent decisions affecting current work:
 - Pricing source of truth: `src/config/business.ts` and `src/config/solarSchedule.ts`
 - [Phase 01-pricing-integrity]: GuestForm receives pricePerPerson as a required prop rather than reading from BUSINESS_INFO directly — fixes tip calculation for all slot types
 - [Phase 01-pricing-integrity]: Compute slotType/perPerson before the Supabase insert so values are available to store; use nullish coalescing fallback for historical bookings
+- [Phase 02-discount-codes]: Payment intent creation is lenient on invalid discount codes — no rejection, just no discount applied
+- [Phase 02-discount-codes]: Discount amount floored at 0 with Math.max to prevent negative Stripe charges
 
 ### Pending Todos
 
@@ -79,6 +82,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-01T05:13:50.644Z
-Stopped at: Completed 01-03-PLAN.md
+Last session: 2026-04-01T10:44:32.230Z
+Stopped at: Completed 02-03-PLAN.md
 Resume file: None

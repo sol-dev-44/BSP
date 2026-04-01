@@ -17,8 +17,8 @@
 - [ ] **DISC-01**: Admin can create a discount code with a name and fixed dollar amount
 - [ ] **DISC-02**: Admin can edit an existing discount code's name and amount
 - [ ] **DISC-03**: Admin can delete a discount code, making it immediately invalid for future bookings
-- [ ] **DISC-04**: Customer can enter a discount code during booking and see the total reduced by the code's dollar amount
-- [ ] **DISC-05**: Booking API validates the discount code exists and is active before applying the discount
+- [x] **DISC-04**: Customer can enter a discount code during booking and see the total reduced by the code's dollar amount
+- [x] **DISC-05**: Booking API validates the discount code exists and is active before applying the discount
 - [ ] **DISC-06**: Discount amount is stored on the booking record and reflected in confirmation email and success page
 
 ### Admin Panel
@@ -69,8 +69,8 @@
 | DISC-01 | Phase 2 | Pending |
 | DISC-02 | Phase 2 | Pending |
 | DISC-03 | Phase 2 | Pending |
-| DISC-04 | Phase 2 | Pending |
-| DISC-05 | Phase 2 | Pending |
+| DISC-04 | Phase 2 | Complete |
+| DISC-05 | Phase 2 | Complete |
 | DISC-06 | Phase 2 | Pending |
 | ADMIN-01 | Phase 3 | Pending |
 | ADMIN-02 | Phase 3 | Pending |
