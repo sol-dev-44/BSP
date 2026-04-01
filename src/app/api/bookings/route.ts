@@ -32,6 +32,8 @@ export async function POST(request: Request) {
             payment_intent_id,
             notes,
             add_ons,
+            discount_code,
+            discount_amount,
         } = body;
 
         // 1. Validate Payment Intent ID with Stripe
@@ -91,6 +93,8 @@ export async function POST(request: Request) {
                     add_ons,
                     slot_type: slotType,
                     per_person_rate: perPerson,
+                    discount_code: discount_code || null,
+                    discount_amount: discount_amount || 0,
                 },
             ])
             .select()
@@ -121,6 +125,7 @@ export async function POST(request: Request) {
         const photoTotal = (add_ons?.photo_package || 0) * BUSINESS_INFO.pricing.photos;
         const goproTotal = (add_ons?.gopro_package || 0) * BUSINESS_INFO.pricing.gopro;
         const tipTotal = add_ons?.tip_amount || 0;
+        const discountTotal = discount_amount || 0;
 
         // Format date/time for display
         const formatDate = (d: string) => {
@@ -152,6 +157,9 @@ export async function POST(request: Request) {
         }
         if (tipTotal > 0) {
             addOnRows += `<tr><td style="padding:6px 0;color:#16a34a">Crew Gratuity</td><td style="padding:6px 0;text-align:right;color:#16a34a;font-weight:600">$${tipTotal.toFixed(2)}</td></tr>`;
+        }
+        if (discountTotal > 0) {
+            addOnRows += `<tr><td style="padding:6px 0;color:#16a34a">Discount (${discount_code || 'Code'})</td><td style="padding:6px 0;text-align:right;color:#16a34a;font-weight:600">-$${discountTotal.toFixed(2)}</td></tr>`;
         }
 
         const slotTypeLabel = slotType === 'earlybird' ? 'Early Bird' : slotType === 'sunset' ? 'Sunset' : 'Standard';
