@@ -27,7 +27,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. The Stripe charge matches exactly what was displayed on the payment screen
   3. The confirmation email shows an itemized receipt with the correct rate and slot type label
   4. The success page shows the same itemized receipt matching what was charged
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 01-01-PLAN.md — Add slot_type and per_person_rate columns to bsp_bookings (schema + human SQL execution)
+- [ ] 01-02-PLAN.md — Fix GuestForm tip calculation prop (BUG A: hardcoded $119 for tips)
+- [ ] 01-03-PLAN.md — Store slot pricing in bookings API and fix success page receipt (BUG B)
 **UI hint**: yes
 
 ### Phase 2: Discount Codes
@@ -62,6 +66,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Pricing Integrity | 0/? | Not started | - |
+| 1. Pricing Integrity | 0/3 | Not started | - |
 | 2. Discount Codes | 0/? | Not started | - |
 | 3. Admin & Scheduling | 0/? | Not started | - |
