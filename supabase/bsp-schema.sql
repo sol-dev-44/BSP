@@ -194,3 +194,29 @@ CREATE POLICY "bsp_notes_service_all" ON bsp_notes
 ALTER TABLE bsp_bookings
     ADD COLUMN IF NOT EXISTS slot_type TEXT CHECK (slot_type IN ('earlybird', 'standard', 'sunset')),
     ADD COLUMN IF NOT EXISTS per_person_rate NUMERIC(10, 2);
+
+-- ============================================================
+-- 10. DISCOUNT CODES MIGRATION (Phase 2)
+-- Run these in Supabase SQL Editor to add discount code support.
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS bsp_discount_codes (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code_name TEXT NOT NULL UNIQUE,
+    amount NUMERIC(10, 2) NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT true,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+ALTER TABLE bsp_discount_codes ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "bsp_discount_codes_service_all" ON bsp_discount_codes
+    FOR ALL USING (true) WITH CHECK (true);
+
+CREATE INDEX IF NOT EXISTS idx_bsp_discount_codes_code_name ON bsp_discount_codes(code_name);
+CREATE INDEX IF NOT EXISTS idx_bsp_discount_codes_is_active ON bsp_discount_codes(is_active);
+
+ALTER TABLE bsp_bookings
+    ADD COLUMN IF NOT EXISTS discount_code TEXT,
+    ADD COLUMN IF NOT EXISTS discount_amount NUMERIC(10, 2) DEFAULT 0;
