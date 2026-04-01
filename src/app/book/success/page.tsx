@@ -16,10 +16,13 @@ interface BookingDetails {
     trip_time: string;
     party_size: number;
     total_amount: number;
+    slot_type: 'earlybird' | 'standard' | 'sunset' | null;
+    per_person_rate: number | null;
     add_ons: {
         photo_package?: number;
         gopro_package?: number;
         observer_package?: number;
+        combo_package?: number;
         tip_amount?: number;
     };
     created_at: string;
@@ -92,11 +95,14 @@ function BookingContent() {
     }
 
     const { add_ons } = booking;
-    const perPerson = BUSINESS_INFO.pricing.parasail;
+    const perPerson = booking.per_person_rate ?? BUSINESS_INFO.pricing.parasail;
+    const slotType = booking.slot_type ?? 'standard';
+    const slotTypeLabel = slotType === 'earlybird' ? 'Early Bird' : slotType === 'sunset' ? 'Sunset' : 'Standard';
     const flightSubtotal = booking.party_size * perPerson;
     const photoTotal = (add_ons?.photo_package || 0) * BUSINESS_INFO.pricing.photos;
     const goproTotal = (add_ons?.gopro_package || 0) * BUSINESS_INFO.pricing.gopro;
     const observerTotal = (add_ons?.observer_package || 0) * BUSINESS_INFO.pricing.observer;
+    const comboTotal = (add_ons?.combo_package || 0) * BUSINESS_INFO.pricing.combo;
     const tipTotal = add_ons?.tip_amount || 0;
 
     const displayTime = formatTime(booking.trip_time);
@@ -157,7 +163,7 @@ function BookingContent() {
                         </div>
                         <div>
                             <p className="text-xs text-[#8B6914] uppercase font-semibold">Rate</p>
-                            <p className="font-bold text-lg">${perPerson}/person{booking.party_size >= 2 ? ' (group)' : ''}</p>
+                            <p className="font-bold text-lg">${perPerson}/person <span className="text-sm font-normal text-[#8B6914]">({slotTypeLabel})</span></p>
                         </div>
                     </div>
                 </div>
@@ -194,6 +200,12 @@ function BookingContent() {
                             <div className="flex justify-between">
                                 <span className="text-[#614020]">Observer / Boat Rider x {add_ons.observer_package}</span>
                                 <span className="font-medium text-[#2D1600]">${observerTotal.toFixed(2)}</span>
+                            </div>
+                        )}
+                        {(add_ons?.combo_package || 0) > 0 && (
+                            <div className="flex justify-between">
+                                <span className="text-[#614020]">Media Combo (Photos + Video) x {add_ons.combo_package}</span>
+                                <span className="font-medium text-[#2D1600]">${comboTotal.toFixed(2)}</span>
                             </div>
                         )}
                         {tipTotal > 0 && (
