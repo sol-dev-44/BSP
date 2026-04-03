@@ -23,7 +23,6 @@ export const BOOKING_CONFIG = {
     // This static list is kept as a fallback / reference for mid-season.
     timeSlots: {
         daily: [
-            '9:00 AM',
             '10:00 AM',
             '11:00 AM',
             '12:00 PM',

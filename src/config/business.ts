@@ -38,20 +38,20 @@ export const BUSINESS_INFO = {
         text: 'May 1st - September 30th',
     },
 
-    // Business Hours (9 AM - 7 PM daily)
+    // Business Hours (10 AM - 7 PM daily)
     hours: {
-        monday: '9:00 AM - 7:00 PM',
-        tuesday: '9:00 AM - 7:00 PM',
-        wednesday: '9:00 AM - 7:00 PM',
-        thursday: '9:00 AM - 7:00 PM',
-        friday: '9:00 AM - 7:00 PM',
-        saturday: '9:00 AM - 7:00 PM',
-        sunday: '9:00 AM - 7:00 PM',
+        monday: '10:00 AM - 7:00 PM',
+        tuesday: '10:00 AM - 7:00 PM',
+        wednesday: '10:00 AM - 7:00 PM',
+        thursday: '10:00 AM - 7:00 PM',
+        friday: '10:00 AM - 7:00 PM',
+        saturday: '10:00 AM - 7:00 PM',
+        sunday: '10:00 AM - 7:00 PM',
     },
 
     // Schema.org format for hours
     openingHours: [
-        'Mo-Su 09:00-19:00',
+        'Mo-Su 10:00-19:00',
     ],
 
     // Social Media
@@ -92,9 +92,9 @@ export const BUSINESS_INFO = {
             price: 99,
             image: 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images//WhiteFishSmiles.jpg',
             tagline: 'Start your day soaring over Flathead Lake',
-            description: 'Catch the calm morning waters on Flathead Lake with our 9 AM flight. Enjoy smooth conditions and serene mountain views before the afternoon winds pick up.',
+            description: 'Catch the calm morning waters on Flathead Lake with our 10 AM flight. Enjoy smooth conditions and serene mountain views before the afternoon winds pick up.',
             features: [
-                '9 AM or 10 AM departure',
+                '10 AM departure',
                 'Calm morning waters',
                 'Lower wind conditions',
                 'Stunning morning light',

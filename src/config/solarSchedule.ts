@@ -2,12 +2,12 @@
  * Montana Solar Schedule (Flathead Lake area)
  *
  * Approximate sunrise/sunset times for Lakeside, MT (48.0°N, 114.2°W)
- * Used to generate dynamic daily time slots from 9 AM through last trip time.
+ * Used to generate dynamic daily time slots from 10 AM through last trip time.
  *
  * Season: May 1 - September 30
  *
- * Big Sky Parasail operates 9:00 AM - 7:00 PM daily with tiered pricing:
- * Early Bird (9-10 AM) = $99, Standard = $119, Sunset (last slot) = $159.
+ * Big Sky Parasail operates 10:00 AM - 7:00 PM daily with tiered pricing:
+ * Early Bird (10 AM) = $99, Standard = $119, Sunset (last slot) = $159.
  */
 
 interface SolarEntry {
@@ -62,9 +62,9 @@ const SOLAR_TABLE: SolarEntry[] = [
 ];
 
 /**
- * First trip of the day - 9:00 AM
+ * First trip of the day - 10:00 AM
  */
-const FIRST_TRIP_HOUR = 9;
+const FIRST_TRIP_HOUR = 10;
 
 /**
  * Get the solar entry for a given date string (YYYY-MM-DD).
@@ -104,17 +104,17 @@ export function getLastTripSlot(dateStr: string): string {
 
 /**
  * Generate the full array of available time slot display strings for a given date.
- * Hourly from 9:00 AM through the last trip time for that date.
+ * Hourly from 10:00 AM through the last trip time for that date.
  *
- * Example for a June date: ["9:00 AM", "10:00 AM", ..., "7:00 PM", "8:00 PM"]
- * Pricing: 9-10 AM = Early Bird ($99), last slot = Sunset ($159), all others = Standard ($119).
+ * Example for a June date: ["10:00 AM", "11:00 AM", ..., "7:00 PM", "8:00 PM"]
+ * Pricing: 10 AM = Early Bird ($99), last slot = Sunset ($159), all others = Standard ($119).
  */
 export function getTimeSlotsForDate(dateStr: string): string[] {
     const entry = getSolarEntry(dateStr);
 
     const slots: string[] = [];
 
-    // Generate hourly slots from 9 AM through last trip time
+    // Generate hourly slots from 10 AM through last trip time
     for (let hour = FIRST_TRIP_HOUR; hour <= entry.lastTripHour; hour++) {
         if (hour === entry.lastTripHour && entry.lastTripMinute > 0) {
             // Last trip is at :30 - add the half-hour slot
@@ -145,7 +145,7 @@ function formatTime(hour24: number, minute: number): string {
  */
 export function getScheduleDescription(dateStr: string): string {
     const lastTrip = getLastTripSlot(dateStr);
-    return `9:00 AM - ${lastTrip}`;
+    return `10:00 AM - ${lastTrip}`;
 }
 
 /**
@@ -166,12 +166,12 @@ function normalizeTime(timeStr: string): string {
 }
 
 /**
- * Early bird slots = 9:00 AM and 10:00 AM.
- * Returns true if the given time string represents a morning early bird slot.
+ * Early bird slot = 10:00 AM only.
+ * Returns true if the given time string represents the morning early bird slot.
  */
 export function isEarlyBirdSlot(timeStr: string): boolean {
     const normalized = normalizeTime(timeStr);
-    return normalized === '9:00 AM' || normalized === '10:00 AM';
+    return normalized === '10:00 AM';
 }
 
 /**

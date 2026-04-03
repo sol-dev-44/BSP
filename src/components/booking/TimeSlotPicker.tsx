@@ -60,7 +60,7 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
         <div className="w-full">
             <h3 className="text-xl font-semibold mb-2 text-[#2D1600] font-serif">Select a Time</h3>
             <p className="text-sm text-[#8B6914] mb-4">
-                Early Bird (9 AM) $99 | Standard $119 | Sunset (last flight) $159
+                Early Bird (10 AM) $99 | Standard $119 | Sunset (last flight) $159
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                 {slots.map((slot) => {

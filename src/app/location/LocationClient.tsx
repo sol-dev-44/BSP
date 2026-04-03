@@ -180,7 +180,7 @@ export default function LocationClient() {
                                         </div>
                                         <div>
                                             <p className="text-sm font-semibold text-[#2D1600]">Operating Hours</p>
-                                            <p className="text-[#614020]">May - September: 9:00 AM - 7:00 PM</p>
+                                            <p className="text-[#614020]">May - September: 10:00 AM - 7:00 PM</p>
                                             <p className="text-[#8B6914] text-sm">Weather permitting</p>
                                         </div>
                                     </div>

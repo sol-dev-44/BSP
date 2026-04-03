@@ -8,7 +8,7 @@ export const PARASAILING_FAQS: FAQItem[] = [
     // Pricing & Booking
     {
         question: 'How much does parasailing cost on Flathead Lake?',
-        answer: 'Parasailing on Flathead Lake starts at $99/person for our Early Bird flights (9 AM or 10 AM). Standard flights are $119/person, and our premium Sunset flight (last flight of the day) is $159/person. We also offer observer/boat rider passes for $49, photo packages for $40, GoPro video for $50, or save with our media combo (photos + video) for $75. View all our packages and pricing at montanaparasail.com/services',
+        answer: 'Parasailing on Flathead Lake starts at $99/person for our Early Bird flight (10 AM). Standard flights are $119/person, and our premium Sunset flight (last flight of the day) is $159/person. We also offer observer/boat rider passes for $49, photo packages for $40, GoPro video for $50, or save with our media combo (photos + video) for $75. View all our packages and pricing at montanaparasail.com/services',
         category: 'Pricing & Booking'
     },
     {
@@ -18,12 +18,12 @@ export const PARASAILING_FAQS: FAQItem[] = [
     },
     {
         question: 'Can I book parasailing for a group on Flathead Lake?',
-        answer: 'Yes! We love group adventures. Our boat, the Cloud Dancer (Ocean Pro 31), accommodates up to 10 passengers per trip. Standard flights are $119/person, with Early Bird (9 AM) at $99/person and Sunset (last flight) at $159/person. We can do tandem and triple flights, making it a great experience for families and friends.',
+        answer: 'Yes! We love group adventures. Our boat, the Cloud Dancer (Ocean Pro 31), accommodates up to 10 passengers per trip. Standard flights are $119/person, with Early Bird (10 AM) at $99/person and Sunset (last flight) at $159/person. We can do tandem and triple flights, making it a great experience for families and friends.',
         category: 'Pricing & Booking'
     },
     {
         question: 'Is there a group discount for parasailing?',
-        answer: 'Our best value is the Early Bird flight at 9 AM for just $99/person. Standard flights are $119/person, and our premium Sunset flight is $159/person. All pricing is per person regardless of group size.',
+        answer: 'Our best value is the Early Bird flight at 10 AM for just $99/person. Standard flights are $119/person, and our premium Sunset flight is $159/person. All pricing is per person regardless of group size.',
         category: 'Pricing & Booking'
     },
 
@@ -62,7 +62,7 @@ export const PARASAILING_FAQS: FAQItem[] = [
     },
     {
         question: 'What\'s the best time of day for parasailing on Flathead Lake?',
-        answer: 'All times are great! Our Early Bird 9 AM flight offers the calmest waters at our best price of $99/person. Standard midday flights are $119/person with warm temperatures and beautiful light. Our premium Sunset flight (last flight of the day) is $159/person for a magical golden hour experience. We operate daily from 9:00 AM to 7:00 PM during our season (May 1 - September 30).',
+        answer: 'All times are great! Our Early Bird 10 AM flight offers the calmest waters at our best price of $99/person. Standard midday flights are $119/person with warm temperatures and beautiful light. Our premium Sunset flight (last flight of the day) is $159/person for a magical golden hour experience. We operate daily from 10:00 AM to 7:00 PM during our season (May 1 - September 30).',
         category: 'Experience Details'
     },
     {
@@ -89,7 +89,7 @@ export const PARASAILING_FAQS: FAQItem[] = [
     },
     {
         question: 'When is parasailing season on Flathead Lake?',
-        answer: 'We operate from May 1st through September 30th. This season offers the best weather conditions with warm temperatures, long daylight hours, and stunning views of the surrounding mountains. Our daily schedule runs from 9:00 AM to 7:00 PM.',
+        answer: 'We operate from May 1st through September 30th. This season offers the best weather conditions with warm temperatures, long daylight hours, and stunning views of the surrounding mountains. Our daily schedule runs from 10:00 AM to 7:00 PM.',
         category: 'Location & Logistics'
     },
 
