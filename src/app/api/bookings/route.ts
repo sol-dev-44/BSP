@@ -29,12 +29,20 @@ export async function POST(request: Request) {
             trip_date,
             trip_time,
             party_size,
+            boat_riders,
             payment_intent_id,
             notes,
             add_ons,
             discount_code,
             discount_amount,
         } = body;
+
+        // Normalize observer count into add_ons (BookingClient sends observer_package, BookingForm sends boat_riders)
+        const observerCount = boat_riders || add_ons?.observer_count || add_ons?.observer_package || 0;
+        const storedAddOns = {
+            ...(add_ons || {}),
+            observer_count: observerCount,
+        };
 
         // 1. Validate Payment Intent ID with Stripe
         if (!payment_intent_id) {
@@ -90,7 +98,7 @@ export async function POST(request: Request) {
                     status: paymentStatus,
                     stripe_payment_intent_id: payment_intent_id,
                     notes,
-                    add_ons,
+                    add_ons: storedAddOns,
                     slot_type: slotType,
                     per_person_rate: perPerson,
                     discount_code: discount_code || null,
@@ -120,7 +128,7 @@ export async function POST(request: Request) {
 
         // Tiered pricing: Early Bird $99, Standard $119, Sunset $159
         const flightSubtotal = party_size * perPerson;
-        const observerTotal = (add_ons?.observer_count || add_ons?.observer_package || 0) * BUSINESS_INFO.pricing.observer;
+        const observerTotal = observerCount * BUSINESS_INFO.pricing.observer;
         const comboTotal = (add_ons?.combo_package || 0) * BUSINESS_INFO.pricing.combo;
         const photoTotal = (add_ons?.photo_package || 0) * BUSINESS_INFO.pricing.photos;
         const goproTotal = (add_ons?.gopro_package || 0) * BUSINESS_INFO.pricing.gopro;
@@ -143,8 +151,8 @@ export async function POST(request: Request) {
 
         // Build add-on rows for email
         let addOnRows = '';
-        if ((add_ons?.observer_count || 0) > 0) {
-            addOnRows += `<tr><td style="padding:6px 0;color:#555">Boat Rider x ${add_ons.observer_count}</td><td style="padding:6px 0;text-align:right;font-weight:600">$${observerTotal.toFixed(2)}</td></tr>`;
+        if (observerCount > 0) {
+            addOnRows += `<tr><td style="padding:6px 0;color:#555">Observer Pass x ${observerCount}</td><td style="padding:6px 0;text-align:right;font-weight:600">$${observerTotal.toFixed(2)}</td></tr>`;
         }
         if ((add_ons?.combo_package || 0) > 0) {
             addOnRows += `<tr><td style="padding:6px 0;color:#555">Media Combo (Photos + Video) x ${add_ons.combo_package}</td><td style="padding:6px 0;text-align:right;font-weight:600">$${comboTotal.toFixed(2)}</td></tr>`;
@@ -163,6 +171,7 @@ export async function POST(request: Request) {
         }
 
         const slotTypeLabel = slotType === 'earlybird' ? 'Early Bird' : slotType === 'sunset' ? 'Sunset' : 'Standard';
+        const isObserverOnly = party_size === 0;
         const tripLabel = `Parasail Flight (${slotTypeLabel})`;
         const priceNote = `$${perPerson}/person (${slotTypeLabel.toLowerCase()} rate)`;
 
@@ -174,7 +183,7 @@ export async function POST(request: Request) {
             const customerResult = await resend.emails.send({
                 from: fromAddress,
                 to: [customer_email],
-                subject: `Booking Confirmed - Parasail Flight on ${displayDate}`,
+                subject: `Booking Confirmed - Big Sky Parasail on ${displayDate}`,
                 html: `
                     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#1a1a1a">
                         <div style="background:linear-gradient(135deg,#2563eb,#0ea5e9);padding:24px;text-align:center;border-radius:12px 12px 0 0">
@@ -184,25 +193,26 @@ export async function POST(request: Request) {
 
                         <div style="padding:24px">
                             <p>Hi ${customer_name.split(' ')[0]},</p>
-                            <p>Your parasailing adventure is confirmed! Here are your details:</p>
+                            <p>Your ${isObserverOnly ? 'boat reservation' : 'parasailing adventure'} is confirmed! Here are your details:</p>
 
                             <div style="background:#f3f4f6;padding:20px;border-radius:8px;margin:16px 0">
                                 <h3 style="margin:0 0 12px;color:#374151">Trip Details</h3>
                                 <table style="width:100%;border-collapse:collapse">
                                     <tr><td style="padding:6px 0;color:#666">Date</td><td style="padding:6px 0;font-weight:bold;text-align:right">${displayDate}</td></tr>
                                     <tr><td style="padding:6px 0;color:#666">Time</td><td style="padding:6px 0;font-weight:bold;text-align:right">${displayTime} (Mountain)</td></tr>
-                                    <tr><td style="padding:6px 0;color:#666">Group Size</td><td style="padding:6px 0;font-weight:bold;text-align:right">${party_size} ${party_size === 1 ? 'person' : 'people'}</td></tr>
+                                    <tr><td style="padding:6px 0;color:#666">Parasailers</td><td style="padding:6px 0;font-weight:bold;text-align:right">${party_size}</td></tr>
+                                    ${observerCount > 0 ? `<tr><td style="padding:6px 0;color:#666">Observers</td><td style="padding:6px 0;font-weight:bold;text-align:right">${observerCount}</td></tr>` : ''}
                                 </table>
                             </div>
 
                             <div style="background:#f3f4f6;padding:20px;border-radius:8px;margin:16px 0">
                                 <h3 style="margin:0 0 12px;color:#374151">Itemized Receipt</h3>
                                 <table style="width:100%;border-collapse:collapse">
-                                    <tr>
+                                    ${party_size > 0 ? `<tr>
                                         <td style="padding:6px 0;color:#111;font-weight:600">${tripLabel} x ${party_size}</td>
                                         <td style="padding:6px 0;text-align:right;font-weight:600">$${flightSubtotal.toFixed(2)}</td>
                                     </tr>
-                                    <tr><td colspan="2" style="padding:0 0 6px;font-size:12px;color:#888">${priceNote}</td></tr>
+                                    <tr><td colspan="2" style="padding:0 0 6px;font-size:12px;color:#888">${priceNote}</td></tr>` : ''}
                                     ${addOnRows}
                                     <tr style="border-top:2px solid #d1d5db">
                                         <td style="padding:12px 0 0;font-weight:bold;font-size:16px">Total Paid</td>
@@ -256,13 +266,14 @@ export async function POST(request: Request) {
                             <p><strong>Booking ID:</strong> ${data.id}</p>
                             <p><strong>Date:</strong> ${displayDate}</p>
                             <p><strong>Time:</strong> ${displayTime} (Mountain)</p>
-                            <p><strong>Party Size:</strong> ${party_size}</p>
+                            <p><strong>Parasailers:</strong> ${party_size}</p>
+                            ${observerCount > 0 ? `<p><strong>Observers:</strong> ${observerCount}</p>` : ''}
                             <p><strong>Notes:</strong> ${notes || 'None'}</p>
                         </div>
                         <div style="background:#eff6ff;padding:16px;border-radius:8px;margin:16px 0">
                             <h3 style="margin-top:0">Receipt</h3>
                             <table style="width:100%;border-collapse:collapse">
-                                <tr><td style="padding:4px 0">${tripLabel} x ${party_size} @ ${priceNote}</td><td style="text-align:right;font-weight:bold">$${flightSubtotal.toFixed(2)}</td></tr>
+                                ${party_size > 0 ? `<tr><td style="padding:4px 0">${tripLabel} x ${party_size} @ ${priceNote}</td><td style="text-align:right;font-weight:bold">$${flightSubtotal.toFixed(2)}</td></tr>` : ''}
                                 ${addOnRows}
                                 <tr style="border-top:2px solid #d1d5db"><td style="padding:8px 0;font-weight:bold">Total</td><td style="text-align:right;font-weight:bold;font-size:16px;color:#2563eb">$${total_amount.toFixed(2)}</td></tr>
                             </table>

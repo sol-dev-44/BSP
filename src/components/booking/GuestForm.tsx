@@ -38,7 +38,12 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
     const isNameValid = formData.customer_name.length > 2;
     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.customer_email);
     const isPhoneValid = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(formData.customer_phone);
-    const isPartySizeValid = formData.party_size > 0 && formData.party_size <= maxPartySize;
+    const flyerCount = Number(formData.party_size) || 0;
+    const observerCount = (formData.add_ons as any)?.observer_package || 0;
+    const totalOnBoat = flyerCount + observerCount;
+    const maxFlyers = maxPartySize - observerCount;
+    const maxObservers = maxPartySize - flyerCount;
+    const isPartySizeValid = totalOnBoat > 0 && totalOnBoat <= maxPartySize;
 
     // Price per person comes from the slot-based price passed via props
     const baseFlightCost = formData.party_size * pricePerPerson;
@@ -115,44 +120,46 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
 
                     <div>
                         <label className="block text-sm font-semibold text-[#614020] mb-2">
-                            Number of Parasailers <span className="text-xs text-[#8B6914]">(Max {maxPartySize})</span>
+                            Parasailers
                         </label>
-                        <input
-                            type="number"
-                            min="1"
-                            max={maxPartySize}
+                        <select
                             name="party_size"
-                            value={formData.party_size}
+                            value={String(Number(formData.party_size) || 0)}
                             onChange={onChange}
-                            onBlur={() => handleBlur('party_size')}
-                            required
-                            className={`${inputBaseClass} ${touched.party_size && !isPartySizeValid ? inputErrorClass : inputValidClass}`}
-                        />
-                        {touched.party_size && !isPartySizeValid && (
-                            <p className="text-red-500 text-xs mt-1">Please enter a valid number (1-{maxPartySize}).</p>
-                        )}
+                            className="w-full bg-[#FFFFFF] border border-[#DCC8A0] rounded-xl px-3 py-2 text-sm text-[#2D1600] focus:ring-[#FF9500] focus:border-[#FF9500] cursor-pointer"
+                        >
+                            {Array.from({ length: maxFlyers + 1 }, (_, i) => (
+                                <option key={i} value={String(i)}>
+                                    {i === 0 ? 'None' : `${i} ${i === 1 ? 'parasailer' : 'parasailers'}`}
+                                </option>
+                            ))}
+                        </select>
                         <p className="text-xs text-[#8B6914] mt-1">
-                            Price per person depends on your selected time slot (Early Bird $99, Standard $119, Sunset $159)
+                            ${pricePerPerson}/person for your selected time slot
                         </p>
                     </div>
                 </div>
 
-                {/* Boat Riders / Observers */}
+                {/* Observer Pass */}
                 <div>
                     <label className="block text-sm font-semibold text-[#614020] mb-2">
-                        Boat Riders / Observers <span className="text-xs text-[#8B6914]">($49 each)</span>
+                        Observer Pass <span className="text-xs text-[#8B6914]">($49/person — ride the boat, no flight)</span>
                     </label>
-                    <input
-                        type="number"
-                        min="0"
-                        max={maxPartySize}
-                        name="boat_riders"
-                        value={formData.boat_riders}
+                    <select
+                        name="add_ons.observer_package"
+                        value={String(observerCount)}
                         onChange={onChange}
-                        className={`${inputBaseClass} ${inputValidClass} max-w-xs`}
-                    />
+                        className="w-full max-w-xs bg-[#FFFFFF] border border-[#DCC8A0] rounded-xl px-3 py-2 text-sm text-[#2D1600] focus:ring-[#FF9500] focus:border-[#FF9500] cursor-pointer"
+                    >
+                        {Array.from({ length: maxObservers + 1 }, (_, i) => (
+                            <option key={i} value={String(i)}>
+                                {i === 0 ? 'None' : `${i} ${i === 1 ? 'observer' : 'observers'} ($${i * 49})`}
+                            </option>
+                        ))}
+                    </select>
                     <p className="text-xs text-[#8B6914] mt-1">
-                        Friends or family who want to ride the boat without flying.
+                        {totalOnBoat} of {maxPartySize} boat spots filled.
+                        {totalOnBoat === 0 && <span className="text-red-500 ml-1">Add at least 1 parasailer or observer.</span>}
                     </p>
                 </div>
 

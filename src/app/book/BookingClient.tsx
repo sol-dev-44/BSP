@@ -14,6 +14,7 @@ import { Footer } from '@/components/Footer';
 import { Calendar, ShieldCheck, Anchor, CreditCard } from 'lucide-react';
 import { BUSINESS_INFO } from '@/config/business';
 import { BOOKING_CONFIG } from '@/config/booking';
+import * as gtag from '@/lib/gtag';
 
 export default function BookingClient() {
     const [step, setStep] = useState(1);
@@ -57,7 +58,7 @@ export default function BookingClient() {
         customer_name: '',
         customer_email: '',
         customer_phone: '',
-        party_size: 2,
+        party_size: 0,
         notes: '',
         add_ons: {
             photo_package: 0,
@@ -130,36 +131,64 @@ export default function BookingClient() {
     const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
 
+        // Parasailers changed — clamp observers so total <= maxPartySize
+        if (name === 'party_size') {
+            const newFlyers = parseInt(value) || 0;
+            setFormData(prev => {
+                const clampedObservers = Math.min(prev.add_ons.observer_package, maxPartySize - newFlyers);
+                return {
+                    ...prev,
+                    party_size: newFlyers,
+                    add_ons: { ...prev.add_ons, observer_package: Math.max(0, clampedObservers) },
+                };
+            });
+            return;
+        }
+
+        // Observers changed — clamp parasailers so total <= maxPartySize
+        if (name === 'add_ons.observer_package') {
+            const newObservers = parseInt(value) || 0;
+            setFormData(prev => {
+                const prevFlyers = Number(prev.party_size) || 0;
+                const clampedFlyers = Math.min(prevFlyers, maxPartySize - newObservers);
+                return {
+                    ...prev,
+                    party_size: Math.max(0, clampedFlyers),
+                    add_ons: { ...prev.add_ons, observer_package: newObservers },
+                };
+            });
+            return;
+        }
+
+        // All other add_ons
         if (name.startsWith('add_ons.')) {
             const field = name.split('.')[1];
             setFormData(prev => ({
                 ...prev,
-                add_ons: {
-                    ...prev.add_ons,
-                    [field]: parseInt(value) || 0
-                }
+                add_ons: { ...prev.add_ons, [field]: parseInt(value) || 0 },
             }));
-        } else {
-            setFormData(prev => ({
-                ...prev,
-                [name]: name === 'party_size' ? (value === '' ? '' : parseInt(value)) : value
-            }));
+            return;
         }
+
+        // Text fields (name, email, phone, notes)
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
     // Validation Logic
-    const isFormValid = () => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    const partySize = Number(formData.party_size) || 0;
+    const observers = formData.add_ons.observer_package || 0;
+    const totalOnBoat = partySize + observers;
 
-        return (
-            formData.customer_name.length > 2 &&
-            emailRegex.test(formData.customer_email) &&
-            phoneRegex.test(formData.customer_phone) &&
-            Number(formData.party_size) > 0 &&
-            Number(formData.party_size) <= maxPartySize
-        );
-    };
+    const validationErrors: string[] = [];
+    if (formData.customer_name.length <= 2) validationErrors.push('Full name is required.');
+    if (!emailRegex.test(formData.customer_email)) validationErrors.push('Valid email address is required.');
+    if (!phoneRegex.test(formData.customer_phone)) validationErrors.push('Valid US phone number is required.');
+    if (totalOnBoat <= 0) validationErrors.push('Add at least 1 parasailer or observer.');
+    if (totalOnBoat > maxPartySize) validationErrors.push(`Max ${maxPartySize} passengers per boat.`);
+
+    const isFormValid = () => validationErrors.length === 0;
 
     // Apply discount code
     const handleApplyDiscount = async () => {
@@ -191,11 +220,9 @@ export default function BookingClient() {
 
     // Prepare payment when moving to step 3
     const handleProceedToPayment = async () => {
-        if (!isFormValid()) {
-            alert("Please fill in a valid email and phone number.");
-            return;
-        }
+        if (!isFormValid()) return;
 
+        gtag.trackBeginCheckout(calculateTotal(), partySize, observers, selectedSlotType);
         setStep(3);
 
         try {
@@ -245,6 +272,7 @@ export default function BookingClient() {
             const result = await res.json();
 
             if (res.ok) {
+                gtag.trackPurchase(paymentIntentId, calculateTotal(), partySize, observers, selectedSlotType);
                 window.location.href = `/book/success?booking_id=${result.booking?.id || result.id}`;
             } else {
                 alert("Payment successful but booking creation failed. Please contact us.");
@@ -408,7 +436,12 @@ export default function BookingClient() {
 
                                     <div className="flex justify-end pt-2">
                                         <button
-                                            onClick={() => setStep(2)}
+                                            onClick={() => {
+                                                if (selectedTime && selectedDate) {
+                                                    gtag.trackSlotSelected(selectedDate, selectedTime, selectedSlotType, currentPricePerPerson);
+                                                }
+                                                setStep(2);
+                                            }}
                                             disabled={!selectedTime}
                                             className="bg-[#FF9500] hover:bg-[#E07B00] text-[#FFFFFF] text-lg font-bold px-10 py-4 rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-[#FF9500]/25 hover:scale-105"
                                         >
@@ -481,6 +514,16 @@ export default function BookingClient() {
                                         )}
                                         {discountError && <p className="text-red-500 text-xs mt-2">{discountError}</p>}
                                     </div>
+
+                                    {validationErrors.length > 0 && (
+                                        <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+                                            <ul className="text-sm text-red-600 space-y-1">
+                                                {validationErrors.map((err, i) => (
+                                                    <li key={i}>{err}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
 
                                     <div className="flex justify-between items-center pt-4">
                                         <button

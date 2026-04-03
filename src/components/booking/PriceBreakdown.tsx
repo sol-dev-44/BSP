@@ -33,14 +33,14 @@ export default function PriceBreakdown({
 
     const slotTypeLabel = slotType === 'earlybird' ? 'Early Bird' : slotType === 'sunset' ? 'Sunset' : 'Standard';
 
-    const boatRiderTotal = (boatRiders || 0) * BUSINESS_INFO.pricing.observer;
-    const observerTotal = (addOns.observer_package || 0) * BUSINESS_INFO.pricing.observer;
+    const observerCount = (boatRiders || 0) + (addOns.observer_package || 0);
+    const observerTotal = observerCount * BUSINESS_INFO.pricing.observer;
     const comboTotal = (addOns.combo_package || 0) * BUSINESS_INFO.pricing.combo;
     const photoTotal = (addOns.photo_package || 0) * BUSINESS_INFO.pricing.photos;
     const goproTotal = (addOns.gopro_package || 0) * BUSINESS_INFO.pricing.gopro;
     const tipTotal = addOns.tip_amount || 0;
 
-    const grandTotal = Math.max(0, flightTotal + boatRiderTotal + observerTotal + comboTotal + photoTotal + goproTotal + tipTotal - discountAmount);
+    const grandTotal = Math.max(0, flightTotal + observerTotal + comboTotal + photoTotal + goproTotal + tipTotal - discountAmount);
 
     return (
         <div className="bg-[#FFEACC] rounded-xl shadow-lg border-2 border-[#FF9500]/20 overflow-hidden">
@@ -52,15 +52,17 @@ export default function PriceBreakdown({
 
             <div className="p-6 space-y-3">
                 {/* Flights */}
-                <div className="flex justify-between items-center text-sm">
-                    <span className="text-[#614020]">
-                        Parasail Flight x {size}
-                        <span className="text-[#8B6914] ml-1 text-xs">
-                            (${pricePerPerson}/ea {slotTypeLabel.toLowerCase()})
+                {size > 0 && (
+                    <div className="flex justify-between items-center text-sm">
+                        <span className="text-[#614020]">
+                            Parasail Flight x {size}
+                            <span className="text-[#8B6914] ml-1 text-xs">
+                                (${pricePerPerson}/ea {slotTypeLabel.toLowerCase()})
+                            </span>
                         </span>
-                    </span>
-                    <span className="font-medium text-[#2D1600]">${flightTotal}</span>
-                </div>
+                        <span className="font-medium text-[#2D1600]">${flightTotal}</span>
+                    </div>
+                )}
 
                 {/* Early bird savings note */}
                 {slotType === 'earlybird' && size > 0 && (
@@ -76,24 +78,11 @@ export default function PriceBreakdown({
                     </div>
                 )}
 
-                {/* Boat Riders */}
-                {boatRiders > 0 && (
+                {/* Observer Pass */}
+                {observerCount > 0 && (
                     <div className="flex justify-between items-center text-sm">
                         <span className="text-[#614020]">
-                            Boat Riders x {boatRiders}
-                            <span className="text-[#8B6914] ml-1 text-xs">
-                                ($49/ea)
-                            </span>
-                        </span>
-                        <span className="font-medium text-[#2D1600]">${boatRiderTotal}</span>
-                    </div>
-                )}
-
-                {/* Observers */}
-                {(addOns.observer_package || 0) > 0 && (
-                    <div className="flex justify-between items-center text-sm">
-                        <span className="text-[#614020]">
-                            Observer Pass x {addOns.observer_package}
+                            Observer Pass x {observerCount}
                             <span className="text-[#8B6914] ml-1 text-xs">
                                 ($49/ea)
                             </span>

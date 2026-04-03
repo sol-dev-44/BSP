@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Oswald, Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Providers from "./providers";
 import { BASE_METADATA } from "@/config/seo";
@@ -8,6 +9,7 @@ import {
   generateLocalBusinessSchema,
   generateOrganizationSchema
 } from "@/config/structured-data";
+import { GA_MEASUREMENT_ID } from "@/lib/gtag";
 
 const oswald = Oswald({
   subsets: ["latin"],
@@ -37,6 +39,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
         <StructuredData data={generateLocalBusinessSchema()} />
         <StructuredData data={generateOrganizationSchema()} />
       </head>

@@ -21,6 +21,7 @@ interface BookingDetails {
     add_ons: {
         photo_package?: number;
         gopro_package?: number;
+        observer_count?: number;
         observer_package?: number;
         combo_package?: number;
         tip_amount?: number;
@@ -105,7 +106,8 @@ function BookingContent() {
     const flightSubtotal = booking.party_size * perPerson;
     const photoTotal = (add_ons?.photo_package || 0) * BUSINESS_INFO.pricing.photos;
     const goproTotal = (add_ons?.gopro_package || 0) * BUSINESS_INFO.pricing.gopro;
-    const observerTotal = (add_ons?.observer_package || 0) * BUSINESS_INFO.pricing.observer;
+    const observerCount = add_ons?.observer_count || add_ons?.observer_package || 0;
+    const observerTotal = observerCount * BUSINESS_INFO.pricing.observer;
     const comboTotal = (add_ons?.combo_package || 0) * BUSINESS_INFO.pricing.combo;
     const tipTotal = add_ons?.tip_amount || 0;
 
@@ -157,8 +159,12 @@ function BookingContent() {
                             <Users className="w-6 h-6 text-[#FFFFFF]" />
                         </div>
                         <div>
-                            <p className="text-xs text-[#8B6914] uppercase font-semibold">Party Size</p>
-                            <p className="font-bold text-lg">{booking.party_size} {booking.party_size === 1 ? 'Person' : 'People'}</p>
+                            <p className="text-xs text-[#8B6914] uppercase font-semibold">Party</p>
+                            <p className="font-bold text-lg">
+                                {booking.party_size > 0 && <>{booking.party_size} {booking.party_size === 1 ? 'Parasailer' : 'Parasailers'}</>}
+                                {booking.party_size > 0 && observerCount > 0 && ', '}
+                                {observerCount > 0 && <>{observerCount} {observerCount === 1 ? 'Observer' : 'Observers'}</>}
+                            </p>
                         </div>
                     </div>
                     <div className="flex items-center space-x-4">
@@ -167,7 +173,12 @@ function BookingContent() {
                         </div>
                         <div>
                             <p className="text-xs text-[#8B6914] uppercase font-semibold">Rate</p>
-                            <p className="font-bold text-lg">${perPerson}/person <span className="text-sm font-normal text-[#8B6914]">({slotTypeLabel})</span></p>
+                            <p className="font-bold text-lg">
+                                {booking.party_size > 0
+                                    ? <>${perPerson}/person <span className="text-sm font-normal text-[#8B6914]">({slotTypeLabel})</span></>
+                                    : <>$49/observer</>
+                                }
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -179,13 +190,23 @@ function BookingContent() {
                     </h3>
                     <div className="bg-[#FFD699] rounded-xl p-4 space-y-3 text-sm">
                         {/* Base flight */}
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <span className="text-[#2D1600] font-medium">Parasail Flight x {booking.party_size}</span>
-                                <span className="block text-xs text-[#8B6914]">${perPerson}/person</span>
+                        {booking.party_size > 0 && (
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <span className="text-[#2D1600] font-medium">Parasail Flight x {booking.party_size}</span>
+                                    <span className="block text-xs text-[#8B6914]">${perPerson}/person</span>
+                                </div>
+                                <span className="font-medium text-[#2D1600]">${flightSubtotal.toFixed(2)}</span>
                             </div>
-                            <span className="font-medium text-[#2D1600]">${flightSubtotal.toFixed(2)}</span>
-                        </div>
+                        )}
+
+                        {/* Observer Pass */}
+                        {observerCount > 0 && (
+                            <div className="flex justify-between">
+                                <span className="text-[#614020]">Observer Pass x {observerCount}</span>
+                                <span className="font-medium text-[#2D1600]">${observerTotal.toFixed(2)}</span>
+                            </div>
+                        )}
 
                         {/* Add-ons */}
                         {(add_ons?.photo_package || 0) > 0 && (
@@ -198,12 +219,6 @@ function BookingContent() {
                             <div className="flex justify-between">
                                 <span className="text-[#614020]">GoPro Rental x {add_ons.gopro_package}</span>
                                 <span className="font-medium text-[#2D1600]">${goproTotal.toFixed(2)}</span>
-                            </div>
-                        )}
-                        {(add_ons?.observer_package || 0) > 0 && (
-                            <div className="flex justify-between">
-                                <span className="text-[#614020]">Observer / Boat Rider x {add_ons.observer_package}</span>
-                                <span className="font-medium text-[#2D1600]">${observerTotal.toFixed(2)}</span>
                             </div>
                         )}
                         {(add_ons?.combo_package || 0) > 0 && (

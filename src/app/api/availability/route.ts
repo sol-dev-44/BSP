@@ -24,7 +24,7 @@ export async function GET(request: Request) {
         // Fetch bookings for the date
         const { data: bookings, error } = await supabase
             .from('bsp_bookings')
-            .select('trip_time, party_size')
+            .select('trip_time, party_size, add_ons')
             .eq('trip_date', date)
             .neq('status', 'cancelled')
             .neq('status', 'Cancelled');
@@ -45,12 +45,14 @@ export async function GET(request: Request) {
             return `${h}:${minutes} ${suffix}`;
         };
 
-        // Calculate used capacity per time slot
+        // Calculate used capacity per time slot (flyers + observers = total passengers)
         const capacityMap: Record<string, number> = {};
         bookings?.forEach((booking) => {
             const timeKey = to12Hour(booking.trip_time);
-            capacityMap[timeKey] = (capacityMap[timeKey] || 0) + booking.party_size;
-            console.log(`Mapped ${booking.trip_time} -> ${timeKey} (Party: ${booking.party_size})`);
+            const observers = booking.add_ons?.observer_count || booking.add_ons?.observer_package || 0;
+            const totalOnBoat = booking.party_size + observers;
+            capacityMap[timeKey] = (capacityMap[timeKey] || 0) + totalOnBoat;
+            console.log(`Mapped ${booking.trip_time} -> ${timeKey} (Flyers: ${booking.party_size}, Observers: ${observers})`);
         });
 
         // Use solar-calendar-based time slots for the requested date

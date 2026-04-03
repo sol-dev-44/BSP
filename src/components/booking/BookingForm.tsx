@@ -13,6 +13,7 @@ import TimeSlotPicker from './TimeSlotPicker';
 import GuestForm from './GuestForm';
 import PaymentForm from './PaymentForm';
 import PriceBreakdown from './PriceBreakdown';
+import * as gtag from '@/lib/gtag';
 
 interface BookingFormProps {
     className?: string;
@@ -100,17 +101,22 @@ export default function BookingForm({ className }: BookingFormProps) {
 
     const isFormValid = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const totalPassengers = formData.party_size + formData.boat_riders;
         return (
             formData.customer_name.length > 2 &&
             emailRegex.test(formData.customer_email) &&
             formData.customer_phone.length > 9 &&
-            formData.party_size > 0
+            totalPassengers > 0 &&
+            totalPassengers <= BOOKING_CONFIG.MAX_PASSENGERS
         );
     };
 
     const handleProceedToPayment = async () => {
         if (!isFormValid()) return;
         setLoading(true);
+
+        const slotType = selectedDate && selectedTime ? getSlotType(selectedDate, selectedTime) : 'standard';
+        gtag.trackBeginCheckout(calculateTotal(), formData.party_size, formData.boat_riders, slotType);
 
         try {
             const res = await fetch('/api/create-payment-intent', {
@@ -121,7 +127,10 @@ export default function BookingForm({ className }: BookingFormProps) {
                     trip_time: selectedTime,
                     party_size: formData.party_size,
                     boat_riders: formData.boat_riders,
-                    add_ons: formData.add_ons
+                    add_ons: {
+                        ...formData.add_ons,
+                        observer_count: formData.boat_riders,
+                    },
                 }),
             });
             const data = await res.json();
@@ -147,7 +156,16 @@ export default function BookingForm({ className }: BookingFormProps) {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    ...formData,
+                    customer_name: formData.customer_name,
+                    customer_email: formData.customer_email,
+                    customer_phone: formData.customer_phone,
+                    party_size: formData.party_size,
+                    boat_riders: formData.boat_riders,
+                    notes: formData.notes,
+                    add_ons: {
+                        ...formData.add_ons,
+                        observer_count: formData.boat_riders,
+                    },
                     trip_date: selectedDate,
                     trip_time: selectedTime,
                     payment_intent_id: paymentIntentId,
@@ -156,6 +174,8 @@ export default function BookingForm({ className }: BookingFormProps) {
 
             const data = await res.json();
             if (res.ok) {
+                const slotType = selectedDate && selectedTime ? getSlotType(selectedDate, selectedTime) : 'standard';
+                gtag.trackPurchase(paymentIntentId, calculateTotal(), formData.party_size, formData.boat_riders, slotType);
                 setStep(4);
             } else {
                 alert('Booking creation failed: ' + data.error);
@@ -178,6 +198,7 @@ export default function BookingForm({ className }: BookingFormProps) {
         const pricePerPerson = getSelectedSlotPrice();
         let base = size * pricePerPerson;
         base += (formData.boat_riders || 0) * BUSINESS_INFO.pricing.observer;
+        base += ((formData.add_ons as any).combo_package || 0) * BUSINESS_INFO.pricing.combo;
         base += (formData.add_ons.photo_package || 0) * BUSINESS_INFO.pricing.photos;
         base += (formData.add_ons.gopro_package || 0) * BUSINESS_INFO.pricing.gopro;
         base += (formData.add_ons.tip_amount || 0);
@@ -193,7 +214,7 @@ export default function BookingForm({ className }: BookingFormProps) {
                 </div>
                 <h3 className="text-2xl font-bold text-foreground mb-2 font-serif">Booking Confirmed!</h3>
                 <p className="text-foreground/70 mb-6">
-                    Thank you, {formData.customer_name}. Your flight for {selectedDate} at {selectedTime} is confirmed.
+                    Thank you, {formData.customer_name}. Your reservation for {selectedDate} at {selectedTime} is confirmed.
                     Check your email for details.
                 </p>
                 <button
@@ -261,7 +282,13 @@ export default function BookingForm({ className }: BookingFormProps) {
 
                                 <div className="flex justify-end">
                                     <button
-                                        onClick={() => setStep(2)}
+                                        onClick={() => {
+                                            if (selectedTime && selectedDate) {
+                                                const slotType = getSlotType(selectedDate, selectedTime);
+                                                gtag.trackSlotSelected(selectedDate, selectedTime, slotType, getSlotPrice(slotType));
+                                            }
+                                            setStep(2);
+                                        }}
                                         disabled={!selectedTime}
                                         className="bg-[#FF9500] hover:bg-[#E07B00] text-white font-bold px-8 py-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-[#FF9500]/20 uppercase tracking-wider"
                                     >

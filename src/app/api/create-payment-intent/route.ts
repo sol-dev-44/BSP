@@ -17,9 +17,12 @@ function getPerPersonPrice(tripDate: string, tripTime: string): number {
 
 export async function POST(request: Request) {
     try {
-        const { party_size, trip_date, trip_time, add_ons, discount_code } = await request.json();
+        const { party_size, trip_date, trip_time, add_ons, discount_code, boat_riders } = await request.json();
 
-        if (!party_size || !trip_date) {
+        const observerCount = boat_riders || parseInt(add_ons?.observer_count || add_ons?.observer_package || 0);
+        const totalPassengers = (party_size || 0) + observerCount;
+
+        if (totalPassengers <= 0 || !trip_date) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
 
@@ -30,17 +33,18 @@ export async function POST(request: Request) {
 
         // Server-side price calculation - tiered pricing based on time slot
         const perPerson = getPerPersonPrice(trip_date, trip_time || '');
-        let amount = party_size * perPerson;
+        let amount = (party_size || 0) * perPerson;
+
+        // Observers
+        amount += (observerCount * BUSINESS_INFO.pricing.observer);
 
         // Add-ons
         if (add_ons) {
-            const observerCount = parseInt(add_ons.observer_count || add_ons.observer_package || 0);
             const comboCount = parseInt(add_ons.combo_package || 0);
             const photoCount = parseInt(add_ons.photo_package || 0);
             const goproCount = parseInt(add_ons.gopro_package || 0);
             const tip = parseFloat(add_ons.tip_amount || 0);
 
-            amount += (observerCount * BUSINESS_INFO.pricing.observer);
             amount += (comboCount * BUSINESS_INFO.pricing.combo);
             amount += (photoCount * BUSINESS_INFO.pricing.photos);
             amount += (goproCount * BUSINESS_INFO.pricing.gopro);
@@ -85,7 +89,7 @@ export async function POST(request: Request) {
                 party_size,
                 slot_type: slotType,
                 per_person_rate: perPerson,
-                observer_count: add_ons?.observer_count || add_ons?.observer_package || 0,
+                observer_count: observerCount,
                 combo_package: add_ons?.combo_package || 0,
                 photo_package: add_ons?.photo_package || 0,
                 gopro_package: add_ons?.gopro_package || 0,
