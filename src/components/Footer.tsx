@@ -147,6 +147,17 @@ export function Footer() {
                     <p className="text-center text-white/40 text-sm sm:text-base md:text-xl">
                         &copy; {currentYear} Big Sky Parasail. All rights reserved.
                     </p>
+                    <p className="text-center text-white/30 text-xs sm:text-sm mt-2">
+                        Discover more things to do in{' '}
+                        <a
+                            href="https://www.kayak.com/Lakeside.1446.guide"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-white/40 hover:text-[#FFD700] transition-colors underline underline-offset-2"
+                        >
+                            Lakeside
+                        </a>
+                    </p>
                 </div>
             </div>
         </footer>
