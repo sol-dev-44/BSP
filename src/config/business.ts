@@ -38,20 +38,21 @@ export const BUSINESS_INFO = {
         text: 'May 1st - September 30th',
     },
 
-    // Business Hours (10 AM - 7 PM daily)
+    // Business Hours (2026 schedule)
     hours: {
-        monday: '10:00 AM - 7:00 PM',
-        tuesday: '10:00 AM - 7:00 PM',
-        wednesday: '10:00 AM - 7:00 PM',
-        thursday: '10:00 AM - 7:00 PM',
-        friday: '10:00 AM - 7:00 PM',
-        saturday: '10:00 AM - 7:00 PM',
-        sunday: '10:00 AM - 7:00 PM',
+        monday: 'Closed',
+        tuesday: 'Closed',
+        wednesday: '3:00 PM - Sunset',
+        thursday: 'Closed',
+        friday: '3:00 PM - Sunset',
+        saturday: '10:00 AM - Sunset',
+        sunday: '10:00 AM - Sunset',
     },
 
-    // Schema.org format for hours
+    // Schema.org format for hours (19:00 is approximate — actual end varies by sunset)
     openingHours: [
-        'Tu-Su 10:00-19:00',
+        'We,Fr 15:00-19:00',
+        'Sa,Su 10:00-19:00',
     ],
 
     // Social Media

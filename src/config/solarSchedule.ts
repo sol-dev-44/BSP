@@ -2,12 +2,19 @@
  * Montana Solar Schedule (Flathead Lake area)
  *
  * Approximate sunrise/sunset times for Lakeside, MT (48.0°N, 114.2°W)
- * Used to generate dynamic daily time slots from 10 AM through last trip time.
+ * Used to generate dynamic daily time slots based on the 2026 operating schedule.
  *
  * Season: May 1 - September 30
  *
- * Big Sky Parasail operates 10:00 AM - 7:00 PM daily with tiered pricing:
- * Early Bird (10 AM) = $99, Standard = $119, Sunset (last slot) = $159.
+ * 2026 Schedule:
+ *   Saturday & Sunday: Full hours — 10:00 AM through last trip (sunset - 1 hr)
+ *   Wednesday & Friday: Restricted hours — 3:00 PM through last trip
+ *   Monday, Tuesday, Thursday: Closed
+ *
+ * Tiered pricing:
+ *   Early Bird (10 AM, Sat/Sun only) = $99
+ *   Standard = $119
+ *   Sunset (last slot of any open day) = $159
  */
 
 interface SolarEntry {
@@ -62,9 +69,14 @@ const SOLAR_TABLE: SolarEntry[] = [
 ];
 
 /**
- * First trip of the day - 10:00 AM
+ * First trip of the day - 10:00 AM (Saturday and Sunday full schedule)
  */
 const FIRST_TRIP_HOUR = 10;
+
+/**
+ * First trip of the day for restricted days (Wednesday and Friday) - 3:00 PM
+ */
+export const RESTRICTED_START_HOUR = 15;
 
 /**
  * Get the solar entry for a given date string (YYYY-MM-DD).
@@ -104,18 +116,22 @@ export function getLastTripSlot(dateStr: string): string {
 
 /**
  * Generate the full array of available time slot display strings for a given date.
- * Hourly from 10:00 AM through the last trip time for that date.
+ * Hourly from startHour (default: 10 AM) through the last trip time for that date.
  *
- * Example for a June date: ["10:00 AM", "11:00 AM", ..., "7:00 PM", "8:00 PM"]
+ * Pass startHour=15 for restricted days (Wednesday, Friday) to generate 3 PM+ slots only.
+ *
+ * Example for a June Saturday: ["10:00 AM", "11:00 AM", ..., "7:00 PM", "8:00 PM"]
+ * Example for a June Wednesday: ["3:00 PM", "4:00 PM", ..., "8:00 PM"]
  * Pricing: 10 AM = Early Bird ($99), last slot = Sunset ($159), all others = Standard ($119).
  */
-export function getTimeSlotsForDate(dateStr: string): string[] {
+export function getTimeSlotsForDate(dateStr: string, startHour?: number): string[] {
     const entry = getSolarEntry(dateStr);
+    const firstHour = startHour ?? FIRST_TRIP_HOUR;
 
     const slots: string[] = [];
 
-    // Generate hourly slots from 10 AM through last trip time
-    for (let hour = FIRST_TRIP_HOUR; hour <= entry.lastTripHour; hour++) {
+    // Generate hourly slots from firstHour through last trip time
+    for (let hour = firstHour; hour <= entry.lastTripHour; hour++) {
         if (hour === entry.lastTripHour && entry.lastTripMinute > 0) {
             // Last trip is at :30 - add the half-hour slot
             slots.push(formatTime(hour, entry.lastTripMinute));
@@ -141,11 +157,13 @@ function formatTime(hour24: number, minute: number): string {
 
 /**
  * Get a human-readable schedule description for display.
- * e.g. "9:00 AM - 7:00 PM"
+ * e.g. "10:00 AM - 7:00 PM" for Sat/Sun, "3:00 PM - 8:00 PM" for Wed/Fri.
+ * Pass startHour to override the default 10 AM start for restricted days.
  */
-export function getScheduleDescription(dateStr: string): string {
+export function getScheduleDescription(dateStr: string, startHour?: number): string {
     const lastTrip = getLastTripSlot(dateStr);
-    return `10:00 AM - ${lastTrip}`;
+    const firstHour = startHour ?? FIRST_TRIP_HOUR;
+    return `${formatTime(firstHour, 0)} - ${lastTrip}`;
 }
 
 /**

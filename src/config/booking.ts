@@ -3,7 +3,7 @@
  * Season: May 1st - September 30th
  */
 
-import { getTimeSlotsForDate } from './solarSchedule';
+import { getTimeSlotsForDate, RESTRICTED_START_HOUR } from './solarSchedule';
 
 export const BOOKING_CONFIG = {
     // Season dates (YYYY-MM-DD format)
@@ -12,15 +12,19 @@ export const BOOKING_CONFIG = {
     ],
 
     // Excluded days of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-    // Closed Mondays — open Tuesday through Sunday
-    excludedDaysOfWeek: [1] as number[],
+    // Closed Monday, Tuesday, Thursday — open Wednesday, Friday, Saturday, Sunday
+    excludedDaysOfWeek: [1, 2, 4] as number[],
+
+    // Days with restricted hours (3 PM start instead of 10 AM)
+    // 3 = Wednesday, 5 = Friday
+    restrictedDaysOfWeek: [3, 5] as number[],
 
     // Max passengers per boat (Cloud Dancer holds 10)
     MAX_PASSENGERS: 10,
 
     // Time slots are dynamic based on Montana solar calendar.
     // Use getTimeSlotsForDate(dateStr) from solarSchedule.ts for date-specific slots.
-    // This static list is kept as a fallback / reference for mid-season.
+    // This static list is kept as a Sat/Sun reference only (full 10 AM schedule).
     timeSlots: {
         daily: [
             '10:00 AM',
@@ -80,12 +84,22 @@ export function isDayOfWeekAllowed(dayOfWeek: number, date?: Date): boolean {
 }
 
 /**
+ * Helper function to check if a day of the week has restricted hours (3 PM start).
+ * Wednesday (3) and Friday (5) only offer 3 PM through sunset.
+ */
+export function isRestrictedDay(dayOfWeek: number): boolean {
+    return BOOKING_CONFIG.restrictedDaysOfWeek.includes(dayOfWeek);
+}
+
+/**
  * Helper function to get time slots for a specific date.
  * Uses the Montana solar calendar to determine available slots.
+ * Passes RESTRICTED_START_HOUR for Wednesday and Friday.
  */
 export function getTimeSlotsForDayOfWeek(dayOfWeek: number, dateStr?: string): string[] {
     if (dateStr) {
-        return getTimeSlotsForDate(dateStr);
+        const startHour = isRestrictedDay(dayOfWeek) ? RESTRICTED_START_HOUR : undefined;
+        return getTimeSlotsForDate(dateStr, startHour);
     }
     // Fallback to static daily slots if no date provided
     return BOOKING_CONFIG.timeSlots.daily;
