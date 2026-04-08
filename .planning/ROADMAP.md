@@ -84,9 +84,9 @@ Plans:
   9. OG image uses CDN-hosted URL for fast social previews
 **Plans**: 3 plans
 Plans:
-- [ ] 04-01-PLAN.md — Delete stale static files, fix openingHours, remove verification placeholder, switch OG image to CDN
+- [x] 04-01-PLAN.md — Delete stale static files, fix openingHours, remove verification placeholder, switch OG image to CDN
 - [ ] 04-02-PLAN.md — Wire structured data (ServiceSchema, TouristAttractionSchema, BreadcrumbList) to all pages, fix hardcoded URLs
-- [ ] 04-03-PLAN.md — Convert bsp-chat to server wrapper pattern with metadata, link manifest, fix manifest icons
+- [x] 04-03-PLAN.md — Convert bsp-chat to server wrapper pattern with metadata, link manifest, fix manifest icons
 
 ## Progress
 
@@ -98,4 +98,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 1. Pricing Integrity | 1/3 | In Progress|  |
 | 2. Discount Codes | 5/5 | Complete   | 2026-04-01 |
 | 3. Admin & Scheduling | 2/2 | Complete   | 2026-04-01 |
-| 4. SEO & Optimization | 0/3 | Planned    |  |
+| 4. SEO & Optimization | 2/3 | In Progress|  |
