@@ -25,6 +25,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   ...BASE_METADATA,
+  manifest: '/manifest.json',
   icons: {
     icon: "/JerryBearLogo.png",
     apple: "/JerryBearLogo.png",

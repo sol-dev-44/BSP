@@ -5,7 +5,7 @@
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#2563eb",
+  "theme_color": "#FF9500",
   "orientation": "portrait-primary",
   "categories": [
     "travel",
@@ -16,16 +16,16 @@
   "scope": "/",
   "icons": [
     {
-      "src": "/icon-192x192.png",
+      "src": "/JerryBearLogo.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "/icon-512x512.png",
+      "src": "/JerryBearLogo.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ],
   "screenshots": [
