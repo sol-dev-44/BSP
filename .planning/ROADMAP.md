@@ -78,3 +78,13 @@ Phases execute in numeric order: 1 → 2 → 3
 | 1. Pricing Integrity | 1/3 | In Progress|  |
 | 2. Discount Codes | 5/5 | Complete   | 2026-04-01 |
 | 3. Admin & Scheduling | 2/2 | Complete   | 2026-04-01 |
+
+### Phase 4: Complete SEO audit and automated optimization — technical SEO fixes, meta tags, structured data, performance improvements, all implementable without human content effort
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 3
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 4 to break down)

@@ -86,6 +86,10 @@ Recent decisions affecting current work:
 - [Phase 03-admin-scheduling]: lastTripHour is strictly sunsetHour - 1 with lastTripMinute 0 - sunset flight always on the hour, always 1h before sunset
 - [Phase 03-admin-scheduling]: Monday exclusion via BOOKING_CONFIG.excludedDaysOfWeek: [1] — isDayOfWeekAllowed drives both calendar UI and availability API
 
+### Roadmap Evolution
+
+- Phase 4 added: Complete SEO audit and automated optimization — technical SEO fixes, meta tags, structured data, performance improvements
+
 ### Pending Todos
 
 None yet.
