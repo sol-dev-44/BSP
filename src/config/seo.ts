@@ -27,10 +27,10 @@ export const BASE_METADATA: Metadata = {
         description: BUSINESS_INFO.description,
         images: [
             {
-                url: '/colorfulChute.jpg',
+                url: 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images/FlatheadWithShadow.jpg',
                 width: 1200,
                 height: 630,
-                alt: `${BUSINESS_INFO.name} - Parasailing on Flathead Lake`,
+                alt: 'Parasailing above Flathead Lake, Montana - Big Sky Parasail',
             },
         ],
     },
@@ -38,7 +38,7 @@ export const BASE_METADATA: Metadata = {
         card: 'summary_large_image',
         title: `${BUSINESS_INFO.name} | Soar Above Flathead Lake`,
         description: BUSINESS_INFO.description,
-        images: ['/colorfulChute.jpg'],
+        images: ['https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images/FlatheadWithShadow.jpg'],
         creator: '@bigskyparasail',
     },
     robots: {
@@ -51,11 +51,6 @@ export const BASE_METADATA: Metadata = {
             'max-image-preview': 'large',
             'max-snippet': -1,
         },
-    },
-    verification: {
-        google: 'your-google-verification-code', // Add when you get it
-        // yandex: 'your-yandex-verification-code',
-        // bing: 'your-bing-verification-code',
     },
 }
 

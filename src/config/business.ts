@@ -51,7 +51,7 @@ export const BUSINESS_INFO = {
 
     // Schema.org format for hours
     openingHours: [
-        'Mo-Su 10:00-19:00',
+        'Tu-Su 10:00-19:00',
     ],
 
     // Social Media
