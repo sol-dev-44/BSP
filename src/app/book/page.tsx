@@ -1,5 +1,7 @@
-import BookingClient from './BookingClient';
 import { generatePageMetadata } from '@/config/seo';
+import { generateBreadcrumbSchema, StructuredData } from '@/config/structured-data';
+import { BUSINESS_INFO } from '@/config/business';
+import BookingClient from './BookingClient';
 
 export const metadata = generatePageMetadata(
     'Book Parasailing - Big Sky Parasail | Instant Confirmation',
@@ -8,5 +10,14 @@ export const metadata = generatePageMetadata(
 );
 
 export default function BookingPage() {
-    return <BookingClient />;
+    const breadcrumbs = [
+        { name: 'Home', url: `${BUSINESS_INFO.url}/` },
+        { name: 'Book Now', url: `${BUSINESS_INFO.url}/book` },
+    ];
+    return (
+        <>
+            <StructuredData data={generateBreadcrumbSchema(breadcrumbs)} />
+            <BookingClient />
+        </>
+    );
 }

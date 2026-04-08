@@ -1,4 +1,6 @@
 import { generatePageMetadata } from '@/config/seo'
+import { generateBreadcrumbSchema, StructuredData } from '@/config/structured-data'
+import { BUSINESS_INFO } from '@/config/business'
 import JobsClient from './JobsClient'
 
 export const metadata = generatePageMetadata(
@@ -8,5 +10,14 @@ export const metadata = generatePageMetadata(
 )
 
 export default function JobsPage() {
-    return <JobsClient />
+    const breadcrumbs = [
+        { name: 'Home', url: `${BUSINESS_INFO.url}/` },
+        { name: 'Jobs', url: `${BUSINESS_INFO.url}/jobs` },
+    ]
+    return (
+        <>
+            <StructuredData data={generateBreadcrumbSchema(breadcrumbs)} />
+            <JobsClient />
+        </>
+    )
 }
