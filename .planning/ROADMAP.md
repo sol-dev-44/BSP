@@ -68,23 +68,34 @@ Plans:
 - [x] 03-01-PLAN.md — Remove Twilio/SMS stat cards and fix Transactions count to exclude cancelled bookings
 - [x] 03-02-PLAN.md — Expand solar schedule to bi-weekly sunset data and exclude Mondays from booking
 
+### Phase 4: SEO Audit & Automated Optimization
+**Goal**: All technical SEO gaps are closed — stale files removed, structured data wired to all pages, metadata accurate, manifest linked, OG image optimized — entirely through code changes with no human content effort
+**Depends on**: Phase 3
+**Requirements**: SEO-01, SEO-02, SEO-03, SEO-04, SEO-05, SEO-06, SEO-07, SEO-08, SEO-09, SEO-10
+**Success Criteria** (what must be TRUE):
+  1. Dynamic sitemap.ts and robots.ts serve /sitemap.xml and /robots.txt (no static file conflicts)
+  2. All 7 public pages emit BreadcrumbList JSON-LD with URLs from BUSINESS_INFO.url
+  3. /services page emits ServiceSchema JSON-LD for each service
+  4. /location page emits TouristAttractionSchema JSON-LD
+  5. Schema.org openingHours says Tu-Su (not Mo-Su)
+  6. No invalid google-site-verification meta tag in HTML
+  7. /bsp-chat page has its own title and description (not homepage defaults)
+  8. Web manifest is linked from layout and manifest icons reference existing files
+  9. OG image uses CDN-hosted URL for fast social previews
+**Plans**: 3 plans
+Plans:
+- [ ] 04-01-PLAN.md — Delete stale static files, fix openingHours, remove verification placeholder, switch OG image to CDN
+- [ ] 04-02-PLAN.md — Wire structured data (ServiceSchema, TouristAttractionSchema, BreadcrumbList) to all pages, fix hardcoded URLs
+- [ ] 04-03-PLAN.md — Convert bsp-chat to server wrapper pattern with metadata, link manifest, fix manifest icons
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3
+Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Pricing Integrity | 1/3 | In Progress|  |
 | 2. Discount Codes | 5/5 | Complete   | 2026-04-01 |
 | 3. Admin & Scheduling | 2/2 | Complete   | 2026-04-01 |
-
-### Phase 4: Complete SEO audit and automated optimization — technical SEO fixes, meta tags, structured data, performance improvements, all implementable without human content effort
-
-**Goal:** [To be planned]
-**Requirements**: TBD
-**Depends on:** Phase 3
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (run /gsd:plan-phase 4 to break down)
+| 4. SEO & Optimization | 0/3 | Planned    |  |

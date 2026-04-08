@@ -33,6 +33,19 @@
 - [x] **SCHED-02**: Sunset flight times vary throughout the season (May-September) based on real sunset data
 - [x] **SCHED-03**: Mondays are excluded from booking availability across all flight types
 
+### SEO & Technical Optimization
+
+- [ ] **SEO-01**: Stale static files (public/sitemap.xml, public/robots.txt, public/seo-report.json) deleted so dynamic App Router routes serve /sitemap.xml and /robots.txt
+- [ ] **SEO-02**: All 7 public pages emit BreadcrumbList JSON-LD structured data with URLs derived from BUSINESS_INFO.url
+- [ ] **SEO-03**: Schema.org openingHours reflects actual availability (Tu-Su, excluding Monday per BOOKING_CONFIG)
+- [ ] **SEO-04**: /services page emits ServiceSchema JSON-LD for each service in BUSINESS_INFO.services
+- [ ] **SEO-05**: /location page emits TouristAttractionSchema JSON-LD
+- [ ] **SEO-06**: Invalid google-site-verification placeholder removed from BASE_METADATA and OG image uses CDN-hosted URL
+- [ ] **SEO-07**: /bsp-chat page has own metadata export (title, description, canonical) via server wrapper pattern
+- [ ] **SEO-08**: OG image meta tag references CDN-hosted Supabase URL instead of 2.7 MB local file
+- [ ] **SEO-09**: Web manifest linked from layout metadata via manifest property
+- [ ] **SEO-10**: manifest.json icon references point to files that exist in public/
+
 ## v2 Requirements
 
 ### Discount Codes (Future)
@@ -78,12 +91,22 @@
 | SCHED-01 | Phase 3 | Complete |
 | SCHED-02 | Phase 3 | Complete |
 | SCHED-03 | Phase 3 | Complete |
+| SEO-01 | Phase 4 | Planned |
+| SEO-02 | Phase 4 | Planned |
+| SEO-03 | Phase 4 | Planned |
+| SEO-04 | Phase 4 | Planned |
+| SEO-05 | Phase 4 | Planned |
+| SEO-06 | Phase 4 | Planned |
+| SEO-07 | Phase 4 | Planned |
+| SEO-08 | Phase 4 | Planned |
+| SEO-09 | Phase 4 | Planned |
+| SEO-10 | Phase 4 | Planned |
 
 **Coverage:**
-- v1 requirements: 16 total
-- Mapped to phases: 16
+- v1 requirements: 26 total
+- Mapped to phases: 26
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-31*
-*Last updated: 2026-03-31 — traceability added after roadmap creation*
+*Last updated: 2026-04-07 — SEO requirements added for Phase 4*
