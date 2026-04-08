@@ -36,10 +36,10 @@
 ### SEO & Technical Optimization
 
 - [x] **SEO-01**: Stale static files (public/sitemap.xml, public/robots.txt, public/seo-report.json) deleted so dynamic App Router routes serve /sitemap.xml and /robots.txt
-- [ ] **SEO-02**: All 7 public pages emit BreadcrumbList JSON-LD structured data with URLs derived from BUSINESS_INFO.url
+- [x] **SEO-02**: All 7 public pages emit BreadcrumbList JSON-LD structured data with URLs derived from BUSINESS_INFO.url
 - [x] **SEO-03**: Schema.org openingHours reflects actual availability (Tu-Su, excluding Monday per BOOKING_CONFIG)
-- [ ] **SEO-04**: /services page emits ServiceSchema JSON-LD for each service in BUSINESS_INFO.services
-- [ ] **SEO-05**: /location page emits TouristAttractionSchema JSON-LD
+- [x] **SEO-04**: /services page emits ServiceSchema JSON-LD for each service in BUSINESS_INFO.services
+- [x] **SEO-05**: /location page emits TouristAttractionSchema JSON-LD
 - [x] **SEO-06**: Invalid google-site-verification placeholder removed from BASE_METADATA and OG image uses CDN-hosted URL
 - [ ] **SEO-07**: /bsp-chat page has own metadata export (title, description, canonical) via server wrapper pattern
 - [x] **SEO-08**: OG image meta tag references CDN-hosted Supabase URL instead of 2.7 MB local file
