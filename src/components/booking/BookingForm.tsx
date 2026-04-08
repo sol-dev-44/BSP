@@ -6,8 +6,8 @@ import { Elements } from '@stripe/react-stripe-js';
 import { stripePromise } from '@/lib/stripe';
 import { Loader2, Calendar, ShieldCheck, CreditCard } from 'lucide-react';
 import { BUSINESS_INFO } from '@/config/business';
-import { BOOKING_CONFIG } from '@/config/booking';
-import { getTimeSlotsForDate, getSlotType, getSlotPrice } from '@/config/solarSchedule';
+import { BOOKING_CONFIG, isRestrictedDay } from '@/config/booking';
+import { getTimeSlotsForDate, getSlotType, getSlotPrice, RESTRICTED_START_HOUR } from '@/config/solarSchedule';
 import DateSelector from './DateSelector';
 import TimeSlotPicker from './TimeSlotPicker';
 import GuestForm from './GuestForm';
@@ -54,7 +54,10 @@ export default function BookingForm({ className }: BookingFormProps) {
         if (selectedDate) {
             setIsLoadingSlots(true);
             setTimeout(() => {
-                const solarSlots = getTimeSlotsForDate(selectedDate);
+                const dateObj = new Date(selectedDate + 'T12:00:00');
+                const dayOfWeek = dateObj.getDay();
+                const startHour = isRestrictedDay(dayOfWeek) ? RESTRICTED_START_HOUR : undefined;
+                const solarSlots = getTimeSlotsForDate(selectedDate, startHour);
                 const slots = solarSlots.map(time => {
                     const type = getSlotType(selectedDate, time);
                     return {
