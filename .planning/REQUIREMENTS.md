@@ -41,10 +41,10 @@
 - [x] **SEO-04**: /services page emits ServiceSchema JSON-LD for each service in BUSINESS_INFO.services
 - [x] **SEO-05**: /location page emits TouristAttractionSchema JSON-LD
 - [x] **SEO-06**: Invalid google-site-verification placeholder removed from BASE_METADATA and OG image uses CDN-hosted URL
-- [ ] **SEO-07**: /bsp-chat page has own metadata export (title, description, canonical) via server wrapper pattern
+- [x] **SEO-07**: /bsp-chat page has own metadata export (title, description, canonical) via server wrapper pattern
 - [x] **SEO-08**: OG image meta tag references CDN-hosted Supabase URL instead of 2.7 MB local file
-- [ ] **SEO-09**: Web manifest linked from layout metadata via manifest property
-- [ ] **SEO-10**: manifest.json icon references point to files that exist in public/
+- [x] **SEO-09**: Web manifest linked from layout metadata via manifest property
+- [x] **SEO-10**: manifest.json icon references point to files that exist in public/
 
 ## v2 Requirements
 
