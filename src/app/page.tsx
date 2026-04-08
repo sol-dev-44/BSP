@@ -10,6 +10,7 @@ import { Footer } from '@/components/Footer'
 import { ChatCTA } from '@/components/ChatCTA'
 import { generatePageMetadata } from '@/config/seo'
 import { generateBreadcrumbSchema, StructuredData } from '@/config/structured-data'
+import { BUSINESS_INFO } from '@/config/business'
 
 export const metadata = generatePageMetadata(
   'Big Sky Parasail | Soar Above Flathead Lake, Montana',
@@ -19,7 +20,7 @@ export const metadata = generatePageMetadata(
 
 export default function Home() {
   const breadcrumbs = [
-    { name: 'Home', url: 'https://www.montanaparasail.com/' }
+    { name: 'Home', url: `${BUSINESS_INFO.url}/` }
   ]
 
   return (

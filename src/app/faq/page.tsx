@@ -4,6 +4,7 @@ import { ChatCTA } from '@/components/ChatCTA'
 import { FAQ } from '@/components/FAQ'
 import { generatePageMetadata } from '@/config/seo'
 import { generateFAQSchema, generateBreadcrumbSchema, StructuredData } from '@/config/structured-data'
+import { BUSINESS_INFO } from '@/config/business'
 import { PARASAILING_FAQS } from '@/config/faq'
 
 export const metadata = generatePageMetadata(
@@ -19,8 +20,8 @@ export default function FAQPage() {
     }))
 
     const breadcrumbs = [
-        { name: 'Home', url: 'https://www.montanaparasail.com/' },
-        { name: 'FAQ', url: 'https://www.montanaparasail.com/faq' }
+        { name: 'Home', url: `${BUSINESS_INFO.url}/` },
+        { name: 'FAQ', url: `${BUSINESS_INFO.url}/faq` }
     ]
 
     return (
