@@ -126,7 +126,7 @@ export default function DateSelector({ selectedDate, onSelectDate, minDate }: Da
                     ))}
                 </div>
                 <p className="mt-3 text-xs text-[#8B6914]">
-                    Open Wed, Fri (3 PM+), Sat &amp; Sun (10 AM+) during season
+                    Sat &amp; Sun: all day &middot; Mon/Tue/Thu/Fri: 3 PM, 4 PM &amp; sunset &middot; Wed: closed
                 </p>
             </div>
         </div>

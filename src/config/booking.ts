@@ -3,7 +3,7 @@
  * Season: May 1st - September 30th
  */
 
-import { getTimeSlotsForDate, RESTRICTED_START_HOUR } from './solarSchedule';
+import { getTimeSlotsForDate, getLastTripSlot } from './solarSchedule';
 
 export const BOOKING_CONFIG = {
     // Season dates (YYYY-MM-DD format)
@@ -12,12 +12,19 @@ export const BOOKING_CONFIG = {
     ],
 
     // Excluded days of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-    // Closed Monday, Tuesday, Thursday — open Wednesday, Friday, Saturday, Sunday
-    excludedDaysOfWeek: [1, 2, 4] as number[],
+    // Wednesday off. Sat/Sun all day. Mon/Tue/Thu/Fri limited slots.
+    excludedDaysOfWeek: [3] as number[],
 
-    // Days with restricted hours (3 PM start instead of 10 AM)
-    // 3 = Wednesday, 5 = Friday
-    restrictedDaysOfWeek: [3, 5] as number[],
+    // Mon (1), Tue (2), Thu (4), Fri (5): only 3 PM, 4 PM, and sunset
+    limitedDays: [1, 2, 4, 5] as number[],
+
+    // Specific dates that override limited-day restrictions (full day, e.g. Viator bookings)
+    fullDayOverrides: [
+        '2026-07-10', // Fri - W Kay Fries (Viator 2 PM)
+        '2026-07-28', // Tue - Tyler Stanhope (Viator 5 PM)
+        '2026-08-03', // Mon - Brian Godshall x3 (Viator 2 PM)
+        '2026-08-11', // Tue - Heather Vest (Viator 2 PM)
+    ] as string[],
 
     // Max passengers per boat (Cloud Dancer holds 10)
     MAX_PASSENGERS: 10,
@@ -84,23 +91,22 @@ export function isDayOfWeekAllowed(dayOfWeek: number, date?: Date): boolean {
 }
 
 /**
- * Helper function to check if a day of the week has restricted hours (3 PM start).
- * Wednesday (3) and Friday (5) only offer 3 PM through sunset.
- */
-export function isRestrictedDay(dayOfWeek: number): boolean {
-    return BOOKING_CONFIG.restrictedDaysOfWeek.includes(dayOfWeek);
-}
-
-/**
  * Helper function to get time slots for a specific date.
  * Uses the Montana solar calendar to determine available slots.
- * Passes RESTRICTED_START_HOUR for Wednesday and Friday.
+ * Limited days (Mon/Tue/Thu/Fri) get only 3 PM, 4 PM, and sunset.
  */
 export function getTimeSlotsForDayOfWeek(dayOfWeek: number, dateStr?: string): string[] {
-    if (dateStr) {
-        const startHour = isRestrictedDay(dayOfWeek) ? RESTRICTED_START_HOUR : undefined;
-        return getTimeSlotsForDate(dateStr, startHour);
+    const slots = dateStr ? getTimeSlotsForDate(dateStr) : BOOKING_CONFIG.timeSlots.daily;
+
+    // Limited days: only 3 PM, 4 PM, and sunset (unless date has a full-day override)
+    if (BOOKING_CONFIG.limitedDays.includes(dayOfWeek) && dateStr && !BOOKING_CONFIG.fullDayOverrides.includes(dateStr)) {
+        const sunsetSlot = getLastTripSlot(dateStr);
+        const limitedSlots = ['3:00 PM', '4:00 PM'];
+        if (sunsetSlot !== '3:00 PM' && sunsetSlot !== '4:00 PM') {
+            limitedSlots.push(sunsetSlot);
+        }
+        return limitedSlots.filter(s => slots.includes(s));
     }
-    // Fallback to static daily slots if no date provided
-    return BOOKING_CONFIG.timeSlots.daily;
+
+    return slots;
 }

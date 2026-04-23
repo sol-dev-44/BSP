@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { getTimeSlotsForDate, getSlotType, getSlotPrice, RESTRICTED_START_HOUR } from '@/config/solarSchedule';
-import { BOOKING_CONFIG, isRestrictedDay } from '@/config/booking';
+import { getSlotType, getSlotPrice } from '@/config/solarSchedule';
+import { BOOKING_CONFIG, getTimeSlotsForDayOfWeek } from '@/config/booking';
 
 const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -56,11 +56,11 @@ export async function GET(request: Request) {
         });
 
         // Use solar-calendar-based time slots for the requested date
-        // Wed/Fri (restricted days) start at 3 PM; Sat/Sun start at 10 AM
-        const dateObj = new Date(date + 'T12:00:00');
+        // Respects day-of-week restrictions (limited days get 3 PM, 4 PM, sunset only)
+        const parts = date.split('-');
+        const dateObj = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
         const dayOfWeek = dateObj.getDay();
-        const startHour = isRestrictedDay(dayOfWeek) ? RESTRICTED_START_HOUR : undefined;
-        const dailySlots = getTimeSlotsForDate(date, startHour);
+        const dailySlots = getTimeSlotsForDayOfWeek(dayOfWeek, date);
 
         // Build response with slot type and tiered pricing
         const slots = dailySlots.map((time) => {
