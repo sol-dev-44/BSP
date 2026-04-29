@@ -13,7 +13,7 @@ export const PARASAILING_FAQS: FAQItem[] = [
     },
     {
         question: 'How do I book a parasailing trip on Flathead Lake?',
-        answer: 'You can book online at montanaparasail.com/book with instant confirmation and real-time availability. Simply select your preferred date and time slot during our operating season (May 1 - September 30). You can also call us at (406) 270-6256 or email bigskyparasailing@gmail.com.',
+        answer: 'You can book online at montanaparasail.com/book with instant confirmation and real-time availability. Simply select your preferred date and time slot during our operating season (May 16 - September 30). You can also call us at (406) 270-6256 or email bigskyparasailing@gmail.com.',
         category: 'Pricing & Booking'
     },
     {
@@ -62,7 +62,7 @@ export const PARASAILING_FAQS: FAQItem[] = [
     },
     {
         question: 'What\'s the best time of day for parasailing on Flathead Lake?',
-        answer: 'All times are great! Our Early Bird 10 AM flight offers the calmest waters at our best price of $99/person. Standard midday flights are $119/person with warm temperatures and beautiful light. Our premium Sunset flight (last flight of the day) is $159/person for a magical golden hour experience. We operate daily from 10:00 AM to 7:00 PM during our season (May 1 - September 30).',
+        answer: 'All times are great! Our Early Bird 10 AM flight offers the calmest waters at our best price of $99/person. Standard midday flights are $119/person with warm temperatures and beautiful light. Our premium Sunset flight (last flight of the day) is $159/person for a magical golden hour experience. We operate daily from 10:00 AM to 7:00 PM during our season (May 16 - September 30).',
         category: 'Experience Details'
     },
     {
@@ -89,7 +89,7 @@ export const PARASAILING_FAQS: FAQItem[] = [
     },
     {
         question: 'When is parasailing season on Flathead Lake?',
-        answer: 'We operate from May 1st through September 30th. This season offers the best weather conditions with warm temperatures, long daylight hours, and stunning views of the surrounding mountains. Our daily schedule runs from 10:00 AM to 7:00 PM.',
+        answer: 'We operate from May 16th through September 30th. This season offers the best weather conditions with warm temperatures, long daylight hours, and stunning views of the surrounding mountains. Our daily schedule runs from 10:00 AM to 7:00 PM.',
         category: 'Location & Logistics'
     },
 

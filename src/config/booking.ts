@@ -1,6 +1,6 @@
 /**
  * Booking Configuration for Big Sky Parasail
- * Season: May 1st - September 30th
+ * Season: May 16th - September 30th
  */
 
 import { getTimeSlotsForDate, getLastTripSlot } from './solarSchedule';
@@ -8,7 +8,7 @@ import { getTimeSlotsForDate, getLastTripSlot } from './solarSchedule';
 export const BOOKING_CONFIG = {
     // Season dates (YYYY-MM-DD format)
     seasons: [
-        { startDate: '2026-05-01', endDate: '2026-09-30' },
+        { startDate: '2026-05-16', endDate: '2026-09-30' },
     ],
 
     // Excluded days of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
@@ -49,7 +49,7 @@ export const BOOKING_CONFIG = {
 
     // Location schedule (for display purposes)
     locationSchedule: [
-        { location: 'Flathead Harbor Marina', startDate: '2026-05-01', endDate: '2026-09-30' },
+        { location: 'Flathead Harbor Marina', startDate: '2026-05-16', endDate: '2026-09-30' },
     ],
 };
 

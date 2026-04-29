@@ -4,7 +4,7 @@
  * Approximate sunrise/sunset times for Lakeside, MT (48.0°N, 114.2°W)
  * Used to generate dynamic daily time slots based on the 2026 operating schedule.
  *
- * Season: May 1 - September 30
+ * Season: May 16 - September 30
  *
  * 2026 Schedule:
  *   Saturday & Sunday: Full hours — 10:00 AM through last trip (sunset - 1 hr)

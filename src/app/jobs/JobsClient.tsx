@@ -123,7 +123,7 @@ export default function JobsClient() {
                         transition={{ duration: 0.8, delay: 0.4 }}
                         className="mt-4 text-[#8B6914] font-medium"
                     >
-                        Lakeside, Montana &nbsp;&middot;&nbsp; May 1 - September 30
+                        Lakeside, Montana &nbsp;&middot;&nbsp; May 16 - September 30
                     </motion.div>
 
                     <motion.a

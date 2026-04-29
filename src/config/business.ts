@@ -32,10 +32,10 @@ export const BUSINESS_INFO = {
     // Season Dates
     season: {
         startMonth: 5, // May
-        startDay: 1,
+        startDay: 16,
         endMonth: 9, // September
         endDay: 30,
-        text: 'May 1st - September 30th',
+        text: 'May 16th - September 30th',
     },
 
     // Business Hours (2026 schedule)
