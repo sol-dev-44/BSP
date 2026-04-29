@@ -12,11 +12,11 @@ export const BOOKING_CONFIG = {
     ],
 
     // Excluded days of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-    // Wednesday off. Sat/Sun all day. Mon/Tue/Thu/Fri limited slots.
-    excludedDaysOfWeek: [3] as number[],
+    // Mon & Wed off. Sat/Sun all day. Tue/Thu/Fri limited slots.
+    excludedDaysOfWeek: [1, 3] as number[],
 
-    // Mon (1), Tue (2), Thu (4), Fri (5): only 3 PM, 4 PM, and sunset
-    limitedDays: [1, 2, 4, 5] as number[],
+    // Tue (2), Thu (4), Fri (5): only 3 PM, 4 PM, and sunset
+    limitedDays: [2, 4, 5] as number[],
 
     // Specific dates that override limited-day restrictions (full day, e.g. Viator bookings)
     fullDayOverrides: [
@@ -87,7 +87,18 @@ export function isWithinSeason(date: Date): boolean {
  * Helper function to check if a day of the week is allowed for bookings
  */
 export function isDayOfWeekAllowed(dayOfWeek: number, date?: Date): boolean {
-    return !BOOKING_CONFIG.excludedDaysOfWeek.includes(dayOfWeek);
+    if (!BOOKING_CONFIG.excludedDaysOfWeek.includes(dayOfWeek)) return true;
+
+    // Allow excluded days that have a full-day override (e.g. existing Viator bookings)
+    if (date) {
+        const yyyy = date.getFullYear();
+        const mm = String(date.getMonth() + 1).padStart(2, '0');
+        const dd = String(date.getDate()).padStart(2, '0');
+        const dateStr = `${yyyy}-${mm}-${dd}`;
+        return BOOKING_CONFIG.fullDayOverrides.includes(dateStr);
+    }
+
+    return false;
 }
 
 /**
