@@ -8,8 +8,8 @@
  *
  * 2026 Schedule:
  *   Saturday & Sunday: Full hours — 10:00 AM through last trip (sunset - 1 hr)
- *   Wednesday & Friday: Restricted hours — 3:00 PM through last trip
- *   Monday, Tuesday, Thursday: Closed
+ *   Tuesday, Thursday, Friday: Restricted hours — 3:00 PM, 4:00 PM, and sunset
+ *   Monday & Wednesday: Closed
  *
  * Tiered pricing:
  *   Early Bird (10 AM, Sat/Sun only) = $99

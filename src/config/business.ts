@@ -41,9 +41,9 @@ export const BUSINESS_INFO = {
     // Business Hours (2026 schedule)
     hours: {
         monday: 'Closed',
-        tuesday: 'Closed',
-        wednesday: '3:00 PM - Sunset',
-        thursday: 'Closed',
+        tuesday: '3:00 PM - Sunset',
+        wednesday: 'Closed',
+        thursday: '3:00 PM - Sunset',
         friday: '3:00 PM - Sunset',
         saturday: '10:00 AM - Sunset',
         sunday: '10:00 AM - Sunset',
@@ -51,7 +51,7 @@ export const BUSINESS_INFO = {
 
     // Schema.org format for hours (19:00 is approximate — actual end varies by sunset)
     openingHours: [
-        'We,Fr 15:00-19:00',
+        'Tu,Th,Fr 15:00-19:00',
         'Sa,Su 10:00-19:00',
     ],
 
