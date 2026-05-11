@@ -13,6 +13,7 @@ const navLinks: { name: string; href: string; cta?: boolean }[] = [
     { name: 'Location', href: '/location' },
     { name: 'FAQ', href: '/faq' },
     { name: 'Chat', href: '/bsp-chat' },
+    { name: 'Jobs', href: '/jobs' },
     { name: 'Book Now', href: '/book', cta: true },
 ]
 
