@@ -22,7 +22,6 @@ const RESPONSIBILITIES = [
     { icon: Anchor, text: 'Help rig, launch, and land the parasail chute from the boat deck' },
     { icon: Shield, text: 'Fit guests with harnesses and life jackets, run safety briefings' },
     { icon: Users, text: 'Welcome guests at the dock, answer questions, and keep the energy high' },
-    { icon: Zap, text: 'Operate the winch under captain direction during flights' },
     { icon: Sun, text: 'Keep the boat clean, organized, and ready between trips' },
     { icon: MapPin, text: 'Assist with docking, line handling, and marina etiquette' },
 ]
