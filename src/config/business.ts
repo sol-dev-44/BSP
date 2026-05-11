@@ -32,17 +32,17 @@ export const BUSINESS_INFO = {
     // Season Dates
     season: {
         startMonth: 5, // May
-        startDay: 16,
+        startDay: 23,
         endMonth: 9, // September
         endDay: 30,
-        text: 'May 16th - September 30th',
+        text: 'May 23rd - September 30th',
     },
 
     // Business Hours (2026 schedule)
     hours: {
-        monday: 'Closed',
+        monday: '3:00 PM - Sunset',
         tuesday: '3:00 PM - Sunset',
-        wednesday: 'Closed',
+        wednesday: '3:00 PM - Sunset',
         thursday: '3:00 PM - Sunset',
         friday: '3:00 PM - Sunset',
         saturday: '10:00 AM - Sunset',
@@ -51,7 +51,7 @@ export const BUSINESS_INFO = {
 
     // Schema.org format for hours (19:00 is approximate — actual end varies by sunset)
     openingHours: [
-        'Tu,Th,Fr 15:00-19:00',
+        'Mo,Tu,We,Th,Fr 15:00-19:00',
         'Sa,Su 10:00-19:00',
     ],
 

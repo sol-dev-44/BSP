@@ -1,6 +1,6 @@
 /**
  * Booking Configuration for Big Sky Parasail
- * Season: May 16th - September 30th
+ * Season: May 23rd - September 30th
  */
 
 import { getTimeSlotsForDate, getLastTripSlot } from './solarSchedule';
@@ -8,15 +8,15 @@ import { getTimeSlotsForDate, getLastTripSlot } from './solarSchedule';
 export const BOOKING_CONFIG = {
     // Season dates (YYYY-MM-DD format)
     seasons: [
-        { startDate: '2026-05-16', endDate: '2026-09-30' },
+        { startDate: '2026-05-23', endDate: '2026-09-30' },
     ],
 
     // Excluded days of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-    // Mon & Wed off. Sat/Sun all day. Tue/Thu/Fri limited slots.
-    excludedDaysOfWeek: [1, 3] as number[],
+    // Open 7 days/week. Sat/Sun all day. Mon-Fri limited (3 PM - sunset).
+    excludedDaysOfWeek: [] as number[],
 
-    // Tue (2), Thu (4), Fri (5): only 3 PM, 4 PM, and sunset
-    limitedDays: [2, 4, 5] as number[],
+    // Mon (1), Tue (2), Wed (3), Thu (4), Fri (5): all hourly slots from 3 PM through sunset
+    limitedDays: [1, 2, 3, 4, 5] as number[],
 
     // Specific dates that override limited-day restrictions (full day, e.g. Viator bookings)
     fullDayOverrides: [
@@ -49,7 +49,7 @@ export const BOOKING_CONFIG = {
 
     // Location schedule (for display purposes)
     locationSchedule: [
-        { location: 'Flathead Harbor Marina', startDate: '2026-05-16', endDate: '2026-09-30' },
+        { location: 'Flathead Harbor Marina', startDate: '2026-05-23', endDate: '2026-09-30' },
     ],
 };
 
@@ -104,19 +104,19 @@ export function isDayOfWeekAllowed(dayOfWeek: number, date?: Date): boolean {
 /**
  * Helper function to get time slots for a specific date.
  * Uses the Montana solar calendar to determine available slots.
- * Limited days (Mon/Tue/Thu/Fri) get only 3 PM, 4 PM, and sunset.
+ * Limited days (Mon-Fri) get all hourly slots from 3 PM through sunset.
  */
 export function getTimeSlotsForDayOfWeek(dayOfWeek: number, dateStr?: string): string[] {
     const slots = dateStr ? getTimeSlotsForDate(dateStr) : BOOKING_CONFIG.timeSlots.daily;
 
-    // Limited days: only 3 PM, 4 PM, and sunset (unless date has a full-day override)
+    // Limited days: all hourly slots from 3 PM through sunset (unless date has a full-day override)
     if (BOOKING_CONFIG.limitedDays.includes(dayOfWeek) && dateStr && !BOOKING_CONFIG.fullDayOverrides.includes(dateStr)) {
-        const sunsetSlot = getLastTripSlot(dateStr);
-        const limitedSlots = ['3:00 PM', '4:00 PM'];
-        if (sunsetSlot !== '3:00 PM' && sunsetSlot !== '4:00 PM') {
-            limitedSlots.push(sunsetSlot);
-        }
-        return limitedSlots.filter(s => slots.includes(s));
+        return slots.filter(s => {
+            const hour = parseInt(s);
+            const isPM = s.includes('PM');
+            const hour24 = isPM && hour !== 12 ? hour + 12 : (!isPM && hour === 12 ? 12 : hour);
+            return hour24 >= 15; // 3 PM and later
+        });
     }
 
     return slots;

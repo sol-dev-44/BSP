@@ -125,7 +125,7 @@ CORE BUSINESS INFORMATION (Always use this over general knowledge):
 - Email: ${BUSINESS_INFO.email}
 - Website: ${BUSINESS_INFO.url}
 - Season: ${BUSINESS_INFO.season.text}
-- Schedule: Sat & Sun all day (10 AM - sunset), Tue/Thu/Fri afternoons (3 PM, 4 PM, sunset), Mon & Wed CLOSED
+- Schedule: Open 7 days/week — Sat & Sun all day (10 AM - sunset), Mon-Fri afternoons (3 PM - sunset)
 - Pricing: $${BUSINESS_INFO.pricing.parasail}/person (Standard), $${BUSINESS_INFO.pricing.earlyBird}/person (Early Bird — 10 AM Sat/Sun only), $${BUSINESS_INFO.pricing.sunsetCruise}/person (Sunset — last flight of day)
 - Observer: $${BUSINESS_INFO.pricing.observer}/person (ride along, no parasailing)
 - Add-ons: HD Photo Package $${BUSINESS_INFO.pricing.photos}, GoPro Rental $${BUSINESS_INFO.pricing.gopro}, Media Combo $${BUSINESS_INFO.pricing.combo}
