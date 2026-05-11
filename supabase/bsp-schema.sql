@@ -220,3 +220,13 @@ CREATE INDEX IF NOT EXISTS idx_bsp_discount_codes_is_active ON bsp_discount_code
 ALTER TABLE bsp_bookings
     ADD COLUMN IF NOT EXISTS discount_code TEXT,
     ADD COLUMN IF NOT EXISTS discount_amount NUMERIC(10, 2) DEFAULT 0;
+
+-- ============================================================
+-- 11. BOOKING SOURCE MIGRATION
+-- Tracks where bookings originate: 'website', 'viator', 'gyg', 'manual'
+-- ============================================================
+ALTER TABLE bsp_bookings
+    ADD COLUMN IF NOT EXISTS booking_source TEXT DEFAULT 'website'
+    CHECK (booking_source IN ('website', 'viator', 'gyg', 'manual'));
+
+CREATE INDEX IF NOT EXISTS idx_bsp_bookings_source ON bsp_bookings(booking_source);

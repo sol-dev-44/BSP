@@ -54,6 +54,9 @@ export default async function AdminBookingsPage({
                         <div className="text-sm text-gray-500">
                             {new Date().toLocaleDateString('en-US', { timeZone: 'America/Denver', dateStyle: 'full' })}
                         </div>
+                        <Link href="/admin/calendar" className="text-sky-600 dark:text-sky-400 font-medium hover:underline">
+                            Calendar
+                        </Link>
                         <Link href="/admin/tasks" className="text-sky-600 dark:text-sky-400 font-medium hover:underline">
                             Tasks
                         </Link>

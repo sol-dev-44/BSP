@@ -4,8 +4,8 @@ import { BUSINESS_INFO } from '@/config/business'
 import JobsClient from './JobsClient'
 
 export const metadata = generatePageMetadata(
-    'Jobs | Big Sky Parasail - Flathead Lake, Montana',
-    'Join the Big Sky Parasail crew on Flathead Lake. We\'re hiring for Dock Sales, Boat Crew, and coding internship roles for the 2026 season.',
+    'Crew Member Wanted | Big Sky Parasail - Flathead Lake, Montana',
+    'Join the Big Sky Parasail crew on Flathead Lake. Hiring parasail crew members for the 2026 season -- full or part time, no experience needed. Apply now!',
     '/jobs'
 )
 
