@@ -16,6 +16,11 @@ const nextConfig: NextConfig = {
         destination: "/book",
         permanent: true,
       },
+      {
+        source: "/book/time",
+        destination: "/book",
+        permanent: true,
+      },
     ];
   },
 };
