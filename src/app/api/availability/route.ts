@@ -62,10 +62,22 @@ export async function GET(request: Request) {
         const dayOfWeek = dateObj.getDay();
         const dailySlots = getTimeSlotsForDayOfWeek(dayOfWeek, date);
 
+        // Hardcoded block: 2026-05-23, all slots before 5 PM unavailable
+        const isBefore5PM = (time: string) => {
+            const match = time.match(/^(\d+):(\d+)\s*(AM|PM)$/);
+            if (!match) return false;
+            let hour = parseInt(match[1]);
+            const period = match[3];
+            if (period === 'PM' && hour !== 12) hour += 12;
+            if (period === 'AM' && hour === 12) hour = 0;
+            return hour < 17;
+        };
+
         // Build response with slot type and tiered pricing
         const slots = dailySlots.map((time) => {
             const used = capacityMap[time] || 0;
-            const remaining = Math.max(0, BOOKING_CONFIG.MAX_PASSENGERS - used);
+            const blocked = date === '2026-05-23' && isBefore5PM(time);
+            const remaining = blocked ? 0 : Math.max(0, BOOKING_CONFIG.MAX_PASSENGERS - used);
             const type = getSlotType(date, time);
             const price = getSlotPrice(type);
             return {
