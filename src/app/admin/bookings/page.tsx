@@ -24,9 +24,10 @@ export default async function AdminBookingsPage({
 
     // Calculate Stats
     const activeBookings = bookings.filter(b => b.status !== 'cancelled');
+    const completedBookings = bookings.filter(b => b.status === 'completed');
 
     const totalBookings = activeBookings.length;
-    const totalRevenue = activeBookings.reduce((sum, b) => sum + (Number(b.total_amount) || 0), 0);
+    const totalRevenue = completedBookings.reduce((sum, b) => sum + (Number(b.total_amount) || 0), 0);
     const totalPax = activeBookings.reduce((sum, b) => sum + (Number(b.party_size) || 0), 0);
     const confirmedBookings = bookings.filter(b => b.status === 'confirmed').length;
 
