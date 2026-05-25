@@ -14,6 +14,10 @@ import {
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { BOOKING_CONFIG, isWithinSeason, isDayOfWeekAllowed } from '@/config/booking';
 
+const BLOCKED_DATES = new Set<string>([
+    '2026-05-26',
+]);
+
 interface DateSelectorProps {
     selectedDate: string; // YYYY-MM-DD
     onSelectDate: (date: string) => void;
@@ -56,7 +60,8 @@ export default function DateSelector({ selectedDate, onSelectDate, minDate }: Da
             const isAllowedDay = isDayOfWeekAllowed(dayOfWeek, day);
 
             const isPast = isBefore(day, minDateObj);
-            const isDisabled = isPast || !isInSeason || !isAllowedDay;
+            const isBlocked = BLOCKED_DATES.has(dateString);
+            const isDisabled = isPast || !isInSeason || !isAllowedDay || isBlocked;
             const isSelected = selectedDate === dateString;
 
             days.push(
