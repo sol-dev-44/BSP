@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { ArrowUpDown, Search } from 'lucide-react';
 import CancelBookingButton from '@/components/admin/CancelBookingButton';
+import CompleteBookingButton from '@/components/admin/CompleteBookingButton';
 
 interface Booking {
     id: string;
@@ -144,9 +145,14 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
                                             {new Date(booking.created_at).toLocaleDateString()}
                                         </td>
                                         <td className="p-4 text-right">
-                                            {booking.status !== 'cancelled' && (
-                                                <CancelBookingButton bookingId={booking.id} />
-                                            )}
+                                            <div className="flex items-center justify-end gap-3">
+                                                {booking.status !== 'cancelled' && booking.status !== 'completed' && (
+                                                    <CompleteBookingButton bookingId={booking.id} />
+                                                )}
+                                                {booking.status !== 'cancelled' && booking.status !== 'completed' && (
+                                                    <CancelBookingButton bookingId={booking.id} />
+                                                )}
+                                            </div>
                                         </td>
                                     </tr>
                                 );
