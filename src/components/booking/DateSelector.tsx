@@ -16,6 +16,11 @@ import { BOOKING_CONFIG, isWithinSeason, isDayOfWeekAllowed } from '@/config/boo
 
 const BLOCKED_DATES = new Set<string>([
     '2026-05-26',
+    '2026-05-28',
+    '2026-05-30',
+    '2026-05-31',
+    '2026-06-01',
+    '2026-06-02',
 ]);
 
 interface DateSelectorProps {
