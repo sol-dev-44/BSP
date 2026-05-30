@@ -222,6 +222,58 @@ ALTER TABLE bsp_bookings
     ADD COLUMN IF NOT EXISTS discount_amount NUMERIC(10, 2) DEFAULT 0;
 
 -- ============================================================
+-- 10b. DISCOUNT CODE PER-GUEST + CAP + EARLY-BIRD EXCLUSION (Phase 02.1)
+-- Semantics of bsp_discount_codes.amount changes from flat-total to per-guest dollars.
+-- Safe to re-run: ADD COLUMN IF NOT EXISTS is idempotent.
+-- ============================================================
+ALTER TABLE bsp_discount_codes
+    ADD COLUMN IF NOT EXISTS max_redemptions INTEGER NOT NULL DEFAULT 0,
+    ADD COLUMN IF NOT EXISTS times_redeemed INTEGER NOT NULL DEFAULT 0,
+    ADD COLUMN IF NOT EXISTS excludes_early_bird BOOLEAN NOT NULL DEFAULT false;
+
+COMMENT ON COLUMN bsp_discount_codes.amount IS
+    'Per-guest discount in dollars. Final discount = amount * party_size. (Semantics changed Phase 02.1 — was flat-total in Phase 2.)';
+COMMENT ON COLUMN bsp_discount_codes.max_redemptions IS
+    'Maximum redemptions allowed. 0 = unlimited.';
+COMMENT ON COLUMN bsp_discount_codes.times_redeemed IS
+    'Counter incremented atomically by bsp_increment_discount_redemption() after successful booking insert.';
+
+-- Atomic counter increment with cap guard (Pattern 2A from research; D-10).
+-- Returns at_cap=true if the row was at-or-above max_redemptions and no increment occurred.
+CREATE OR REPLACE FUNCTION bsp_increment_discount_redemption(p_code_name TEXT)
+RETURNS TABLE(times_redeemed INTEGER, at_cap BOOLEAN) AS $$
+DECLARE
+    v_updated_count INTEGER;
+    v_new_count INTEGER;
+BEGIN
+    UPDATE bsp_discount_codes
+    SET times_redeemed = bsp_discount_codes.times_redeemed + 1,
+        updated_at = now()
+    WHERE bsp_discount_codes.code_name = p_code_name
+      AND (bsp_discount_codes.max_redemptions = 0
+           OR bsp_discount_codes.times_redeemed < bsp_discount_codes.max_redemptions)
+    RETURNING bsp_discount_codes.times_redeemed INTO v_new_count;
+
+    GET DIAGNOSTICS v_updated_count = ROW_COUNT;
+
+    IF v_updated_count = 0 THEN
+        RETURN QUERY SELECT NULL::INTEGER, true;
+    ELSE
+        RETURN QUERY SELECT v_new_count, false;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Seed: "30OFF" inaugural code (DISC-11). ON CONFLICT preserves dev test counters.
+INSERT INTO bsp_discount_codes (code_name, amount, max_redemptions, times_redeemed, excludes_early_bird, is_active)
+VALUES ('30OFF', 30, 6, 0, true, true)
+ON CONFLICT (code_name) DO UPDATE SET
+    amount = EXCLUDED.amount,
+    max_redemptions = EXCLUDED.max_redemptions,
+    excludes_early_bird = EXCLUDED.excludes_early_bird,
+    is_active = EXCLUDED.is_active;
+
+-- ============================================================
 -- 11. BOOKING SOURCE MIGRATION
 -- Tracks where bookings originate: 'website', 'viator', 'gyg', 'manual'
 -- ============================================================
