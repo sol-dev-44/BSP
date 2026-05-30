@@ -7,6 +7,9 @@ export interface DiscountCode {
     is_active: boolean
     created_at: string
     updated_at: string
+    max_redemptions: number       // 0 = unlimited (D-02)
+    times_redeemed: number        // server-mutated only — incremented by RPC after booking insert (D-02)
+    excludes_early_bird: boolean  // default false (D-02)
 }
 
 export const discountCodesApi = createApi({
@@ -18,7 +21,7 @@ export const discountCodesApi = createApi({
             query: () => 'discount-codes',
             providesTags: ['DiscountCodes'],
         }),
-        addDiscountCode: builder.mutation<DiscountCode, { code_name: string; amount: number }>({
+        addDiscountCode: builder.mutation<DiscountCode, { code_name: string; amount: number; max_redemptions?: number; excludes_early_bird?: boolean }>({
             query: (data) => ({
                 url: 'discount-codes',
                 method: 'POST',
