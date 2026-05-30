@@ -64,11 +64,14 @@ Plans:
   3. A code flagged excludes_early_bird = true is rejected with the exact message "This code cannot be used with early bird flights" when the selected slot is early-bird
   4. Admin can create/edit codes setting per-guest amount, max redemptions, and early-bird exclusion; the codes list shows current redemption count vs cap
   5. The seed code "30off" exists in the database with $30 per guest, max_redemptions = 6, excludes_early_bird = true, and is_active = true
-**Plans**: TBD
+**Plans**: 4 plans
 **UI hint**: yes
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 02.1 to break down)
+- [ ] 02.1-01-PLAN.md — Schema migration: add columns, RPC, and 30OFF seed; extend DiscountCode TypeScript interface
+- [ ] 02.1-02-PLAN.md — Server endpoints: validate (cap + early-bird), write APIs (POST/PATCH new fields), payment-intent per-guest math, bookings counter increment
+- [ ] 02.1-03-PLAN.md — UI layer: BookingClient per-guest math + trip params on validate; Admin DiscountCodesClient three new controls + Redemptions column
+- [ ] 02.1-04-PLAN.md — Operator step: run §10b SQL in Supabase + end-to-end smoke test with Stripe test card (checkpoints)
 
 ### Phase 3: Admin & Scheduling
 **Goal**: The admin panel reflects accurate business state — no dead SMS references, correct revenue after cancellations — and the booking calendar reflects real scheduling rules
