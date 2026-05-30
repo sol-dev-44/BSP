@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02.1-02-PLAN.md
-last_updated: "2026-05-30T02:14:44.694Z"
+stopped_at: Completed 02.1-03-PLAN.md
+last_updated: "2026-05-30T02:16:25.912Z"
 last_activity: 2026-05-30
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 17
-  completed_plans: 15
+  completed_plans: 16
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-31)
 ## Current Position
 
 Phase: 02.1 (extend-discount-codes-with-per-flyer-pricing-usage-limits-and-early-bird-exclusion) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-05-30
 
@@ -65,6 +65,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 04 P03 | 8 | 2 tasks | 4 files |
 | Phase 02.1 P01 | 2min | 2 tasks | 2 files |
 | Phase 02.1 P02 | 2m | 3 tasks | 5 files |
+| Phase 02.1 P03 | 3min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -105,6 +106,9 @@ Recent decisions affecting current work:
 - [Phase 02.1]: Per-guest discount math: discountData.amount * party_size, floored with Math.max(0, ...) (D-08)
 - [Phase 02.1]: PATCH /api/discount-codes/[id] accepts times_redeemed for admin reset workflow (Open Question 5)
 - [Phase 02.1]: bookings/route.ts RPC bsp_increment_discount_redemption call placed after insert success, before email section; no inner try/catch (D-03, D-10)
+- [Phase 02.1]: [Phase 02.1] BookingClient discountAmount state stores PER-GUEST dollars; multiplied at every use site (calculateTotal, handlePaymentSuccess, PriceBreakdown prop) so changing party_size after applying a code auto-recomputes total without re-fetching
+- [Phase 02.1]: [Phase 02.1] handlePaymentSuccess sends FINAL applied total (per-guest * party_size) as discount_amount so bsp_bookings receipt matches Stripe charge — DISC-06 fix (discount_code) preserved
+- [Phase 02.1]: [Phase 02.1] DiscountCodesClient renders excludes_early_bird as an amber 'No Early Bird' pill inside the Redemptions cell instead of a separate column — keeps table width manageable while remaining at-a-glance scannable
 
 ### Roadmap Evolution
 
@@ -129,6 +133,6 @@ None yet.
 
 Last activity: 2026-04-08 - Completed quick task 260407-u1d: Update tour availability schedule
 
-Last session: 2026-05-30T02:14:35.794Z
-Stopped at: Completed 02.1-02-PLAN.md
+Last session: 2026-05-30T02:16:15.361Z
+Stopped at: Completed 02.1-03-PLAN.md
 Resume file: None
