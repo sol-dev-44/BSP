@@ -61,7 +61,7 @@ export async function POST(request: Request) {
             const normalizedCode = discount_code.trim().toUpperCase();
             const { data: discountData, error: discountError } = await supabaseAdmin
                 .from('bsp_discount_codes')
-                .select('amount, is_active, code_name')
+                .select('amount, is_active, code_name, max_redemptions, times_redeemed, excludes_early_bird')
                 .eq('code_name', normalizedCode)
                 .single();
 
@@ -69,11 +69,17 @@ export async function POST(request: Request) {
                 console.warn('[BSP PAYMENT] Discount code not found:', normalizedCode);
             } else if (!discountData.is_active) {
                 console.warn('[BSP PAYMENT] Discount code inactive:', normalizedCode);
+            } else if (discountData.max_redemptions > 0 && discountData.times_redeemed >= discountData.max_redemptions) {
+                console.warn('[BSP PAYMENT] Discount code at cap:', normalizedCode);
+            } else if (discountData.excludes_early_bird && slotType === 'earlybird') {
+                // slotType already computed above from getSlotType(trip_date, trip_time || '')
+                console.warn('[BSP PAYMENT] Discount code excludes early bird:', normalizedCode);
             } else {
-                discountAmount = discountData.amount;
+                // DISC-07: per-guest math — code.amount is per-guest dollars (D-01 semantic change)
+                discountAmount = discountData.amount * (party_size || 0);
                 appliedDiscountCode = discountData.code_name;
                 amount = Math.max(0, amount - discountAmount);
-                console.log('[DISCOUNT] Applied discount code', normalizedCode, 'amount', discountAmount);
+                console.log('[DISCOUNT] Applied per-guest discount', normalizedCode, 'amount/guest', discountData.amount, 'party', party_size, 'total discount', discountAmount);
             }
         }
 

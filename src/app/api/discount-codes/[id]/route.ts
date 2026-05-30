@@ -8,7 +8,7 @@ export async function PATCH(
     try {
         const { id } = await params;
         const body = await request.json();
-        const { code_name, amount, is_active } = body;
+        const { code_name, amount, is_active, max_redemptions, excludes_early_bird } = body;
 
         const updates: Record<string, unknown> = {
             updated_at: new Date().toISOString(),
@@ -22,6 +22,15 @@ export async function PATCH(
         }
         if (is_active !== undefined) {
             updates.is_active = is_active;
+        }
+        if (max_redemptions !== undefined) {
+            updates.max_redemptions = max_redemptions;
+        }
+        if (excludes_early_bird !== undefined) {
+            updates.excludes_early_bird = excludes_early_bird;
+        }
+        if (body.times_redeemed !== undefined) {
+            updates.times_redeemed = body.times_redeemed;
         }
 
         const { data: code, error } = await supabaseAdmin

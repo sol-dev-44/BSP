@@ -23,7 +23,7 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { code_name, amount } = body;
+        const { code_name, amount, max_redemptions, excludes_early_bird } = body;
 
         if (!code_name || typeof code_name !== 'string' || !code_name.trim()) {
             return NextResponse.json({ error: 'code_name is required and must be a non-empty string' }, { status: 400 });
@@ -33,11 +33,26 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'amount is required and must be a positive number' }, { status: 400 });
         }
 
+        if (max_redemptions !== undefined && (typeof max_redemptions !== 'number' || max_redemptions < 0 || !Number.isInteger(max_redemptions))) {
+            return NextResponse.json({ error: 'max_redemptions must be a non-negative integer' }, { status: 400 });
+        }
+
+        if (excludes_early_bird !== undefined && typeof excludes_early_bird !== 'boolean') {
+            return NextResponse.json({ error: 'excludes_early_bird must be a boolean' }, { status: 400 });
+        }
+
         const normalizedName = code_name.trim().toUpperCase();
+
+        const insertPayload: Record<string, unknown> = {
+            code_name: normalizedName,
+            amount,
+        };
+        if (max_redemptions !== undefined) insertPayload.max_redemptions = max_redemptions;
+        if (excludes_early_bird !== undefined) insertPayload.excludes_early_bird = excludes_early_bird;
 
         const { data: code, error } = await supabaseAdmin
             .from('bsp_discount_codes')
-            .insert([{ code_name: normalizedName, amount }])
+            .insert([insertPayload])
             .select()
             .single();
 
