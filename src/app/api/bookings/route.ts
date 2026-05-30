@@ -113,6 +113,25 @@ export async function POST(request: Request) {
             throw new Error('Failed to save booking');
         }
 
+        // Phase 02.1 / DISC-08: Atomically increment the discount-code redemption counter.
+        // The RPC bsp_increment_discount_redemption performs a conditional UPDATE with the cap guard;
+        // if the row is at-cap, at_cap=true is returned and we log a warning — we do NOT fail the booking
+        // because Stripe has already charged at this point (D-10).
+        if (discount_code) {
+            const normalizedCode = String(discount_code).trim().toUpperCase();
+            const { data: incData, error: incErr } = await supabase.rpc(
+                'bsp_increment_discount_redemption',
+                { p_code_name: normalizedCode }
+            );
+            if (incErr) {
+                console.error('[DISCOUNT] Counter increment RPC failed (booking already saved):', incErr);
+            } else if (incData?.[0]?.at_cap) {
+                console.warn('[DISCOUNT] Code at cap on increment — Stripe already charged:', normalizedCode);
+            } else {
+                console.log('[DISCOUNT] Counter incremented for', normalizedCode, 'new value:', incData?.[0]?.times_redeemed);
+            }
+        }
+
         // 3. Send Confirmation Emails
         const isDev = process.env.NODE_ENV === 'development';
         const hasVerifiedDomain = !!process.env.RESEND_VERIFIED_DOMAIN;
