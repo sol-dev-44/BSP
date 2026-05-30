@@ -98,6 +98,7 @@ Recent decisions affecting current work:
 ### Roadmap Evolution
 
 - Phase 4 added: Complete SEO audit and automated optimization — technical SEO fixes, meta tags, structured data, performance improvements
+- Phase 02.1 inserted after Phase 2: Extend discount codes with per-flyer pricing, usage limits, and early-bird exclusion (URGENT)
 
 ### Pending Todos
 

@@ -53,6 +53,23 @@ Plans:
 - [x] 02-05-PLAN.md — Store discount on booking record; show in success page and confirmation email
 **UI hint**: yes
 
+### Phase 02.1: Extend discount codes with per-flyer pricing, usage limits, and early-bird exclusion (INSERTED)
+
+**Goal**: Discount codes apply per-guest, enforce max redemption limits, and can be configured to exclude early-bird slots — with admin UI surfacing all three controls
+**Depends on**: Phase 2
+**Requirements**: DISC-07, DISC-08, DISC-09, DISC-10, DISC-11
+**Success Criteria** (what must be TRUE):
+  1. Applying a discount code reduces the total by (per-guest amount × party_size), not a flat amount
+  2. A code with max_redemptions = N can be successfully applied to bookings N times; the (N+1)th attempt is rejected with a clear error
+  3. A code flagged excludes_early_bird = true is rejected with the exact message "This code cannot be used with early bird flights" when the selected slot is early-bird
+  4. Admin can create/edit codes setting per-guest amount, max redemptions, and early-bird exclusion; the codes list shows current redemption count vs cap
+  5. The seed code "30off" exists in the database with $30 per guest, max_redemptions = 6, excludes_early_bird = true, and is_active = true
+**Plans**: TBD
+**UI hint**: yes
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 02.1 to break down)
+
 ### Phase 3: Admin & Scheduling
 **Goal**: The admin panel reflects accurate business state — no dead SMS references, correct revenue after cancellations — and the booking calendar reflects real scheduling rules
 **Depends on**: Phase 1
