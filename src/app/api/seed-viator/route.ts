@@ -12,6 +12,9 @@ const VIATOR_BOOKINGS = [
     { name: 'Brian Godshall', date: '2026-08-03', time: '14:00', size: 4, ref: 'BR-1334202287', detail: '4 adults | Submitted Nov 10, 2025' },
     { name: 'Brian Godshall', date: '2026-08-03', time: '14:00', size: 5, ref: 'BR-1334201497', detail: '5 adults | Submitted Nov 10, 2025' },
     { name: 'Brian Godshall', date: '2026-08-03', time: '14:00', size: 9, ref: 'BR-1334200299', detail: '9 adults | Submitted Nov 10, 2025 | CANCELLED', statusOverride: 'cancelled' as const },
+    { name: 'Aneta Jones', date: '2026-06-11', time: '17:00', size: 2, ref: 'BR-1403469327', detail: '2 adults | Submitted May 28, 2026' },
+    { name: 'Dustin Croft', date: '2026-06-20', time: '14:00', size: 2, ref: 'BR-1400346411', detail: '2 adults | Submitted May 21, 2026' },
+    { name: 'Danielle Karpel Liel', date: '2026-08-12', time: '10:00', size: 4, ref: 'BR-1398502795', detail: '2 children, 2 adults | Submitted May 17, 2026' },
 ];
 
 export async function GET() {

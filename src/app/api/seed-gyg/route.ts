@@ -5,6 +5,8 @@ import { getSlotType, getSlotPrice } from '@/config/solarSchedule';
 const GYG_BOOKINGS = [
     { name: 'Julie Bomfim', date: '2026-07-30', time: '16:00', size: 4, ref: 'GYGG45W7FGA4', total: 340.00, detail: '2 Adults - $190.00, 2 Children - $150.00 | Booked Apr 22, 2026' },
     { name: 'Jonathan Rose', date: '2026-06-02', time: '16:00', size: 2, ref: 'GYGFWV9H3QA9', total: 190.00, detail: '2 Adults - $190.00 | Booked Apr 17, 2026' },
+    { name: 'Vanessa Trahan', date: '2026-06-12', time: '15:00', size: 5, ref: 'GYG6H8AMGQNK', total: 435.00, detail: '3 Adults - $285.00, 2 Children - $150.00 | Booked May 20, 2026' },
+    { name: 'Derek Swanson', date: '2026-07-01', time: '10:00', size: 2, ref: 'GYG6H8A6Z6QW', total: 190.00, detail: '2 Adults - $190.00 | Booked May 7, 2026' },
 ];
 
 export async function GET() {
