@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02.1-01-PLAN.md
-last_updated: "2026-05-30T02:09:30.736Z"
+stopped_at: Completed 02.1-02-PLAN.md
+last_updated: "2026-05-30T02:14:44.694Z"
 last_activity: 2026-05-30
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 17
-  completed_plans: 14
+  completed_plans: 15
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-31)
 ## Current Position
 
 Phase: 02.1 (extend-discount-codes-with-per-flyer-pricing-usage-limits-and-early-bird-exclusion) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 Status: Ready to execute
 Last activity: 2026-05-30
 
@@ -64,6 +64,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 04 P02 | 10min | 2 tasks | 7 files |
 | Phase 04 P03 | 8 | 2 tasks | 4 files |
 | Phase 02.1 P01 | 2min | 2 tasks | 2 files |
+| Phase 02.1 P02 | 2m | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -99,6 +100,11 @@ Recent decisions affecting current work:
 - [Phase 02.1]: [Phase 02.1]: max_redemptions defaults to 0 = unlimited so existing test rows remain backward compatible (D-02)
 - [Phase 02.1]: [Phase 02.1]: bsp_increment_discount_redemption RPC uses atomic conditional UPDATE with cap guard (Pattern 2A) — at_cap flag returned so caller can log but not fail booking when Stripe already charged (D-10)
 - [Phase 02.1]: [Phase 02.1]: 30OFF seed uses ON CONFLICT DO UPDATE but intentionally omits times_redeemed so dev test counters survive schema re-runs (D-15)
+- [Phase 02.1]: Validate endpoint enforces D-05 check order (exists -> is_active -> cap -> early-bird) with verbatim D-07 error strings
+- [Phase 02.1]: create-payment-intent re-checks cap and early-bird as last-gate safety; payment-intent stays LENIENT (no 4xx) per Phase 2 pattern
+- [Phase 02.1]: Per-guest discount math: discountData.amount * party_size, floored with Math.max(0, ...) (D-08)
+- [Phase 02.1]: PATCH /api/discount-codes/[id] accepts times_redeemed for admin reset workflow (Open Question 5)
+- [Phase 02.1]: bookings/route.ts RPC bsp_increment_discount_redemption call placed after insert success, before email section; no inner try/catch (D-03, D-10)
 
 ### Roadmap Evolution
 
@@ -123,6 +129,6 @@ None yet.
 
 Last activity: 2026-04-08 - Completed quick task 260407-u1d: Update tour availability schedule
 
-Last session: 2026-05-30T02:09:30.733Z
-Stopped at: Completed 02.1-01-PLAN.md
+Last session: 2026-05-30T02:14:35.794Z
+Stopped at: Completed 02.1-02-PLAN.md
 Resume file: None

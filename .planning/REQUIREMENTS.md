@@ -20,9 +20,9 @@
 - [x] **DISC-04**: Customer can enter a discount code during booking and see the total reduced by the code's dollar amount
 - [x] **DISC-05**: Booking API validates the discount code exists and is active before applying the discount
 - [x] **DISC-06**: Discount amount is stored on the booking record and reflected in confirmation email and success page
-- [ ] **DISC-07**: Discount is applied per-guest — final discount equals (per-guest amount × party_size), not a flat total
+- [x] **DISC-07**: Discount is applied per-guest — final discount equals (per-guest amount × party_size), not a flat total
 - [x] **DISC-08**: Discount codes enforce a max_redemptions cap with an incrementing times_redeemed counter; codes at or above the cap are rejected at validation and at payment-intent creation
-- [ ] **DISC-09**: Discount codes can be configured to exclude early-bird slots; when set, the validate endpoint returns the exact error message "This code cannot be used with early bird flights" if the selected trip_time is an early-bird slot (per getSlotType in src/config/solarSchedule.ts)
+- [x] **DISC-09**: Discount codes can be configured to exclude early-bird slots; when set, the validate endpoint returns the exact error message "This code cannot be used with early bird flights" if the selected trip_time is an early-bird slot (per getSlotType in src/config/solarSchedule.ts)
 - [ ] **DISC-10**: Admin discount codes UI lets the operator set per-guest amount, max_redemptions, and excludes_early_bird; the list view displays times_redeemed / max_redemptions for each code
 - [x] **DISC-11**: Seed migration inserts code "30off" with amount_per_guest = 30, max_redemptions = 6, times_redeemed = 0, excludes_early_bird = true, is_active = true
 
