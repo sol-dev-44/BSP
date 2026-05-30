@@ -71,7 +71,7 @@ Plans:
 - [x] 02.1-01-PLAN.md — Schema migration: add columns, RPC, and 30OFF seed; extend DiscountCode TypeScript interface
 - [x] 02.1-02-PLAN.md — Server endpoints: validate (cap + early-bird), write APIs (POST/PATCH new fields), payment-intent per-guest math, bookings counter increment
 - [x] 02.1-03-PLAN.md — UI layer: BookingClient per-guest math + trip params on validate; Admin DiscountCodesClient three new controls + Redemptions column
-- [ ] 02.1-04-PLAN.md — Operator step: run §10b SQL in Supabase + end-to-end smoke test with Stripe test card (checkpoints)
+- [x] 02.1-04-PLAN.md — Operator step: run §10b SQL in Supabase + end-to-end smoke test with Stripe test card (checkpoints)
 
 ### Phase 3: Admin & Scheduling
 **Goal**: The admin panel reflects accurate business state — no dead SMS references, correct revenue after cancellations — and the booking calendar reflects real scheduling rules
