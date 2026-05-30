@@ -199,12 +199,16 @@ export default function BookingClient() {
             const res = await fetch('/api/discount-codes/validate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ code: discountInput.trim() }),
+                body: JSON.stringify({
+                    code: discountInput.trim(),
+                    trip_date: selectedDate,       // NEW (DISC-09): enables early-bird check on server
+                    trip_time: selectedTime,       // NEW (DISC-09)
+                }),
             });
             const data = await res.json();
             if (data.valid) {
                 setDiscountCode(data.code_name);
-                setDiscountAmount(data.amount);
+                setDiscountAmount(data.amount);    // PER-GUEST amount (DISC-07)
                 setDiscountError('');
             } else {
                 setDiscountCode('');
@@ -265,7 +269,7 @@ export default function BookingClient() {
                     party_size: Number(formData.party_size),
                     add_ons: formData.add_ons,
                     discount_code: discountCode || null,
-                    discount_amount: discountAmount || 0,
+                    discount_amount: (discountAmount * Number(formData.party_size)) || 0,    // FINAL applied total (DISC-07)
                 }),
             });
 
@@ -294,7 +298,10 @@ export default function BookingClient() {
         base += (formData.add_ons.observer_package || 0) * BUSINESS_INFO.pricing.observer;
         base += (formData.add_ons.tip_amount || 0);
 
-        return base - discountAmount;
+        // DISC-07: discountAmount in state is PER-GUEST; multiply by party_size for the applied total.
+        // Math.max(0, ...) preserves the Phase 2 floor-at-zero invariant.
+        const totalDiscount = discountAmount * partySize;
+        return Math.max(0, base - totalDiscount);
     };
 
     const currentPricePerPerson = getBasePricePerPerson();
@@ -549,7 +556,7 @@ export default function BookingClient() {
                                             addOns={formData.add_ons}
                                             basePricePerPerson={currentPricePerPerson}
                                             slotType={selectedSlotType}
-                                            discountAmount={discountAmount}
+                                            discountAmount={discountAmount * (Number(formData.party_size) || 0)}    // FINAL applied total (DISC-07)
                                             discountCode={discountCode}
                                         />
                                         <p className="text-center text-xs text-[#8B6914] mt-4">
@@ -602,7 +609,7 @@ export default function BookingClient() {
                                             addOns={formData.add_ons}
                                             basePricePerPerson={currentPricePerPerson}
                                             slotType={selectedSlotType}
-                                            discountAmount={discountAmount}
+                                            discountAmount={discountAmount * (Number(formData.party_size) || 0)}    // FINAL applied total (DISC-07)
                                             discountCode={discountCode}
                                         />
                                         <div className="mt-4 bg-[#FFFFFF]/10 p-4 rounded-xl flex items-start gap-3">
