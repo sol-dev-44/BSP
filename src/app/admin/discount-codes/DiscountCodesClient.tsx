@@ -17,8 +17,18 @@ export default function DiscountCodesClient() {
 
     const [isAdding, setIsAdding] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
-    const [formData, setFormData] = useState({ code_name: '', amount: '' });
-    const [editData, setEditData] = useState({ code_name: '', amount: '' });
+    const [formData, setFormData] = useState({
+        code_name: '',
+        amount: '',
+        max_redemptions: '0',           // string from <input type="number">; parseInt at submit (D-12)
+        excludes_early_bird: false,     // boolean (D-12)
+    });
+    const [editData, setEditData] = useState({
+        code_name: '',
+        amount: '',
+        max_redemptions: '0',
+        excludes_early_bird: false,
+    });
 
     const activeCount = codes ? codes.filter((c) => c.is_active).length : 0;
 
@@ -28,18 +38,25 @@ export default function DiscountCodesClient() {
             await addDiscountCode({
                 code_name: formData.code_name.trim().toUpperCase(),
                 amount: parseFloat(formData.amount),
+                max_redemptions: parseInt(formData.max_redemptions, 10) || 0,
+                excludes_early_bird: formData.excludes_early_bird,
             }).unwrap();
             setIsAdding(false);
-            setFormData({ code_name: '', amount: '' });
+            setFormData({ code_name: '', amount: '', max_redemptions: '0', excludes_early_bird: false });
         } catch (error) {
             console.error('Failed to add discount code:', error);
             alert('Failed to add discount code. Check console for details.');
         }
     };
 
-    const handleEdit = (id: string, code_name: string, amount: number) => {
+    const handleEdit = (id: string, code_name: string, amount: number, max_redemptions: number, excludes_early_bird: boolean) => {
         setEditingId(id);
-        setEditData({ code_name, amount: String(amount) });
+        setEditData({
+            code_name,
+            amount: String(amount),
+            max_redemptions: String(max_redemptions),
+            excludes_early_bird,
+        });
     };
 
     const handleEditSave = async (id: string) => {
@@ -48,6 +65,8 @@ export default function DiscountCodesClient() {
                 id,
                 code_name: editData.code_name.trim().toUpperCase(),
                 amount: parseFloat(editData.amount),
+                max_redemptions: parseInt(editData.max_redemptions, 10) || 0,
+                excludes_early_bird: editData.excludes_early_bird,
             }).unwrap();
             setEditingId(null);
         } catch (error) {
@@ -125,17 +144,41 @@ export default function DiscountCodesClient() {
                             />
                         </div>
                         <div>
-                            <label className="block text-xs font-semibold text-slate-500 mb-1">Discount Amount ($) *</label>
+                            <label className="block text-xs font-semibold text-slate-500 mb-1">Discount per Guest ($) *</label>
                             <input
                                 type="number"
                                 step="0.01"
                                 min="0.01"
                                 required
-                                placeholder="25.00"
+                                placeholder="30.00"
                                 value={formData.amount}
                                 onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
                                 className="w-full p-2 rounded-md border border-slate-300 dark:border-slate-600 bg-transparent"
                             />
+                        </div>
+                        <div>
+                            <label className="block text-xs font-semibold text-slate-500 mb-1">Max Redemptions</label>
+                            <input
+                                type="number"
+                                step="1"
+                                min="0"
+                                placeholder="0 = unlimited"
+                                value={formData.max_redemptions}
+                                onChange={(e) => setFormData({ ...formData, max_redemptions: e.target.value })}
+                                className="w-full p-2 rounded-md border border-slate-300 dark:border-slate-600 bg-transparent"
+                            />
+                        </div>
+                        <div className="md:col-span-2 flex items-center gap-2">
+                            <input
+                                id="add_excludes_early_bird"
+                                type="checkbox"
+                                checked={formData.excludes_early_bird}
+                                onChange={(e) => setFormData({ ...formData, excludes_early_bird: e.target.checked })}
+                                className="w-4 h-4 rounded border-slate-300 dark:border-slate-600"
+                            />
+                            <label htmlFor="add_excludes_early_bird" className="text-xs font-semibold text-slate-500 cursor-pointer">
+                                Exclude Early Bird Flights
+                            </label>
                         </div>
                         <div className="md:col-span-2 flex justify-end mt-2">
                             <button
@@ -156,7 +199,8 @@ export default function DiscountCodesClient() {
                         <thead>
                             <tr className="bg-slate-50 dark:bg-slate-900 text-slate-500 text-xs uppercase tracking-wider">
                                 <th className="p-4 font-semibold">Code Name</th>
-                                <th className="p-4 font-semibold">Amount</th>
+                                <th className="p-4 font-semibold">Per Guest</th>
+                                <th className="p-4 font-semibold">Redemptions</th>
                                 <th className="p-4 font-semibold">Status</th>
                                 <th className="p-4 font-semibold text-right">Actions</th>
                             </tr>
@@ -164,13 +208,13 @@ export default function DiscountCodesClient() {
                         <tbody className="divide-y divide-slate-100 dark:divide-slate-700/50">
                             {isLoading ? (
                                 <tr>
-                                    <td colSpan={4} className="p-8 text-center text-slate-500">
+                                    <td colSpan={5} className="p-8 text-center text-slate-500">
                                         Loading discount codes...
                                     </td>
                                 </tr>
                             ) : !codes || codes.length === 0 ? (
                                 <tr>
-                                    <td colSpan={4} className="p-12 text-center text-slate-500">
+                                    <td colSpan={5} className="p-12 text-center text-slate-500">
                                         No discount codes yet. Create your first code above.
                                     </td>
                                 </tr>
@@ -178,7 +222,9 @@ export default function DiscountCodesClient() {
                                 codes.map((code) => (
                                     <tr
                                         key={code.id}
-                                        className="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors"
+                                        className={`hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors ${
+                                            code.max_redemptions > 0 && code.times_redeemed >= code.max_redemptions ? 'opacity-50' : ''
+                                        }`}
                                     >
                                         {/* Code Name */}
                                         <td className="p-4">
@@ -198,7 +244,7 @@ export default function DiscountCodesClient() {
                                             )}
                                         </td>
 
-                                        {/* Amount */}
+                                        {/* Per Guest */}
                                         <td className="p-4">
                                             {editingId === code.id ? (
                                                 <input
@@ -215,6 +261,47 @@ export default function DiscountCodesClient() {
                                                 <span className="font-mono text-slate-900 dark:text-white">
                                                     ${Number(code.amount).toFixed(2)}
                                                 </span>
+                                            )}
+                                        </td>
+
+                                        {/* Redemptions */}
+                                        <td className="p-4">
+                                            {editingId === code.id ? (
+                                                <div className="space-y-2">
+                                                    <input
+                                                        type="number"
+                                                        step="1"
+                                                        min="0"
+                                                        value={editData.max_redemptions}
+                                                        onChange={(e) =>
+                                                            setEditData({ ...editData, max_redemptions: e.target.value })
+                                                        }
+                                                        className="p-1 rounded border border-slate-300 dark:border-slate-600 bg-transparent text-sm w-24"
+                                                        placeholder="0 = unlimited"
+                                                    />
+                                                    <label className="flex items-center gap-2 text-xs text-slate-500">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={editData.excludes_early_bird}
+                                                            onChange={(e) =>
+                                                                setEditData({ ...editData, excludes_early_bird: e.target.checked })
+                                                            }
+                                                            className="w-3 h-3"
+                                                        />
+                                                        No Early Bird
+                                                    </label>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <span className="font-mono text-slate-700 dark:text-slate-300">
+                                                        {code.times_redeemed} / {code.max_redemptions > 0 ? code.max_redemptions : '∞'}
+                                                    </span>
+                                                    {code.excludes_early_bird && (
+                                                        <span className="ml-2 inline-block bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider">
+                                                            No Early Bird
+                                                        </span>
+                                                    )}
+                                                </>
                                             )}
                                         </td>
 
@@ -256,7 +343,7 @@ export default function DiscountCodesClient() {
                                                 <div className="flex items-center justify-end gap-2">
                                                     <button
                                                         onClick={() =>
-                                                            handleEdit(code.id, code.code_name, code.amount)
+                                                            handleEdit(code.id, code.code_name, code.amount, code.max_redemptions, code.excludes_early_bird)
                                                         }
                                                         className="p-2 text-slate-400 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-sky-900/30 rounded-lg transition-colors"
                                                         title="Edit"
