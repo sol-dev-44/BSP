@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 04-03-PLAN.md
-last_updated: "2026-04-08T01:05:24.520Z"
-last_activity: 2026-04-08
+status: executing
+stopped_at: Completed 02.1-01-PLAN.md
+last_updated: "2026-05-30T02:09:30.736Z"
+last_activity: 2026-05-30
 progress:
-  total_phases: 4
+  total_phases: 5
   completed_phases: 4
-  total_plans: 13
-  completed_plans: 13
+  total_plans: 17
+  completed_plans: 14
   percent: 0
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-31)
 
 **Core value:** Customers book and pay for the correct flight at the correct price, and the business owner sees accurate revenue and booking data in the admin dashboard.
-**Current focus:** Phase 04 — complete-seo-audit-and-automated-optimization
+**Current focus:** Phase 02.1 — extend-discount-codes-with-per-flyer-pricing-usage-limits-and-early-bird-exclusion
 
 ## Current Position
 
-Phase: 04
-Plan: Not started
-Status: Phase complete — ready for verification
-Last activity: 2026-04-08
+Phase: 02.1 (extend-discount-codes-with-per-flyer-pricing-usage-limits-and-early-bird-exclusion) — EXECUTING
+Plan: 2 of 4
+Status: Ready to execute
+Last activity: 2026-05-30
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -63,6 +63,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 04-complete-seo-audit P01 | 5 | 2 tasks | 5 files |
 | Phase 04 P02 | 10min | 2 tasks | 7 files |
 | Phase 04 P03 | 8 | 2 tasks | 4 files |
+| Phase 02.1 P01 | 2min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -94,6 +95,10 @@ Recent decisions affecting current work:
 - [Phase 04]: All breadcrumb URLs use BUSINESS_INFO.url template literal instead of hardcoded domain — single source of truth for domain changes
 - [Phase 04]: bsp-chat page.tsx converted to server wrapper — metadata export is silently ignored on 'use client' components
 - [Phase 04]: Manifest icon purpose 'any maskable' changed to 'any' — JerryBearLogo.png not designed for maskable safe zone
+- [Phase 02.1]: [Phase 02.1]: bsp_discount_codes.amount column name preserved with COMMENT documenting semantic shift from flat-total to per-guest — avoids destructive rename (D-01)
+- [Phase 02.1]: [Phase 02.1]: max_redemptions defaults to 0 = unlimited so existing test rows remain backward compatible (D-02)
+- [Phase 02.1]: [Phase 02.1]: bsp_increment_discount_redemption RPC uses atomic conditional UPDATE with cap guard (Pattern 2A) — at_cap flag returned so caller can log but not fail booking when Stripe already charged (D-10)
+- [Phase 02.1]: [Phase 02.1]: 30OFF seed uses ON CONFLICT DO UPDATE but intentionally omits times_redeemed so dev test counters survive schema re-runs (D-15)
 
 ### Roadmap Evolution
 
@@ -118,6 +123,6 @@ None yet.
 
 Last activity: 2026-04-08 - Completed quick task 260407-u1d: Update tour availability schedule
 
-Last session: 2026-04-08T01:02:09.311Z
-Stopped at: Completed 04-03-PLAN.md
+Last session: 2026-05-30T02:09:30.733Z
+Stopped at: Completed 02.1-01-PLAN.md
 Resume file: None
