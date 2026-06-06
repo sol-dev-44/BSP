@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { Instagram, ExternalLink } from 'lucide-react'
 
 const IMAGE_BASE = 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images/'
@@ -22,13 +21,7 @@ export function InstagramFeed() {
         <div className="py-16 sm:py-20 md:py-28 bg-[#FFF8EE]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                    className="text-center mb-8 sm:mb-12 md:mb-16"
-                >
+                <div className="text-center mb-8 sm:mb-12 md:mb-16">
                     <div className="inline-flex items-center gap-2 bg-[#FF9500] text-white px-4 py-2 mb-4 sm:px-6 sm:py-3 sm:mb-6 rounded-full shadow-[0_4px_15px_rgba(255,149,0,0.3)]">
                         <Instagram className="h-5 w-5" />
                         <span className="font-bold uppercase tracking-widest text-sm">Follow Our Adventures</span>
@@ -41,20 +34,16 @@ export function InstagramFeed() {
                     <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#8B6914] max-w-3xl mx-auto">
                         Daily adventures, customer photos, and stunning Flathead Lake views
                     </p>
-                </motion.div>
+                </div>
 
                 {/* Instagram Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8 sm:mb-12">
-                    {INSTAGRAM_POSTS.map((post, index) => (
-                        <motion.a
+                    {INSTAGRAM_POSTS.map((post) => (
+                        <a
                             key={post.id}
                             href={post.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
                             className="group relative aspect-square rounded-xl overflow-hidden border border-[#FF9500]/10 hover:border-[#FF9500]/40 hover:shadow-[0_4px_20px_rgba(255,149,0,0.15)] transition-all duration-500"
                         >
                             <img
@@ -72,18 +61,12 @@ export function InstagramFeed() {
                                     <span className="font-semibold text-white text-lg">{post.likes}</span>
                                 </div>
                             </div>
-                        </motion.a>
+                        </a>
                     ))}
                 </div>
 
                 {/* Follow CTA */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center"
-                >
+                <div className="text-center">
                     <a
                         href="https://www.instagram.com/bigskyparasail/"
                         target="_blank"
@@ -94,7 +77,7 @@ export function InstagramFeed() {
                         Follow @bigskyparasail
                         <ExternalLink className="w-4 h-4" />
                     </a>
-                </motion.div>
+                </div>
             </div>
         </div>
     )

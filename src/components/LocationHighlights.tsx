@@ -36,30 +36,20 @@ export function LocationHighlights() {
     return (
         <div className="py-16 sm:py-20 md:py-28 lg:py-32 bg-[#FFEACC] relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                    className="text-center mb-8 sm:mb-12 md:mb-16"
-                >
+                <div className="text-center mb-8 sm:mb-12 md:mb-16">
                     <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tight text-[#2D1600] mb-4">
                         Why Flathead Lake?
                     </h2>
                     <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#8B6914] max-w-3xl mx-auto">
                         The perfect combination of natural beauty and ideal conditions for parasailing.
                     </p>
-                </motion.div>
+                </div>
 
                 {/* Location Cards Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {highlights.map((highlight, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: index * 0.15 }}
                             whileHover={{ y: -5 }}
                             className="group relative rounded-xl overflow-hidden border border-[#FF9500]/15 hover:border-[#FF9500]/40 hover:shadow-[0_8px_30px_rgba(255,149,0,0.15)] transition-all duration-500"
                         >
@@ -95,20 +85,14 @@ export function LocationHighlights() {
                     ))}
                 </div>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: 0.5 }}
-                    className="text-center mt-10 sm:mt-16"
-                >
+                <div className="text-center mt-10 sm:mt-16">
                     <a
                         href="/location"
                         className="inline-block bg-[#FF9500] text-white rounded-full font-bold uppercase tracking-widest px-6 py-3 text-base sm:px-8 sm:text-lg shadow-[0_4px_20px_rgba(255,149,0,0.3)] hover:shadow-[0_6px_30px_rgba(255,149,0,0.5)] hover:scale-105 transition-all duration-300"
                     >
                         Learn More About Our Location
                     </a>
-                </motion.div>
+                </div>
             </div>
         </div>
     )

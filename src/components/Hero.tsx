@@ -1,19 +1,13 @@
 'use client'
 
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 
 export function Hero() {
-    const { scrollY } = useScroll()
-    const y = useTransform(scrollY, [0, 500], [0, 150])
-
     return (
         <div className="relative min-h-screen flex items-end overflow-hidden">
-            {/* Hero Background Video with Parallax */}
-            <motion.div
-                style={{ y }}
-                className="absolute inset-0 w-full h-full"
-            >
+            {/* Hero Background Video (parallax removed — caused mobile scroll flicker) */}
+            <div className="absolute inset-0 w-full h-full">
                 {/* Landing page video - full width */}
                 <video
                     autoPlay
@@ -33,9 +27,9 @@ export function Hero() {
 
                 {/* Gradient overlay - warm fade to cream */}
                 <div className="absolute inset-0 bg-gradient-to-b from-[#3D1C00]/30 via-[#3D1C00]/60 to-[#FFF8EE]" />
-                {/* Warm color tint overlay — mix-blend gated to desktop; on mobile the blend mode + parallax transform causes expensive per-scroll-tick repaints */}
+                {/* Warm color tint overlay — mix-blend gated to desktop to avoid expensive mobile repaints */}
                 <div className="absolute inset-0 bg-[#FF9500]/15 md:mix-blend-multiply" />
-            </motion.div>
+            </div>
 
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 pb-16 sm:pb-24">
                 <motion.div

@@ -62,13 +62,7 @@ export function VesselShowcase() {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Editorial Header: title left, label right */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                    className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 sm:mb-12 md:mb-16"
-                >
+                <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 sm:mb-12 md:mb-16">
                     <div>
                         <h2 className="font-[family-name:var(--font-headline)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight uppercase text-[#FF9500]">
                             The Cloud Dancer
@@ -81,18 +75,12 @@ export function VesselShowcase() {
                         <Anchor className="h-5 w-5" />
                         <span className="font-[family-name:var(--font-headline)] text-sm font-bold uppercase tracking-wider">Meet Our Vessel</span>
                     </div>
-                </motion.div>
+                </div>
 
                 {/* Bento Grid: main image spanning 2 cols, feature cards alongside */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Main Cloud Dancer image - spans 2 cols */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                        className="lg:col-span-2 lg:row-span-2 group relative rounded-xl overflow-hidden"
-                    >
+                    <div className="lg:col-span-2 lg:row-span-2 group relative rounded-xl overflow-hidden">
                         <img
                             src={`${IMAGE_BASE}cloudDancerInclineDock.jpg`}
                             alt="Cloud Dancer vessel docked at Flathead Harbor Marina"
@@ -104,18 +92,14 @@ export function VesselShowcase() {
                                 The <span className="font-bold text-[#FFD700]">Cloud Dancer</span> &mdash; our 31-foot Ocean Pro commercial parasail vessel, powered by Volvo Penta diesel with a professional hydraulic winch system.
                             </p>
                         </div>
-                    </motion.div>
+                    </div>
 
                     {/* Feature highlight cards in right column */}
                     {highlights.slice(0, 2).map((highlight, index) => {
                         const Icon = highlight.icon
                         return (
-                            <motion.div
+                            <div
                                 key={index}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
                                 className="bg-[#5A3010] rounded-xl p-5 sm:p-6 md:p-8 border border-[#FF9500]/20 hover:border-[#FF9500]/40 transition-all duration-500"
                             >
                                 <div className="mb-4">
@@ -127,7 +111,7 @@ export function VesselShowcase() {
                                 <p className="text-white/70 leading-relaxed">
                                     {highlight.description}
                                 </p>
-                            </motion.div>
+                            </div>
                         )
                     })}
                 </div>
@@ -138,12 +122,8 @@ export function VesselShowcase() {
                     {highlights.slice(2).map((highlight, index) => {
                         const Icon = highlight.icon
                         return (
-                            <motion.div
+                            <div
                                 key={index + 2}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6, delay: 0.1 * index }}
                                 className="bg-[#5A3010] rounded-xl p-5 sm:p-6 md:p-8 border border-[#FF9500]/20 hover:border-[#FF9500]/40 transition-all duration-500"
                             >
                                 <div className="mb-4">
@@ -155,18 +135,12 @@ export function VesselShowcase() {
                                 <p className="text-white/70 leading-relaxed">
                                     {highlight.description}
                                 </p>
-                            </motion.div>
+                            </div>
                         )
                     })}
 
                     {/* Leroy image card */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.3 }}
-                        className="group relative rounded-xl overflow-hidden"
-                    >
+                    <div className="group relative rounded-xl overflow-hidden">
                         <img
                             src={`${IMAGE_BASE}leroyDock.jpg`}
                             alt="Leroy the dog mascot at the dock"
@@ -178,16 +152,10 @@ export function VesselShowcase() {
                             </p>
                             <p className="text-white/80 text-sm">Our official dock mascot</p>
                         </div>
-                    </motion.div>
+                    </div>
 
                     {/* Vessel Specs card */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                        className="bg-[#5A3010] rounded-xl p-5 sm:p-6 md:p-8 border border-[#FF9500]/20 hover:border-[#FF9500]/40 transition-all duration-500"
-                    >
+                    <div className="bg-[#5A3010] rounded-xl p-5 sm:p-6 md:p-8 border border-[#FF9500]/20 hover:border-[#FF9500]/40 transition-all duration-500">
                         <h3 className="font-[family-name:var(--font-headline)] text-lg font-bold text-white mb-4 flex items-center gap-2 uppercase tracking-wide">
                             <Gauge className="h-5 w-5 text-[#FF9500]" />
                             Vessel Specs
@@ -200,24 +168,18 @@ export function VesselShowcase() {
                                 </li>
                             ))}
                         </ul>
-                    </motion.div>
+                    </div>
                 </div>
 
                 {/* Bottom safety badge */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: 0.5 }}
-                    className="mt-10 sm:mt-16 text-center"
-                >
+                <div className="mt-10 sm:mt-16 text-center">
                     <div className="inline-flex items-center gap-3 bg-[#FF9500] px-4 py-3 sm:px-6 sm:py-4 md:px-8 rounded-xl shadow-lg">
                         <Shield className="h-6 w-6 text-white" />
                         <p className="text-sm sm:text-base md:text-lg font-bold text-white">
                             Safety-First Operations Since Day One
                         </p>
                     </div>
-                </motion.div>
+                </div>
             </div>
         </section>
     )

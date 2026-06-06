@@ -57,30 +57,20 @@ export function ExperienceGallery() {
         <section className="py-16 sm:py-20 md:py-28 lg:py-32 bg-[#FFF0D6] relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Editorial section header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                    className="mb-8 sm:mb-12 md:mb-16"
-                >
+                <div className="mb-8 sm:mb-12 md:mb-16">
                     <h2 className="font-[family-name:var(--font-headline)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight uppercase text-[#2D1600]">
                         Experience the<br /><span className="text-[#FF9500]">Adventure</span>
                     </h2>
                     <p className="text-lg md:text-xl text-[#8B6914] max-w-2xl mt-4">
                         See what awaits you high above Flathead Lake's pristine waters.
                     </p>
-                </motion.div>
+                </div>
 
                 {/* Bento Grid Gallery */}
                 <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[200px] md:auto-rows-[250px] gap-3 md:gap-4">
                     {images.map((image, index) => (
-                        <motion.div
+                        <div
                             key={index}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: index * 0.05 }}
                             className={`relative group cursor-pointer rounded-xl overflow-hidden border border-[#FF9500]/10 hover:border-[#FF9500]/40 hover:shadow-[0_4px_20px_rgba(255,149,0,0.15)] transition-all duration-500 ${getGridSpan(
                                 image.span
                             )}`}
@@ -101,22 +91,16 @@ export function ExperienceGallery() {
                                     <p className="text-white font-bold text-[11px] leading-tight md:text-lg md:leading-normal">{image.alt}</p>
                                 </div>
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
 
                 {/* View All CTA */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: 0.3 }}
-                    className="text-center mt-10 sm:mt-16"
-                >
+                <div className="text-center mt-10 sm:mt-16">
                     <Link href="/gallery" className="inline-block px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg rounded-xl bg-[#FF9500] text-white font-bold hover:bg-[#E07B00] hover:scale-105 transition-all duration-300 shadow-[0_4px_20px_rgba(255,149,0,0.3)] hover:shadow-[0_6px_30px_rgba(255,149,0,0.5)]">
                         View Full Gallery
                     </Link>
-                </motion.div>
+                </div>
             </div>
 
             {/* Lightbox Modal */}

@@ -119,20 +119,14 @@ export function Testimonials() {
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                    className="text-center mb-8 sm:mb-12 md:mb-16"
-                >
+                <div className="text-center mb-8 sm:mb-12 md:mb-16">
                     <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tight text-[#2D1600] mb-4">
                         What Our Guests Say
                     </h2>
                     <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#8B6914] max-w-3xl mx-auto">
                         Don&apos;t just take our word for it. Hear from the adventurers who&apos;ve soared above Flathead Lake.
                     </p>
-                </motion.div>
+                </div>
 
                 <div className="relative max-w-4xl mx-auto">
                     {/* Testimonial Cards */}
