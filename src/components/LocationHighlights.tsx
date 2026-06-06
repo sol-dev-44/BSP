@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion'
 import { Droplets, Mountain, TreePine, MapPin } from 'lucide-react'
-import { useIsMobile } from '@/lib/useIsMobile'
 
 const IMAGE_BASE = 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images/'
 
@@ -34,16 +33,14 @@ const highlights = [
 ]
 
 export function LocationHighlights() {
-    const isMobile = useIsMobile();
-
     return (
         <div className="py-16 sm:py-20 md:py-28 lg:py-32 bg-[#FFEACC] relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div
-                    initial={isMobile ? false : { opacity: 0, y: 20 }}
-                    whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                    viewport={isMobile ? undefined : { once: true }}
-                    transition={isMobile ? undefined : { duration: 0.8 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
                     className="text-center mb-8 sm:mb-12 md:mb-16"
                 >
                     <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tight text-[#2D1600] mb-4">
@@ -59,10 +56,10 @@ export function LocationHighlights() {
                     {highlights.map((highlight, index) => (
                         <motion.div
                             key={index}
-                            initial={isMobile ? false : { opacity: 0, y: 30 }}
-                            whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                            viewport={isMobile ? undefined : { once: true }}
-                            transition={isMobile ? undefined : { duration: 0.6, delay: index * 0.15 }}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: index * 0.15 }}
                             whileHover={{ y: -5 }}
                             className="group relative rounded-xl overflow-hidden border border-[#FF9500]/15 hover:border-[#FF9500]/40 hover:shadow-[0_8px_30px_rgba(255,149,0,0.15)] transition-all duration-500"
                         >
@@ -99,10 +96,10 @@ export function LocationHighlights() {
                 </div>
 
                 <motion.div
-                    initial={isMobile ? false : { opacity: 0, y: 20 }}
-                    whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                    viewport={isMobile ? undefined : { once: true }}
-                    transition={isMobile ? undefined : { duration: 0.8, delay: 0.5 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
                     className="text-center mt-10 sm:mt-16"
                 >
                     <a

@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
-import { useIsMobile } from '@/lib/useIsMobile'
 
 const IMAGE_BASE = 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images/'
 
@@ -33,7 +32,6 @@ const images: GalleryImage[] = [
 ]
 
 export function ExperienceGallery() {
-    const isMobile = useIsMobile();
     const [selectedImage, setSelectedImage] = useState<number | null>(null)
 
     const getGridSpan = (span?: string) => {
@@ -60,10 +58,10 @@ export function ExperienceGallery() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Editorial section header */}
                 <motion.div
-                    initial={isMobile ? false : { opacity: 0, y: 20 }}
-                    whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                    viewport={isMobile ? undefined : { once: true }}
-                    transition={isMobile ? undefined : { duration: 0.8 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
                     className="mb-8 sm:mb-12 md:mb-16"
                 >
                     <h2 className="font-[family-name:var(--font-headline)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight uppercase text-[#2D1600]">
@@ -79,10 +77,10 @@ export function ExperienceGallery() {
                     {images.map((image, index) => (
                         <motion.div
                             key={index}
-                            initial={isMobile ? false : { opacity: 0, scale: 0.8 }}
-                            whileInView={isMobile ? undefined : { opacity: 1, scale: 1 }}
-                            viewport={isMobile ? undefined : { once: true }}
-                            transition={isMobile ? undefined : { duration: 0.5, delay: index * 0.05 }}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: index * 0.05 }}
                             className={`relative group cursor-pointer rounded-xl overflow-hidden border border-[#FF9500]/10 hover:border-[#FF9500]/40 hover:shadow-[0_4px_20px_rgba(255,149,0,0.15)] transition-all duration-500 ${getGridSpan(
                                 image.span
                             )}`}
@@ -109,10 +107,10 @@ export function ExperienceGallery() {
 
                 {/* View All CTA */}
                 <motion.div
-                    initial={isMobile ? false : { opacity: 0, y: 20 }}
-                    whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                    viewport={isMobile ? undefined : { once: true }}
-                    transition={isMobile ? undefined : { duration: 0.8, delay: 0.3 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.3 }}
                     className="text-center mt-10 sm:mt-16"
                 >
                     <Link href="/gallery" className="inline-block px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg rounded-xl bg-[#FF9500] text-white font-bold hover:bg-[#E07B00] hover:scale-105 transition-all duration-300 shadow-[0_4px_20px_rgba(255,149,0,0.3)] hover:shadow-[0_6px_30px_rgba(255,149,0,0.5)]">

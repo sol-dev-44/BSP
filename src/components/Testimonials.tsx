@@ -3,7 +3,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react'
-import { useIsMobile } from '@/lib/useIsMobile'
 
 interface Testimonial {
     name: string
@@ -68,7 +67,6 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 export function Testimonials() {
-    const isMobile = useIsMobile();
     const [currentIndex, setCurrentIndex] = useState(0)
     const [direction, setDirection] = useState(0)
 
@@ -122,10 +120,10 @@ export function Testimonials() {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <motion.div
-                    initial={isMobile ? false : { opacity: 0, y: 20 }}
-                    whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                    viewport={isMobile ? undefined : { once: true }}
-                    transition={isMobile ? undefined : { duration: 0.8 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
                     className="text-center mb-8 sm:mb-12 md:mb-16"
                 >
                     <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tight text-[#2D1600] mb-4">

@@ -2,12 +2,10 @@
 
 import { motion } from 'framer-motion'
 import { Shield, Anchor, Users, Waves, Gauge, CheckCircle } from 'lucide-react'
-import { useIsMobile } from '@/lib/useIsMobile'
 
 const IMAGE_BASE = 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images/'
 
 export function VesselShowcase() {
-    const isMobile = useIsMobile();
     const highlights = [
         {
             icon: Shield,
@@ -65,10 +63,10 @@ export function VesselShowcase() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Editorial Header: title left, label right */}
                 <motion.div
-                    initial={isMobile ? false : { opacity: 0, y: 20 }}
-                    whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                    viewport={isMobile ? undefined : { once: true }}
-                    transition={isMobile ? undefined : { duration: 0.8 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
                     className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 sm:mb-12 md:mb-16"
                 >
                     <div>
@@ -89,10 +87,10 @@ export function VesselShowcase() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Main Cloud Dancer image - spans 2 cols */}
                     <motion.div
-                        initial={isMobile ? false : { opacity: 0, y: 30 }}
-                        whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                        viewport={isMobile ? undefined : { once: true }}
-                        transition={isMobile ? undefined : { duration: 0.8 }}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
                         className="lg:col-span-2 lg:row-span-2 group relative rounded-xl overflow-hidden"
                     >
                         <img
@@ -114,10 +112,10 @@ export function VesselShowcase() {
                         return (
                             <motion.div
                                 key={index}
-                                initial={isMobile ? false : { opacity: 0, y: 30 }}
-                                whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                                viewport={isMobile ? undefined : { once: true }}
-                                transition={isMobile ? undefined : { duration: 0.6, delay: 0.2 + index * 0.1 }}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
                                 className="bg-[#5A3010] rounded-xl p-5 sm:p-6 md:p-8 border border-[#FF9500]/20 hover:border-[#FF9500]/40 transition-all duration-500"
                             >
                                 <div className="mb-4">
@@ -142,10 +140,10 @@ export function VesselShowcase() {
                         return (
                             <motion.div
                                 key={index + 2}
-                                initial={isMobile ? false : { opacity: 0, y: 30 }}
-                                whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                                viewport={isMobile ? undefined : { once: true }}
-                                transition={isMobile ? undefined : { duration: 0.6, delay: 0.1 * index }}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: 0.1 * index }}
                                 className="bg-[#5A3010] rounded-xl p-5 sm:p-6 md:p-8 border border-[#FF9500]/20 hover:border-[#FF9500]/40 transition-all duration-500"
                             >
                                 <div className="mb-4">
@@ -163,10 +161,10 @@ export function VesselShowcase() {
 
                     {/* Leroy image card */}
                     <motion.div
-                        initial={isMobile ? false : { opacity: 0, y: 30 }}
-                        whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                        viewport={isMobile ? undefined : { once: true }}
-                        transition={isMobile ? undefined : { duration: 0.6, delay: 0.3 }}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.3 }}
                         className="group relative rounded-xl overflow-hidden"
                     >
                         <img
@@ -184,10 +182,10 @@ export function VesselShowcase() {
 
                     {/* Vessel Specs card */}
                     <motion.div
-                        initial={isMobile ? false : { opacity: 0, y: 30 }}
-                        whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                        viewport={isMobile ? undefined : { once: true }}
-                        transition={isMobile ? undefined : { duration: 0.6, delay: 0.4 }}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
                         className="bg-[#5A3010] rounded-xl p-5 sm:p-6 md:p-8 border border-[#FF9500]/20 hover:border-[#FF9500]/40 transition-all duration-500"
                     >
                         <h3 className="font-[family-name:var(--font-headline)] text-lg font-bold text-white mb-4 flex items-center gap-2 uppercase tracking-wide">
@@ -207,10 +205,10 @@ export function VesselShowcase() {
 
                 {/* Bottom safety badge */}
                 <motion.div
-                    initial={isMobile ? false : { opacity: 0, y: 20 }}
-                    whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                    viewport={isMobile ? undefined : { once: true }}
-                    transition={isMobile ? undefined : { duration: 0.8, delay: 0.5 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
                     className="mt-10 sm:mt-16 text-center"
                 >
                     <div className="inline-flex items-center gap-3 bg-[#FF9500] px-4 py-3 sm:px-6 sm:py-4 md:px-8 rounded-xl shadow-lg">

@@ -2,7 +2,6 @@
 
 import { motion, useInView, useMotionValue, useSpring } from 'framer-motion'
 import { useEffect, useRef } from 'react'
-import { useIsMobile } from '@/lib/useIsMobile'
 
 function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
     const ref = useRef<HTMLSpanElement>(null)
@@ -40,7 +39,6 @@ function StarRating() {
 }
 
 export function Stats() {
-    const isMobile = useIsMobile();
     const stats = [
         { value: 25000, suffix: '+', label: 'Flights Completed' },
         { value: 100, suffix: '%', label: 'Safety Record' },
@@ -52,10 +50,10 @@ export function Stats() {
         <div className="py-16 bg-[#3D1C00] relative border-y-4 border-[#FFD700]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.p
-                    initial={isMobile ? false : { opacity: 0, y: 10 }}
-                    whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                    viewport={isMobile ? undefined : { once: true }}
-                    transition={isMobile ? undefined : { duration: 0.6 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
                     className="font-[family-name:var(--font-headline)] text-sm font-black uppercase tracking-widest sm:tracking-[0.3em] text-white/50 text-center mb-6 sm:mb-10"
                 >
                     Trusted by Thousands
@@ -65,10 +63,10 @@ export function Stats() {
                     {stats.map((stat, index) => (
                         <motion.div
                             key={index}
-                            initial={isMobile ? false : { opacity: 0, y: 20 }}
-                            whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                            viewport={isMobile ? undefined : { once: true }}
-                            transition={isMobile ? undefined : { duration: 0.5, delay: index * 0.1 }}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
                             className="flex flex-col items-center text-center"
                         >
                             <div className="font-[family-name:var(--font-headline)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#FF9500] text-glow">

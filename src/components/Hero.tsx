@@ -2,54 +2,40 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link'
-import { useIsMobile } from '@/lib/useIsMobile'
 
 export function Hero() {
     const { scrollY } = useScroll()
     const y = useTransform(scrollY, [0, 500], [0, 150])
-    const isMobile = useIsMobile();
-
-    const heroBackground = (
-        <>
-            {/* Landing page video - full width */}
-            <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="absolute inset-x-0 w-full object-cover -top-[350px] h-[calc(100%+350px)] sm:inset-0 sm:h-full"
-            >
-                <source src="https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images//ownBusiness.mp4" type="video/mp4" />
-                {/* Fallback image if video doesn't load */}
-                <img
-                    src="https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images//FlatheadWithShadow.jpg"
-                    alt="Parasailing over Flathead Lake with mountain views"
-                    className="absolute inset-x-0 w-full object-cover -top-[350px] h-[calc(100%+350px)] sm:inset-0 sm:h-full"
-                />
-            </video>
-
-            {/* Gradient overlay - warm fade to cream */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#3D1C00]/30 via-[#3D1C00]/60 to-[#FFF8EE]" />
-            {/* Warm color tint overlay */}
-            <div className="absolute inset-0 bg-[#FF9500]/15 mix-blend-multiply" />
-        </>
-    );
 
     return (
         <div className="relative min-h-screen flex items-end overflow-hidden">
-            {/* Hero Background Video with Parallax (desktop only; mobile uses plain div to avoid iOS Safari compositor flicker) */}
-            {isMobile ? (
-                <div className="absolute inset-0 w-full h-full">
-                    {heroBackground}
-                </div>
-            ) : (
-                <motion.div
-                    style={{ y }}
-                    className="absolute inset-0 w-full h-full"
+            {/* Hero Background Video with Parallax */}
+            <motion.div
+                style={{ y }}
+                className="absolute inset-0 w-full h-full"
+            >
+                {/* Landing page video - full width */}
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="absolute inset-x-0 w-full object-cover -top-[350px] h-[calc(100%+350px)] sm:inset-0 sm:h-full"
                 >
-                    {heroBackground}
-                </motion.div>
-            )}
+                    <source src="https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images//ownBusiness.mp4" type="video/mp4" />
+                    {/* Fallback image if video doesn't load */}
+                    <img
+                        src="https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images//FlatheadWithShadow.jpg"
+                        alt="Parasailing over Flathead Lake with mountain views"
+                        className="absolute inset-x-0 w-full object-cover -top-[350px] h-[calc(100%+350px)] sm:inset-0 sm:h-full"
+                    />
+                </video>
+
+                {/* Gradient overlay - warm fade to cream */}
+                <div className="absolute inset-0 bg-gradient-to-b from-[#3D1C00]/30 via-[#3D1C00]/60 to-[#FFF8EE]" />
+                {/* Warm color tint overlay */}
+                <div className="absolute inset-0 bg-[#FF9500]/15 mix-blend-multiply" />
+            </motion.div>
 
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 pb-16 sm:pb-24">
                 <motion.div
