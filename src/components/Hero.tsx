@@ -33,8 +33,8 @@ export function Hero() {
 
                 {/* Gradient overlay - warm fade to cream */}
                 <div className="absolute inset-0 bg-gradient-to-b from-[#3D1C00]/30 via-[#3D1C00]/60 to-[#FFF8EE]" />
-                {/* Warm color tint overlay */}
-                <div className="absolute inset-0 bg-[#FF9500]/15 mix-blend-multiply" />
+                {/* Warm color tint overlay — mix-blend gated to desktop; on mobile the blend mode + parallax transform causes expensive per-scroll-tick repaints */}
+                <div className="absolute inset-0 bg-[#FF9500]/15 md:mix-blend-multiply" />
             </motion.div>
 
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 pb-16 sm:pb-24">
