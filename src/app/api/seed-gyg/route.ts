@@ -3,10 +3,11 @@ import { createClient } from '@supabase/supabase-js';
 import { getSlotType, getSlotPrice } from '@/config/solarSchedule';
 
 const GYG_BOOKINGS = [
-    { name: 'Julie Bomfim', date: '2026-07-30', time: '16:00', size: 4, ref: 'GYGG45W7FGA4', total: 340.00, detail: '2 Adults - $190.00, 2 Children - $150.00 | Booked Apr 22, 2026' },
-    { name: 'Jonathan Rose', date: '2026-06-02', time: '16:00', size: 2, ref: 'GYGFWV9H3QA9', total: 190.00, detail: '2 Adults - $190.00 | Booked Apr 17, 2026' },
-    { name: 'Vanessa Trahan', date: '2026-06-12', time: '15:00', size: 5, ref: 'GYG6H8AMGQNK', total: 435.00, detail: '3 Adults - $285.00, 2 Children - $150.00 | Booked May 20, 2026' },
-    { name: 'Derek Swanson', date: '2026-07-01', time: '10:00', size: 2, ref: 'GYG6H8A6Z6QW', total: 190.00, detail: '2 Adults - $190.00 | Booked May 7, 2026' },
+    { name: 'Julie Bomfim', date: '2026-07-30', time: '16:00', size: 4, ref: 'GYGG45W7FGA4', total: 340.00, phone: '', detail: '2 Adults - $190.00, 2 Children - $150.00 | Booked Apr 22, 2026' },
+    { name: 'Jonathan Rose', date: '2026-06-02', time: '16:00', size: 2, ref: 'GYGFWV9H3QA9', total: 190.00, phone: '', detail: '2 Adults - $190.00 | Booked Apr 17, 2026' },
+    { name: 'Vanessa Trahan', date: '2026-06-12', time: '15:00', size: 5, ref: 'GYG6H8AMGQNK', total: 435.00, phone: '+1 605 377 3664', detail: '3 Adults - $285.00, 2 Children - $150.00 | Booked May 20, 2026' },
+    { name: 'Derek Swanson', date: '2026-07-01', time: '10:00', size: 2, ref: 'GYG6H8A6Z6QW', total: 190.00, phone: '+1 308 672 0011', detail: '2 Adults - $190.00 | Booked May 7, 2026' },
+    { name: 'Alisa Chernack', date: '2026-08-22', time: '16:00', size: 1, ref: 'UHPVHID6KG6X8KO4AO3V3ELGSBR5B5BI-1TNSI', total: 129.00, phone: '', detail: '1 Adult - $129.00 | Reserve Now Pay Later | Booked Jun 6, 2026' },
 ];
 
 export async function GET() {
@@ -20,12 +21,25 @@ export async function GET() {
         // Skip if already inserted (idempotent via GYG ref)
         const { data: existing } = await supabase
             .from('bsp_bookings')
-            .select('id')
+            .select('id, customer_phone')
             .eq('stripe_payment_intent_id', 'gyg_' + b.ref)
             .single();
 
         if (existing) {
-            results.push({ status: 'skipped', name: b.name, ref: b.ref, reason: 'already exists' });
+            // Backfill phone if we have one and the existing row is missing it
+            if (b.phone && !existing.customer_phone) {
+                const { error: updateError } = await supabase
+                    .from('bsp_bookings')
+                    .update({ customer_phone: b.phone })
+                    .eq('id', existing.id);
+                if (updateError) {
+                    results.push({ status: 'phone_update_failed', name: b.name, ref: b.ref, error: updateError.message });
+                } else {
+                    results.push({ status: 'phone_backfilled', name: b.name, ref: b.ref, phone: b.phone });
+                }
+            } else {
+                results.push({ status: 'skipped', name: b.name, ref: b.ref, reason: 'already exists' });
+            }
             continue;
         }
 
@@ -37,7 +51,7 @@ export async function GET() {
             .insert({
                 customer_name: b.name,
                 customer_email: 'gyg@placeholder.com',
-                customer_phone: '',
+                customer_phone: b.phone,
                 trip_date: b.date,
                 trip_time: b.time,
                 party_size: b.size,
