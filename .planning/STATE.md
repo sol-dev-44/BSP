@@ -124,6 +124,7 @@ None yet.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260407-u1d | Update tour availability schedule | 2026-04-08 | 9a311fb | [260407-u1d-update-tour-availability-schedule](./quick/260407-u1d-update-tour-availability-schedule/) |
+| 260606-dhm | Fix mobile homepage scroll flickering | 2026-06-06 | 1154572 | [260606-dhm-fix-mobile-homepage-scroll-flickering](./quick/260606-dhm-fix-mobile-homepage-scroll-flickering/) |
 
 ### Blockers/Concerns
 
@@ -131,7 +132,7 @@ None yet.
 
 ## Session Continuity
 
-Last activity: 2026-04-08 - Completed quick task 260407-u1d: Update tour availability schedule
+Last activity: 2026-06-06 - Completed quick task 260606-dhm: Fix mobile homepage scroll flickering
 
 Last session: 2026-05-30T02:16:15.361Z
 Stopped at: Completed 02.1-03-PLAN.md
