@@ -91,11 +91,11 @@ export function ExperienceGallery() {
                             <img
                                 src={image.src}
                                 alt={image.alt}
-                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                className="w-full h-full object-cover [@media(hover:hover)]:group-hover:scale-110 transition-transform duration-700"
                             />
 
                             {/* Hover overlay with gradient from bottom */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#3D1C00]/80 via-[#3D1C00]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#3D1C00]/80 via-[#3D1C00]/20 to-transparent opacity-0 [@media(hover:hover)]:group-hover:opacity-100 transition-opacity duration-300">
                                 <div className="absolute bottom-0 left-0 right-0 p-3 md:p-6">
                                     <p className="text-[9px] md:text-xs font-semibold text-[#FFD700] mb-0.5 md:mb-1 uppercase tracking-wide">
                                         {image.category}
