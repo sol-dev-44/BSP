@@ -4,10 +4,11 @@ import { getSlotType, getSlotPrice } from '@/config/solarSchedule';
 
 const GYG_BOOKINGS = [
     { name: 'Julie Bomfim', date: '2026-07-30', time: '16:00', size: 4, ref: 'GYGG45W7FGA4', total: 340.00, phone: '', detail: '2 Adults - $190.00, 2 Children - $150.00 | Booked Apr 22, 2026' },
-    { name: 'Jonathan Rose', date: '2026-06-02', time: '16:00', size: 2, ref: 'GYGFWV9H3QA9', total: 190.00, phone: '', detail: '2 Adults - $190.00 | Booked Apr 17, 2026' },
-    { name: 'Vanessa Trahan', date: '2026-06-12', time: '15:00', size: 5, ref: 'GYG6H8AMGQNK', total: 435.00, phone: '+1 605 377 3664', detail: '3 Adults - $285.00, 2 Children - $150.00 | Booked May 20, 2026' },
+    { name: 'Jonathan Rose', date: '2026-06-02', time: '16:00', size: 2, ref: 'GYGFWV9H3QA9', total: 190.00, phone: '+18644927997', detail: '2 Adults - $190.00 | Booked Apr 17, 2026' },
+    { name: 'Vanessa Trahan', date: '2026-06-12', time: '15:00', size: 5, ref: 'GYG6H8AMGQNK', total: 340.00, phone: '+1 605 377 3664', detail: '3 Adults - $285.00, 2 Children - $150.00 | Booked May 20, 2026' },
     { name: 'Derek Swanson', date: '2026-07-01', time: '10:00', size: 2, ref: 'GYG6H8A6Z6QW', total: 190.00, phone: '+1 308 672 0011', detail: '2 Adults - $190.00 | Booked May 7, 2026' },
-    { name: 'Alisa Chernack', date: '2026-08-22', time: '16:00', size: 1, ref: 'UHPVHID6KG6X8KO4AO3V3ELGSBR5B5BI-1TNSI', total: 129.00, phone: '', detail: '1 Adult - $129.00 | Reserve Now Pay Later | Booked Jun 6, 2026' },
+    { name: 'Alisa Chernack', date: '2026-08-22', time: '16:00', size: 1, ref: 'GYG6H79XYFN2', total: 129.00, phone: '', detail: '1 Adult - $129.00 | Reserve Now Pay Later | Booked Jun 6, 2026' },
+    { name: 'Zach Nelson', date: '2026-06-11', time: '17:00', size: 2, ref: 'GYGLMRYXXN2N', total: 258.00, phone: '+14026597533', detail: '2 Adults - $258.00 | Booked Jun 9, 2026' },
 ];
 
 export async function GET() {
