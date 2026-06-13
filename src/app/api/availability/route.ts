@@ -62,21 +62,32 @@ export async function GET(request: Request) {
         const dayOfWeek = dateObj.getDay();
         const dailySlots = getTimeSlotsForDayOfWeek(dayOfWeek, date);
 
-        // Hardcoded block: 2026-05-23, all slots before 5 PM unavailable
-        const isBefore5PM = (time: string) => {
+        // Parse "H:MM AM/PM" display string back to 24h hour (0-23).
+        const to24Hour = (time: string): number | null => {
             const match = time.match(/^(\d+):(\d+)\s*(AM|PM)$/);
-            if (!match) return false;
+            if (!match) return null;
             let hour = parseInt(match[1]);
             const period = match[3];
             if (period === 'PM' && hour !== 12) hour += 12;
             if (period === 'AM' && hour === 12) hour = 0;
-            return hour < 17;
+            return hour;
+        };
+
+        // Per-date manual blackouts. Predicate returns true for slots to block.
+        const DATE_BLOCKS: Record<string, (time: string) => boolean> = {
+            // All slots before 5 PM unavailable
+            '2026-05-23': (t) => { const h = to24Hour(t); return h !== null && h < 17; },
+            // Keep only the trip before sunset (7 PM); block everything else
+            '2026-06-13': (t) => { const h = to24Hour(t); return h !== null && h !== 19; },
+            // Block 10 AM, 11 AM, 12 PM, 1 PM (everything at or before 1 PM)
+            '2026-06-14': (t) => { const h = to24Hour(t); return h !== null && h <= 13; },
         };
 
         // Build response with slot type and tiered pricing
         const slots = dailySlots.map((time) => {
             const used = capacityMap[time] || 0;
-            const blocked = date === '2026-05-23' && isBefore5PM(time);
+            const blockPredicate = DATE_BLOCKS[date];
+            const blocked = blockPredicate ? blockPredicate(time) : false;
             const remaining = blocked ? 0 : Math.max(0, BOOKING_CONFIG.MAX_PASSENGERS - used);
             const type = getSlotType(date, time);
             const price = getSlotPrice(type);
