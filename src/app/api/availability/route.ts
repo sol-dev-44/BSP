@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { getSlotType, getSlotPrice } from '@/config/solarSchedule';
+import { getSlotType, getSlotPrice, getSlotAvailability } from '@/config/solarSchedule';
 import { BOOKING_CONFIG, getTimeSlotsForDayOfWeek } from '@/config/booking';
 
 const supabase = createClient(
@@ -83,12 +83,19 @@ export async function GET(request: Request) {
             '2026-06-14': (t) => { const h = to24Hour(t); return h !== null && h <= 13; },
         };
 
-        // Build response with slot type and tiered pricing
+        // Build response with slot type, tiered pricing, and time-based availability.
+        // Past slots and slots within the minimum-notice window are marked unbookable
+        // so the UI can disable them without showing misleading "10 of 10" capacity.
+        const nowMs = Date.now();
         const slots = dailySlots.map((time) => {
             const used = capacityMap[time] || 0;
             const blockPredicate = DATE_BLOCKS[date];
             const blocked = blockPredicate ? blockPredicate(time) : false;
-            const remaining = blocked ? 0 : Math.max(0, BOOKING_CONFIG.MAX_PASSENGERS - used);
+            const availability = getSlotAvailability(date, time, nowMs);
+            const noticeBlocked = availability !== 'bookable';
+            const remaining = (blocked || noticeBlocked)
+                ? 0
+                : Math.max(0, BOOKING_CONFIG.MAX_PASSENGERS - used);
             const type = getSlotType(date, time);
             const price = getSlotPrice(type);
             return {
@@ -96,6 +103,7 @@ export async function GET(request: Request) {
                 remaining,
                 type,
                 price,
+                availability,
             };
         });
 

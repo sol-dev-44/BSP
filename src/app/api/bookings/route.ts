@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
 import { Resend } from 'resend';
 import { BUSINESS_INFO } from '@/config/business';
-import { getSlotType, getSlotPrice } from '@/config/solarSchedule';
+import { getSlotType, getSlotPrice, getSlotAvailability, MIN_BOOKING_NOTICE_HOURS } from '@/config/solarSchedule';
 
 // Initialize Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -47,6 +47,23 @@ export async function POST(request: Request) {
         // 1. Validate Payment Intent ID with Stripe
         if (!payment_intent_id) {
             return NextResponse.json({ error: 'Missing payment intent ID' }, { status: 400 });
+        }
+
+        // Reject past or within-notice-window trip times. The payment-intent route
+        // already enforces this, but mirror the guard here in case a stale client
+        // posts directly to /api/bookings after Stripe succeeds on a prior intent.
+        const slotAvailability = getSlotAvailability(trip_date, trip_time || '');
+        if (slotAvailability === 'past') {
+            return NextResponse.json(
+                { error: 'This time slot has already passed.' },
+                { status: 400 }
+            );
+        }
+        if (slotAvailability === 'too-soon') {
+            return NextResponse.json(
+                { error: `Online booking requires ${MIN_BOOKING_NOTICE_HOURS}-hour advance notice. Please call ${BUSINESS_INFO.displayPhone}.` },
+                { status: 400 }
+            );
         }
 
         let total_amount = 0;

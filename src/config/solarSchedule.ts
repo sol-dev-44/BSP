@@ -221,3 +221,61 @@ export function getSlotPrice(slotType: 'earlybird' | 'sunset' | 'standard'): num
         case 'standard': return 119;
     }
 }
+
+/**
+ * Mountain Time UTC offset during the operating season (May 23 - Sep 30).
+ * Hardcoded to -6 because the entire booking season falls within US DST (MDT).
+ */
+const MT_UTC_OFFSET_HOURS = 6;
+
+/**
+ * Required minimum advance notice (hours) for an online booking.
+ * Customers attempting to book inside this window are routed to phone.
+ */
+export const MIN_BOOKING_NOTICE_HOURS = 4;
+
+function parseSlotTime(timeStr: string): { hour: number; minute: number } | null {
+    const m = (timeStr || '').match(/^(\d+):(\d+)\s*(AM|PM)$/i);
+    if (!m) return null;
+    let hour = parseInt(m[1], 10);
+    const minute = parseInt(m[2], 10);
+    const period = m[3].toUpperCase();
+    if (period === 'PM' && hour !== 12) hour += 12;
+    if (period === 'AM' && hour === 12) hour = 0;
+    return { hour, minute };
+}
+
+/**
+ * Return the epoch milliseconds when a (date, time) slot begins in Mountain Time.
+ * Returns null if the inputs cannot be parsed.
+ */
+export function getSlotEpochMs(dateStr: string, timeStr: string): number | null {
+    const parts = (dateStr || '').split('-');
+    if (parts.length !== 3) return null;
+    const year = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10);
+    const day = parseInt(parts[2], 10);
+    const t = parseSlotTime(timeStr);
+    if (!year || !month || !day || !t) return null;
+    return Date.UTC(year, month - 1, day, t.hour + MT_UTC_OFFSET_HOURS, t.minute);
+}
+
+export type SlotAvailability = 'past' | 'too-soon' | 'bookable';
+
+/**
+ * Classify a slot relative to "now":
+ *   past      — slot start time has already passed
+ *   too-soon  — within MIN_BOOKING_NOTICE_HOURS of now (must call to book)
+ *   bookable  — enough notice; can be booked online
+ */
+export function getSlotAvailability(
+    dateStr: string,
+    timeStr: string,
+    nowMs: number = Date.now(),
+): SlotAvailability {
+    const slotMs = getSlotEpochMs(dateStr, timeStr);
+    if (slotMs == null) return 'bookable';
+    if (slotMs <= nowMs) return 'past';
+    if (slotMs < nowMs + MIN_BOOKING_NOTICE_HOURS * 3600 * 1000) return 'too-soon';
+    return 'bookable';
+}

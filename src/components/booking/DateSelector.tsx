@@ -73,11 +73,13 @@ export default function DateSelector({ selectedDate, onSelectDate, minDate }: Da
                 <button
                     key={day.toString()}
                     disabled={isDisabled}
+                    aria-disabled={isDisabled || undefined}
                     onClick={() => onSelectDate(dateString)}
                     className={`
                         relative h-14 w-full flex items-center justify-center rounded-lg transition-all duration-200
                         ${!isSameMonth(day, monthStart) ? "text-[#DCC8A0] opacity-50" : ""}
                         ${isDisabled ? "text-[#DCC8A0] cursor-not-allowed bg-[#FFFFFF]" : "hover:bg-[#FF9500]/10 cursor-pointer text-[#2D1600] font-medium"}
+                        ${isPast && isSameMonth(day, monthStart) ? "line-through decoration-[#DCC8A0]/70" : ""}
                         ${isSelected ? "!bg-[#FF9500] !text-[#FFFFFF] shadow-lg shadow-[#FF9500]/30 scale-105 z-10 font-bold" : ""}
                     `}
                 >

@@ -83,7 +83,7 @@ export default function BookingClient() {
     }, [step]);
 
     // Availability
-    const [availableSlots, setAvailableSlots] = useState<{ time: string, remaining: number, type: string, price: number }[]>([]);
+    const [availableSlots, setAvailableSlots] = useState<{ time: string, remaining: number, type: string, price: number, availability?: 'past' | 'too-soon' | 'bookable' }[]>([]);
     const [isLoadingSlots, setIsLoadingSlots] = useState(false);
 
     // Tiered pricing based on slot type: Early Bird $99, Standard $119, Sunset $159
@@ -121,8 +121,11 @@ export default function BookingClient() {
     };
 
     const handleTimeSelect = (time: string) => {
-        setSelectedTime(time);
         const newSlot = availableSlots.find(s => s.time === time);
+        // Guard: disabled buttons should prevent this, but block anyway in case
+        // a stale state update lets a past/too-soon slot through.
+        if (newSlot && newSlot.availability && newSlot.availability !== 'bookable') return;
+        setSelectedTime(time);
         if (newSlot && Number(formData.party_size) > newSlot.remaining) {
             setFormData(prev => ({ ...prev, party_size: newSlot.remaining }));
         }

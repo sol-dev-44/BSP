@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { BUSINESS_INFO } from '@/config/business';
-import { getSlotType, getSlotPrice } from '@/config/solarSchedule';
+import { getSlotType, getSlotPrice, getSlotAvailability, MIN_BOOKING_NOTICE_HOURS } from '@/config/solarSchedule';
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
 
 // Initialize Stripe
@@ -24,6 +24,23 @@ export async function POST(request: Request) {
 
         if (totalPassengers <= 0 || !trip_date) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+        }
+
+        // Block bookings for past slots or slots inside the minimum-notice window.
+        // The UI should already prevent this, but enforce server-side so a stale
+        // tab or hand-crafted request cannot bypass it.
+        const slotAvailability = getSlotAvailability(trip_date, trip_time || '');
+        if (slotAvailability === 'past') {
+            return NextResponse.json(
+                { error: 'This time slot has already passed. Please pick a future date and time.' },
+                { status: 400 }
+            );
+        }
+        if (slotAvailability === 'too-soon') {
+            return NextResponse.json(
+                { error: `Online booking requires ${MIN_BOOKING_NOTICE_HOURS}-hour advance notice. Please call ${BUSINESS_INFO.displayPhone} for same-day availability.` },
+                { status: 400 }
+            );
         }
 
         if (!process.env.STRIPE_SECRET_KEY) {
