@@ -81,6 +81,8 @@ export async function GET(request: Request) {
             '2026-06-13': (t) => { const h = to24Hour(t); return h !== null && h !== 19; },
             // Block 10 AM, 11 AM, 12 PM, 1 PM (everything at or before 1 PM)
             '2026-06-14': (t) => { const h = to24Hour(t); return h !== null && h <= 13; },
+            // Full-day blackout — too windy
+            '2026-06-16': () => true,
         };
 
         // Build response with slot type, tiered pricing, and time-based availability.
