@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Phone } from 'lucide-react';
+import { Phone, Wind } from 'lucide-react';
 import { BOOKING_CONFIG } from '@/config/booking';
 import { BUSINESS_INFO } from '@/config/business';
 import { MIN_BOOKING_NOTICE_HOURS } from '@/config/solarSchedule';
@@ -12,11 +12,17 @@ interface TimeSlot {
     availability?: 'past' | 'too-soon' | 'bookable';
 }
 
+interface DateNotice {
+    type: 'weather';
+    message: string;
+}
+
 interface TimeSlotPickerProps {
     slots: TimeSlot[];
     selectedTime: string | null;
     onSelectTime: (time: string) => void;
     isLoading: boolean;
+    dateNotice?: DateNotice | null;
 }
 
 const slotTypeConfig: Record<string, { label: string; color: string; bgColor: string; borderColor: string; badgeBg: string }> = {
@@ -43,11 +49,36 @@ const slotTypeConfig: Record<string, { label: string; color: string; bgColor: st
     },
 };
 
-export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLoading }: TimeSlotPickerProps) {
+export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLoading, dateNotice }: TimeSlotPickerProps) {
     if (isLoading) {
         return (
             <div className="flex justify-center p-8">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#FF9500]"></div>
+            </div>
+        );
+    }
+
+    if (dateNotice?.type === 'weather') {
+        return (
+            <div className="w-full">
+                <h3 className="text-xl font-semibold mb-4 text-[#2D1600] font-serif">Select a Time</h3>
+                <div className="relative overflow-hidden rounded-2xl border border-[#7BA7C7]/40 bg-gradient-to-br from-[#E8F1F8] via-[#F0F5FA] to-[#E8F1F8] p-8 text-center">
+                    <div className="absolute -top-6 -right-6 opacity-20">
+                        <Wind className="w-32 h-32 text-[#5A8BA8]" strokeWidth={1.25} />
+                    </div>
+                    <div className="relative">
+                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#5A8BA8] text-white mb-4 shadow-lg shadow-[#5A8BA8]/30">
+                            <Wind className="w-8 h-8" strokeWidth={2} />
+                        </div>
+                        <h4 className="text-2xl font-bold text-[#2D1600] mb-2 font-serif">
+                            {dateNotice.message}
+                        </h4>
+                        <p className="text-sm text-[#5A6B7A] max-w-sm mx-auto">
+                            Conditions on Flathead Lake aren&apos;t safe for parasailing today.
+                            Please pick another date — we&apos;ll see you on the water soon!
+                        </p>
+                    </div>
+                </div>
             </div>
         );
     }

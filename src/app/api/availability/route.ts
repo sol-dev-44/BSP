@@ -81,9 +81,15 @@ export async function GET(request: Request) {
             '2026-06-13': (t) => { const h = to24Hour(t); return h !== null && h !== 19; },
             // Block 10 AM, 11 AM, 12 PM, 1 PM (everything at or before 1 PM)
             '2026-06-14': (t) => { const h = to24Hour(t); return h !== null && h <= 13; },
-            // Full-day blackout — too windy
-            '2026-06-16': () => true,
         };
+
+        // Weather closures — block the entire day AND surface a structured notice
+        // so the UI can show a "Too Windy to Operate" card with a wind icon
+        // instead of a row of disabled time tiles.
+        const WEATHER_BLOCKED_DATES: Record<string, { type: 'weather'; message: string }> = {
+            '2026-06-16': { type: 'weather', message: 'Too Windy to Operate' },
+        };
+        const dateNotice = WEATHER_BLOCKED_DATES[date] || null;
 
         // Build response with slot type, tiered pricing, and time-based availability.
         // Past slots and slots within the minimum-notice window are marked unbookable
@@ -92,7 +98,7 @@ export async function GET(request: Request) {
         const slots = dailySlots.map((time) => {
             const used = capacityMap[time] || 0;
             const blockPredicate = DATE_BLOCKS[date];
-            const blocked = blockPredicate ? blockPredicate(time) : false;
+            const blocked = (blockPredicate ? blockPredicate(time) : false) || !!dateNotice;
             const availability = getSlotAvailability(date, time, nowMs);
             const noticeBlocked = availability !== 'bookable';
             const remaining = (blocked || noticeBlocked)
@@ -109,7 +115,7 @@ export async function GET(request: Request) {
             };
         });
 
-        return NextResponse.json({ slots }, {
+        return NextResponse.json({ slots, dateNotice }, {
             headers: {
                 'Cache-Control': 'no-store, max-age=0',
             },

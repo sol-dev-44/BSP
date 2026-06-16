@@ -84,6 +84,7 @@ export default function BookingClient() {
 
     // Availability
     const [availableSlots, setAvailableSlots] = useState<{ time: string, remaining: number, type: string, price: number, availability?: 'past' | 'too-soon' | 'bookable' }[]>([]);
+    const [dateNotice, setDateNotice] = useState<{ type: 'weather'; message: string } | null>(null);
     const [isLoadingSlots, setIsLoadingSlots] = useState(false);
 
     // Tiered pricing based on slot type: Early Bird $99, Standard $119, Sunset $159
@@ -101,6 +102,7 @@ export default function BookingClient() {
                 .then(data => {
                     if (data.slots) {
                         setAvailableSlots(data.slots);
+                        setDateNotice(data.dateNotice || null);
                     } else {
                         console.error('Failed to load slots:', data.error);
                     }
@@ -411,6 +413,7 @@ export default function BookingClient() {
                                             selectedTime={selectedTime}
                                             onSelectTime={handleTimeSelect}
                                             isLoading={isLoadingSlots}
+                                            dateNotice={dateNotice}
                                         />
                                     </div>
 
