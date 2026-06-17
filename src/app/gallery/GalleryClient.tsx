@@ -14,11 +14,13 @@ interface GalleryImage {
     category: string
     orientation: 'landscape' | 'portrait' | 'square'
     isVideo?: boolean
+    youtubeId?: string
 }
 
 const IMAGE_BASE = 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images/'
 
 const images: GalleryImage[] = [
+    { youtubeId: 'epfr2tTITao', src: 'https://img.youtube.com/vi/epfr2tTITao/maxresdefault.jpg', alt: 'Big Sky Parasail on YouTube — Flathead Lake adventure', category: 'Adventures', orientation: 'landscape' as const, isVideo: true },
     { src: `${IMAGE_BASE}WhiteFishSmiles.jpg`, alt: 'Smiling parasailers soaring over Flathead Lake', category: 'Adventures', orientation: 'landscape' as const },
     { src: `${IMAGE_BASE}HighAerial.jpeg`, alt: '400 feet above crystal-clear Flathead Lake', category: 'Aerial Views', orientation: 'landscape' as const },
     { src: `${IMAGE_BASE}wfdip1.JPG`, alt: 'Touching down for a refreshing lake dip', category: 'Adventures', orientation: 'landscape' as const },
@@ -173,7 +175,7 @@ export default function GalleryClient() {
                                         className="relative group cursor-pointer rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300"
                                         onClick={() => setSelectedImage(index)}
                                     >
-                                        {image.isVideo ? (
+                                        {image.isVideo && !image.youtubeId ? (
                                             <video
                                                 muted
                                                 loop
@@ -273,7 +275,17 @@ export default function GalleryClient() {
                             className="max-w-6xl max-h-[90vh] relative"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            {filteredImages[selectedImage].isVideo ? (
+                            {filteredImages[selectedImage].youtubeId ? (
+                                <div className="relative w-[90vw] max-w-5xl aspect-video rounded-lg overflow-hidden shadow-2xl bg-black">
+                                    <iframe
+                                        src={`https://www.youtube.com/embed/${filteredImages[selectedImage].youtubeId}?autoplay=1&rel=0`}
+                                        title={filteredImages[selectedImage].alt}
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowFullScreen
+                                        className="absolute inset-0 w-full h-full"
+                                    />
+                                </div>
+                            ) : filteredImages[selectedImage].isVideo ? (
                                 <video
                                     autoPlay
                                     loop
