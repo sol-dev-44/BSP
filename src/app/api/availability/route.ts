@@ -81,6 +81,9 @@ export async function GET(request: Request) {
             '2026-06-13': (t) => { const h = to24Hour(t); return h !== null && h !== 19; },
             // Block 10 AM, 11 AM, 12 PM, 1 PM (everything at or before 1 PM)
             '2026-06-14': (t) => { const h = to24Hour(t); return h !== null && h <= 13; },
+            // Father's Day weekend — open only 11 AM, 12 PM, 1 PM
+            '2026-06-20': (t) => { const h = to24Hour(t); return h !== null && (h < 11 || h > 13); },
+            '2026-06-21': (t) => { const h = to24Hour(t); return h !== null && (h < 11 || h > 13); },
         };
 
         // Weather closures — block the entire day AND surface a structured notice
@@ -89,19 +92,40 @@ export async function GET(request: Request) {
         const WEATHER_BLOCKED_DATES: Record<string, { type: 'weather'; message: string }> = {
             '2026-06-16': { type: 'weather', message: 'Too Windy to Operate' },
         };
-        const dateNotice = WEATHER_BLOCKED_DATES[date] || null;
+
+        // Event notices — paired with DATE_BLOCKS above so the UI shows a banner
+        // ABOVE the slot grid explaining why most slots are dim, while still
+        // allowing booking of the slots that are intentionally left open.
+        const EVENT_DATES: Record<string, { type: 'event'; emoji: string; title: string; message: string }> = {
+            '2026-06-20': {
+                type: 'event',
+                emoji: '👨‍👦',
+                title: "Closed for Father's Day",
+                message: 'Limited availability: 11 AM, 12 PM, and 1 PM only.',
+            },
+            '2026-06-21': {
+                type: 'event',
+                emoji: '👨‍👦',
+                title: "Closed for Father's Day",
+                message: 'Limited availability: 11 AM, 12 PM, and 1 PM only.',
+            },
+        };
+        const dateNotice = WEATHER_BLOCKED_DATES[date] || EVENT_DATES[date] || null;
 
         // Build response with slot type, tiered pricing, and time-based availability.
         // Past slots and slots within the minimum-notice window are marked unbookable
         // so the UI can disable them without showing misleading "10 of 10" capacity.
         const nowMs = Date.now();
+        // Weather notices apply to the entire day; event notices only block the
+        // specific slots covered by DATE_BLOCKS.
+        const dayWideBlock = dateNotice?.type === 'weather';
         const slots = dailySlots.map((time) => {
             const used = capacityMap[time] || 0;
             const blockPredicate = DATE_BLOCKS[date];
-            const blocked = (blockPredicate ? blockPredicate(time) : false) || !!dateNotice;
+            const slotBlocked = (blockPredicate ? blockPredicate(time) : false) || dayWideBlock;
             const availability = getSlotAvailability(date, time, nowMs);
             const noticeBlocked = availability !== 'bookable';
-            const remaining = (blocked || noticeBlocked)
+            const remaining = (slotBlocked || noticeBlocked)
                 ? 0
                 : Math.max(0, BOOKING_CONFIG.MAX_PASSENGERS - used);
             const type = getSlotType(date, time);
@@ -112,6 +136,7 @@ export async function GET(request: Request) {
                 type,
                 price,
                 availability,
+                blocked: slotBlocked,
             };
         });
 

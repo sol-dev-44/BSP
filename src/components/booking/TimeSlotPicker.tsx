@@ -10,12 +10,12 @@ interface TimeSlot {
     type: string;
     price: number;
     availability?: 'past' | 'too-soon' | 'bookable';
+    blocked?: boolean;
 }
 
-interface DateNotice {
-    type: 'weather';
-    message: string;
-}
+type DateNotice =
+    | { type: 'weather'; message: string }
+    | { type: 'event'; emoji: string; title: string; message: string };
 
 interface TimeSlotPickerProps {
     slots: TimeSlot[];
@@ -93,6 +93,7 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
 
     const hasTooSoon = slots.some(s => s.availability === 'too-soon');
     const allUnbookable = slots.every(s => s.availability === 'past' || s.availability === 'too-soon');
+    const eventNotice = dateNotice?.type === 'event' ? dateNotice : null;
 
     return (
         <div className="w-full">
@@ -100,6 +101,16 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
             <p className="text-sm text-[#8B6914] mb-4">
                 Early Bird (10 AM) $99 | Standard $119 | Sunset (last flight) $159
             </p>
+
+            {eventNotice && (
+                <div className="flex items-start gap-3 mb-4 p-4 rounded-xl bg-gradient-to-r from-[#FFEACC] via-[#FFD699] to-[#FFEACC] border border-[#FF9500]/40">
+                    <span className="text-3xl shrink-0 leading-none" aria-hidden="true">{eventNotice.emoji}</span>
+                    <div className="text-left">
+                        <p className="font-bold text-[#2D1600] text-base">{eventNotice.title}</p>
+                        <p className="text-sm text-[#614020] mt-0.5">{eventNotice.message}</p>
+                    </div>
+                </div>
+            )}
 
             {(hasTooSoon || allUnbookable) && (
                 <a
@@ -130,9 +141,20 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
                     const config = slotTypeConfig[slot.type] || slotTypeConfig.standard;
                     const isPast = slot.availability === 'past';
                     const isTooSoon = slot.availability === 'too-soon';
-                    const isDisabled = isPast || isTooSoon;
+                    const isBlocked = slot.blocked && !isPast && !isTooSoon;
+                    const isDisabled = isPast || isTooSoon || isBlocked;
 
                     if (isDisabled) {
+                        const badgeText = isPast
+                            ? 'Past'
+                            : isTooSoon
+                            ? 'Call to book'
+                            : 'Closed';
+                        const subText = isPast
+                            ? 'Unavailable'
+                            : isTooSoon
+                            ? `< ${MIN_BOOKING_NOTICE_HOURS} hr notice`
+                            : 'Not available';
                         return (
                             <button
                                 key={slot.time}
@@ -142,13 +164,13 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
                                 className="relative py-3 px-4 rounded-xl border border-dashed border-[#DCC8A0] bg-[#FFF8EE] text-[#A8946B] flex flex-col items-center justify-center cursor-not-allowed select-none"
                             >
                                 <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full mb-1 bg-[#DCC8A0]/30 text-[#8B6914]">
-                                    {isPast ? 'Past' : 'Call to book'}
+                                    {badgeText}
                                 </span>
                                 <span className="text-lg font-bold line-through decoration-[#A8946B]/60">
                                     {slot.time}
                                 </span>
                                 <span className="text-[10px] mt-1 text-[#A8946B]">
-                                    {isPast ? 'Unavailable' : `< ${MIN_BOOKING_NOTICE_HOURS} hr notice`}
+                                    {subText}
                                 </span>
                             </button>
                         );
