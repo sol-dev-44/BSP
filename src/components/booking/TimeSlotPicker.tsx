@@ -94,6 +94,31 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
     const hasTooSoon = slots.some(s => s.availability === 'too-soon');
     const allUnbookable = slots.every(s => s.availability === 'past' || s.availability === 'too-soon');
     const eventNotice = dateNotice?.type === 'event' ? dateNotice : null;
+    const allBlocked = slots.every(s => s.blocked);
+
+    // Fully closed day with an event notice — promote the banner to a full
+    // closed-day card so the customer isn't staring at a grid of struck-through
+    // tiles wondering if any of them are still bookable.
+    if (eventNotice && allBlocked) {
+        return (
+            <div className="w-full">
+                <h3 className="text-xl font-semibold mb-4 text-[#2D1600] font-serif">Select a Time</h3>
+                <div className="relative overflow-hidden rounded-2xl border border-[#FF9500]/40 bg-gradient-to-br from-[#FFEACC] via-[#FFD699] to-[#FFEACC] p-8 text-center">
+                    <div className="relative">
+                        <div className="text-6xl mb-4 leading-none" aria-hidden="true">
+                            {eventNotice.emoji}
+                        </div>
+                        <h4 className="text-2xl font-bold text-[#2D1600] mb-2 font-serif">
+                            {eventNotice.title}
+                        </h4>
+                        <p className="text-sm text-[#614020] max-w-sm mx-auto">
+                            {eventNotice.message}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="w-full">
