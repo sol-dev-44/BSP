@@ -111,7 +111,7 @@ export async function GET(request: Request) {
                 type: 'event',
                 emoji: '👨‍👦',
                 title: "Closed for Father's Day Weekend",
-                message: "Spending the day with the dads — we'll see you Monday!",
+                message: "Spending the day with the mini-me — we'll see you Monday!",
             },
             '2026-06-21': {
                 type: 'event',
