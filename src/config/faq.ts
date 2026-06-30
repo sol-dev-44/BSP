@@ -8,7 +8,7 @@ export const PARASAILING_FAQS: FAQItem[] = [
     // Pricing & Booking
     {
         question: 'How much does parasailing cost on Flathead Lake?',
-        answer: 'Parasailing on Flathead Lake starts at $99/person for our Early Bird flight (10 AM). Standard flights are $119/person, and our premium Sunset flight (last flight of the day) is $159/person. We also offer observer/boat rider passes for $49, photo packages for $40, GoPro video for $50, or save with our media combo (photos + video) for $75. View all our packages and pricing at montanaparasail.com/services',
+        answer: 'Parasailing on Flathead Lake starts at $99/person for our Early Bird flight (10 AM). Standard flights are $119/person, and our premium Sunset flight (last flight of the day) is $159/person. We also offer observer/boat rider passes for $49, photo packages for $40, GoPro video for $40, or save with our media combo (photos + video) for $70. View all our packages and pricing at montanaparasail.com/services',
         category: 'Pricing & Booking'
     },
     {
@@ -67,7 +67,7 @@ export const PARASAILING_FAQS: FAQItem[] = [
     },
     {
         question: 'Can I take photos or videos while parasailing?',
-        answer: 'Yes! We offer photo packages for $40 and GoPro video packages for $50. Save with our media combo (photos + video) for just $75 -- that is $15 off vs buying separately. Our photo package includes crew-shot HD photos from the boat, and our GoPro package captures immersive aerial footage of your flight over Flathead Lake. You can also bring your own waterproof camera or phone in a waterproof case.',
+        answer: 'Yes! We offer photo packages for $40 and GoPro video packages for $40. Save with our media combo (photos + video) for just $70 -- that is $10 off vs buying separately. Our photo package includes crew-shot HD photos from the boat, and our GoPro package captures immersive aerial footage of your flight over Flathead Lake. You can also bring your own waterproof camera or phone in a waterproof case.',
         category: 'Experience Details'
     },
     {

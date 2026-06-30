@@ -1,5 +1,6 @@
 
 import * as React from 'react';
+import { BUSINESS_INFO } from '@/config/business';
 
 interface EmailTemplateProps {
     customerName: string;
@@ -36,8 +37,8 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
     totalAmount,
     addOns,
 }) => {
-    const photoTotal = (addOns?.photo_package || 0) * 30;
-    const goproTotal = (addOns?.gopro_package || 0) * 50;
+    const photoTotal = (addOns?.photo_package || 0) * BUSINESS_INFO.pricing.photos;
+    const goproTotal = (addOns?.gopro_package || 0) * BUSINESS_INFO.pricing.gopro;
     const tipTotal = addOns?.tip_amount || 0;
     const displayTime = formatTime12(tripTime);
     const displayDate = formatDate(tripDate);

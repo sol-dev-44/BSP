@@ -96,7 +96,7 @@ export default function PriceBreakdown({
                     <div className="flex justify-between items-center text-sm">
                         <span className="text-[#614020]">
                             Media Combo ({addOns.combo_package})
-                            <span className="text-[#FF9500] ml-1 text-xs font-semibold">Save $15</span>
+                            <span className="text-[#FF9500] ml-1 text-xs font-semibold">Save $10</span>
                         </span>
                         <span className="font-medium text-[#2D1600]">${comboTotal}</span>
                     </div>

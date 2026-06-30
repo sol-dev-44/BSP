@@ -184,9 +184,9 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Media Combo Package */}
                     <div className="bg-[#FFEACC] p-4 rounded-xl border-2 border-[#FF9500]/30 shadow-sm hover:border-[#FF9500]/50 transition-colors relative">
-                        <span className="absolute -top-2.5 right-3 bg-[#FF9500] text-[#FFFFFF] text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Save $15</span>
+                        <span className="absolute -top-2.5 right-3 bg-[#FF9500] text-[#FFFFFF] text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Save $10</span>
                         <label className="block text-sm font-bold text-[#2D1600] mb-2">Media Combo (${BUSINESS_INFO.pricing.combo})</label>
-                        <p className="text-xs text-[#8B6914] mb-3">Photos + GoPro video. Save $15 vs buying separately!</p>
+                        <p className="text-xs text-[#8B6914] mb-3">Photos + GoPro video. Save $10 vs buying separately!</p>
                         <select
                             name="add_ons.combo_package"
                             value={(formData.add_ons as any)?.combo_package || 0}
@@ -194,8 +194,8 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
                             className="w-full bg-[#FFFFFF] border border-[#DCC8A0] rounded-xl px-3 py-2 text-sm text-[#2D1600] focus:ring-[#FF9500] focus:border-[#FF9500] cursor-pointer"
                         >
                             <option value="0">None</option>
-                            <option value="1">1 combo ($75)</option>
-                            <option value="2">2 combos ($150)</option>
+                            <option value="1">1 combo ($70)</option>
+                            <option value="2">2 combos ($140)</option>
                         </select>
                     </div>
 
