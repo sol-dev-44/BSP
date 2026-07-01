@@ -21,6 +21,7 @@ export const BOOKING_CONFIG = {
     // Specific dates that override limited-day restrictions (full day, e.g. Viator bookings)
     fullDayOverrides: [
         '2026-06-19', // Fri - Father's Day weekend: open midday slots, blocked outside 11-1
+        '2026-07-02', // Thu - open full day (10 AM through sunset)
         '2026-07-10', // Fri - W Kay Fries (Viator 2 PM)
         '2026-07-28', // Tue - Tyler Stanhope (Viator 5 PM)
         '2026-08-03', // Mon - Brian Godshall x3 (Viator 2 PM)
