@@ -89,6 +89,8 @@ export async function GET(request: Request) {
             '2026-06-21': () => true,
             // Mon — block 3, 4, 5 PM (keep 6 PM through sunset)
             '2026-06-22': (t) => { const h = to24Hour(t); return h !== null && h >= 15 && h <= 17; },
+            // Thu — closed for the rest of the day; block all slots
+            '2026-07-02': () => true,
         };
 
         // Weather closures — block the entire day AND surface a structured notice
