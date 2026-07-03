@@ -133,7 +133,17 @@ export async function GET(request: Request) {
         // Weather notices apply to the entire day; event notices only block the
         // specific slots covered by DATE_BLOCKS.
         const dayWideBlock = dateNotice?.type === 'weather';
-        const slots = dailySlots.map((time) => {
+        type SlotOut = {
+            time: string;
+            remaining: number;
+            type: 'earlybird' | 'sunset' | 'standard';
+            price: number;
+            availability: 'past' | 'too-soon' | 'bookable';
+            blocked: boolean;
+            soldOut?: boolean;
+            soldOutReason?: string;
+        };
+        const slots: SlotOut[] = dailySlots.map((time) => {
             const used = capacityMap[time] || 0;
             const blockPredicate = DATE_BLOCKS[date];
             const slotBlocked = (blockPredicate ? blockPredicate(time) : false) || dayWideBlock;
@@ -153,6 +163,25 @@ export async function GET(request: Request) {
                 blocked: slotBlocked,
             };
         });
+
+        // July 3 (Fri) — a private charter occupies the 2 PM slot. Surface it as a
+        // disabled "Sold out for Private" tile before the normal 3 PM public slot.
+        // The 3 PM–sunset public slots are untouched; the 10 AM–1 PM morning slots
+        // stay closed (this is a limited Friday).
+        if (date === '2026-07-03') {
+            const privateTime = '2:00 PM';
+            const privateType = getSlotType(date, privateTime);
+            slots.unshift({
+                time: privateTime,
+                remaining: 0,
+                type: privateType,
+                price: getSlotPrice(privateType),
+                availability: 'bookable',
+                blocked: false,
+                soldOut: true,
+                soldOutReason: 'Sold out for Private',
+            });
+        }
 
         return NextResponse.json({ slots, dateNotice }, {
             headers: {
