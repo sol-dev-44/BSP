@@ -138,5 +138,3 @@ Last activity: 2026-07-02 - Completed quick task 260702-u1t: Add 2 PM sold-out-f
 Last session: 2026-07-02T21:43:00.000Z
 Stopped at: Completed 260702-u1t Tasks 1-2 (checkpoint:human-verify pending)
 Resume file: None
-| 2026-07-01 | fast | Open full day (10 AM–sunset) on Thu Jul 2 via fullDayOverrides | ✅ |
-| 2026-07-02 | fast | Close all slots for Thu Jul 2 (rest of today) | ✅ |
