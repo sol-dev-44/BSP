@@ -11,6 +11,8 @@ interface TimeSlot {
     price: number;
     availability?: 'past' | 'too-soon' | 'bookable';
     blocked?: boolean;
+    soldOut?: boolean;
+    soldOutReason?: string;
 }
 
 type DateNotice =
@@ -167,15 +169,20 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
                     const isPast = slot.availability === 'past';
                     const isTooSoon = slot.availability === 'too-soon';
                     const isBlocked = slot.blocked && !isPast && !isTooSoon;
-                    const isDisabled = isPast || isTooSoon || isBlocked;
+                    const isSoldOut = !!slot.soldOut;
+                    const isDisabled = isPast || isTooSoon || isBlocked || isSoldOut;
 
                     if (isDisabled) {
-                        const badgeText = isPast
+                        const badgeText = isSoldOut
+                            ? 'Sold Out'
+                            : isPast
                             ? 'Past'
                             : isTooSoon
                             ? 'Call to book'
                             : 'Closed';
-                        const subText = isPast
+                        const subText = isSoldOut
+                            ? slot.soldOutReason || 'Private'
+                            : isPast
                             ? 'Unavailable'
                             : isTooSoon
                             ? `< ${MIN_BOOKING_NOTICE_HOURS} hr notice`
@@ -188,7 +195,9 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
                                 aria-disabled="true"
                                 className="relative py-3 px-4 rounded-xl border border-dashed border-[#DCC8A0] bg-[#FFF8EE] text-[#A8946B] flex flex-col items-center justify-center cursor-not-allowed select-none"
                             >
-                                <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full mb-1 bg-[#DCC8A0]/30 text-[#8B6914]">
+                                <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full mb-1 ${
+                                    isSoldOut ? 'bg-red-100 text-red-600' : 'bg-[#DCC8A0]/30 text-[#8B6914]'
+                                }`}>
                                     {badgeText}
                                 </span>
                                 <span className="text-lg font-bold line-through decoration-[#A8946B]/60">

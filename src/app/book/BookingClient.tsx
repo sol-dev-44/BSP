@@ -83,7 +83,7 @@ export default function BookingClient() {
     }, [step]);
 
     // Availability
-    const [availableSlots, setAvailableSlots] = useState<{ time: string, remaining: number, type: string, price: number, availability?: 'past' | 'too-soon' | 'bookable', blocked?: boolean }[]>([]);
+    const [availableSlots, setAvailableSlots] = useState<{ time: string, remaining: number, type: string, price: number, availability?: 'past' | 'too-soon' | 'bookable', blocked?: boolean, soldOut?: boolean, soldOutReason?: string }[]>([]);
     const [dateNotice, setDateNotice] = useState<
         | { type: 'weather'; message: string }
         | { type: 'event'; emoji: string; title: string; message: string }
@@ -132,6 +132,7 @@ export default function BookingClient() {
         // a stale state update lets a past/too-soon/closed slot through.
         if (newSlot && newSlot.availability && newSlot.availability !== 'bookable') return;
         if (newSlot && newSlot.blocked) return;
+        if (newSlot && newSlot.soldOut) return;
         setSelectedTime(time);
         if (newSlot && Number(formData.party_size) > newSlot.remaining) {
             setFormData(prev => ({ ...prev, party_size: newSlot.remaining }));
