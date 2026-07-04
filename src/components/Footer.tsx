@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Facebook, Instagram, Star, MapPin as TripAdvisorIcon, Phone, Mail, ExternalLink, MapPinned } from 'lucide-react'
+import { Facebook, Instagram, Star, MapPin as TripAdvisorIcon, Phone, Mail, MapPinned } from 'lucide-react'
 import { BUSINESS_INFO } from '@/config/business'
 
 export function Footer() {
@@ -36,22 +36,6 @@ export function Footer() {
                         <p className="text-[#FFD700] font-bold text-lg">
                             Season: May &ndash; September
                         </p>
-
-                        {/* Sister Sites */}
-                        <div className="mt-6 space-y-2">
-                            <p className="text-sm text-white/40 font-[family-name:var(--font-headline)] font-bold uppercase tracking-widest">Sister Site</p>
-                            <div className="flex flex-col gap-2">
-                                <a
-                                    href={BUSINESS_INFO.sisterSite.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 text-white/80 hover:text-[#FFD700] transition-colors"
-                                >
-                                    <ExternalLink className="h-4 w-4" />
-                                    {BUSINESS_INFO.sisterSite.name}
-                                </a>
-                            </div>
-                        </div>
                     </div>
 
                     {/* Contact */}

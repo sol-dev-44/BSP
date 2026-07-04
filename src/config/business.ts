@@ -67,12 +67,6 @@ export const BUSINESS_INFO = {
     // Website
     url: 'https://www.montanaparasail.com',
 
-    // Sister Site
-    sisterSite: {
-        name: 'Havasu Parasail',
-        url: 'https://www.parasailhavasu.com',
-    },
-
     // Pricing Constants
     priceRange: '$$',
     pricing: {
