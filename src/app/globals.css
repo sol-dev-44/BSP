@@ -53,6 +53,12 @@
   scroll-behavior: smooth;
 }
 
+/* Branded keyboard focus ring */
+:focus-visible {
+  outline: 2px solid #FF9500;
+  outline-offset: 2px;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   background-color: var(--color-background);

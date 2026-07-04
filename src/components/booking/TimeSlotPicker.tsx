@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Phone, Wind } from 'lucide-react';
+import { Phone, Wind, Sunrise, Sun, Sunset, type LucideIcon } from 'lucide-react';
 import { BOOKING_CONFIG } from '@/config/booking';
 import { BUSINESS_INFO } from '@/config/business';
 import { MIN_BOOKING_NOTICE_HOURS } from '@/config/solarSchedule';
@@ -27,27 +27,27 @@ interface TimeSlotPickerProps {
     dateNotice?: DateNotice | null;
 }
 
-const slotTypeConfig: Record<string, { label: string; color: string; bgColor: string; borderColor: string; badgeBg: string }> = {
+const slotTypeConfig: Record<string, { label: string; icon: LucideIcon; color: string; tileClass: string; badgeBg: string }> = {
     earlybird: {
         label: 'Early Bird',
+        icon: Sunrise,
         color: 'text-[#B8860B]',
-        bgColor: 'bg-[#FFD699]',
-        borderColor: 'border-[#DCC8A0]',
-        badgeBg: 'bg-[#FFD700]/15 text-[#3D1C00]',
+        tileClass: 'bg-gradient-to-b from-[#FFF3D6] to-[#FFE2A6] border-[#E8C86B]',
+        badgeBg: 'bg-[#FFD700]/20 text-[#8B6914]',
     },
     standard: {
         label: 'Standard',
+        icon: Sun,
         color: 'text-[#3D1C00]',
-        bgColor: 'bg-[#FFD699]',
-        borderColor: 'border-[#DCC8A0]',
+        tileClass: 'bg-[#FFD699] border-[#DCC8A0]',
         badgeBg: 'bg-[#FF9500]/15 text-[#3D1C00]',
     },
     sunset: {
         label: 'Sunset',
-        color: 'text-[#FF9500]',
-        bgColor: 'bg-[#FFD699]',
-        borderColor: 'border-[#DCC8A0]',
-        badgeBg: 'bg-[#FF9500]/15 text-[#FF9500]',
+        icon: Sunset,
+        color: 'text-[#C24E00]',
+        tileClass: 'bg-gradient-to-b from-[#FFD699] via-[#FFC063] to-[#FFAB57] border-[#FF9500]/60 shadow-[0_2px_12px_rgba(255,149,0,0.25)]',
+        badgeBg: 'bg-[#FF9500]/20 text-[#C24E00]',
     },
 };
 
@@ -63,7 +63,6 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
     if (dateNotice?.type === 'weather') {
         return (
             <div className="w-full">
-                <h3 className="text-xl font-semibold mb-4 text-[#2D1600] font-serif">Select a Time</h3>
                 <div className="relative overflow-hidden rounded-2xl border border-[#7BA7C7]/40 bg-gradient-to-br from-[#E8F1F8] via-[#F0F5FA] to-[#E8F1F8] p-8 text-center">
                     <div className="absolute -top-6 -right-6 opacity-20">
                         <Wind className="w-32 h-32 text-[#5A8BA8]" strokeWidth={1.25} />
@@ -72,7 +71,7 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
                         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#5A8BA8] text-white mb-4 shadow-lg shadow-[#5A8BA8]/30">
                             <Wind className="w-8 h-8" strokeWidth={2} />
                         </div>
-                        <h4 className="text-2xl font-bold text-[#2D1600] mb-2 font-serif">
+                        <h4 className="text-2xl font-bold text-[#2D1600] mb-2 font-[family-name:var(--font-headline)] uppercase tracking-wide">
                             {dateNotice.message}
                         </h4>
                         <p className="text-sm text-[#5A6B7A] max-w-sm mx-auto">
@@ -104,13 +103,12 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
     if (eventNotice && allBlocked) {
         return (
             <div className="w-full">
-                <h3 className="text-xl font-semibold mb-4 text-[#2D1600] font-serif">Select a Time</h3>
                 <div className="relative overflow-hidden rounded-2xl border border-[#FF9500]/40 bg-gradient-to-br from-[#FFEACC] via-[#FFD699] to-[#FFEACC] p-8 text-center">
                     <div className="relative">
                         <div className="text-6xl mb-4 leading-none" aria-hidden="true">
                             {eventNotice.emoji}
                         </div>
-                        <h4 className="text-2xl font-bold text-[#2D1600] mb-2 font-serif">
+                        <h4 className="text-2xl font-bold text-[#2D1600] mb-2 font-[family-name:var(--font-headline)] uppercase tracking-wide">
                             {eventNotice.title}
                         </h4>
                         <p className="text-sm text-[#614020] max-w-sm mx-auto">
@@ -124,7 +122,6 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
 
     return (
         <div className="w-full">
-            <h3 className="text-xl font-semibold mb-2 text-[#2D1600] font-serif">Select a Time</h3>
             <p className="text-sm text-[#8B6914] mb-4">
                 Early Bird (10 AM) $99 | Standard $119 | Sunset (last flight) $159
             </p>
@@ -210,6 +207,7 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
                         );
                     }
 
+                    const BadgeIcon = config.icon;
                     return (
                         <motion.button
                             key={slot.time}
@@ -221,14 +219,15 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
                                 relative py-3 px-4 rounded-xl border flex flex-col items-center justify-center transition-all
                                 ${isSelected
                                     ? 'bg-[#FF9500] border-[#FF9500] text-[#FFFFFF] shadow-lg shadow-[#FF9500]/30'
-                                    : `bg-[#FFD699] ${config.borderColor} text-[#2D1600] hover:shadow-md hover:border-[#FF9500]`
+                                    : `${config.tileClass} text-[#2D1600] hover:shadow-md hover:border-[#FF9500]`
                                 }
                             `}
                         >
                             {/* Slot type badge */}
-                            <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full mb-1 ${
+                            <span className={`inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full mb-1 ${
                                 isSelected ? 'bg-[#FFFFFF]/20 text-[#FFFFFF]' : config.badgeBg
                             }`}>
+                                <BadgeIcon className="w-3 h-3" />
                                 {config.label}
                             </span>
 

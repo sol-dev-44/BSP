@@ -1,9 +1,10 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
+import { FadeInImage } from '@/components/FadeInImage'
 
 const IMAGE_BASE = 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images/'
 
@@ -57,29 +58,39 @@ export function ExperienceGallery() {
         <section className="py-16 sm:py-20 md:py-28 lg:py-32 bg-[#FFF0D6] relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Editorial section header */}
-                <div className="mb-8 sm:mb-12 md:mb-16">
+                <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-80px' }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                    className="mb-8 sm:mb-12 md:mb-16"
+                >
                     <h2 className="font-[family-name:var(--font-headline)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight uppercase text-[#2D1600]">
                         Experience the<br /><span className="text-[#FF9500]">Adventure</span>
                     </h2>
                     <p className="text-lg md:text-xl text-[#8B6914] max-w-2xl mt-4">
                         See what awaits you high above Flathead Lake's pristine waters.
                     </p>
-                </div>
+                </motion.div>
 
                 {/* Bento Grid Gallery */}
                 <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[200px] md:auto-rows-[250px] gap-3 md:gap-4">
                     {images.map((image, index) => (
-                        <div
+                        <motion.div
                             key={index}
+                            initial={{ opacity: 0, y: 16 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-60px' }}
+                            transition={{ duration: 0.5, ease: 'easeOut', delay: Math.min((index % 4) * 0.06, 0.24) }}
                             className={`relative group cursor-pointer rounded-xl overflow-hidden border border-[#FF9500]/10 hover:border-[#FF9500]/40 hover:shadow-[0_4px_20px_rgba(255,149,0,0.15)] transition-all duration-500 ${getGridSpan(
                                 image.span
                             )}`}
                             onClick={() => setSelectedImage(index)}
                         >
-                            <img
+                            <FadeInImage
                                 src={image.src}
                                 alt={image.alt}
-                                className="w-full h-full object-cover [@media(hover:hover)]:group-hover:scale-110 transition-transform duration-700"
+                                className="w-full h-full object-cover [@media(hover:hover)]:group-hover:scale-110 transition-[transform,opacity] duration-700"
                             />
 
                             {/* Hover overlay with gradient from bottom */}
@@ -91,19 +102,20 @@ export function ExperienceGallery() {
                                     <p className="text-white font-bold text-[11px] leading-tight md:text-lg md:leading-normal">{image.alt}</p>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
 
                 {/* View All CTA */}
                 <div className="text-center mt-10 sm:mt-16">
-                    <Link href="/gallery" className="inline-block px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg rounded-xl bg-[#FF9500] text-white font-bold hover:bg-[#E07B00] hover:scale-105 transition-all duration-300 shadow-[0_4px_20px_rgba(255,149,0,0.3)] hover:shadow-[0_6px_30px_rgba(255,149,0,0.5)]">
+                    <Link href="/gallery" className="inline-block px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg rounded-full bg-[#FF9500] text-white font-bold hover:bg-[#E07B00] hover:scale-105 transition-all duration-300 shadow-[0_4px_20px_rgba(255,149,0,0.3)] hover:shadow-[0_6px_30px_rgba(255,149,0,0.5)]">
                         View Full Gallery
                     </Link>
                 </div>
             </div>
 
             {/* Lightbox Modal */}
+            <AnimatePresence>
             {selectedImage !== null && (
                 <motion.div
                     initial={{ opacity: 0 }}
@@ -134,6 +146,7 @@ export function ExperienceGallery() {
                     <motion.div
                         initial={{ scale: 0.8 }}
                         animate={{ scale: 1 }}
+                        exit={{ scale: 0.85 }}
                         className="max-w-6xl max-h-[90vh] relative"
                         onClick={(e) => e.stopPropagation()}
                     >
@@ -164,6 +177,7 @@ export function ExperienceGallery() {
                     </button>
                 </motion.div>
             )}
+            </AnimatePresence>
         </section>
     )
 }

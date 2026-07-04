@@ -11,7 +11,7 @@ import PaymentForm from '@/components/booking/PaymentForm';
 import PriceBreakdown from '@/components/booking/PriceBreakdown';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
-import { Calendar, ShieldCheck, Anchor, CreditCard } from 'lucide-react';
+import { Calendar, ShieldCheck, Anchor, CreditCard, Check, Clock, User, Lock, Sunrise, Sunset, Sailboat } from 'lucide-react';
 import { BUSINESS_INFO } from '@/config/business';
 import { BOOKING_CONFIG } from '@/config/booking';
 import * as gtag from '@/lib/gtag';
@@ -356,11 +356,11 @@ export default function BookingClient() {
                                 <Anchor className="w-5 h-5" />
                                 <span className="font-semibold text-sm">Weather Guarantee</span>
                             </div>
-                            <div className="flex items-center gap-2 bg-[#FFFFFF]/10 text-[#FFFFFF] px-4 py-2 rounded-lg">
+                            <div className="flex items-center gap-2 bg-[#2D1600]/10 text-[#2D1600] px-4 py-2 rounded-lg">
                                 <ShieldCheck className="w-5 h-5" />
                                 <span className="font-semibold text-sm">Satisfaction Guaranteed</span>
                             </div>
-                            <div className="flex items-center gap-2 bg-[#FFD700]/10 text-[#FFD700] px-4 py-2 rounded-lg">
+                            <div className="flex items-center gap-2 bg-[#FFD700]/15 text-[#8B6914] px-4 py-2 rounded-lg">
                                 <CreditCard className="w-5 h-5" />
                                 <span className="font-semibold text-sm">Secure Payment</span>
                             </div>
@@ -380,12 +380,14 @@ export default function BookingClient() {
                                     ${step >= s.step ? 'text-[#FF9500]' : 'text-[#8B6914]'}
                                 `}>
                                     <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg transition-all duration-300 ${step >= s.step ? 'bg-[#FF9500] text-[#FFFFFF] shadow-lg shadow-[#FF9500]/30' : 'bg-[#FFD699]'}`}>
-                                        {s.step}
+                                        {step > s.step ? <Check className="w-5 h-5" strokeWidth={3} /> : s.step}
                                     </div>
                                     <span className="text-xs font-bold uppercase tracking-wider hidden sm:block">{s.label}</span>
                                 </div>
                                 {s.step < 3 && (
-                                    <div className={`w-12 h-0.5 mx-4 transition-colors duration-300 -translate-y-3 ${step > s.step ? 'bg-[#FF9500]' : 'bg-[#FFD699]'}`} />
+                                    <div className="w-12 h-1 mx-4 self-start mt-[18px] rounded-full bg-[#FFD699] overflow-hidden">
+                                        <div className={`h-full rounded-full bg-[#FF9500] transition-all duration-500 ${step > s.step ? 'w-full' : 'w-0'}`} />
+                                    </div>
                                 )}
                             </div>
                         ))}
@@ -410,8 +412,8 @@ export default function BookingClient() {
 
                                 <div className="lg:col-span-7 space-y-8">
                                     <div className="bg-[#FFEACC] rounded-xl shadow-xl p-8">
-                                        <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-[#2D1600]">
-                                            <span className="bg-[#FF9500]/10 text-[#FF9500] p-2 rounded-xl">&#9201;</span>
+                                        <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-[#2D1600] font-[family-name:var(--font-headline)] uppercase tracking-wide">
+                                            <span className="bg-[#FF9500]/10 text-[#FF9500] p-2 rounded-xl"><Clock className="w-6 h-6" /></span>
                                             Select Time
                                         </h3>
                                         <TimeSlotPicker
@@ -431,7 +433,9 @@ export default function BookingClient() {
                                             className="mt-6 bg-[#FFEACC] rounded-xl p-5"
                                         >
                                             <div className="flex items-start gap-3">
-                                                <span className="text-2xl">{selectedSlotType === 'earlybird' ? '\u2600\uFE0F' : selectedSlotType === 'sunset' ? '\uD83C\uDF05' : '\u26F5'}</span>
+                                                <span className="bg-[#FF9500]/10 text-[#FF9500] p-2 rounded-xl shrink-0">
+                                                    {selectedSlotType === 'earlybird' ? <Sunrise className="w-6 h-6" /> : selectedSlotType === 'sunset' ? <Sunset className="w-6 h-6" /> : <Sailboat className="w-6 h-6" />}
+                                                </span>
                                                 <div>
                                                     <h4 className="font-bold text-[#2D1600] text-lg">
                                                         {selectedSlotType === 'earlybird' ? 'Early Bird Flight' : selectedSlotType === 'sunset' ? 'Sunset Flight' : 'Standard Flight'} -- ${currentPricePerPerson}/person
@@ -445,8 +449,8 @@ export default function BookingClient() {
                                                     </p>
                                                     <div className="flex flex-wrap gap-2 mt-3">
                                                         <span className="inline-flex items-center gap-1 text-xs font-semibold bg-[#FF9500]/10 text-[#FF9500] px-2.5 py-1 rounded-full">400ft altitude</span>
-                                                        <span className="inline-flex items-center gap-1 text-xs font-semibold bg-[#FFFFFF]/10 text-[#FFFFFF] px-2.5 py-1 rounded-full">Mountain views</span>
-                                                        <span className="inline-flex items-center gap-1 text-xs font-semibold bg-[#FFD700]/10 text-[#FFD700] px-2.5 py-1 rounded-full">USCG certified</span>
+                                                        <span className="inline-flex items-center gap-1 text-xs font-semibold bg-[#2D1600]/10 text-[#2D1600] px-2.5 py-1 rounded-full">Mountain views</span>
+                                                        <span className="inline-flex items-center gap-1 text-xs font-semibold bg-[#FFD700]/15 text-[#8B6914] px-2.5 py-1 rounded-full">USCG certified</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -482,8 +486,8 @@ export default function BookingClient() {
                                 <div className="lg:col-span-7 space-y-8">
                                     <div className="bg-[#FFEACC] rounded-xl shadow-xl overflow-hidden">
                                         <div className="p-8">
-                                            <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-[#2D1600]">
-                                                <span className="bg-[#FF9500]/10 text-[#FF9500] p-2 rounded-xl">&#128100;</span>
+                                            <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-[#2D1600] font-[family-name:var(--font-headline)] uppercase tracking-wide">
+                                                <span className="bg-[#FF9500]/10 text-[#FF9500] p-2 rounded-xl"><User className="w-6 h-6" /></span>
                                                 Guest Details
                                             </h3>
                                             <GuestForm
@@ -591,8 +595,8 @@ export default function BookingClient() {
                                     <div className="bg-[#FFEACC] p-8 rounded-xl shadow-xl relative overflow-hidden">
                                         <div className="absolute top-0 right-0 w-32 h-32 bg-[#FF9500]/5 rounded-bl-full -mr-10 -mt-10" />
 
-                                        <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-[#2D1600] relative z-10">
-                                            <span className="bg-[#FFFFFF]/10 text-[#FFFFFF] p-2 rounded-xl">&#128274;</span>
+                                        <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-[#2D1600] relative z-10 font-[family-name:var(--font-headline)] uppercase tracking-wide">
+                                            <span className="bg-[#FF9500]/10 text-[#FF9500] p-2 rounded-xl"><Lock className="w-6 h-6" /></span>
                                             Secure Payment
                                         </h3>
 
@@ -624,8 +628,8 @@ export default function BookingClient() {
                                             discountAmount={discountAmount * (Number(formData.party_size) || 0)}    // FINAL applied total (DISC-07)
                                             discountCode={discountCode}
                                         />
-                                        <div className="mt-4 bg-[#FFFFFF]/10 p-4 rounded-xl flex items-start gap-3">
-                                            <ShieldCheck className="w-5 h-5 text-[#FFFFFF] mt-0.5 shrink-0" />
+                                        <div className="mt-4 bg-[#FF9500]/10 p-4 rounded-xl flex items-start gap-3">
+                                            <ShieldCheck className="w-5 h-5 text-[#FF9500] mt-0.5 shrink-0" />
                                             <div>
                                                 <p className="text-sm font-bold text-[#2D1600]">
                                                     Payment Protection

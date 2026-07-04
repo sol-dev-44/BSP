@@ -1,6 +1,6 @@
 'use client'
 
-import { useInView, useMotionValue, useSpring } from 'framer-motion'
+import { motion, useInView, useMotionValue, useSpring } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 
 function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
@@ -49,14 +49,24 @@ export function Stats() {
     return (
         <div className="py-16 bg-[#3D1C00] relative border-y-4 border-[#FFD700]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <p className="font-[family-name:var(--font-headline)] text-sm font-black uppercase tracking-widest sm:tracking-[0.3em] text-white/50 text-center mb-6 sm:mb-10">
+                <motion.p
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-80px' }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                    className="font-[family-name:var(--font-headline)] text-sm font-black uppercase tracking-widest sm:tracking-[0.3em] text-white/50 text-center mb-6 sm:mb-10"
+                >
                     Trusted by Thousands
-                </p>
+                </motion.p>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 md:gap-12 lg:gap-16">
                     {stats.map((stat, index) => (
-                        <div
+                        <motion.div
                             key={index}
+                            initial={{ opacity: 0, y: 16 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-80px' }}
+                            transition={{ duration: 0.5, ease: 'easeOut', delay: index * 0.08 }}
                             className="flex flex-col items-center text-center"
                         >
                             <div className="font-[family-name:var(--font-headline)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-[#FF9500] text-glow">
@@ -72,7 +82,7 @@ export function Stats() {
                             <p className="text-sm text-white/50 mt-2 uppercase tracking-wider font-medium">
                                 {stat.label}
                             </p>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </div>

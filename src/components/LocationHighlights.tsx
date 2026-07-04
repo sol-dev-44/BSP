@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Droplets, Mountain, TreePine, MapPin } from 'lucide-react'
+import { FadeInImage } from '@/components/FadeInImage'
 
 const IMAGE_BASE = 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images/'
 
@@ -36,29 +37,39 @@ export function LocationHighlights() {
     return (
         <div className="py-16 sm:py-20 md:py-28 lg:py-32 bg-[#FFEACC] relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-8 sm:mb-12 md:mb-16">
+                <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-80px' }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                    className="text-center mb-8 sm:mb-12 md:mb-16"
+                >
                     <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-[family-name:var(--font-headline)] font-black uppercase tracking-tight text-[#2D1600] mb-4">
                         Why Flathead Lake?
                     </h2>
                     <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#8B6914] max-w-3xl mx-auto">
                         The perfect combination of natural beauty and ideal conditions for parasailing.
                     </p>
-                </div>
+                </motion.div>
 
                 {/* Location Cards Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {highlights.map((highlight, index) => (
                         <motion.div
                             key={index}
+                            initial={{ opacity: 0, y: 16 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-60px' }}
+                            transition={{ duration: 0.5, ease: 'easeOut', delay: (index % 2) * 0.08 }}
                             whileHover={{ y: -5 }}
                             className="group relative rounded-xl overflow-hidden border border-[#FF9500]/15 hover:border-[#FF9500]/40 hover:shadow-[0_8px_30px_rgba(255,149,0,0.15)] transition-all duration-500"
                         >
                             {/* Background Image */}
                             <div className="relative h-[250px] sm:h-[300px] md:h-[350px]">
-                                <img
+                                <FadeInImage
                                     src={highlight.image}
                                     alt={highlight.title}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    className="w-full h-full object-cover transition-[transform,opacity] duration-500 group-hover:scale-110"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#3D1C00] via-[#3D1C00]/50 to-transparent" />
 

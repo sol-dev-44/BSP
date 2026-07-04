@@ -2,6 +2,14 @@
 
 import { motion } from 'framer-motion'
 import { Shield, Anchor, Users, Waves, Gauge, CheckCircle } from 'lucide-react'
+import { FadeInImage } from '@/components/FadeInImage'
+
+const reveal = (delay = 0) => ({
+    initial: { opacity: 0, y: 16 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: '-80px' },
+    transition: { duration: 0.5, ease: 'easeOut' as const, delay },
+})
 
 const IMAGE_BASE = 'https://qcohcaavhwujvagmpbdp.supabase.co/storage/v1/object/public/bsp-images/'
 
@@ -62,7 +70,7 @@ export function VesselShowcase() {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Editorial Header: title left, label right */}
-                <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 sm:mb-12 md:mb-16">
+                <motion.div {...reveal()} className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 sm:mb-12 md:mb-16">
                     <div>
                         <h2 className="font-[family-name:var(--font-headline)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight uppercase text-[#FF9500]">
                             The Cloud Dancer
@@ -75,16 +83,16 @@ export function VesselShowcase() {
                         <Anchor className="h-5 w-5" />
                         <span className="font-[family-name:var(--font-headline)] text-sm font-bold uppercase tracking-wider">Meet Our Vessel</span>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Bento Grid: main image spanning 2 cols, feature cards alongside */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Main Cloud Dancer image - spans 2 cols */}
-                    <div className="lg:col-span-2 lg:row-span-2 group relative rounded-xl overflow-hidden">
-                        <img
+                    <motion.div {...reveal()} className="lg:col-span-2 lg:row-span-2 group relative rounded-xl overflow-hidden">
+                        <FadeInImage
                             src={`${IMAGE_BASE}cloudDancerInclineDock.jpg`}
                             alt="Cloud Dancer vessel docked at Flathead Harbor Marina"
-                            className="w-full h-full object-cover min-h-[250px] sm:min-h-[300px] md:min-h-[400px] group-hover:scale-110 transition-transform duration-700"
+                            className="w-full h-full object-cover min-h-[250px] sm:min-h-[300px] md:min-h-[400px] group-hover:scale-110 transition-[transform,opacity] duration-700"
                         />
                         {/* Text overlay at bottom */}
                         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#3D1C00]/95 via-[#3D1C00]/70 to-transparent p-6 md:p-8">
@@ -92,14 +100,15 @@ export function VesselShowcase() {
                                 The <span className="font-bold text-[#FFD700]">Cloud Dancer</span> &mdash; our 31-foot Ocean Pro commercial parasail vessel, powered by Volvo Penta diesel with a professional hydraulic winch system.
                             </p>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Feature highlight cards in right column */}
                     {highlights.slice(0, 2).map((highlight, index) => {
                         const Icon = highlight.icon
                         return (
-                            <div
+                            <motion.div
                                 key={index}
+                                {...reveal(0.1 + index * 0.08)}
                                 className="bg-[#5A3010] rounded-xl p-5 sm:p-6 md:p-8 border border-[#FF9500]/20 hover:border-[#FF9500]/40 transition-all duration-500"
                             >
                                 <div className="mb-4">
@@ -111,7 +120,7 @@ export function VesselShowcase() {
                                 <p className="text-white/70 leading-relaxed">
                                     {highlight.description}
                                 </p>
-                            </div>
+                            </motion.div>
                         )
                     })}
                 </div>
@@ -122,8 +131,9 @@ export function VesselShowcase() {
                     {highlights.slice(2).map((highlight, index) => {
                         const Icon = highlight.icon
                         return (
-                            <div
+                            <motion.div
                                 key={index + 2}
+                                {...reveal(index * 0.08)}
                                 className="bg-[#5A3010] rounded-xl p-5 sm:p-6 md:p-8 border border-[#FF9500]/20 hover:border-[#FF9500]/40 transition-all duration-500"
                             >
                                 <div className="mb-4">
@@ -135,16 +145,16 @@ export function VesselShowcase() {
                                 <p className="text-white/70 leading-relaxed">
                                     {highlight.description}
                                 </p>
-                            </div>
+                            </motion.div>
                         )
                     })}
 
                     {/* Leroy image card */}
-                    <div className="group relative rounded-xl overflow-hidden">
-                        <img
+                    <motion.div {...reveal(0.16)} className="group relative rounded-xl overflow-hidden">
+                        <FadeInImage
                             src={`${IMAGE_BASE}leroyDock.jpg`}
                             alt="Leroy the dog mascot at the dock"
-                            className="w-full h-full object-cover min-h-[250px] group-hover:scale-110 transition-transform duration-700"
+                            className="w-full h-full object-cover min-h-[250px] group-hover:scale-110 transition-[transform,opacity] duration-700"
                         />
                         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#3D1C00]/95 to-transparent p-4">
                             <p className="text-white font-bold text-lg">
@@ -152,10 +162,10 @@ export function VesselShowcase() {
                             </p>
                             <p className="text-white/80 text-sm">Our official dock mascot</p>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Vessel Specs card */}
-                    <div className="bg-[#5A3010] rounded-xl p-5 sm:p-6 md:p-8 border border-[#FF9500]/20 hover:border-[#FF9500]/40 transition-all duration-500">
+                    <motion.div {...reveal(0.24)} className="bg-[#5A3010] rounded-xl p-5 sm:p-6 md:p-8 border border-[#FF9500]/20 hover:border-[#FF9500]/40 transition-all duration-500">
                         <h3 className="font-[family-name:var(--font-headline)] text-lg font-bold text-white mb-4 flex items-center gap-2 uppercase tracking-wide">
                             <Gauge className="h-5 w-5 text-[#FF9500]" />
                             Vessel Specs
@@ -168,18 +178,18 @@ export function VesselShowcase() {
                                 </li>
                             ))}
                         </ul>
-                    </div>
+                    </motion.div>
                 </div>
 
                 {/* Bottom safety badge */}
-                <div className="mt-10 sm:mt-16 text-center">
+                <motion.div {...reveal()} className="mt-10 sm:mt-16 text-center">
                     <div className="inline-flex items-center gap-3 bg-[#FF9500] px-4 py-3 sm:px-6 sm:py-4 md:px-8 rounded-xl shadow-lg">
                         <Shield className="h-6 w-6 text-white" />
                         <p className="text-sm sm:text-base md:text-lg font-bold text-white">
                             Safety-First Operations Since Day One
                         </p>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     )

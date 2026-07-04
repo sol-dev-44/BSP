@@ -44,7 +44,7 @@ export default function PaymentForm({ amount, onSuccess, onError }: PaymentFormP
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
             <div className="bg-[#FFEACC] p-6 rounded-xl border border-[#DCC8A0]">
-                <h3 className="text-xl font-semibold mb-4 text-[#2D1600] font-serif">Payment Details</h3>
+                <h3 className="text-xl font-semibold mb-4 text-[#2D1600] font-[family-name:var(--font-headline)] uppercase tracking-wide">Payment Details</h3>
                 <p className="text-[#8B6914] mb-6">Total to pay: <span className="font-bold text-[#FF9500] text-lg">${amount.toFixed(2)}</span></p>
 
                 <PaymentElement
@@ -61,7 +61,7 @@ export default function PaymentForm({ amount, onSuccess, onError }: PaymentFormP
             <button
                 type="submit"
                 disabled={!stripe || isProcessing || !isReady}
-                className="w-full bg-gradient-to-r from-[#FF9500] to-[#FFD700] hover:opacity-90 text-[#FFFFFF] font-bold py-4 rounded-xl transition-all shadow-lg shadow-[#FF9500]/30 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center uppercase tracking-wider"
+                className="w-full bg-gradient-to-r from-[#FF9500] to-[#FFD700] hover:opacity-90 text-[#FFFFFF] font-bold py-4 rounded-full transition-all shadow-lg shadow-[#FF9500]/30 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center uppercase tracking-wider"
             >
                 {isProcessing ? (
                     <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#FFFFFF]"></div>

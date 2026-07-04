@@ -51,6 +51,9 @@ export default function DateSelector({ selectedDate, onSelectDate, minDate }: Da
 
     const minDateObj = minDate ? new Date(parseInt(minDate.split('-')[0]), parseInt(minDate.split('-')[1]) - 1, parseInt(minDate.split('-')[2])) : new Date();
 
+    const now = new Date();
+    const todayString = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
     while (day <= endDate) {
         for (let i = 0; i < 7; i++) {
             formattedDate = format(day, dateFormat);
@@ -68,6 +71,7 @@ export default function DateSelector({ selectedDate, onSelectDate, minDate }: Da
             const isBlocked = BLOCKED_DATES.has(dateString);
             const isDisabled = isPast || !isInSeason || !isAllowedDay || isBlocked;
             const isSelected = selectedDate === dateString;
+            const isToday = dateString === todayString;
 
             days.push(
                 <button
@@ -80,6 +84,7 @@ export default function DateSelector({ selectedDate, onSelectDate, minDate }: Da
                         ${!isSameMonth(day, monthStart) ? "text-[#DCC8A0] opacity-50" : ""}
                         ${isDisabled ? "text-[#DCC8A0] cursor-not-allowed bg-[#FFFFFF]" : "hover:bg-[#FF9500]/10 cursor-pointer text-[#2D1600] font-medium"}
                         ${isPast && isSameMonth(day, monthStart) ? "line-through decoration-[#DCC8A0]/70" : ""}
+                        ${isToday && !isSelected ? "ring-2 ring-[#FFD700] ring-offset-2 ring-offset-[#FFEACC]" : ""}
                         ${isSelected ? "!bg-[#FF9500] !text-[#FFFFFF] shadow-lg shadow-[#FF9500]/30 scale-105 z-10 font-bold" : ""}
                     `}
                 >
@@ -103,14 +108,14 @@ export default function DateSelector({ selectedDate, onSelectDate, minDate }: Da
         <div className="w-full max-w-md mx-auto space-y-6">
             <div className="bg-[#FFEACC] rounded-2xl shadow-xl border border-[#DCC8A0] p-6">
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-xl font-bold text-[#2D1600] capitalize font-serif">
+                    <h2 className="text-xl font-bold text-[#2D1600] uppercase tracking-wide font-[family-name:var(--font-headline)]">
                         {format(currentMonth, "MMMM yyyy")}
                     </h2>
                     <div className="flex gap-2">
-                        <button onClick={prevMonth} className="p-2 hover:bg-[#FFD699] bg-[#FFEACC] rounded-full text-[#2D1600] transition-colors">
+                        <button onClick={prevMonth} aria-label="Previous month" className="p-2 hover:bg-[#FFD699] bg-[#FFEACC] rounded-full text-[#2D1600] transition-colors">
                             <ChevronLeft className="w-5 h-5" />
                         </button>
-                        <button onClick={nextMonth} className="p-2 hover:bg-[#FFD699] bg-[#FFEACC] rounded-full text-[#2D1600] transition-colors">
+                        <button onClick={nextMonth} aria-label="Next month" className="p-2 hover:bg-[#FFD699] bg-[#FFEACC] rounded-full text-[#2D1600] transition-colors">
                             <ChevronRight className="w-5 h-5" />
                         </button>
                     </div>

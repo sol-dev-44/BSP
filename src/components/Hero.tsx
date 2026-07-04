@@ -2,8 +2,18 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { ChevronDown } from 'lucide-react'
 
 export function Hero() {
+    const [hasScrolled, setHasScrolled] = useState(false)
+
+    useEffect(() => {
+        const onScroll = () => setHasScrolled(window.scrollY > 80)
+        window.addEventListener('scroll', onScroll, { passive: true })
+        return () => window.removeEventListener('scroll', onScroll)
+    }, [])
+
     return (
         <div className="relative min-h-screen flex items-end overflow-hidden">
             {/* Hero Background Video (parallax removed — caused mobile scroll flicker) */}
@@ -83,6 +93,24 @@ export function Hero() {
                     </Link>
                 </motion.div>
             </div>
+
+            {/* Scroll cue */}
+            <motion.button
+                type="button"
+                aria-label="Scroll to explore"
+                onClick={() => window.scrollBy({ top: window.innerHeight * 0.85, behavior: 'smooth' })}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: hasScrolled ? 0 : 1 }}
+                transition={{ duration: 0.4, delay: hasScrolled ? 0 : 1.6 }}
+                className={`absolute bottom-5 left-1/2 -translate-x-1/2 z-10 hidden sm:block text-white/70 hover:text-white transition-colors ${hasScrolled ? 'pointer-events-none' : ''}`}
+            >
+                <motion.div
+                    animate={{ y: [0, 8, 0] }}
+                    transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                    <ChevronDown className="w-8 h-8" />
+                </motion.div>
+            </motion.button>
         </div>
     )
 }

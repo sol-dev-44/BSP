@@ -84,7 +84,7 @@ function BookingContent() {
     }, [bookingId]);
 
     if (loading) {
-        return <div className="text-[#FFD700] animate-pulse">Loading ticket details...</div>;
+        return <div className="text-[#8B6914] animate-pulse">Loading ticket details...</div>;
     }
 
     if (!booking) {
@@ -122,7 +122,7 @@ function BookingContent() {
             className="w-full max-w-2xl bg-[#FFEACC] text-[#2D1600] rounded-xl shadow-2xl overflow-hidden mb-8"
         >
             {/* Header */}
-            <div className="p-6 text-[#FFFFFF] text-center bg-gradient-to-r from-[#FF9500] via-[#FFD700] to-[#FFFFFF]">
+            <div className="p-6 text-[#FFFFFF] text-center bg-gradient-to-r from-[#FF9500] via-[#FFA520] to-[#FFB300]">
                 <CheckCircle className="w-16 h-16 mx-auto mb-4 text-[#FFFFFF]/80" />
                 <h2 className="text-3xl font-black uppercase tracking-tight font-[family-name:var(--font-headline)]">Booking Confirmed!</h2>
                 <div className="bg-[#FFFFFF]/20 inline-block px-4 py-1 rounded-full mb-3 backdrop-blur-sm mt-2">
@@ -147,7 +147,7 @@ function BookingContent() {
                     </div>
                     <div className="flex items-center space-x-4">
                         <div className="bg-[#FFD700]/10 p-3 rounded-full">
-                            <Clock className="w-6 h-6 text-[#FFD700]" />
+                            <Clock className="w-6 h-6 text-[#B8860B]" />
                         </div>
                         <div>
                             <p className="text-xs text-[#8B6914] uppercase font-semibold">Time</p>
@@ -155,8 +155,8 @@ function BookingContent() {
                         </div>
                     </div>
                     <div className="flex items-center space-x-4">
-                        <div className="bg-[#FFFFFF]/10 p-3 rounded-full">
-                            <Users className="w-6 h-6 text-[#FFFFFF]" />
+                        <div className="bg-[#2D1600]/10 p-3 rounded-full">
+                            <Users className="w-6 h-6 text-[#2D1600]" />
                         </div>
                         <div>
                             <p className="text-xs text-[#8B6914] uppercase font-semibold">Party</p>
@@ -228,7 +228,7 @@ function BookingContent() {
                             </div>
                         )}
                         {tipTotal > 0 && (
-                            <div className="flex justify-between text-[#FFFFFF] font-medium">
+                            <div className="flex justify-between text-[#E07B00] font-medium">
                                 <span>Crew Gratuity</span>
                                 <span>${tipTotal.toFixed(2)}</span>
                             </div>
@@ -277,7 +277,7 @@ function BookingContent() {
                         >
                             View on Google Maps &rarr;
                         </a>
-                        <p className="text-xs text-[#FFFFFF] mt-2 font-medium">Please arrive 15 minutes before departure.</p>
+                        <p className="text-xs text-[#E07B00] mt-2 font-semibold">Please arrive 15 minutes before departure.</p>
                         <p className="text-xs text-[#8B6914] mt-2 italic">
                             * Confirmation not required to board the boat.
                         </p>
@@ -307,7 +307,7 @@ function BookingContent() {
 export default function BookingSuccessPage() {
     return (
         <div className="min-h-screen bg-[#FFF8EE] flex flex-col items-center justify-center p-4">
-            <Suspense fallback={<p className="text-[#FFD700] mb-8 max-w-md">Processing booking details...</p>}>
+            <Suspense fallback={<p className="text-[#8B6914] mb-8 max-w-md">Processing booking details...</p>}>
                 <BookingContent />
             </Suspense>
 

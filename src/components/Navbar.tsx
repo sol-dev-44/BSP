@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -19,7 +19,15 @@ const navLinks: { name: string; href: string; cta?: boolean }[] = [
 
 export function Navbar() {
     const [isOpen, setIsOpen] = useState(false)
+    const [isScrolled, setIsScrolled] = useState(false)
     const pathname = usePathname()
+
+    useEffect(() => {
+        const onScroll = () => setIsScrolled(window.scrollY > 50)
+        onScroll()
+        window.addEventListener('scroll', onScroll, { passive: true })
+        return () => window.removeEventListener('scroll', onScroll)
+    }, [])
 
     const isActive = (href: string) => {
         if (href === '/') return pathname === '/'
@@ -28,15 +36,18 @@ export function Navbar() {
 
     return (
         <nav
-            className="fixed w-full z-50 bg-[#FFF8EE]/90 backdrop-blur-xl border-b border-[#FF9500]/15 shadow-[0_2px_20px_rgba(255,149,0,0.08)] transition-all duration-300"
+            className={`fixed w-full z-50 backdrop-blur-xl border-b border-[#FF9500]/15 transition-all duration-300 ${isScrolled
+                ? 'bg-[#FFF8EE]/95 shadow-[0_4px_30px_rgba(255,149,0,0.15)]'
+                : 'bg-[#FFF8EE]/90 shadow-[0_2px_20px_rgba(255,149,0,0.08)]'
+            }`}
         >
             <div className="w-full mx-auto px-4 sm:px-6 lg:px-10">
-                <div className="flex items-center justify-between h-16 sm:h-20 lg:h-28">
+                <div className={`flex items-center justify-between h-16 sm:h-20 transition-[height] duration-300 ${isScrolled ? 'lg:h-[72px]' : 'lg:h-28'}`}>
                     <Link href="/" className="flex items-center space-x-4">
                         <img
                             src="/JerryBearLogo.png"
                             alt="Big Sky Parasail logo"
-                            className="h-10 sm:h-14 lg:h-20 w-auto"
+                            className={`h-10 sm:h-14 w-auto transition-all duration-300 ${isScrolled ? 'lg:h-12' : 'lg:h-20'}`}
                         />
                         <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black tracking-wide font-[family-name:var(--font-headline)] text-[#2D1600] hover:scale-105 transition-transform duration-200 whitespace-nowrap uppercase">
                             Big Sky Parasail
@@ -68,7 +79,7 @@ export function Navbar() {
                     <div className="lg:hidden flex items-center space-x-4">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className="inline-flex items-center justify-center p-2 rounded-md text-[#2D1600] hover:text-[#FF9500] focus:outline-none"
+                            className="inline-flex items-center justify-center p-2 rounded-md text-[#2D1600] hover:text-[#FF9500]"
                             aria-label="Toggle menu"
                         >
                             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

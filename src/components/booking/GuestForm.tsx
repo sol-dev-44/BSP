@@ -56,7 +56,7 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
         <div className="space-y-8">
             <div className="bg-[#FFD700]/10 border border-[#FFD700]/30 rounded-xl p-6 mb-8 text-center">
                 <p className="text-[#8B6914] text-sm uppercase tracking-wider font-semibold mb-1">Booking For</p>
-                <div className="text-2xl font-bold text-[#2D1600] font-serif">
+                <div className="text-2xl font-bold text-[#2D1600] font-[family-name:var(--font-headline)] uppercase tracking-wide">
                     {new Date(selectedDate + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
                     <span className="mx-2">&bull;</span>
                     {selectedTime}
@@ -64,7 +64,7 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
             </div>
 
             <div className="space-y-6">
-                <h3 className="text-xl font-semibold mb-4 text-[#2D1600] font-serif">Your Details</h3>
+                <h3 className="text-xl font-semibold mb-4 text-[#2D1600] font-[family-name:var(--font-headline)] uppercase tracking-wide">Your Details</h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
@@ -178,7 +178,7 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
 
             {/* Add-ons Section */}
             <div className="bg-[#FFD699] p-6 rounded-xl border border-[#DCC8A0]/30">
-                <h3 className="text-lg font-semibold mb-4 text-[#2D1600] font-serif flex items-center gap-2">
+                <h3 className="text-lg font-semibold mb-4 text-[#2D1600] font-[family-name:var(--font-headline)] uppercase tracking-wide flex items-center gap-2">
                     Upgrade Your Experience
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -235,7 +235,7 @@ export default function GuestForm({ formData, onChange, maxPartySize, selectedDa
 
             {/* Gratuity Section */}
             <div className="bg-[#FFEACC] p-6 rounded-xl border border-[#DCC8A0] shadow-sm">
-                <h3 className="text-lg font-semibold mb-4 text-[#2D1600] font-serif flex items-center gap-2">
+                <h3 className="text-lg font-semibold mb-4 text-[#2D1600] font-[family-name:var(--font-headline)] uppercase tracking-wide flex items-center gap-2">
                     Show Some Love to the Crew
                 </h3>
                 <p className="text-sm text-[#8B6914] mb-6">Gratuity is greatly appreciated! 100% goes to your captain and crew.</p>

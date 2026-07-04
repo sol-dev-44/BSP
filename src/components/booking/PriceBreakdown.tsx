@@ -45,7 +45,7 @@ export default function PriceBreakdown({
     return (
         <div className="bg-[#FFEACC] rounded-xl shadow-lg border-2 border-[#FF9500]/20 overflow-hidden">
             <div className="bg-[#FFD699] px-6 py-4">
-                <h3 className="font-bold text-lg flex items-center gap-2 text-[#2D1600] font-serif">
+                <h3 className="font-bold text-lg flex items-center gap-2 text-[#2D1600] font-[family-name:var(--font-headline)] uppercase tracking-wide">
                     Order Summary
                 </h3>
             </div>
@@ -140,7 +140,7 @@ export default function PriceBreakdown({
 
                 {/* Total */}
                 <div className="flex justify-between items-center text-xl font-black text-[#FF9500]">
-                    <span className="font-serif">Total</span>
+                    <span className="font-[family-name:var(--font-headline)] uppercase tracking-wide">Total</span>
                     <span>${grandTotal}</span>
                 </div>
             </div>
