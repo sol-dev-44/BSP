@@ -98,6 +98,7 @@ export async function GET(request: Request) {
         // instead of a row of disabled time tiles.
         const WEATHER_BLOCKED_DATES: Record<string, { type: 'weather'; message: string }> = {
             '2026-06-16': { type: 'weather', message: 'Too Windy to Operate' },
+            '2026-07-04': { type: 'weather', message: '🚩 Red Flag Warning — High Wind 💨' },
         };
 
         // Event notices — paired with DATE_BLOCKS above. When the day is partly
