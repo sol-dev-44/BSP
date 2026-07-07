@@ -127,6 +127,7 @@ None yet.
 | 260606-dhm | Fix mobile homepage scroll flickering | 2026-06-06 | 1154572 | [260606-dhm-fix-mobile-homepage-scroll-flickering](./quick/260606-dhm-fix-mobile-homepage-scroll-flickering/) |
 | 260702-u1t | Add 2 PM sold-out-for-private slot to Jul 3, 2026 | 2026-07-02 | aa2831f, e484037 | [260702-u1t-add-2-pm-sold-out-for-private-slot-to-ju](./quick/260702-u1t-add-2-pm-sold-out-for-private-slot-to-ju/) |
 | 260705-ihu | Block 4/5/6 PM trips for Jul 5, 2026 | 2026-07-05 | ce01204 | [260705-ihu-block-off-4-5-and-6-pm-trips-for-july-5](./quick/260705-ihu-block-off-4-5-and-6-pm-trips-for-july-5/) |
+| 260707-g2h | Block Jul 7 PM slots, close Jul 8/9 for wind | 2026-07-07 | 78f6f34 | [260707-g2h-block-trips-from-4pm-onward-tue-jul-7-an](./quick/260707-g2h-block-trips-from-4pm-onward-tue-jul-7-an/) |
 
 ### Blockers/Concerns
 
@@ -134,8 +135,8 @@ None yet.
 
 ## Session Continuity
 
-Last activity: 2026-07-05 - Completed quick task 260705-ihu: Block 4/5/6 PM trips for Jul 5, 2026 (Tasks 1-2)
+Last activity: 2026-07-07 - Completed quick task 260707-g2h: Block Jul 7 PM slots, close Jul 8/9 for wind (Task 1; Task 2 human-verify checkpoint pending)
 
-Last session: 2026-07-05T19:21:06.000Z
-Stopped at: Completed 260705-ihu Tasks 1-2
+Last session: 2026-07-07T18:37:25.000Z
+Stopped at: Completed 260707-g2h Task 1 - awaiting human verification on /book (Task 2 checkpoint)
 Resume file: None
