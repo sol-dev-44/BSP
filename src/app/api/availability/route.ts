@@ -93,6 +93,8 @@ export async function GET(request: Request) {
             '2026-07-02': () => true,
             // Sat — block 4, 5, 6 PM (keep earlier and sunset slots open)
             '2026-07-05': (t) => { const h = to24Hour(t); return h !== null && h >= 16 && h <= 18; },
+            // Tue — high wind moving in; block afternoon (4 PM onward), keep morning open
+            '2026-07-07': (t) => { const h = to24Hour(t); return h !== null && h >= 16; },
         };
 
         // Weather closures — block the entire day AND surface a structured notice
@@ -101,6 +103,8 @@ export async function GET(request: Request) {
         const WEATHER_BLOCKED_DATES: Record<string, { type: 'weather'; message: string }> = {
             '2026-06-16': { type: 'weather', message: 'Too Windy to Operate' },
             '2026-07-04': { type: 'weather', message: '🚩 Red Flag Warning — High Wind 💨' },
+            '2026-07-08': { type: 'weather', message: '💨 Wind Advisory — All Flights Cancelled' },
+            '2026-07-09': { type: 'weather', message: '💨 Wind Advisory — All Flights Cancelled' },
         };
 
         // Event notices — paired with DATE_BLOCKS above. When the day is partly
@@ -125,6 +129,12 @@ export async function GET(request: Request) {
                 emoji: '👨‍👦',
                 title: "Closed for Father's Day",
                 message: "Happy Father's Day! We're off the water — back Monday.",
+            },
+            '2026-07-07': {
+                type: 'event',
+                emoji: '💨',
+                title: 'Wind Advisory — Afternoon Closed',
+                message: 'High wind is moving in this afternoon — 4 PM and later flights are cancelled. Morning trips are still on, so grab an earlier slot!',
             },
         };
         const dateNotice = WEATHER_BLOCKED_DATES[date] || EVENT_DATES[date] || null;
