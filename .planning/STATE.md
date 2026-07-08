@@ -128,14 +128,16 @@ None yet.
 | 260702-u1t | Add 2 PM sold-out-for-private slot to Jul 3, 2026 | 2026-07-02 | aa2831f, e484037 | [260702-u1t-add-2-pm-sold-out-for-private-slot-to-ju](./quick/260702-u1t-add-2-pm-sold-out-for-private-slot-to-ju/) |
 | 260705-ihu | Block 4/5/6 PM trips for Jul 5, 2026 | 2026-07-05 | ce01204 | [260705-ihu-block-off-4-5-and-6-pm-trips-for-july-5](./quick/260705-ihu-block-off-4-5-and-6-pm-trips-for-july-5/) |
 | 260707-g2h | Block Jul 7 PM slots, close Jul 8/9 for wind | 2026-07-07 | 78f6f34 | [260707-g2h-block-trips-from-4pm-onward-tue-jul-7-an](./quick/260707-g2h-block-trips-from-4pm-onward-tue-jul-7-an/) |
+| 260708-fast | Drop Jul 9 wind closure, keep Jul 8 full-day block | 2026-07-08 | dce1278 | (fast — inline) |
 
 ### Blockers/Concerns
 
 - Resend API monitoring (ADMIN-02) depends on whether Resend exposes usage data in their API — needs verification during planning.
+- Vercel production deploys have been BLOCKED since Jul 5 ("Deployment was blocked" — Vercel-side, not build failures; local `npm run build` passes). Last live deploy is a4cbeff (Jul 4). Commits ce01204, c02be86, 9a5e22d, dce1278 are pushed but not deployed. Needs Vercel dashboard access (miami-sol-devs-projects/bsp) to see the block reason (spend cap / paused / protection).
 
 ## Session Continuity
 
-Last activity: 2026-07-07 - Completed quick task 260707-g2h: Block Jul 7 PM slots, close Jul 8/9 for wind (Task 1; Task 2 human-verify checkpoint pending)
+Last activity: 2026-07-08 - Fast task: dropped Jul 9 wind closure (kept Jul 8); found Vercel deploys blocked since Jul 5
 
 Last session: 2026-07-07T18:37:25.000Z
 Stopped at: Completed 260707-g2h Task 1 - awaiting human verification on /book (Task 2 checkpoint)
