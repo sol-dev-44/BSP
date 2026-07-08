@@ -129,6 +129,7 @@ None yet.
 | 260705-ihu | Block 4/5/6 PM trips for Jul 5, 2026 | 2026-07-05 | ce01204 | [260705-ihu-block-off-4-5-and-6-pm-trips-for-july-5](./quick/260705-ihu-block-off-4-5-and-6-pm-trips-for-july-5/) |
 | 260707-g2h | Block Jul 7 PM slots, close Jul 8/9 for wind | 2026-07-07 | 78f6f34 | [260707-g2h-block-trips-from-4pm-onward-tue-jul-7-an](./quick/260707-g2h-block-trips-from-4pm-onward-tue-jul-7-an/) |
 | 260708-fast | Drop Jul 9 wind closure, keep Jul 8 full-day block | 2026-07-08 | dce1278 | (fast — inline) |
+| 260708-hcu | Show Stripe payment intent ID and add-on details in admin bookings table | 2026-07-08 | 4127bdf | [260708-hcu-show-stripe-payment-intent-id-and-add-on](./quick/260708-hcu-show-stripe-payment-intent-id-and-add-on/) |
 
 ### Blockers/Concerns
 
@@ -137,8 +138,8 @@ None yet.
 
 ## Session Continuity
 
-Last activity: 2026-07-08 - Fast task: dropped Jul 9 wind closure (kept Jul 8); found Vercel deploys blocked since Jul 5
+Last activity: 2026-07-08 - Quick task 260708-hcu: added Stripe PI + add-ons details disclosure to admin bookings table
 
-Last session: 2026-07-07T18:37:25.000Z
-Stopped at: Completed 260707-g2h Task 1 - awaiting human verification on /book (Task 2 checkpoint)
+Last session: 2026-07-08T18:34:01Z
+Stopped at: Completed 260708-hcu Task 1 - awaiting human verification on /admin/bookings (Task 2 checkpoint)
 Resume file: None
