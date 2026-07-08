@@ -133,7 +133,7 @@ None yet.
 ### Blockers/Concerns
 
 - Resend API monitoring (ADMIN-02) depends on whether Resend exposes usage data in their API — needs verification during planning.
-- Vercel production deploys have been BLOCKED since Jul 5 ("Deployment was blocked" — Vercel-side, not build failures; local `npm run build` passes). Last live deploy is a4cbeff (Jul 4). Commits ce01204, c02be86, 9a5e22d, dce1278 are pushed but not deployed. Needs Vercel dashboard access (miami-sol-devs-projects/bsp) to see the block reason (spend cap / paused / protection).
+- RESOLVED 2026-07-08: Vercel deploys were blocked Jul 5–8 because the GitHub repo was private (owner made it public to fix). Production was frozen on a4cbeff during that window — the Jul 5 and Jul 7 availability blocks never went live. Deploy 12a6097 succeeded; Jul 8 wind closure verified live in prod.
 
 ## Session Continuity
 
