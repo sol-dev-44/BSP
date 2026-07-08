@@ -1,9 +1,18 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import { ArrowUpDown, Search } from 'lucide-react';
+import { Fragment, useMemo, useState } from 'react';
+import { ArrowUpDown, Search, ChevronDown, ChevronRight, ExternalLink, Copy, Check } from 'lucide-react';
 import CancelBookingButton from '@/components/admin/CancelBookingButton';
 import CompleteBookingButton from '@/components/admin/CompleteBookingButton';
+
+interface BookingAddOns {
+    tip_amount?: number;
+    photo_package?: number;
+    gopro_package?: number;
+    combo_package?: number;
+    observer_count?: number;
+    observer_package?: number;
+}
 
 interface Booking {
     id: string;
@@ -17,6 +26,12 @@ interface Booking {
     total_amount: number;
     status: string;
     notes: string | null;
+    stripe_payment_intent_id?: string | null;
+    add_ons?: BookingAddOns | null;
+    discount_code?: string | null;
+    discount_amount?: number | null;
+    per_person_rate?: number | null;
+    slot_type?: string | null;
 }
 
 interface BookingsTableProps {
@@ -26,6 +41,22 @@ interface BookingsTableProps {
 export default function BookingsTable({ bookings }: BookingsTableProps) {
     const [query, setQuery] = useState('');
     const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
+    const [expandedId, setExpandedId] = useState<string | null>(null);
+    const [copiedId, setCopiedId] = useState<string | null>(null);
+
+    const toggleExpanded = (id: string) => {
+        setExpandedId((current) => (current === id ? null : id));
+    };
+
+    const handleCopyPi = async (pi: string, id: string) => {
+        try {
+            await navigator.clipboard.writeText(pi);
+            setCopiedId(id);
+            setTimeout(() => setCopiedId((current) => (current === id ? null : current)), 1500);
+        } catch (error) {
+            console.error('Failed to copy Stripe PI:', error);
+        }
+    };
 
     const todayStr = useMemo(() => {
         const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Denver' }));
@@ -106,9 +137,10 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
                         <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
                             {processed.map((booking) => {
                                 const isPast = booking.trip_date < todayStr;
+                                const isExpanded = expandedId === booking.id;
                                 return (
+                                    <Fragment key={booking.id}>
                                     <tr
-                                        key={booking.id}
                                         className={`hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors ${isPast ? 'opacity-60' : ''}`}
                                     >
                                         <td className="p-4">
@@ -146,6 +178,18 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
                                         </td>
                                         <td className="p-4 text-right">
                                             <div className="flex items-center justify-end gap-3">
+                                                <button
+                                                    onClick={() => toggleExpanded(booking.id)}
+                                                    title="Toggle details"
+                                                    aria-label="Toggle details"
+                                                    className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                                                >
+                                                    {isExpanded ? (
+                                                        <ChevronDown className="w-4 h-4" />
+                                                    ) : (
+                                                        <ChevronRight className="w-4 h-4" />
+                                                    )}
+                                                </button>
                                                 {booking.status !== 'cancelled' && booking.status !== 'completed' && (
                                                     <CompleteBookingButton bookingId={booking.id} />
                                                 )}
@@ -155,6 +199,18 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
                                             </div>
                                         </td>
                                     </tr>
+                                    {isExpanded && (
+                                        <tr className="bg-gray-50 dark:bg-gray-900/40">
+                                            <td colSpan={9} className="p-4">
+                                                <BookingDetailsPanel
+                                                    booking={booking}
+                                                    copied={copiedId === booking.id}
+                                                    onCopyPi={(pi) => handleCopyPi(pi, booking.id)}
+                                                />
+                                            </td>
+                                        </tr>
+                                    )}
+                                    </Fragment>
                                 );
                             })}
                             {processed.length === 0 && (
@@ -194,4 +250,116 @@ function formatTime(timeStr: string) {
     const suffix = h >= 12 ? 'PM' : 'AM';
     const h12 = h % 12 || 12;
     return `${h12}:${minutes} ${suffix}`;
+}
+
+interface BookingDetailsPanelProps {
+    booking: Booking;
+    copied: boolean;
+    onCopyPi: (pi: string) => void;
+}
+
+function BookingDetailsPanel({ booking, copied, onCopyPi }: BookingDetailsPanelProps) {
+    const pi = booking.stripe_payment_intent_id;
+    const hasRealPi = !!pi && pi.startsWith('pi_');
+    const addOns = booking.add_ons || {};
+    const observerCount = addOns.observer_count ?? addOns.observer_package ?? 0;
+
+    const addOnRows: { label: string; value: number; isDollar: boolean }[] = [
+        { label: 'Tip', value: addOns.tip_amount || 0, isDollar: true },
+        { label: 'Photo Package', value: addOns.photo_package || 0, isDollar: true },
+        { label: 'GoPro Package', value: addOns.gopro_package || 0, isDollar: true },
+        { label: 'Combo Package', value: addOns.combo_package || 0, isDollar: true },
+        { label: 'Observers', value: observerCount, isDollar: false },
+    ];
+
+    return (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+            <div>
+                <div className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500 mb-1">
+                    Booking Reference
+                </div>
+                <div className="font-mono font-bold text-gray-900 dark:text-gray-100">
+                    {booking.id.split('-')[0].toUpperCase()}
+                </div>
+                <div className="font-mono text-xs text-gray-400 dark:text-gray-500 mt-0.5">
+                    {booking.id}
+                </div>
+            </div>
+
+            <div>
+                <div className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500 mb-1">
+                    Stripe Payment
+                </div>
+                {hasRealPi ? (
+                    <div className="space-y-1.5">
+                        <div className="font-mono text-sm text-gray-900 dark:text-gray-100 break-all select-all">
+                            {pi}
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <button
+                                onClick={() => onCopyPi(pi as string)}
+                                title="Copy Stripe payment intent ID"
+                                className="inline-flex items-center gap-1 text-xs font-medium text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 transition-colors"
+                            >
+                                {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                                {copied ? 'Copied!' : 'Copy'}
+                            </button>
+                            <a
+                                href={`https://dashboard.stripe.com/payments/${pi}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 text-xs font-medium text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 transition-colors"
+                            >
+                                <ExternalLink className="w-3.5 h-3.5" />
+                                Stripe Dashboard
+                            </a>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="text-sm text-gray-400 dark:text-gray-500">
+                        No Stripe payment (OTA / mock)
+                    </div>
+                )}
+            </div>
+
+            <div>
+                <div className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500 mb-1">
+                    Add-ons
+                </div>
+                <div className="space-y-1 text-sm">
+                    {addOnRows.map((row) => (
+                        <div key={row.label} className="flex items-center justify-between gap-3">
+                            <span className="text-gray-500 dark:text-gray-400">{row.label}</span>
+                            <span
+                                className={
+                                    row.value > 0
+                                        ? 'font-semibold text-emerald-600 dark:text-emerald-400'
+                                        : 'text-gray-400 dark:text-gray-500'
+                                }
+                            >
+                                {row.value > 0
+                                    ? row.isDollar
+                                        ? `$${row.value}`
+                                        : row.value
+                                    : '—'}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {(booking.discount_code || booking.slot_type || booking.per_person_rate) && (
+                <div className="text-xs text-gray-400 dark:text-gray-500 space-y-1 lg:col-span-3 pt-2 border-t border-gray-200 dark:border-gray-700">
+                    {booking.discount_code && (
+                        <div>
+                            Discount: <span className="font-mono">{booking.discount_code}</span>
+                            {booking.discount_amount ? ` (-$${booking.discount_amount})` : ''}
+                        </div>
+                    )}
+                    {booking.slot_type && <div>Slot type: {booking.slot_type}</div>}
+                    {booking.per_person_rate && <div>Rate: ${booking.per_person_rate}/person</div>}
+                </div>
+            )}
+        </div>
+    );
 }
