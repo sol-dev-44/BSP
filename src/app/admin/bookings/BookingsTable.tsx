@@ -4,6 +4,7 @@ import { Fragment, useMemo, useState } from 'react';
 import { ArrowUpDown, Search, ChevronDown, ChevronRight, ExternalLink, Copy, Check } from 'lucide-react';
 import CancelBookingButton from '@/components/admin/CancelBookingButton';
 import CompleteBookingButton from '@/components/admin/CompleteBookingButton';
+import { BUSINESS_INFO } from '@/config/business';
 
 interface BookingAddOns {
     tip_amount?: number;
@@ -36,6 +37,20 @@ interface Booking {
 
 interface BookingsTableProps {
     bookings: Booking[];
+}
+
+// Packages are stored as quantities; dollar totals come from BUSINESS_INFO.pricing
+// (same math as BookingClient/checkout). tip_amount is already dollars.
+function getAddOnBadges(booking: Booking): string[] {
+    const addOns = booking.add_ons || {};
+    const observerCount = addOns.observer_count ?? addOns.observer_package ?? 0;
+    const badges: string[] = [];
+    if (addOns.tip_amount) badges.push(`Tip $${addOns.tip_amount}`);
+    if (addOns.photo_package) badges.push(`Photos ×${addOns.photo_package}`);
+    if (addOns.gopro_package) badges.push(`GoPro ×${addOns.gopro_package}`);
+    if (addOns.combo_package) badges.push(`Combo ×${addOns.combo_package}`);
+    if (observerCount) badges.push(`Obs ×${observerCount}`);
+    return badges;
 }
 
 export default function BookingsTable({ bookings }: BookingsTableProps) {
@@ -172,6 +187,18 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
                                         </td>
                                         <td className="p-4 font-mono font-medium">
                                             ${booking.total_amount}
+                                            {getAddOnBadges(booking).length > 0 && (
+                                                <div className="mt-1 flex flex-wrap gap-1">
+                                                    {getAddOnBadges(booking).map((badge) => (
+                                                        <span
+                                                            key={badge}
+                                                            className="px-1.5 py-0.5 rounded text-[10px] font-sans font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 whitespace-nowrap"
+                                                        >
+                                                            {badge}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            )}
                                         </td>
                                         <td className="p-4 text-sm text-gray-500">
                                             {new Date(booking.created_at).toLocaleDateString()}
@@ -264,12 +291,18 @@ function BookingDetailsPanel({ booking, copied, onCopyPi }: BookingDetailsPanelP
     const addOns = booking.add_ons || {};
     const observerCount = addOns.observer_count ?? addOns.observer_package ?? 0;
 
-    const addOnRows: { label: string; value: number; isDollar: boolean }[] = [
-        { label: 'Tip', value: addOns.tip_amount || 0, isDollar: true },
-        { label: 'Photo Package', value: addOns.photo_package || 0, isDollar: true },
-        { label: 'GoPro Package', value: addOns.gopro_package || 0, isDollar: true },
-        { label: 'Combo Package', value: addOns.combo_package || 0, isDollar: true },
-        { label: 'Observers', value: observerCount, isDollar: false },
+    // Packages/observers are quantities; price them with the same config the
+    // checkout uses so the panel matches what the customer was charged.
+    const { photos, gopro, combo, observer } = BUSINESS_INFO.pricing;
+    const qtyDisplay = (qty: number, unitPrice: number) =>
+        qty > 0 ? `${qty} × $${unitPrice} = $${qty * unitPrice}` : '';
+
+    const addOnRows: { label: string; qty: number; display: string }[] = [
+        { label: 'Tip', qty: addOns.tip_amount || 0, display: `$${addOns.tip_amount || 0}` },
+        { label: 'Photo Package', qty: addOns.photo_package || 0, display: qtyDisplay(addOns.photo_package || 0, photos) },
+        { label: 'GoPro Package', qty: addOns.gopro_package || 0, display: qtyDisplay(addOns.gopro_package || 0, gopro) },
+        { label: 'Combo Package', qty: addOns.combo_package || 0, display: qtyDisplay(addOns.combo_package || 0, combo) },
+        { label: 'Observers', qty: observerCount, display: qtyDisplay(observerCount, observer) },
     ];
 
     return (
@@ -332,16 +365,12 @@ function BookingDetailsPanel({ booking, copied, onCopyPi }: BookingDetailsPanelP
                             <span className="text-gray-500 dark:text-gray-400">{row.label}</span>
                             <span
                                 className={
-                                    row.value > 0
+                                    row.qty > 0
                                         ? 'font-semibold text-emerald-600 dark:text-emerald-400'
                                         : 'text-gray-400 dark:text-gray-500'
                                 }
                             >
-                                {row.value > 0
-                                    ? row.isDollar
-                                        ? `$${row.value}`
-                                        : row.value
-                                    : '—'}
+                                {row.qty > 0 ? row.display : '—'}
                             </span>
                         </div>
                     ))}
