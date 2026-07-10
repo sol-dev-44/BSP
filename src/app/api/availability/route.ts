@@ -97,6 +97,16 @@ export async function GET(request: Request) {
             '2026-07-07': (t) => { const h = to24Hour(t); return h !== null && h >= 16; },
         };
 
+        // Per-date sold-out overrides. Unlike DATE_BLOCKS ("Closed" tiles), these
+        // render as red "Sold Out" tiles. Predicate returns true for sold-out slots.
+        const SOLD_OUT_BLOCKS: Record<string, { match: (time: string) => boolean; reason: string }> = {
+            // Sat — 3 PM through end of day sold out
+            '2026-07-11': {
+                match: (t) => { const h = to24Hour(t); return h !== null && h >= 15; },
+                reason: 'Fully booked',
+            },
+        };
+
         // Weather closures — block the entire day AND surface a structured notice
         // so the UI can show a "Too Windy to Operate" card with a wind icon
         // instead of a row of disabled time tiles.
@@ -159,9 +169,11 @@ export async function GET(request: Request) {
             const used = capacityMap[time] || 0;
             const blockPredicate = DATE_BLOCKS[date];
             const slotBlocked = (blockPredicate ? blockPredicate(time) : false) || dayWideBlock;
+            const soldOutBlock = SOLD_OUT_BLOCKS[date];
+            const slotSoldOut = soldOutBlock ? soldOutBlock.match(time) : false;
             const availability = getSlotAvailability(date, time, nowMs);
             const noticeBlocked = availability !== 'bookable';
-            const remaining = (slotBlocked || noticeBlocked)
+            const remaining = (slotBlocked || slotSoldOut || noticeBlocked)
                 ? 0
                 : Math.max(0, BOOKING_CONFIG.MAX_PASSENGERS - used);
             const type = getSlotType(date, time);
@@ -173,6 +185,7 @@ export async function GET(request: Request) {
                 price,
                 availability,
                 blocked: slotBlocked,
+                ...(slotSoldOut ? { soldOut: true, soldOutReason: soldOutBlock!.reason } : {}),
             };
         });
 
