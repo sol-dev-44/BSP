@@ -100,9 +100,14 @@ export async function GET(request: Request) {
         // Per-date sold-out overrides. Unlike DATE_BLOCKS ("Closed" tiles), these
         // render as red "Sold Out" tiles. Predicate returns true for sold-out slots.
         const SOLD_OUT_BLOCKS: Record<string, { match: (time: string) => boolean; reason: string }> = {
-            // Sat — 3 PM through end of day sold out
+            // Sat — 10 AM plus 3 PM through end of day sold out
             '2026-07-11': {
-                match: (t) => { const h = to24Hour(t); return h !== null && h >= 15; },
+                match: (t) => { const h = to24Hour(t); return h !== null && (h === 10 || h >= 15); },
+                reason: 'Fully booked',
+            },
+            // Sun — 1 PM through end of day sold out
+            '2026-07-12': {
+                match: (t) => { const h = to24Hour(t); return h !== null && h >= 13; },
                 reason: 'Fully booked',
             },
         };
