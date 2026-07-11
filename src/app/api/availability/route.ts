@@ -95,19 +95,25 @@ export async function GET(request: Request) {
             '2026-07-05': (t) => { const h = to24Hour(t); return h !== null && h >= 16 && h <= 18; },
             // Tue — high wind moving in; block afternoon (4 PM onward), keep morning open
             '2026-07-07': (t) => { const h = to24Hour(t); return h !== null && h >= 16; },
+            // Mon — only the 6 PM trip runs; block everything else
+            '2026-07-13': (t) => { const h = to24Hour(t); return h !== null && h !== 18; },
+            // Tue — closed all day
+            '2026-07-14': () => true,
+            // Wed — closed all day
+            '2026-07-15': () => true,
         };
 
         // Per-date sold-out overrides. Unlike DATE_BLOCKS ("Closed" tiles), these
         // render as red "Sold Out" tiles. Predicate returns true for sold-out slots.
         const SOLD_OUT_BLOCKS: Record<string, { match: (time: string) => boolean; reason: string }> = {
-            // Sat — 10 AM plus 3 PM through end of day sold out
+            // Sat — 10 AM, 2 PM, and 3 PM through end of day sold out
             '2026-07-11': {
-                match: (t) => { const h = to24Hour(t); return h !== null && (h === 10 || h >= 15); },
+                match: (t) => { const h = to24Hour(t); return h !== null && (h === 10 || h >= 14); },
                 reason: 'Fully booked',
             },
-            // Sun — 1 PM through end of day sold out
+            // Sun — 12 PM through end of day sold out
             '2026-07-12': {
-                match: (t) => { const h = to24Hour(t); return h !== null && h >= 13; },
+                match: (t) => { const h = to24Hour(t); return h !== null && h >= 12; },
                 reason: 'Fully booked',
             },
         };
