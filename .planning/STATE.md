@@ -132,6 +132,7 @@ None yet.
 | 260708-hcu | Show Stripe payment intent ID and add-on details in admin bookings table | 2026-07-08 | 4127bdf | [260708-hcu-show-stripe-payment-intent-id-and-add-on](./quick/260708-hcu-show-stripe-payment-intent-id-and-add-on/) |
 | 260708-fast2 | Fix add-on pricing display + collapsed-row add-on badges in admin bookings | 2026-07-08 | c3958d0 | (fast — inline) |
 | 260710-fast | Mark Jul 11 slots from 3 PM onward as sold out | 2026-07-10 | f956570 | (fast — inline) |
+| 260710-fast2 | Sold out 10 AM Jul 11; sold out 1-8 PM Jul 12 | 2026-07-10 | 7adfc0b | (fast — inline) |
 
 ### Blockers/Concerns
 
@@ -140,7 +141,7 @@ None yet.
 
 ## Session Continuity
 
-Last activity: 2026-07-10 - Fast task: Jul 11 slots 3 PM+ marked sold out
+Last activity: 2026-07-10 - Fast task: added 10 AM Jul 11 + 1-8 PM Jul 12 sold-out slots
 
 Last session: 2026-07-08T18:34:01Z
 Stopped at: Completed 260708-hcu Task 1 - awaiting human verification on /admin/bookings (Task 2 checkpoint)
