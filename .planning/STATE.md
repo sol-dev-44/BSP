@@ -151,3 +151,4 @@ Resume file: None
 | 2026-07-13 | fast | Reopen 7 PM trip on Jul 14 and Jul 15 | ✅ |
 | 2026-07-14 | 260714-e8b | Close Jul 14, 2026 entirely (block remaining 7 PM slot) | ✅ |
 | 2026-07-14 | fast | Open 2 PM timeslot on Jul 15 (fullDayOverrides + DATE_BLOCKS) | ✅ |
+| 2026-07-14 | fast | Block 7 PM on Jul 15 (2 PM only) + insert GYG KBF89RX22 booking | ✅ |
