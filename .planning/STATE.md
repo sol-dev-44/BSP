@@ -134,6 +134,7 @@ None yet.
 | 260710-fast | Mark Jul 11 slots from 3 PM onward as sold out | 2026-07-10 | f956570 | (fast — inline) |
 | 260710-fast2 | Sold out 10 AM Jul 11; sold out 1-8 PM Jul 12 | 2026-07-10 | 7adfc0b | (fast — inline) |
 | 260710-fast3 | Jul 11-15 availability blocks (sold-out + closures) | 2026-07-10 | 92b93e5 | (fast — inline) |
+| 260714-e8b | Close Jul 14, 2026 entirely (block remaining 7 PM slot) | 2026-07-14 | 4746615 | [260714-e8b-block-off-the-7-pm-trip-on-july-14-close](./quick/260714-e8b-block-off-the-7-pm-trip-on-july-14-close/) |
 
 ### Blockers/Concerns
 
@@ -142,9 +143,10 @@ None yet.
 
 ## Session Continuity
 
-Last activity: 2026-07-10 - Fast task: Jul 11-15 availability blocks
+Last activity: 2026-07-14 - Quick task: Close Jul 14, 2026 entirely (block remaining 7 PM slot)
 
 Last session: 2026-07-08T18:34:01Z
-Stopped at: Completed 260708-hcu Task 1 - awaiting human verification on /admin/bookings (Task 2 checkpoint)
+Stopped at: Completed 260714-e8b Task 1 - Jul 14, 2026 fully closed in DATE_BLOCKS
 Resume file: None
 | 2026-07-13 | fast | Reopen 7 PM trip on Jul 14 and Jul 15 | ✅ |
+| 2026-07-14 | 260714-e8b | Close Jul 14, 2026 entirely (block remaining 7 PM slot) | ✅ |
