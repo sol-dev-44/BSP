@@ -76,22 +76,55 @@ export async function POST(req: NextRequest) {
             throw new Error('Failed to generate query embedding');
         }
 
-        // 2. Semantic search in BSP-specific table
+        // 2. Semantic search in BSP-specific table.
+        // Ranking happens in-process rather than via the match_bsp_documents RPC:
+        // the ivfflat index on bsp_documents was built before the documents were
+        // seeded, so its scans intermittently return zero rows depending on which
+        // pooled backend serves the query. At ~10 documents, exact ranking here is
+        // deterministic and effectively free. Revisit (REINDEX + RPC) if the
+        // corpus grows past a few hundred documents.
         let documents: RetrievedDoc[] = [];
         try {
-            const { data, error: searchError } = await supabase.rpc('match_bsp_documents', {
-                query_embedding: queryEmbedding,
-                match_threshold: 0.1,
-                match_count: 5,
-                filter_category: categoryFilter,
-            });
+            let docsQuery = supabase
+                .from('bsp_documents')
+                .select('id, title, content, category, embedding');
+            if (categoryFilter) {
+                docsQuery = docsQuery.eq('category', categoryFilter);
+            }
+            const { data, error: searchError } = await docsQuery;
 
             if (searchError) {
                 console.error('[BSP RAG] Search error:', searchError);
                 throw searchError;
             }
 
-            documents = (data || []) as RetrievedDoc[];
+            const cosineSimilarity = (a: number[], b: number[]) => {
+                let dot = 0, normA = 0, normB = 0;
+                for (let i = 0; i < a.length; i++) {
+                    dot += a[i] * b[i];
+                    normA += a[i] * a[i];
+                    normB += b[i] * b[i];
+                }
+                return dot / (Math.sqrt(normA) * Math.sqrt(normB));
+            };
+
+            documents = (data || [])
+                .map((doc) => {
+                    // pgvector columns arrive as a "[0.1,0.2,...]" string over REST
+                    const embedding: number[] = typeof doc.embedding === 'string'
+                        ? JSON.parse(doc.embedding)
+                        : doc.embedding;
+                    return {
+                        id: doc.id,
+                        title: doc.title,
+                        content: doc.content,
+                        category: doc.category,
+                        similarity: cosineSimilarity(queryEmbedding, embedding),
+                    };
+                })
+                .filter((doc) => doc.similarity > 0.1)
+                .sort((a, b) => b.similarity - a.similarity)
+                .slice(0, 5);
             console.log(`[BSP RAG] Retrieved ${documents.length} documents`);
         } catch (error) {
             console.error('[BSP RAG] Search error:', error);
@@ -151,9 +184,8 @@ Remember: You're Jerry Bear — a parasailing bear who loves the Grateful Dead. 
 
         // 5. Stream Claude response
         const stream = await anthropic.messages.stream({
-            model: 'claude-sonnet-4-20250514',
+            model: 'claude-sonnet-5',
             max_tokens: 1500,
-            temperature: 0.7,
             messages: [
                 ...chatHistory.slice(-6).map((msg: { role: string; content: string }) => ({
                     role: msg.role as 'user' | 'assistant',
