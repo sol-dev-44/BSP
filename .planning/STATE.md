@@ -154,3 +154,4 @@ Resume file: None
 | 2026-07-14 | fast | Block 7 PM on Jul 15 (2 PM only) + insert GYG KBF89RX22 booking | ✅ |
 | 2026-07-14 | fast | Refresh home page Instagram 9-photo grid | ✅ |
 | 2026-07-14 | debug | Fix bsp-chat: retired model + broken ivfflat retrieval | ✅ |
+| 2026-07-15 | fast | Insert GYG MX4F34GLH (Jeannotte) + Viator BR-1423566231 (Baird); verified KBF89RX22 | ✅ |
