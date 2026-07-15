@@ -153,3 +153,4 @@ Resume file: None
 | 2026-07-14 | fast | Open 2 PM timeslot on Jul 15 (fullDayOverrides + DATE_BLOCKS) | ✅ |
 | 2026-07-14 | fast | Block 7 PM on Jul 15 (2 PM only) + insert GYG KBF89RX22 booking | ✅ |
 | 2026-07-14 | fast | Refresh home page Instagram 9-photo grid | ✅ |
+| 2026-07-14 | debug | Fix bsp-chat: retired model + broken ivfflat retrieval | ✅ |
