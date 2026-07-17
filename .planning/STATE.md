@@ -155,3 +155,4 @@ Resume file: None
 | 2026-07-14 | fast | Refresh home page Instagram 9-photo grid | ✅ |
 | 2026-07-14 | debug | Fix bsp-chat: retired model + broken ivfflat retrieval | ✅ |
 | 2026-07-15 | fast | Insert GYG MX4F34GLH (Jeannotte) + Viator BR-1423566231 (Baird); verified KBF89RX22 | ✅ |
+| 2026-07-17 | fast | Cancel Godshall Viator BR-1334202287 + BR-1334201497 (Aug 3); BR-1348307231 remains active | ✅ |
