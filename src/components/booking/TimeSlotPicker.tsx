@@ -166,7 +166,12 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
                     const isPast = slot.availability === 'past';
                     const isTooSoon = slot.availability === 'too-soon';
                     const isBlocked = slot.blocked && !isPast && !isTooSoon;
-                    const isSoldOut = !!slot.soldOut || slot.remaining <= 0;
+                    // Capacity-full only counts as "Sold Out" when the slot isn't
+                    // already unavailable for another reason — the API returns
+                    // remaining: 0 for blocked slots too, and those should read
+                    // "Closed", not "Sold Out".
+                    const isCapacityFull = slot.remaining <= 0 && !isPast && !isTooSoon && !isBlocked;
+                    const isSoldOut = !!slot.soldOut || isCapacityFull;
                     const isDisabled = isPast || isTooSoon || isBlocked || isSoldOut;
 
                     if (isDisabled) {
