@@ -162,3 +162,4 @@ Resume file: None
 | 2026-07-17 | fast | Reopen 7 PM on Jul 17 | ✅ |
 | 2026-07-17 | fast | Reopen Jul 19 10 AM-12 PM (customer booked 10 AM mid-rollout) | ✅ |
 | 2026-07-17 | fast | Move Murphy 9pax Jul 19 10->11 AM (price unchanged), block 10 AM | ✅ |
+| 2026-07-17 | fast | Fix booking UI: 0-seat slots clickable + CTA enabled | ✅ |
