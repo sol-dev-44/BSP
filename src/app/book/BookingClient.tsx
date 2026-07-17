@@ -133,6 +133,7 @@ export default function BookingClient() {
         if (newSlot && newSlot.availability && newSlot.availability !== 'bookable') return;
         if (newSlot && newSlot.blocked) return;
         if (newSlot && newSlot.soldOut) return;
+        if (newSlot && newSlot.remaining <= 0) return;
         setSelectedTime(time);
         if (newSlot && Number(formData.party_size) > newSlot.remaining) {
             setFormData(prev => ({ ...prev, party_size: newSlot.remaining }));
@@ -465,7 +466,7 @@ export default function BookingClient() {
                                                 }
                                                 setStep(2);
                                             }}
-                                            disabled={!selectedTime}
+                                            disabled={!selectedTime || !selectedSlotInfo || selectedSlotInfo.remaining <= 0}
                                             className="bg-[#FF9500] hover:bg-[#E07B00] text-[#FFFFFF] text-lg font-bold px-10 py-4 rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-[#FF9500]/25 hover:scale-105"
                                         >
                                             Continue to Details

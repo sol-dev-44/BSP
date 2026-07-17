@@ -166,7 +166,7 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
                     const isPast = slot.availability === 'past';
                     const isTooSoon = slot.availability === 'too-soon';
                     const isBlocked = slot.blocked && !isPast && !isTooSoon;
-                    const isSoldOut = !!slot.soldOut;
+                    const isSoldOut = !!slot.soldOut || slot.remaining <= 0;
                     const isDisabled = isPast || isTooSoon || isBlocked || isSoldOut;
 
                     if (isDisabled) {
@@ -178,7 +178,7 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
                             ? 'Call to book'
                             : 'Closed';
                         const subText = isSoldOut
-                            ? slot.soldOutReason || 'Private'
+                            ? slot.soldOutReason || 'Fully booked'
                             : isPast
                             ? 'Unavailable'
                             : isTooSoon
