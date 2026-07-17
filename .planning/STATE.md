@@ -160,3 +160,4 @@ Resume file: None
 | 2026-07-17 | fast | Block Jul 18 10/11 AM + 1-4 PM | ✅ |
 | 2026-07-17 | fast | Block Jul 19 10 AM-12 PM | ✅ |
 | 2026-07-17 | fast | Reopen 7 PM on Jul 17 | ✅ |
+| 2026-07-17 | fast | Reopen Jul 19 10 AM-12 PM (customer booked 10 AM mid-rollout) | ✅ |
