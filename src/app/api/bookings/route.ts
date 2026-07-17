@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
 import { Resend } from 'resend';
-import { BUSINESS_INFO } from '@/config/business';
+import { BUSINESS_INFO, getMapLink } from '@/config/business';
 import { getSlotType, getSlotPrice, getSlotAvailability, MIN_BOOKING_NOTICE_HOURS } from '@/config/solarSchedule';
 
 // Initialize Stripe
@@ -259,9 +259,15 @@ export async function POST(request: Request) {
 
                             <div style="margin:16px 0">
                                 <h3 style="color:#374151">Location</h3>
-                                <p style="margin:4px 0"><strong>${BUSINESS_INFO.address.name}</strong><br/>
+                                <!-- Explicit maps link (same pin as the website). Also stops mail
+                                     clients from auto-linking the street address, which geocodes
+                                     to the wrong spot on Highway 93. -->
+                                <p style="margin:4px 0"><a href="${getMapLink()}" style="color:#1a1a1a;text-decoration:none"><strong>${BUSINESS_INFO.address.name}</strong><br/>
                                 ${BUSINESS_INFO.address.street}<br/>
-                                ${BUSINESS_INFO.address.city}, ${BUSINESS_INFO.address.stateCode} ${BUSINESS_INFO.address.zip}</p>
+                                ${BUSINESS_INFO.address.city}, ${BUSINESS_INFO.address.stateCode} ${BUSINESS_INFO.address.zip}</a></p>
+                                <p style="margin:12px 0">
+                                    <a href="${getMapLink()}" style="background:#2563eb;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:600">Get Directions</a>
+                                </p>
                                 <p style="font-size:13px;color:#2563eb;font-weight:600">Please arrive 15 minutes before departure.</p>
                             </div>
 
