@@ -262,6 +262,19 @@ export function getSlotEpochMs(dateStr: string, timeStr: string): number | null 
 
 export type SlotAvailability = 'past' | 'too-soon' | 'bookable';
 
+/** Trip duration used for notice-exempt slots (hourly departures). */
+const TRIP_LENGTH_MS = 60 * 60 * 1000;
+
+/**
+ * One-off exemptions from the advance-notice window: date -> slot hours (24h).
+ * Exempt slots skip the MIN_BOOKING_NOTICE_HOURS check and stay bookable
+ * until the trip ENDS (owner accepts last-minute/walk-up bookings for these).
+ */
+const NOTICE_EXEMPT_SLOTS: Record<string, number[]> = {
+    // Jul 19 — 11 AM, 12 PM, 1 PM bookable up to the last minute of each trip
+    '2026-07-19': [11, 12, 13],
+};
+
 /**
  * Classify a slot relative to "now":
  *   past      — slot start time has already passed
@@ -275,6 +288,12 @@ export function getSlotAvailability(
 ): SlotAvailability {
     const slotMs = getSlotEpochMs(dateStr, timeStr);
     if (slotMs == null) return 'bookable';
+
+    const t = parseSlotTime(timeStr);
+    if (t && NOTICE_EXEMPT_SLOTS[dateStr]?.includes(t.hour)) {
+        return slotMs + TRIP_LENGTH_MS <= nowMs ? 'past' : 'bookable';
+    }
+
     if (slotMs <= nowMs) return 'past';
     if (slotMs < nowMs + MIN_BOOKING_NOTICE_HOURS * 3600 * 1000) return 'too-soon';
     return 'bookable';
