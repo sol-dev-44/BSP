@@ -109,8 +109,8 @@ export async function GET(request: Request) {
             '2026-07-18': (t) => { const h = to24Hour(t); return h !== null && h !== 12; },
             // Mon — block 6, 7, 8 PM (afternoon bookings run)
             '2026-07-20': (t) => { const h = to24Hour(t); return h !== null && h >= 18 && h <= 20; },
-            // Tue — block 4-8 PM
-            '2026-07-21': (t) => { const h = to24Hour(t); return h !== null && h >= 16 && h <= 20; },
+            // Tue — block 5-8 PM (3 and 4 PM open)
+            '2026-07-21': (t) => { const h = to24Hour(t); return h !== null && h >= 17 && h <= 20; },
             // Wed — block 5-8 PM (3 PM booking runs)
             '2026-07-22': (t) => { const h = to24Hour(t); return h !== null && h >= 17 && h <= 20; },
         };
