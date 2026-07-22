@@ -119,6 +119,8 @@ export async function GET(request: Request) {
             '2026-07-24': () => true,
             // Sat — block 1-7 PM (morning open; 8 PM sunset has a booking)
             '2026-07-25': (t) => { const h = to24Hour(t); return h !== null && h >= 13 && h <= 19; },
+            // Sun — block 1-8 PM (morning open)
+            '2026-07-26': (t) => { const h = to24Hour(t); return h !== null && h >= 13 && h <= 20; },
         };
 
         // Per-date sold-out overrides. Unlike DATE_BLOCKS ("Closed" tiles), these
