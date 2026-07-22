@@ -263,13 +263,14 @@ export function getSlotEpochMs(dateStr: string, timeStr: string): number | null 
 export type SlotAvailability = 'past' | 'too-soon' | 'bookable';
 
 /**
- * One-off exemptions from the advance-notice window: date -> slot hours (24h).
+ * One-off exemptions from the advance-notice window: date -> exempt slots.
  * Exempt slots skip the MIN_BOOKING_NOTICE_HOURS check and stay bookable
- * until the trip departs (owner accepts last-minute/walk-up bookings for these).
+ * until closeMinutesBefore minutes ahead of departure (0 = right up to it).
+ * Expired entries can be deleted freely.
  */
-const NOTICE_EXEMPT_SLOTS: Record<string, number[]> = {
-    // Jul 19 — 11 AM, 12 PM, 1 PM bookable up to each trip's departure
-    '2026-07-19': [11, 12, 13],
+const NOTICE_EXEMPT_SLOTS: Record<string, { hour: number; closeMinutesBefore: number }[]> = {
+    // Jul 22 — 3 PM bookable until 2:50 PM
+    '2026-07-22': [{ hour: 15, closeMinutesBefore: 10 }],
 };
 
 /**
@@ -289,7 +290,10 @@ export function getSlotAvailability(
     if (slotMs <= nowMs) return 'past';
 
     const t = parseSlotTime(timeStr);
-    if (t && NOTICE_EXEMPT_SLOTS[dateStr]?.includes(t.hour)) return 'bookable';
+    const exemption = t && NOTICE_EXEMPT_SLOTS[dateStr]?.find((e) => e.hour === t.hour);
+    if (exemption) {
+        return nowMs < slotMs - exemption.closeMinutesBefore * 60 * 1000 ? 'bookable' : 'too-soon';
+    }
     if (slotMs < nowMs + MIN_BOOKING_NOTICE_HOURS * 3600 * 1000) return 'too-soon';
     return 'bookable';
 }
