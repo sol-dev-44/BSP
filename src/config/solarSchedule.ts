@@ -273,16 +273,29 @@ const NOTICE_EXEMPT_SLOTS: Record<string, { hour: number; closeMinutesBefore: nu
     '2026-07-22': [{ hour: 15, closeMinutesBefore: 10 }],
 };
 
+/** Convert a "H:MM AM/PM" display time to "HH:MM:SS" for DB time-column queries. */
+export function slotTimeTo24h(timeStr: string): string | null {
+    const t = parseSlotTime(timeStr);
+    if (!t) return null;
+    return `${String(t.hour).padStart(2, '0')}:${String(t.minute).padStart(2, '0')}:00`;
+}
+
 /**
  * Classify a slot relative to "now":
  *   past      — slot start time has already passed
  *   too-soon  — within MIN_BOOKING_NOTICE_HOURS of now (must call to book)
  *   bookable  — enough notice; can be booked online
+ *
+ * hasActiveBooking: when the slot already has at least one non-cancelled
+ * booking the boat is going out anyway, so the notice window is waived and
+ * the slot stays bookable until departure. An explicit NOTICE_EXEMPT_SLOTS
+ * entry takes precedence over this waiver (manual cutoffs win).
  */
 export function getSlotAvailability(
     dateStr: string,
     timeStr: string,
     nowMs: number = Date.now(),
+    hasActiveBooking: boolean = false,
 ): SlotAvailability {
     const slotMs = getSlotEpochMs(dateStr, timeStr);
     if (slotMs == null) return 'bookable';
@@ -294,6 +307,9 @@ export function getSlotAvailability(
     if (exemption) {
         return nowMs < slotMs - exemption.closeMinutesBefore * 60 * 1000 ? 'bookable' : 'too-soon';
     }
+
+    if (hasActiveBooking) return 'bookable';
+
     if (slotMs < nowMs + MIN_BOOKING_NOTICE_HOURS * 3600 * 1000) return 'too-soon';
     return 'bookable';
 }

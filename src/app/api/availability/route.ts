@@ -202,7 +202,7 @@ export async function GET(request: Request) {
             const slotBlocked = (blockPredicate ? blockPredicate(time) : false) || dayWideBlock;
             const soldOutBlock = SOLD_OUT_BLOCKS[date];
             const slotSoldOut = soldOutBlock ? soldOutBlock.match(time) : false;
-            const availability = getSlotAvailability(date, time, nowMs);
+            const availability = getSlotAvailability(date, time, nowMs, used > 0);
             const noticeBlocked = availability !== 'bookable';
             const remaining = (slotBlocked || slotSoldOut || noticeBlocked)
                 ? 0

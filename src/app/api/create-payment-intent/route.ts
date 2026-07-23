@@ -3,6 +3,7 @@ import Stripe from 'stripe';
 import { BUSINESS_INFO } from '@/config/business';
 import { getSlotType, getSlotPrice, getSlotAvailability, MIN_BOOKING_NOTICE_HOURS } from '@/config/solarSchedule';
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
+import { slotHasActiveBooking } from '@/lib/slotBookings';
 
 // Initialize Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -37,10 +38,15 @@ export async function POST(request: Request) {
             );
         }
         if (slotAvailability === 'too-soon') {
-            return NextResponse.json(
-                { error: `Online booking requires ${MIN_BOOKING_NOTICE_HOURS}-hour advance notice. Please call ${BUSINESS_INFO.displayPhone} for same-day availability.` },
-                { status: 400 }
-            );
+            // Notice window is waived when the trip already has riders — the
+            // boat is going out anyway, so late joiners are welcome.
+            const waived = await slotHasActiveBooking(supabaseAdmin, trip_date, trip_time || '');
+            if (!waived) {
+                return NextResponse.json(
+                    { error: `Online booking requires ${MIN_BOOKING_NOTICE_HOURS}-hour advance notice. Please call ${BUSINESS_INFO.displayPhone} for same-day availability.` },
+                    { status: 400 }
+                );
+            }
         }
 
         if (!process.env.STRIPE_SECRET_KEY) {

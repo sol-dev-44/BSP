@@ -4,6 +4,7 @@ import Stripe from 'stripe';
 import { Resend } from 'resend';
 import { BUSINESS_INFO, getMapLink } from '@/config/business';
 import { getSlotType, getSlotPrice, getSlotAvailability, MIN_BOOKING_NOTICE_HOURS } from '@/config/solarSchedule';
+import { slotHasActiveBooking } from '@/lib/slotBookings';
 
 // Initialize Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -60,10 +61,15 @@ export async function POST(request: Request) {
             );
         }
         if (slotAvailability === 'too-soon') {
-            return NextResponse.json(
-                { error: `Online booking requires ${MIN_BOOKING_NOTICE_HOURS}-hour advance notice. Please call ${BUSINESS_INFO.displayPhone}.` },
-                { status: 400 }
-            );
+            // Notice window is waived when the trip already has riders — mirror
+            // of the create-payment-intent rule so a paid intent isn't rejected.
+            const waived = await slotHasActiveBooking(supabase, trip_date, trip_time || '');
+            if (!waived) {
+                return NextResponse.json(
+                    { error: `Online booking requires ${MIN_BOOKING_NOTICE_HOURS}-hour advance notice. Please call ${BUSINESS_INFO.displayPhone}.` },
+                    { status: 400 }
+                );
+            }
         }
 
         let total_amount = 0;
