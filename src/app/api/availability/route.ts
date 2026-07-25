@@ -123,8 +123,8 @@ export async function GET(request: Request) {
             '2026-07-26': (t) => { const h = to24Hour(t); return h !== null && h >= 13 && h <= 20; },
             // Mon — block 5-8 PM (3 PM bookings run)
             '2026-07-27': (t) => { const h = to24Hour(t); return h !== null && h >= 17 && h <= 20; },
-            // Tue — only 4 PM runs (Reynolds booked; NOTE Stanhope 5 PM booking inside closure)
-            '2026-07-28': (t) => { const h = to24Hour(t); return h !== 16; },
+            // Tue — only 4 PM (Reynolds) and 5 PM (Stanhope) run
+            '2026-07-28': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Wed — only 4 PM runs
             '2026-07-29': (t) => { const h = to24Hour(t); return h !== 16; },
             // Owner out of town Aug 3-7. Mon 8/3: 2 PM Viator trip (Godshall) runs, block the rest
