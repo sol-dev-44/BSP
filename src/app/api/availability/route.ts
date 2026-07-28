@@ -125,12 +125,18 @@ export async function GET(request: Request) {
             '2026-07-27': (t) => { const h = to24Hour(t); return h !== null && h >= 17 && h <= 20; },
             // Tue — only 12 PM (Reynolds, moved from 4 PM) runs; 4 PM and 5 PM closed
             '2026-07-28': (t) => { const h = to24Hour(t); return h !== 12; },
-            // Wed — 10 AM (Stanhope, moved from Jul 28) and 4 PM run
-            '2026-07-29': (t) => { const h = to24Hour(t); return h !== 10 && h !== 16; },
+            // Wed — 4 PM and 5 PM open. 10 AM closed to new bookings; Stanhope's
+            // 2-rider trip still runs at 10 AM (kept as a Closed tile, not removed).
+            '2026-07-29': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
+            // Thu — block 5, 6 and 8 PM (3 and 4 PM bookings run; 7 PM stays open)
+            '2026-07-30': (t) => { const h = to24Hour(t); return h === 17 || h === 18 || h === 20; },
+            // Fri — block 5-8 PM (3 and 4 PM stay open)
+            '2026-07-31': (t) => { const h = to24Hour(t); return h !== null && h >= 17 && h <= 20; },
             // Owner out of town Aug 3-7. Mon 8/3: 2 PM Viator trip (Godshall) runs, block the rest
             '2026-08-03': (t) => { const h = to24Hour(t); return h !== null && h >= 15; },
-            '2026-08-04': () => true,
-            '2026-08-05': () => true,
+            // Tue/Wed 8/4-8/5: 4 PM reopened, rest of the day stays closed
+            '2026-08-04': (t) => { const h = to24Hour(t); return h !== 16; },
+            '2026-08-05': (t) => { const h = to24Hour(t); return h !== 16; },
             // Thu 8/6: 4 PM (Helmer + Barnes Viator parties, 5 riders) and 5 PM run; rest closed
             '2026-08-06': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Fri 8/7: only 6 PM and 7 PM stay open (8 PM isn't offered in August)
