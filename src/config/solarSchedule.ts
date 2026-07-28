@@ -271,6 +271,8 @@ export type SlotAvailability = 'past' | 'too-soon' | 'bookable';
 const NOTICE_EXEMPT_SLOTS: Record<string, { hour: number; closeMinutesBefore: number }[]> = {
     // Jul 22 — 3 PM bookable until 2:50 PM
     '2026-07-22': [{ hour: 15, closeMinutesBefore: 10 }],
+    // Jul 26 — 1 PM bookable until 12:50 PM
+    '2026-07-26': [{ hour: 13, closeMinutesBefore: 10 }],
 };
 
 /** Convert a "H:MM AM/PM" display time to "HH:MM:SS" for DB time-column queries. */

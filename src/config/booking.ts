@@ -23,7 +23,8 @@ export const BOOKING_CONFIG = {
         '2026-06-19', // Fri - Father's Day weekend: open midday slots, blocked outside 11-1
         '2026-07-10', // Fri - W Kay Fries (Viator 2 PM)
         '2026-07-15', // Wed - 2 PM trip opened (DATE_BLOCKS limits day to 2 PM only)
-        '2026-07-28', // Tue - Tyler Stanhope (Viator 5 PM)
+        '2026-07-28', // Tue - Michael Thurman Reynolds moved to 12 PM
+        '2026-07-29', // Wed - Tyler Stanhope moved in (Viator 10 AM)
         '2026-08-03', // Mon - Brian Godshall x3 (Viator 2 PM)
         '2026-08-11', // Tue - Heather Vest (Viator 2 PM)
     ] as string[],
