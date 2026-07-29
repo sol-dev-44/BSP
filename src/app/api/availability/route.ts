@@ -125,9 +125,9 @@ export async function GET(request: Request) {
             '2026-07-27': (t) => { const h = to24Hour(t); return h !== null && h >= 17 && h <= 20; },
             // Tue — only 12 PM (Reynolds, moved from 4 PM) runs; 4 PM and 5 PM closed
             '2026-07-28': (t) => { const h = to24Hour(t); return h !== 12; },
-            // Wed — 4 PM and 5 PM open. 10 AM closed to new bookings; Stanhope's
+            // Wed — 4, 5 and 6 PM open. 10 AM closed to new bookings; Stanhope's
             // 2-rider trip still runs at 10 AM (kept as a Closed tile, not removed).
-            '2026-07-29': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
+            '2026-07-29': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17 && h !== 18; },
             // Thu — block 5, 6 and 8 PM (3 and 4 PM bookings run; 7 PM stays open)
             '2026-07-30': (t) => { const h = to24Hour(t); return h === 17 || h === 18 || h === 20; },
             // Fri — block 5-8 PM (3 and 4 PM stay open)
