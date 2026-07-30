@@ -128,8 +128,8 @@ export async function GET(request: Request) {
             // Wed — 4, 5 and 6 PM open. 10 AM closed to new bookings; Stanhope's
             // 2-rider trip still runs at 10 AM (kept as a Closed tile, not removed).
             '2026-07-29': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17 && h !== 18; },
-            // Thu — block 5, 6 and 8 PM (3 and 4 PM bookings run; 7 PM stays open)
-            '2026-07-30': (t) => { const h = to24Hour(t); return h === 17 || h === 18 || h === 20; },
+            // Thu — block 6 and 8 PM (3, 4, 5 and 7 PM run)
+            '2026-07-30': (t) => { const h = to24Hour(t); return h === 18 || h === 20; },
             // Fri — block 5-8 PM (3 and 4 PM stay open)
             '2026-07-31': (t) => { const h = to24Hour(t); return h !== null && h >= 17 && h <= 20; },
             // Owner out of town Aug 3-7. Mon 8/3: 2 PM Viator trip (Godshall) runs, block the rest
