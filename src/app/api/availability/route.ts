@@ -140,8 +140,9 @@ export async function GET(request: Request) {
             // Owner out of town Aug 3-7. Mon 8/3: 2 PM Viator trip (Godshall) runs and
             // 10 AM stays open; block 11 AM-1 PM and everything from 3 PM on.
             '2026-08-03': (t) => { const h = to24Hour(t); return h !== null && (h >= 15 || (h >= 11 && h <= 13)); },
-            // Tue/Wed 8/4-8/5: 4 PM reopened, rest of the day stays closed
-            '2026-08-04': (t) => { const h = to24Hour(t); return h !== 16; },
+            // Tue 8/4: 4 PM and 5 PM open, rest of the day stays closed
+            '2026-08-04': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
+            // Wed 8/5: 4 PM reopened, rest of the day stays closed
             '2026-08-05': (t) => { const h = to24Hour(t); return h !== 16; },
             // Thu 8/6: 4 PM (Helmer + Barnes Viator parties, 5 riders) and 5 PM run; rest closed
             '2026-08-06': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
