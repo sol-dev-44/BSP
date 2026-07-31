@@ -132,6 +132,10 @@ export async function GET(request: Request) {
             '2026-07-30': (t) => { const h = to24Hour(t); return h === 18 || h === 20; },
             // Fri — block 5-8 PM (3 and 4 PM stay open)
             '2026-07-31': (t) => { const h = to24Hour(t); return h !== null && h >= 17 && h <= 20; },
+            // Sat — block 10 AM-1 PM and 5-7 PM (2 PM Croft and 4 PM Mattsson run; 3 PM open)
+            '2026-08-01': (t) => { const h = to24Hour(t); return h !== null && (h <= 13 || h >= 17); },
+            // Sun — block 10 AM-2 PM and 6-7 PM (3 PM Moss and 5 PM Jason run; 4 PM open)
+            '2026-08-02': (t) => { const h = to24Hour(t); return h !== null && (h <= 14 || h >= 18); },
             // Owner out of town Aug 3-7. Mon 8/3: 2 PM Viator trip (Godshall) runs, block the rest
             '2026-08-03': (t) => { const h = to24Hour(t); return h !== null && h >= 15; },
             // Tue/Wed 8/4-8/5: 4 PM reopened, rest of the day stays closed
