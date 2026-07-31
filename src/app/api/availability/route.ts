@@ -130,8 +130,8 @@ export async function GET(request: Request) {
             '2026-07-29': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17 && h !== 18; },
             // Thu — block 6 and 8 PM (3, 4, 5 and 7 PM run)
             '2026-07-30': (t) => { const h = to24Hour(t); return h === 18 || h === 20; },
-            // Fri — block 5-8 PM (3 and 4 PM stay open)
-            '2026-07-31': (t) => { const h = to24Hour(t); return h !== null && h >= 17 && h <= 20; },
+            // Fri — block 6-8 PM (3, 4 and 5 PM stay open; 5 PM has a 15-min notice window)
+            '2026-07-31': (t) => { const h = to24Hour(t); return h !== null && h >= 18 && h <= 20; },
             // Sat — only 10 and 11 AM run; rest of the day closed (Croft 2 PM and
             // Mattsson 4 PM are being rescheduled)
             '2026-08-01': (t) => { const h = to24Hour(t); return h !== 10 && h !== 11; },
