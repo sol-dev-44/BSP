@@ -134,8 +134,8 @@ export async function GET(request: Request) {
             '2026-07-31': (t) => { const h = to24Hour(t); return h !== null && h >= 17 && h <= 20; },
             // Sat — closed all day; Croft (2 PM) and Mattsson (4 PM) are being rescheduled
             '2026-08-01': () => true,
-            // Sun — block 10 AM-2 PM and 6-7 PM (3 PM Moss and 5 PM Jason run; 4 PM open)
-            '2026-08-02': (t) => { const h = to24Hour(t); return h !== null && (h <= 14 || h >= 18); },
+            // Sun — block 10 AM-2 PM and 7 PM (3 PM Moss and 5 PM Jason run; 4 and 6 PM open)
+            '2026-08-02': (t) => { const h = to24Hour(t); return h !== null && (h <= 14 || h >= 19); },
             // Owner out of town Aug 3-7. Mon 8/3: 2 PM Viator trip (Godshall) runs and
             // 10 AM stays open; block 11 AM-1 PM and everything from 3 PM on.
             '2026-08-03': (t) => { const h = to24Hour(t); return h !== null && (h >= 15 || (h >= 11 && h <= 13)); },
