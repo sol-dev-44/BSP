@@ -136,8 +136,9 @@ export async function GET(request: Request) {
             '2026-08-01': (t) => { const h = to24Hour(t); return h !== null && (h <= 13 || h >= 17); },
             // Sun — block 10 AM-2 PM and 6-7 PM (3 PM Moss and 5 PM Jason run; 4 PM open)
             '2026-08-02': (t) => { const h = to24Hour(t); return h !== null && (h <= 14 || h >= 18); },
-            // Owner out of town Aug 3-7. Mon 8/3: 2 PM Viator trip (Godshall) runs, block the rest
-            '2026-08-03': (t) => { const h = to24Hour(t); return h !== null && h >= 15; },
+            // Owner out of town Aug 3-7. Mon 8/3: 2 PM Viator trip (Godshall) runs and
+            // 10 AM stays open; block 11 AM-1 PM and everything from 3 PM on.
+            '2026-08-03': (t) => { const h = to24Hour(t); return h !== null && (h >= 15 || (h >= 11 && h <= 13)); },
             // Tue/Wed 8/4-8/5: 4 PM reopened, rest of the day stays closed
             '2026-08-04': (t) => { const h = to24Hour(t); return h !== 16; },
             '2026-08-05': (t) => { const h = to24Hour(t); return h !== 16; },
