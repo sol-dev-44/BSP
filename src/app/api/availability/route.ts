@@ -165,6 +165,11 @@ export async function GET(request: Request) {
                 match: (t) => { const h = to24Hour(t); return h !== null && h >= 12; },
                 reason: 'Fully booked',
             },
+            // Sun — 4 PM at 10/10 once Mattsson moved over from the pulled 3 PM trip
+            '2026-08-02': {
+                match: (t) => to24Hour(t) === 16,
+                reason: 'Fully booked',
+            },
         };
 
         // Weather closures — block the entire day AND surface a structured notice
