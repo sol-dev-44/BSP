@@ -135,8 +135,8 @@ export async function GET(request: Request) {
             // Sat — only the 10 AM trip (Elliston) runs; rest of the day closed
             // (Croft moved to 8/8, Mattsson to 8/2)
             '2026-08-01': (t) => { const h = to24Hour(t); return h !== 10; },
-            // Sun — block 10 AM-2 PM and 7 PM (3 PM Moss and 5 PM Jason run; 4 and 6 PM open)
-            '2026-08-02': (t) => { const h = to24Hour(t); return h !== null && (h <= 14 || h >= 19); },
+            // Sun — block 10 AM-2 PM and 6-7 PM (3, 4 and 5 PM run)
+            '2026-08-02': (t) => { const h = to24Hour(t); return h !== null && (h <= 14 || h >= 18); },
             // Owner out of town Aug 3-7. Mon 8/3: 2 PM Viator trip (Godshall) runs and
             // 10 AM stays open; block 11 AM-1 PM and everything from 3 PM on.
             '2026-08-03': (t) => { const h = to24Hour(t); return h !== null && (h >= 15 || (h >= 11 && h <= 13)); },
