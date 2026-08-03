@@ -139,10 +139,10 @@ export async function GET(request: Request) {
             // pulled: the big group (Moss, 6 riders) is rescheduling, and Mattsson's
             // 2 riders are on that slot too and still need a new time.
             '2026-08-02': (t) => { const h = to24Hour(t); return h !== null && (h <= 15 || h >= 18); },
-            // Owner out of town Aug 4-7. Mon 8/3: only 10 AM and 3 PM open; block
-            // 11 AM-2 PM and everything from 4 PM on. (The Godshall Viator party
-            // that held 2 PM cancelled Aug 2 and the slot was pulled.)
-            '2026-08-03': (t) => { const h = to24Hour(t); return h !== null && (h >= 16 || (h >= 11 && h <= 14)); },
+            // Owner out of town Aug 4-7. Mon 8/3: only the 10 AM trip runs; block
+            // everything else. (The Godshall Viator party that held 2 PM cancelled
+            // Aug 2 and the afternoon was pulled.)
+            '2026-08-03': (t) => { const h = to24Hour(t); return h !== 10; },
             // Tue 8/4: 4 PM and 5 PM open, rest of the day stays closed
             '2026-08-04': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Wed 8/5: 4 PM reopened, rest of the day stays closed
