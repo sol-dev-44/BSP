@@ -145,8 +145,8 @@ export async function GET(request: Request) {
             '2026-08-03': (t) => { const h = to24Hour(t); return h !== 10; },
             // Tue 8/4: 4 PM and 5 PM open, rest of the day stays closed
             '2026-08-04': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
-            // Wed 8/5: 4 PM reopened, rest of the day stays closed
-            '2026-08-05': (t) => { const h = to24Hour(t); return h !== 16; },
+            // Wed 8/5: 4 PM and 5 PM open, rest of the day stays closed
+            '2026-08-05': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Thu 8/6: 4 PM (Helmer + Barnes Viator parties, 5 riders) and 5 PM run; rest closed
             '2026-08-06': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Fri 8/7: 5, 6 and 7 PM stay open (8 PM isn't offered in August)
