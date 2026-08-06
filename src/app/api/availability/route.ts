@@ -151,8 +151,10 @@ export async function GET(request: Request) {
             '2026-08-06': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Fri 8/7: 5, 6 and 7 PM stay open (8 PM isn't offered in August)
             '2026-08-07': (t) => { const h = to24Hour(t); return h !== null && h !== 17 && h !== 18 && h !== 19 && h !== 20; },
-            // Wed 8/12: block 3 and 4 PM (5 and 6 PM open; 7 PM is the Zink group, 10/10)
-            '2026-08-12': (t) => { const h = to24Hour(t); return h === 15 || h === 16; },
+            // Wed 8/12: 10 AM (Karpel Liel), 5, 6 and 7 PM open — block 11 AM-4 PM.
+            // The morning slots only exist because 8/12 is in fullDayOverrides.
+            // 7 PM is the Zink group of 10, already at 10/10.
+            '2026-08-12': (t) => { const h = to24Hour(t); return h !== null && h >= 11 && h <= 16; },
         };
 
         // Per-date sold-out overrides. Unlike DATE_BLOCKS ("Closed" tiles), these

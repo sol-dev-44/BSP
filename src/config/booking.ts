@@ -27,6 +27,7 @@ export const BOOKING_CONFIG = {
         '2026-07-29', // Wed - Tyler Stanhope 10 AM trip runs (slot closed to new bookings)
         '2026-08-03', // Mon - full day opened for the 10 AM trip (the Godshall Viator 2 PM party cancelled)
         '2026-08-11', // Tue - Heather Vest (Viator 2 PM)
+        '2026-08-12', // Wed - Danielle Karpel Liel 10 AM trip runs
     ] as string[],
 
     // Max passengers per boat (Cloud Dancer holds 10)
