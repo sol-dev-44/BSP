@@ -165,6 +165,8 @@ export async function GET(request: Request) {
             // The morning slots only exist because 8/12 is in fullDayOverrides.
             // 7 PM is the Zink group of 10, already at 10/10.
             '2026-08-12': (t) => { const h = to24Hour(t); return h !== null && h >= 11 && h <= 17; },
+            // Thu 8/13: block 3-5 PM (6 and 7 PM stay open)
+            '2026-08-13': (t) => { const h = to24Hour(t); return h !== null && h >= 15 && h <= 17; },
         };
 
         // Per-date sold-out overrides. Unlike DATE_BLOCKS ("Closed" tiles), these
