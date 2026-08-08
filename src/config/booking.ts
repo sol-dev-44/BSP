@@ -26,6 +26,7 @@ export const BOOKING_CONFIG = {
         '2026-07-28', // Tue - Michael Thurman Reynolds moved to 12 PM
         '2026-07-29', // Wed - Tyler Stanhope 10 AM trip runs (slot closed to new bookings)
         '2026-08-03', // Mon - full day opened for the 10 AM trip (the Godshall Viator 2 PM party cancelled)
+        '2026-08-10', // Mon - Alison Hoffer 1 PM trip runs
         '2026-08-11', // Tue - Heather Vest (Viator 2 PM)
         '2026-08-12', // Wed - Danielle Karpel Liel 10 AM trip runs
     ] as string[],
