@@ -151,9 +151,8 @@ export async function GET(request: Request) {
             '2026-08-06': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Fri 8/7: 5, 6 and 7 PM stay open (8 PM isn't offered in August)
             '2026-08-07': (t) => { const h = to24Hour(t); return h !== null && h !== 17 && h !== 18 && h !== 19 && h !== 20; },
-            // Sat 8/8: 10 AM (Lanza), 6 PM and 7 PM (Aguero) open; everything else
-            // closed. 3 PM is closed to new bookings but Croft's 2 riders are still
-            // on it pending a move (kept as a Closed tile, not removed).
+            // Sat 8/8: 10 AM (Lanza), 6 PM and 7 PM (Aguero + Croft, moved off the
+            // pulled 3 PM trip) open; everything else closed.
             '2026-08-08': (t) => { const h = to24Hour(t); return h !== 10 && h !== 18 && h !== 19; },
             // Sun 8/9: block 11 AM-5 PM (10 AM Lehman and 7 PM Odom run; 6 PM open)
             '2026-08-09': (t) => { const h = to24Hour(t); return h !== null && h >= 11 && h <= 17; },
