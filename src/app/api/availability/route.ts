@@ -151,9 +151,10 @@ export async function GET(request: Request) {
             '2026-08-06': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Fri 8/7: 5, 6 and 7 PM stay open (8 PM isn't offered in August)
             '2026-08-07': (t) => { const h = to24Hour(t); return h !== null && h !== 17 && h !== 18 && h !== 19 && h !== 20; },
-            // Sat 8/8: only the three booked trips run — 10 AM (Lanza), 3 PM (Croft)
-            // and 7 PM (Aguero); block 11 AM-2 PM and 4-6 PM.
-            '2026-08-08': (t) => { const h = to24Hour(t); return h !== 10 && h !== 15 && h !== 19; },
+            // Sat 8/8: 10 AM (Lanza) and 7 PM (Aguero) open; everything else closed.
+            // 3 PM is closed to new bookings but Croft's 2 riders are still on it
+            // pending a move (kept as a Closed tile, not removed).
+            '2026-08-08': (t) => { const h = to24Hour(t); return h !== 10 && h !== 19; },
             // Wed 8/12: 10 AM (Karpel Liel), 5, 6 and 7 PM open — block 11 AM-4 PM.
             // The morning slots only exist because 8/12 is in fullDayOverrides.
             // 7 PM is the Zink group of 10, already at 10/10.
