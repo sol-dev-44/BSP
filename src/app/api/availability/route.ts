@@ -154,20 +154,24 @@ export async function GET(request: Request) {
             // Sat 8/8: 10 AM (Lanza), 6 PM and 7 PM (Aguero + Croft, moved off the
             // pulled 3 PM trip) open; everything else closed.
             '2026-08-08': (t) => { const h = to24Hour(t); return h !== 10 && h !== 18 && h !== 19; },
-            // Sun 8/9: block 11 AM-5 PM (10 AM Lehman and 7 PM Odom run; 6 PM open)
-            '2026-08-09': (t) => { const h = to24Hour(t); return h !== null && h >= 11 && h <= 17; },
-            // Mon 8/10: 1 PM (Hoffer), 3 PM (Jenkins + Caron) and 4 PM open; block the
-            // rest. The morning/midday slots only exist because 8/10 is in
-            // fullDayOverrides — added so Hoffer's 1 PM trip shows on the grid.
-            '2026-08-10': (t) => { const h = to24Hour(t); return h !== 13 && h !== 15 && h !== 16; },
-            // Tue 8/11: only 12 PM (Jackson, 4 riders) and 1 PM run; block everything else
-            '2026-08-11': (t) => { const h = to24Hour(t); return h !== 12 && h !== 13; },
+            // Sun 8/9: only 10 AM (Lehman) and 7 PM (Odom) run; block 11 AM-6 PM
+            '2026-08-09': (t) => { const h = to24Hour(t); return h !== null && h >= 11 && h <= 18; },
+            // Mon 8/10: 1 PM (Hoffer) and 3 PM (Jenkins + Caron) open; block the rest.
+            // The midday slots only exist because 8/10 is in fullDayOverrides —
+            // added so Hoffer's 1 PM trip shows on the grid.
+            '2026-08-10': (t) => { const h = to24Hour(t); return h !== 13 && h !== 15; },
+            // Tue 8/11: only 12 PM (Jackson, 4 riders) runs; block everything else
+            '2026-08-11': (t) => { const h = to24Hour(t); return h !== 12; },
             // Wed 8/12: 10 AM (Karpel Liel), 6 and 7 PM open — block 11 AM-5 PM.
             // The morning slots only exist because 8/12 is in fullDayOverrides.
             // 7 PM is the Zink group of 10, already at 10/10.
             '2026-08-12': (t) => { const h = to24Hour(t); return h !== null && h >= 11 && h <= 17; },
-            // Thu 8/13: block 3-5 PM (6 and 7 PM stay open)
-            '2026-08-13': (t) => { const h = to24Hour(t); return h !== null && h >= 15 && h <= 17; },
+            // Thu 8/13: only the 6 PM trip runs; block everything else
+            '2026-08-13': (t) => { const h = to24Hour(t); return h !== 18; },
+            // Fri 8/14 - Sun 8/16: only the 5 PM trip runs each day
+            '2026-08-14': (t) => { const h = to24Hour(t); return h !== 17; },
+            '2026-08-15': (t) => { const h = to24Hour(t); return h !== 17; },
+            '2026-08-16': (t) => { const h = to24Hour(t); return h !== 17; },
         };
 
         // Per-date sold-out overrides. Unlike DATE_BLOCKS ("Closed" tiles), these
