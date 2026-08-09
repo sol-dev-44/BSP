@@ -172,6 +172,22 @@ export async function GET(request: Request) {
             '2026-08-14': (t) => { const h = to24Hour(t); return h !== 17; },
             '2026-08-15': (t) => { const h = to24Hour(t); return h !== 17; },
             '2026-08-16': (t) => { const h = to24Hour(t); return h !== 17; },
+            // Mon 8/17: closed all day
+            '2026-08-17': () => true,
+            // Tue 8/18: only the 3 PM trip (Blackburn) runs
+            '2026-08-18': (t) => { const h = to24Hour(t); return h !== 15; },
+            // Wed 8/19: closed all day
+            '2026-08-19': () => true,
+            // Thu 8/20: only the 3 PM trip (Olson, Viator) runs
+            '2026-08-20': (t) => { const h = to24Hour(t); return h !== 15; },
+            // Fri 8/21: only the 3 PM trip (Utter) runs
+            '2026-08-21': (t) => { const h = to24Hour(t); return h !== 15; },
+            // Sat 8/22: 3 PM (Singleterry) and 4 PM (Chernack, GYG) run
+            '2026-08-22': (t) => { const h = to24Hour(t); return h !== 15 && h !== 16; },
+            // Sun 8/23: only the 10 AM trip (Andersen) runs
+            '2026-08-23': (t) => { const h = to24Hour(t); return h !== 10; },
+            // Mon 8/24: only the 5 PM trip (Burns, GYG) runs
+            '2026-08-24': (t) => { const h = to24Hour(t); return h !== 17; },
         };
 
         // Per-date sold-out overrides. Unlike DATE_BLOCKS ("Closed" tiles), these
