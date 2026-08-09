@@ -190,6 +190,12 @@ export async function GET(request: Request) {
             '2026-08-24': (t) => { const h = to24Hour(t); return h !== 17; },
         };
 
+        // Hard season cutoff: every slot on or after this date is closed, so the
+        // calendar takes no new bookings for the rest of the season. Bookings that
+        // already exist past this date are handled manually in the admin console.
+        const CLOSED_FROM_DATE = '2026-08-25';
+        const afterSeasonCutoff = date >= CLOSED_FROM_DATE;
+
         // Per-date sold-out overrides. Unlike DATE_BLOCKS ("Closed" tiles), these
         // render as red "Sold Out" tiles. Predicate returns true for sold-out slots.
         const SOLD_OUT_BLOCKS: Record<string, { match: (time: string) => boolean; reason: string }> = {
@@ -271,7 +277,7 @@ export async function GET(request: Request) {
         const slots: SlotOut[] = dailySlots.map((time) => {
             const used = capacityMap[time] || 0;
             const blockPredicate = DATE_BLOCKS[date];
-            const slotBlocked = (blockPredicate ? blockPredicate(time) : false) || dayWideBlock;
+            const slotBlocked = (blockPredicate ? blockPredicate(time) : false) || dayWideBlock || afterSeasonCutoff;
             const soldOutBlock = SOLD_OUT_BLOCKS[date];
             const slotSoldOut = soldOutBlock ? soldOutBlock.match(time) : false;
             const availability = getSlotAvailability(date, time, nowMs, used > 0);
