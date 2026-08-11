@@ -164,10 +164,11 @@ export async function GET(request: Request) {
             // and 6 PM open; block everything else. 6 PM is the Zink group of 10
             // moved over from 8/12 — at 10/10, so it renders Sold Out.
             '2026-08-11': (t) => { const h = to24Hour(t); return h !== 17 && h !== 18; },
-            // Wed 8/12: 10 AM (Karpel Liel) and 6 PM (Harold) open — block 11 AM-5 PM
-            // and the vacated 7 PM (the Zink group of 10 moved to 8/11 6 PM).
-            // The morning slots only exist because 8/12 is in fullDayOverrides.
-            '2026-08-12': (t) => { const h = to24Hour(t); return h !== null && ((h >= 11 && h <= 17) || h === 19); },
+            // Wed 8/12: only 6 PM (Harold) is open to new bookings. 10 AM is closed
+            // but Karpel Liel's 4-rider trip still runs there pending a reschedule
+            // (kept as a Closed tile, not removed). 7 PM was vacated when the Zink
+            // group of 10 moved to 8/11 6 PM.
+            '2026-08-12': (t) => { const h = to24Hour(t); return h !== 18; },
             // Thu 8/13: closed all day — the 6 PM trip (the last one open) is pulled
             '2026-08-13': () => true,
             // Fri 8/14 - Sun 8/16: only the 5 PM trip runs each day
