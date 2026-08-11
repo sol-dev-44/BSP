@@ -168,8 +168,8 @@ export async function GET(request: Request) {
             // and the vacated 7 PM (the Zink group of 10 moved to 8/11 6 PM).
             // The morning slots only exist because 8/12 is in fullDayOverrides.
             '2026-08-12': (t) => { const h = to24Hour(t); return h !== null && ((h >= 11 && h <= 17) || h === 19); },
-            // Thu 8/13: only the 6 PM trip runs; block everything else
-            '2026-08-13': (t) => { const h = to24Hour(t); return h !== 18; },
+            // Thu 8/13: closed all day — the 6 PM trip (the last one open) is pulled
+            '2026-08-13': () => true,
             // Fri 8/14 - Sun 8/16: only the 5 PM trip runs each day
             '2026-08-14': (t) => { const h = to24Hour(t); return h !== 17; },
             '2026-08-15': (t) => { const h = to24Hour(t); return h !== 17; },
