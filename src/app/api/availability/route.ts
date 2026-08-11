@@ -160,14 +160,14 @@ export async function GET(request: Request) {
             // The midday slots only exist because 8/10 is in fullDayOverrides —
             // added so Hoffer's 1 PM trip shows on the grid.
             '2026-08-10': (t) => { const h = to24Hour(t); return h !== 13 && h !== 15; },
-            // Tue 8/11: only 6 PM runs (Jackson, 4 riders, moved 12 PM -> 5 PM ->
-            // 6 PM); block everything else, including the vacated 5 PM. The 6 PM
-            // trip shows as Sold Out via SOLD_OUT_BLOCKS — it takes no new bookings.
-            '2026-08-11': (t) => { const h = to24Hour(t); return h !== 18; },
-            // Wed 8/12: 10 AM (Karpel Liel), 6 and 7 PM open — block 11 AM-5 PM.
+            // Tue 8/11: 5 PM (Jackson, 4 riders, moved off the pulled 12 PM trip)
+            // and 6 PM open; block everything else. 6 PM is the Zink group of 10
+            // moved over from 8/12 — at 10/10, so it renders Sold Out.
+            '2026-08-11': (t) => { const h = to24Hour(t); return h !== 17 && h !== 18; },
+            // Wed 8/12: 10 AM (Karpel Liel) and 6 PM (Harold) open — block 11 AM-5 PM
+            // and the vacated 7 PM (the Zink group of 10 moved to 8/11 6 PM).
             // The morning slots only exist because 8/12 is in fullDayOverrides.
-            // 7 PM is the Zink group of 10, already at 10/10.
-            '2026-08-12': (t) => { const h = to24Hour(t); return h !== null && h >= 11 && h <= 17; },
+            '2026-08-12': (t) => { const h = to24Hour(t); return h !== null && ((h >= 11 && h <= 17) || h === 19); },
             // Thu 8/13: only the 6 PM trip runs; block everything else
             '2026-08-13': (t) => { const h = to24Hour(t); return h !== 18; },
             // Fri 8/14 - Sun 8/16: only the 5 PM trip runs each day
@@ -216,7 +216,7 @@ export async function GET(request: Request) {
                 match: (t) => to24Hour(t) === 16,
                 reason: 'Fully booked',
             },
-            // Tue — the 6 PM Jackson trip runs but is closed to new bookings
+            // Tue — 6 PM is the Zink group of 10, at 10/10 (5 PM stays open)
             '2026-08-11': {
                 match: (t) => to24Hour(t) === 18,
                 reason: 'Fully booked',
