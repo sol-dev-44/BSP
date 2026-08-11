@@ -160,9 +160,10 @@ export async function GET(request: Request) {
             // The midday slots only exist because 8/10 is in fullDayOverrides —
             // added so Hoffer's 1 PM trip shows on the grid.
             '2026-08-10': (t) => { const h = to24Hour(t); return h !== 13 && h !== 15; },
-            // Tue 8/11: only 5 PM runs (Jackson, 4 riders, moved off the pulled
-            // 12 PM trip); block everything else
-            '2026-08-11': (t) => { const h = to24Hour(t); return h !== 17; },
+            // Tue 8/11: only 6 PM runs (Jackson, 4 riders, moved 12 PM -> 5 PM ->
+            // 6 PM); block everything else, including the vacated 5 PM. The 6 PM
+            // trip shows as Sold Out via SOLD_OUT_BLOCKS — it takes no new bookings.
+            '2026-08-11': (t) => { const h = to24Hour(t); return h !== 18; },
             // Wed 8/12: 10 AM (Karpel Liel), 6 and 7 PM open — block 11 AM-5 PM.
             // The morning slots only exist because 8/12 is in fullDayOverrides.
             // 7 PM is the Zink group of 10, already at 10/10.
@@ -213,6 +214,11 @@ export async function GET(request: Request) {
             // Sun — 4 PM at 10/10 once Mattsson moved over from the pulled 3 PM trip
             '2026-08-02': {
                 match: (t) => to24Hour(t) === 16,
+                reason: 'Fully booked',
+            },
+            // Tue — the 6 PM Jackson trip runs but is closed to new bookings
+            '2026-08-11': {
+                match: (t) => to24Hour(t) === 18,
                 reason: 'Fully booked',
             },
         };
