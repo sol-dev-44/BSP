@@ -160,8 +160,9 @@ export async function GET(request: Request) {
             // The midday slots only exist because 8/10 is in fullDayOverrides —
             // added so Hoffer's 1 PM trip shows on the grid.
             '2026-08-10': (t) => { const h = to24Hour(t); return h !== 13 && h !== 15; },
-            // Tue 8/11: only 12 PM (Jackson, 4 riders) runs; block everything else
-            '2026-08-11': (t) => { const h = to24Hour(t); return h !== 12; },
+            // Tue 8/11: only 5 PM runs (Jackson, 4 riders, moved off the pulled
+            // 12 PM trip); block everything else
+            '2026-08-11': (t) => { const h = to24Hour(t); return h !== 17; },
             // Wed 8/12: 10 AM (Karpel Liel), 6 and 7 PM open — block 11 AM-5 PM.
             // The morning slots only exist because 8/12 is in fullDayOverrides.
             // 7 PM is the Zink group of 10, already at 10/10.
