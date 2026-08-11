@@ -164,13 +164,12 @@ export async function GET(request: Request) {
             // and 6 PM open; block everything else. 6 PM is the Zink group of 10
             // moved over from 8/12 — at 10/10, so it renders Sold Out.
             '2026-08-11': (t) => { const h = to24Hour(t); return h !== 17 && h !== 18; },
-            // Wed 8/12: only 6 PM (Harold) is open to new bookings. 10 AM is closed
-            // but Karpel Liel's 4-rider trip still runs there pending a reschedule
-            // (kept as a Closed tile, not removed). 7 PM was vacated when the Zink
-            // group of 10 moved to 8/11 6 PM.
-            '2026-08-12': (t) => { const h = to24Hour(t); return h !== 18; },
-            // Thu 8/13: closed all day — the 6 PM trip (the last one open) is pulled
-            '2026-08-13': () => true,
+            // Wed 8/12: 11 AM (Karpel Liel, moved off 10 AM) and 6 PM (Harold) open;
+            // block everything else, including the vacated 10 AM. 7 PM was vacated
+            // when the Zink group of 10 moved to 8/11 6 PM.
+            '2026-08-12': (t) => { const h = to24Hour(t); return h !== 11 && h !== 18; },
+            // Thu 8/13: only the 3 PM trip runs; block everything else (6 PM stays pulled)
+            '2026-08-13': (t) => { const h = to24Hour(t); return h !== 15; },
             // Fri 8/14 - Sun 8/16: only the 5 PM trip runs each day
             '2026-08-14': (t) => { const h = to24Hour(t); return h !== 17; },
             '2026-08-15': (t) => { const h = to24Hour(t); return h !== 17; },
