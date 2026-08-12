@@ -170,11 +170,12 @@ export async function GET(request: Request) {
             '2026-08-12': (t) => { const h = to24Hour(t); return h !== 11 && h !== 18; },
             // Thu 8/13: only the 3 PM trip runs; block everything else (6 PM stays pulled)
             '2026-08-13': (t) => { const h = to24Hour(t); return h !== 15; },
-            // Fri 8/14 and Sun 8/16: only the 5 PM trip runs each day
+            // Fri 8/14: only the 5 PM trip runs
             '2026-08-14': (t) => { const h = to24Hour(t); return h !== 17; },
             // Sat 8/15: 3 PM, 4 PM and 5 PM open; block everything else
             '2026-08-15': (t) => { const h = to24Hour(t); return h !== 15 && h !== 16 && h !== 17; },
-            '2026-08-16': (t) => { const h = to24Hour(t); return h !== 17; },
+            // Sun 8/16: 4 PM and 5 PM open; block everything else
+            '2026-08-16': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Mon 8/17: closed all day
             '2026-08-17': () => true,
             // Tue 8/18: only the 3 PM trip (Blackburn) runs
