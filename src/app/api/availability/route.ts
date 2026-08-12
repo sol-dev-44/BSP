@@ -164,10 +164,10 @@ export async function GET(request: Request) {
             // and 6 PM open; block everything else. 6 PM is the Zink group of 10
             // moved over from 8/12 — at 10/10, so it renders Sold Out.
             '2026-08-11': (t) => { const h = to24Hour(t); return h !== 17 && h !== 18; },
-            // Wed 8/12: 11 AM (Karpel Liel, moved off 10 AM) and 6 PM (Harold) open;
-            // block everything else, including the vacated 10 AM. 7 PM was vacated
-            // when the Zink group of 10 moved to 8/11 6 PM.
-            '2026-08-12': (t) => { const h = to24Hour(t); return h !== 11 && h !== 18; },
+            // Wed 8/12: closed. The 11 AM (Karpel Liel, moved off 10 AM) trip ran;
+            // 6 PM (Harold) was cancelled for wind and refunded, so nothing is left
+            // to book. 7 PM was vacated when the Zink group of 10 moved to 8/11 6 PM.
+            '2026-08-12': () => true,
             // Thu 8/13: only the 3 PM trip runs; block everything else (6 PM stays pulled)
             '2026-08-13': (t) => { const h = to24Hour(t); return h !== 15; },
             // Fri 8/14: only the 5 PM trip runs
