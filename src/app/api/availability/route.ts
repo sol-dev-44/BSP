@@ -172,8 +172,9 @@ export async function GET(request: Request) {
             '2026-08-13': (t) => { const h = to24Hour(t); return h !== 15; },
             // Fri 8/14: only the 5 PM trip runs
             '2026-08-14': (t) => { const h = to24Hour(t); return h !== 17; },
-            // Sat 8/15: 3 PM, 4 PM and 5 PM open; block everything else
-            '2026-08-15': (t) => { const h = to24Hour(t); return h !== 15 && h !== 16 && h !== 17; },
+            // Sat 8/15: only the 5 PM trip runs; 3 PM and 4 PM closed again.
+            // The slot is empty — Mayhew's party moved to 8/14 5 PM.
+            '2026-08-15': (t) => { const h = to24Hour(t); return h !== 17; },
             // Sun 8/16: 4 PM and 5 PM open; block everything else
             '2026-08-16': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Mon 8/17: 5 PM open (reopened); rest of the day closed
