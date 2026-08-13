@@ -168,8 +168,9 @@ export async function GET(request: Request) {
             // 6 PM (Harold) was cancelled for wind and refunded, so nothing is left
             // to book. 7 PM was vacated when the Zink group of 10 moved to 8/11 6 PM.
             '2026-08-12': () => true,
-            // Thu 8/13: only the 3 PM trip runs; block everything else (6 PM stays pulled)
-            '2026-08-13': (t) => { const h = to24Hour(t); return h !== 15; },
+            // Thu 8/13: closed. The 3 PM trip is pulled — Flake's 2-rider booking
+            // stays on the row and gets rescheduled by hand.
+            '2026-08-13': () => true,
             // Fri 8/14: 4 PM open; 5 PM runs (Guggisberg + Mayhew, moved off 8/15)
             '2026-08-14': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Sat 8/15: only the 5 PM trip runs; 3 PM and 4 PM closed again.
