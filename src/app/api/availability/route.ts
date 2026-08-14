@@ -194,12 +194,21 @@ export async function GET(request: Request) {
             '2026-08-23': (t) => { const h = to24Hour(t); return h !== 10; },
             // Mon 8/24: 4 PM and 5 PM (Burns GYG + Georgeson Viator) run
             '2026-08-24': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
+            // Season extended through 8/30. Tue 8/25 - Fri 8/28: 4 PM only.
+            '2026-08-25': (t) => { const h = to24Hour(t); return h !== 16; },
+            '2026-08-26': (t) => { const h = to24Hour(t); return h !== 16; },
+            '2026-08-27': (t) => { const h = to24Hour(t); return h !== 16; },
+            '2026-08-28': (t) => { const h = to24Hour(t); return h !== 16; },
+            // Sat 8/29: 10 AM (Abraham) and 3 PM (Wanner, Viator) run
+            '2026-08-29': (t) => { const h = to24Hour(t); return h !== 10 && h !== 15; },
+            // Sun 8/30: no bookings — closed
+            '2026-08-30': () => true,
         };
 
         // Hard season cutoff: every slot on or after this date is closed, so the
         // calendar takes no new bookings for the rest of the season. Bookings that
         // already exist past this date are handled manually in the admin console.
-        const CLOSED_FROM_DATE = '2026-08-25';
+        const CLOSED_FROM_DATE = '2026-08-31';
         const afterSeasonCutoff = date >= CLOSED_FROM_DATE;
 
         // Per-date sold-out overrides. Unlike DATE_BLOCKS ("Closed" tiles), these
