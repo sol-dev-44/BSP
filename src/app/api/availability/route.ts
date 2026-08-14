@@ -190,8 +190,8 @@ export async function GET(request: Request) {
             '2026-08-21': (t) => { const h = to24Hour(t); return h !== 15 && h !== 16; },
             // Sat 8/22: 3 PM (Singleterry) and 4 PM (Chernack, GYG) run
             '2026-08-22': (t) => { const h = to24Hour(t); return h !== 15 && h !== 16; },
-            // Sun 8/23: only the 10 AM trip (Andersen) runs
-            '2026-08-23': (t) => { const h = to24Hour(t); return h !== 10; },
+            // Sun 8/23: 10 AM (Andersen), 11 AM and 12 PM run
+            '2026-08-23': (t) => { const h = to24Hour(t); return h !== 10 && h !== 11 && h !== 12; },
             // Mon 8/24: 4 PM and 5 PM (Burns GYG + Georgeson Viator) run
             '2026-08-24': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Season extended through 8/30. Tue 8/25 - Fri 8/28: 4 PM only.
@@ -199,10 +199,10 @@ export async function GET(request: Request) {
             '2026-08-26': (t) => { const h = to24Hour(t); return h !== 16; },
             '2026-08-27': (t) => { const h = to24Hour(t); return h !== 16; },
             '2026-08-28': (t) => { const h = to24Hour(t); return h !== 16; },
-            // Sat 8/29: 10 AM (Abraham) and 3 PM (Wanner, Viator) run
-            '2026-08-29': (t) => { const h = to24Hour(t); return h !== 10 && h !== 15; },
-            // Sun 8/30: no bookings — closed
-            '2026-08-30': () => true,
+            // Sat 8/29: 10 AM (Abraham) through 3 PM (Wanner, Viator) open; block later slots
+            '2026-08-29': (t) => { const h = to24Hour(t); return h !== null && (h < 10 || h > 15); },
+            // Sun 8/30: 11 AM through 3 PM open; block the rest
+            '2026-08-30': (t) => { const h = to24Hour(t); return h !== null && (h < 11 || h > 15); },
         };
 
         // Hard season cutoff: every slot on or after this date is closed, so the
