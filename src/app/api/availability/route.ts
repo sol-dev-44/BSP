@@ -171,11 +171,11 @@ export async function GET(request: Request) {
             // Thu 8/13: closed. The 3 PM trip is pulled — Flake's 2-rider booking
             // stays on the row and gets rescheduled by hand.
             '2026-08-13': () => true,
-            // Fri 8/14: 4 PM open; 5 PM runs (Guggisberg + Mayhew, moved off 8/15)
-            '2026-08-14': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
-            // Sat 8/15: only the 5 PM trip runs; 3 PM and 4 PM closed again.
-            // The slot is empty — Mayhew's party moved to 8/14 5 PM.
-            '2026-08-15': (t) => { const h = to24Hour(t); return h !== 17; },
+            // Fri 8/14: closed — the whole day was pulled and its three parties
+            // moved to 8/15 (Guggisberg to noon, Flake and Mayhew to 6 PM).
+            '2026-08-14': () => true,
+            // Sat 8/15: 12 PM (Guggisberg), 5 PM and 6 PM (Flake + Mayhew) open
+            '2026-08-15': (t) => { const h = to24Hour(t); return h !== 12 && h !== 17 && h !== 18; },
             // Sun 8/16: 4 PM and 5 PM open; block everything else
             '2026-08-16': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Mon 8/17: 5 PM open (reopened); rest of the day closed
