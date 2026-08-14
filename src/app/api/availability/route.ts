@@ -201,8 +201,8 @@ export async function GET(request: Request) {
             '2026-08-28': (t) => { const h = to24Hour(t); return h !== 16; },
             // Sat 8/29: 10 AM (Abraham) through 3 PM (Wanner, Viator) open; block later slots
             '2026-08-29': (t) => { const h = to24Hour(t); return h !== null && (h < 10 || h > 15); },
-            // Sun 8/30: 11 AM through 3 PM open; block the rest
-            '2026-08-30': (t) => { const h = to24Hour(t); return h !== null && (h < 11 || h > 15); },
+            // Sun 8/30: 10 AM and 11 AM only; block the rest
+            '2026-08-30': (t) => { const h = to24Hour(t); return h !== 10 && h !== 11; },
         };
 
         // Hard season cutoff: every slot on or after this date is closed, so the
