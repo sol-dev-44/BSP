@@ -277,6 +277,8 @@ const NOTICE_EXEMPT_SLOTS: Record<string, { hour: number; closeMinutesBefore: nu
     '2026-07-31': [{ hour: 17, closeMinutesBefore: 15 }],
     // Aug 4 — 5 PM bookable until 4:30 PM
     '2026-08-04': [{ hour: 17, closeMinutesBefore: 30 }],
+    // Aug 15 — 5 PM bookable until 4:55 PM
+    '2026-08-15': [{ hour: 17, closeMinutesBefore: 5 }],
 };
 
 /** Convert a "H:MM AM/PM" display time to "HH:MM:SS" for DB time-column queries. */
