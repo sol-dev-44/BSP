@@ -176,8 +176,8 @@ export async function GET(request: Request) {
             '2026-08-14': () => true,
             // Sat 8/15: 12 PM (Guggisberg), 5 PM and 6 PM (Flake + Mayhew) open
             '2026-08-15': (t) => { const h = to24Hour(t); return h !== 12 && h !== 17 && h !== 18; },
-            // Sun 8/16: 4 PM and 5 PM open; block everything else
-            '2026-08-16': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
+            // Sun 8/16: 5 PM (Davy) and 6 PM open; 4 PM closed
+            '2026-08-16': (t) => { const h = to24Hour(t); return h !== 17 && h !== 18; },
             // Mon 8/17: 5 PM open (reopened); rest of the day closed
             '2026-08-17': (t) => { const h = to24Hour(t); return h !== 17; },
             // Tue 8/18: only the 3 PM trip (Blackburn) runs
