@@ -196,7 +196,8 @@ export async function GET(request: Request) {
             '2026-08-24': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Season extended through 8/30. Tue 8/25 - Fri 8/28: 4 PM only.
             '2026-08-25': (t) => { const h = to24Hour(t); return h !== 16; },
-            '2026-08-26': (t) => { const h = to24Hour(t); return h !== 16; },
+            // Wed 8/26: 4 PM and 5 PM
+            '2026-08-26': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             '2026-08-27': (t) => { const h = to24Hour(t); return h !== 16; },
             '2026-08-28': (t) => { const h = to24Hour(t); return h !== 16; },
             // Sat 8/29: 10 AM (Abraham) through 3 PM (Wanner, Viator) open; block later slots
