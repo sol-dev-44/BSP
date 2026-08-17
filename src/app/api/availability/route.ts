@@ -200,8 +200,9 @@ export async function GET(request: Request) {
             '2026-08-26': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             '2026-08-27': (t) => { const h = to24Hour(t); return h !== 16; },
             '2026-08-28': (t) => { const h = to24Hour(t); return h !== 16; },
-            // Sat 8/29: 10 AM (Abraham) through 3 PM (Wanner, Viator) open; block later slots
-            '2026-08-29': (t) => { const h = to24Hour(t); return h !== null && (h < 10 || h > 15); },
+            // Sat 8/29: 10 AM (Abraham) through 2 PM open; 3 PM closed once the
+            // Wanner Viator party cancelled, and later slots stay blocked.
+            '2026-08-29': (t) => { const h = to24Hour(t); return h !== null && (h < 10 || h > 14); },
             // Sun 8/30: 10 AM and 11 AM only; block the rest
             '2026-08-30': (t) => { const h = to24Hour(t); return h !== 10 && h !== 11; },
         };
