@@ -180,16 +180,18 @@ export async function GET(request: Request) {
             '2026-08-16': (t) => { const h = to24Hour(t); return h !== 17 && h !== 18; },
             // Mon 8/17: closed all day — 5 PM pulled (it was the only open slot)
             '2026-08-17': () => true,
-            // Tue 8/18: only the 3 PM trip (Blackburn) runs
-            '2026-08-18': (t) => { const h = to24Hour(t); return h !== 15; },
+            // Tue 8/18: closed — 3 PM pulled; Blackburn moved to 8/19 5 PM and
+            // Onthank to 8/22 10 AM.
+            '2026-08-18': () => true,
             // Wed 8/19: 5 PM open (reopened); rest of the day closed
             '2026-08-19': (t) => { const h = to24Hour(t); return h !== 17; },
             // Thu 8/20: 3 PM (Olson + Cowgill, Viator) and 4 PM run
             '2026-08-20': (t) => { const h = to24Hour(t); return h !== 15 && h !== 16; },
             // Fri 8/21: 3 PM (Utter + Stenstrom, GYG) and 4 PM run
             '2026-08-21': (t) => { const h = to24Hour(t); return h !== 15 && h !== 16; },
-            // Sat 8/22: 3 PM (Singleterry) and 4 PM (Chernack, GYG) run
-            '2026-08-22': (t) => { const h = to24Hour(t); return h !== 15 && h !== 16; },
+            // Sat 8/22: 10 AM (Onthank, moved off 8/18), 3 PM (Singleterry +
+            // Salehin) and 4 PM (Chernack, GYG) run
+            '2026-08-22': (t) => { const h = to24Hour(t); return h !== 10 && h !== 15 && h !== 16; },
             // Sun 8/23: 10 AM (Andersen), 11 AM and 12 PM run
             '2026-08-23': (t) => { const h = to24Hour(t); return h !== 10 && h !== 11 && h !== 12; },
             // Mon 8/24: 4 PM and 5 PM (Burns GYG + Georgeson Viator) run
