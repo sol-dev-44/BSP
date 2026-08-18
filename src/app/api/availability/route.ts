@@ -190,9 +190,9 @@ export async function GET(request: Request) {
             '2026-08-20': (t) => { const h = to24Hour(t); return h !== 15; },
             // Fri 8/21: 3 PM (Utter + Stenstrom, GYG) and 4 PM run
             '2026-08-21': (t) => { const h = to24Hour(t); return h !== 15 && h !== 16; },
-            // Sat 8/22: 10 AM (Onthank, moved off 8/18), 3 PM (Singleterry +
-            // Salehin) and 4 PM (Chernack, GYG) run
-            '2026-08-22': (t) => { const h = to24Hour(t); return h !== 10 && h !== 15 && h !== 16; },
+            // Sat 8/22: 10 AM (Onthank, moved off 8/18) and 3 PM (Singleterry +
+            // Salehin) run; 4 PM closed once the Chernack GYG booking cancelled
+            '2026-08-22': (t) => { const h = to24Hour(t); return h !== 10 && h !== 15; },
             // Sun 8/23: 10 AM (Andersen), 11 AM and 12 PM run
             '2026-08-23': (t) => { const h = to24Hour(t); return h !== 10 && h !== 11 && h !== 12; },
             // Mon 8/24: 4 PM and 5 PM (Burns GYG + Georgeson Viator) run
