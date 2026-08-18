@@ -185,8 +185,9 @@ export async function GET(request: Request) {
             '2026-08-18': () => true,
             // Wed 8/19: 5 PM open (reopened); rest of the day closed
             '2026-08-19': (t) => { const h = to24Hour(t); return h !== 17; },
-            // Thu 8/20: 3 PM (Olson + Cowgill, Viator) and 4 PM run
-            '2026-08-20': (t) => { const h = to24Hour(t); return h !== 15 && h !== 16; },
+            // Thu 8/20: only the 3 PM trip (Cowgill, Viator) runs; 4 PM closed
+            // (Olson's Viator party cancelled Aug 12)
+            '2026-08-20': (t) => { const h = to24Hour(t); return h !== 15; },
             // Fri 8/21: 3 PM (Utter + Stenstrom, GYG) and 4 PM run
             '2026-08-21': (t) => { const h = to24Hour(t); return h !== 15 && h !== 16; },
             // Sat 8/22: 10 AM (Onthank, moved off 8/18), 3 PM (Singleterry +
