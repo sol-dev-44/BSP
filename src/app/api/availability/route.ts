@@ -193,8 +193,9 @@ export async function GET(request: Request) {
             // Sat 8/22: 10 AM (Onthank, moved off 8/18), 11 AM, 3 PM (Singleterry +
             // Salehin) and 4 PM run — 11 AM and 4 PM reopened
             '2026-08-22': (t) => { const h = to24Hour(t); return h !== 10 && h !== 11 && h !== 15 && h !== 16; },
-            // Sun 8/23: closed all day — 10 AM pulled (it was the only open slot);
-            // the Andersen party of 2 gets rescheduled by hand.
+            // Sun 8/23: closed all day for wind — 10 AM pulled (it was the only open
+            // slot); the Andersen party of 2 gets rescheduled by hand. Also listed in
+            // WEATHER_BLOCKED_DATES so the day renders the red flag / wind card.
             '2026-08-23': () => true,
             // Mon 8/24: 4 PM and 5 PM (Burns GYG + Georgeson Viator) run
             '2026-08-24': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
@@ -249,6 +250,7 @@ export async function GET(request: Request) {
             '2026-06-16': { type: 'weather', message: 'Too Windy to Operate' },
             '2026-07-04': { type: 'weather', message: '🚩 Red Flag Warning — High Wind 💨' },
             '2026-07-08': { type: 'weather', message: '💨 Wind Advisory — All Flights Cancelled' },
+            '2026-08-23': { type: 'weather', message: '🚩 Red Flag Warning — Too Windy to Fly 💨' },
         };
 
         // Event notices — paired with DATE_BLOCKS above. When the day is partly
