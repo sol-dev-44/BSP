@@ -186,9 +186,10 @@ export async function GET(request: Request) {
             // Wed 8/19: 5 PM open (reopened); rest of the day closed
             '2026-08-19': (t) => { const h = to24Hour(t); return h !== 17; },
             // Thu 8/20: closed all day — 3 PM pulled (it was the only open slot);
-            // the Cowgill Viator party gets moved by hand.
+            // the Cowgill Viator party moved to 8/21 4 PM.
             '2026-08-20': () => true,
-            // Fri 8/21: 3 PM (Utter + Stenstrom, GYG) and 4 PM run
+            // Fri 8/21: 3 PM (Utter + Stenstrom + Bench, 9/10) and 4 PM (Cowgill,
+            // Viator, moved off the pulled 8/20 3 PM trip) run
             '2026-08-21': (t) => { const h = to24Hour(t); return h !== 15 && h !== 16; },
             // Sat 8/22: 10 AM (Onthank, moved off 8/18), 11 AM, 3 PM (Singleterry +
             // Salehin) and 4 PM run — 11 AM and 4 PM reopened
