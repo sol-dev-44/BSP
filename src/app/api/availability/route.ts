@@ -191,9 +191,9 @@ export async function GET(request: Request) {
             // Fri 8/21: 3 PM (Utter + Stenstrom + Bench, 9/10) and 4 PM (Cowgill,
             // Viator, moved off the pulled 8/20 3 PM trip) run
             '2026-08-21': (t) => { const h = to24Hour(t); return h !== 15 && h !== 16; },
-            // Sat 8/22: 11 AM and 3 PM (Singleterry + Lars, 4/10 after Salehin moved
-            // to 8/25 4 PM) run. 10 AM (Onthank) and 4 PM (Wilkey) pulled — both
-            // parties get moved by hand.
+            // Sat 8/22: 11 AM and 3 PM (Singleterry + Lars + Onthank, 6/10 — Salehin
+            // moved to 8/25 4 PM, Onthank moved in off the pulled 10 AM) run.
+            // 10 AM and 4 PM pulled; 4 PM's Wilkey party still needs a move.
             '2026-08-22': (t) => { const h = to24Hour(t); return h !== 11 && h !== 15; },
             // Sun 8/23: closed all day for wind — 10 AM pulled (it was the only open
             // slot); the Andersen party of 2 gets rescheduled by hand. Also listed in
