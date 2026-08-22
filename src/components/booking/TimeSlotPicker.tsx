@@ -17,7 +17,8 @@ interface TimeSlot {
 
 type DateNotice =
     | { type: 'weather'; message: string }
-    | { type: 'event'; emoji: string; title: string; message: string };
+    | { type: 'event'; emoji: string; title: string; message: string }
+    | { type: 'season'; message: string; detail: string };
 
 interface TimeSlotPickerProps {
     slots: TimeSlot[];
@@ -79,6 +80,23 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
                             Please pick another date — we&apos;ll see you on the water soon!
                         </p>
                     </div>
+                </div>
+            </div>
+        );
+    }
+
+    // Season sign-off. Muted on purpose — nothing went wrong, the year just ended.
+    if (dateNotice?.type === 'season') {
+        return (
+            <div className="w-full">
+                <div className="rounded-2xl border border-[#DCC8A0]/60 bg-[#FBF7F1] px-8 py-10 text-center">
+                    <Sunset className="w-7 h-7 mx-auto mb-3 text-[#C9A227]" strokeWidth={1.75} />
+                    <h4 className="text-base font-semibold text-[#5C4A33] mb-1.5">
+                        {dateNotice.message}
+                    </h4>
+                    <p className="text-sm text-[#8B7355] max-w-xs mx-auto leading-relaxed">
+                        {dateNotice.detail}
+                    </p>
                 </div>
             </div>
         );

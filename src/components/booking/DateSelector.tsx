@@ -11,8 +11,8 @@ import {
     isSameMonth,
     isBefore,
 } from 'date-fns';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { BOOKING_CONFIG, isWithinSeason, isDayOfWeekAllowed } from '@/config/booking';
+import { ChevronLeft, ChevronRight, Sunset } from 'lucide-react';
+import { BOOKING_CONFIG, isWithinSeason, isDayOfWeekAllowed, isAfterSeasonEnd, isSeasonLastDay } from '@/config/booking';
 
 const BLOCKED_DATES = new Set<string>([
     '2026-05-26',
@@ -69,7 +69,10 @@ export default function DateSelector({ selectedDate, onSelectDate, minDate }: Da
 
             const isPast = isBefore(day, minDateObj);
             const isBlocked = BLOCKED_DATES.has(dateString);
-            const isDisabled = isPast || !isInSeason || !isAllowedDay || isBlocked;
+            // Past the last day the boat runs — still rendered, just quietly closed.
+            const isPostSeason = isAfterSeasonEnd(dateString);
+            const isLastDay = isSeasonLastDay(dateString);
+            const isDisabled = isPast || !isInSeason || !isAllowedDay || isBlocked || isPostSeason;
             const isSelected = selectedDate === dateString;
             const isToday = dateString === todayString;
 
@@ -78,18 +81,24 @@ export default function DateSelector({ selectedDate, onSelectDate, minDate }: Da
                     key={day.toString()}
                     disabled={isDisabled}
                     aria-disabled={isDisabled || undefined}
+                    title={isPostSeason ? 'Season has ended' : isLastDay ? 'Last day of the 2026 season' : undefined}
                     onClick={() => onSelectDate(dateString)}
                     className={`
                         relative h-14 w-full flex items-center justify-center rounded-lg transition-all duration-200
                         ${!isSameMonth(day, monthStart) ? "text-[#DCC8A0] opacity-50" : ""}
                         ${isDisabled ? "text-[#DCC8A0] cursor-not-allowed bg-[#FFFFFF]" : "hover:bg-[#FF9500]/10 cursor-pointer text-[#2D1600] font-medium"}
+                        ${isPostSeason && isSameMonth(day, monthStart) ? "!bg-[#FBF7F1] !text-[#C9B79A] opacity-70" : ""}
                         ${isPast && isSameMonth(day, monthStart) ? "line-through decoration-[#DCC8A0]/70" : ""}
+                        ${isLastDay && !isSelected ? "ring-1 ring-[#FF9500]/40 bg-[#FF9500]/[0.06]" : ""}
                         ${isToday && !isSelected ? "ring-2 ring-[#FFD700] ring-offset-2 ring-offset-[#FFEACC]" : ""}
                         ${isSelected ? "!bg-[#FF9500] !text-[#FFFFFF] shadow-lg shadow-[#FF9500]/30 scale-105 z-10 font-bold" : ""}
                     `}
                 >
                     {formattedDate}
-                    {isAllowedDay && !isDisabled && !isSelected && (
+                    {isLastDay && !isSelected && (
+                        <Sunset className="absolute bottom-1.5 w-3 h-3 text-[#C24E00]/70" strokeWidth={2} aria-hidden />
+                    )}
+                    {isAllowedDay && !isDisabled && !isSelected && !isLastDay && (
                         <span className="absolute bottom-2 w-1 h-1 bg-[#FF9500] rounded-full"></span>
                     )}
                 </button>
@@ -144,6 +153,12 @@ export default function DateSelector({ selectedDate, onSelectDate, minDate }: Da
                 </div>
                 <p className="mt-3 text-xs text-[#8B6914]">
                     Sat &amp; Sun: all day &middot; Mon-Fri: 3 PM - sunset
+                </p>
+                <p className="mt-3 pt-3 border-t border-[#FFD700]/25 text-xs text-[#8B6914] flex items-center gap-1.5">
+                    <Sunset className="w-3.5 h-3.5 text-[#C24E00]/70 shrink-0" strokeWidth={2} aria-hidden />
+                    <span>
+                        {format(new Date(BOOKING_CONFIG.SEASON_LAST_DAY + 'T12:00:00'), 'MMM d')} is our last day of the {format(new Date(BOOKING_CONFIG.SEASON_LAST_DAY + 'T12:00:00'), 'yyyy')} season &mdash; dates after are closed until next May.
+                    </span>
                 </p>
             </div>
         </div>

@@ -214,14 +214,16 @@ export async function GET(request: Request) {
             // 1 PM closed (none had bookings). 3 PM closed once the Wanner Viator
             // party cancelled, and later slots stay blocked.
             '2026-08-29': (t) => { const h = to24Hour(t); return h !== 10 && h !== 14; },
-            // Sun 8/30: 10 AM only — 11 AM closed (no bookings); block the rest
-            '2026-08-30': (t) => { const h = to24Hour(t); return h !== 10; },
+            // Sun 8/30: closed — 10 AM pulled (no bookings). 8/29 is the last day the
+            // boat runs, so this and everything after it falls under the season cutoff.
+            '2026-08-30': () => true,
         };
 
         // Hard season cutoff: every slot on or after this date is closed, so the
         // calendar takes no new bookings for the rest of the season. Bookings that
         // already exist past this date are handled manually in the admin console.
-        const CLOSED_FROM_DATE = '2026-08-31';
+        // 8/29 is the final operating day, so the cutoff starts the morning after.
+        const CLOSED_FROM_DATE = '2026-08-30';
         const afterSeasonCutoff = date >= CLOSED_FROM_DATE;
 
         // Per-date sold-out overrides. Unlike DATE_BLOCKS ("Closed" tiles), these
@@ -289,7 +291,17 @@ export async function GET(request: Request) {
                 message: 'High wind is moving in this afternoon — 4 PM and later flights are cancelled. Morning trips are still on, so grab an earlier slot!',
             },
         };
-        const dateNotice = WEATHER_BLOCKED_DATES[date] || EVENT_DATES[date] || null;
+        // Season-over notice. Deliberately quiet — the season ended on schedule, so
+        // this reads as a sign-off rather than a closure warning. It sits last in the
+        // chain so a weather or event notice on a specific date still wins.
+        const seasonNotice = afterSeasonCutoff
+            ? {
+                type: 'season' as const,
+                message: 'That\'s a wrap on the 2026 season',
+                detail: `Our last flight of the year was ${new Date(BOOKING_CONFIG.SEASON_LAST_DAY + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}. We're back on the water next May — thanks for a great season!`,
+            }
+            : null;
+        const dateNotice = WEATHER_BLOCKED_DATES[date] || EVENT_DATES[date] || seasonNotice;
 
         // Build response with slot type, tiered pricing, and time-based availability.
         // Past slots and slots within the minimum-notice window are marked unbookable

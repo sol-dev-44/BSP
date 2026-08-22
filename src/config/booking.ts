@@ -11,6 +11,11 @@ export const BOOKING_CONFIG = {
         { startDate: '2026-05-23', endDate: '2026-09-30' },
     ],
 
+    // Last day the boat actually runs. The season window above stays open so the
+    // calendar can still render September dates — they're shown as closed-for-the-
+    // season rather than vanishing. Nothing books on or after the following day.
+    SEASON_LAST_DAY: '2026-08-29',
+
     // Excluded days of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
     // Open 7 days/week. Sat/Sun all day. Mon-Fri limited (3 PM - sunset).
     excludedDaysOfWeek: [] as number[],
@@ -52,11 +57,27 @@ export const BOOKING_CONFIG = {
         ],
     },
 
-    // Location schedule (for display purposes)
+    // Location schedule (for display purposes). End date tracks SEASON_LAST_DAY —
+    // keep the two in sync if the season is ever extended again.
     locationSchedule: [
-        { location: 'Flathead Harbor Marina', startDate: '2026-05-23', endDate: '2026-09-30' },
+        { location: 'Flathead Harbor Marina', startDate: '2026-05-23', endDate: '2026-08-29' },
     ],
 };
+
+/**
+ * True once the season has wrapped — any date after the last operating day.
+ * Takes a YYYY-MM-DD string so the comparison stays timezone-free.
+ */
+export function isAfterSeasonEnd(dateStr: string): boolean {
+    return dateStr > BOOKING_CONFIG.SEASON_LAST_DAY;
+}
+
+/**
+ * True for the final operating day of the season — used to flag it on the calendar.
+ */
+export function isSeasonLastDay(dateStr: string): boolean {
+    return dateStr === BOOKING_CONFIG.SEASON_LAST_DAY;
+}
 
 /**
  * Helper function to check if a date is within the booking season
