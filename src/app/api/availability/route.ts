@@ -191,8 +191,9 @@ export async function GET(request: Request) {
             // Fri 8/21: 3 PM (Utter + Stenstrom + Bench, 9/10) and 4 PM (Cowgill,
             // Viator, moved off the pulled 8/20 3 PM trip) run
             '2026-08-21': (t) => { const h = to24Hour(t); return h !== 15 && h !== 16; },
-            // Sat 8/22: 11 AM and 3 PM (Singleterry + Salehin + Lars, 10/10) run.
-            // 10 AM (Onthank) and 4 PM (Wilkey) pulled — both parties get moved by hand.
+            // Sat 8/22: 11 AM and 3 PM (Singleterry + Lars, 4/10 after Salehin moved
+            // to 8/25 4 PM) run. 10 AM (Onthank) and 4 PM (Wilkey) pulled — both
+            // parties get moved by hand.
             '2026-08-22': (t) => { const h = to24Hour(t); return h !== 11 && h !== 15; },
             // Sun 8/23: closed all day for wind — 10 AM pulled (it was the only open
             // slot); the Andersen party of 2 gets rescheduled by hand. Also listed in
@@ -201,6 +202,7 @@ export async function GET(request: Request) {
             // Mon 8/24: 4 PM and 5 PM (Burns GYG + Georgeson Viator) run
             '2026-08-24': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Season extended through 8/30. Tue 8/25 - Fri 8/28: 4 PM only.
+            // 8/25 4 PM: Royal + Salehin (moved off 8/22 3 PM), 8/10.
             '2026-08-25': (t) => { const h = to24Hour(t); return h !== 16; },
             // Wed 8/26: 4 PM and 5 PM
             '2026-08-26': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
