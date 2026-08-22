@@ -199,8 +199,9 @@ export async function GET(request: Request) {
             // slot); the Andersen party of 2 gets rescheduled by hand. Also listed in
             // WEATHER_BLOCKED_DATES so the day renders the red flag / wind card.
             '2026-08-23': () => true,
-            // Mon 8/24: 4 PM and 5 PM (Burns GYG + Georgeson Viator) run
-            '2026-08-24': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
+            // Mon 8/24: 5 PM (Burns GYG + Georgeson Viator + Larrick GYG, 7/10) and
+            // 6 PM run. 4 PM closed — it had no bookings; 6 PM opened in its place.
+            '2026-08-24': (t) => { const h = to24Hour(t); return h !== 17 && h !== 18; },
             // Season extended through 8/30. Tue 8/25 - Fri 8/28: 4 PM only.
             // 8/25 4 PM: Royal + Salehin (moved off 8/22 3 PM), 8/10.
             '2026-08-25': (t) => { const h = to24Hour(t); return h !== 16; },
