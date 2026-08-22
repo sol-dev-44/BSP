@@ -191,9 +191,9 @@ export async function GET(request: Request) {
             // Fri 8/21: 3 PM (Utter + Stenstrom + Bench, 9/10) and 4 PM (Cowgill,
             // Viator, moved off the pulled 8/20 3 PM trip) run
             '2026-08-21': (t) => { const h = to24Hour(t); return h !== 15 && h !== 16; },
-            // Sat 8/22: 10 AM (Onthank, moved off 8/18), 11 AM, 3 PM (Singleterry +
-            // Salehin) and 4 PM run — 11 AM and 4 PM reopened
-            '2026-08-22': (t) => { const h = to24Hour(t); return h !== 10 && h !== 11 && h !== 15 && h !== 16; },
+            // Sat 8/22: 11 AM and 3 PM (Singleterry + Salehin + Lars, 10/10) run.
+            // 10 AM (Onthank) and 4 PM (Wilkey) pulled — both parties get moved by hand.
+            '2026-08-22': (t) => { const h = to24Hour(t); return h !== 11 && h !== 15; },
             // Sun 8/23: closed all day for wind — 10 AM pulled (it was the only open
             // slot); the Andersen party of 2 gets rescheduled by hand. Also listed in
             // WEATHER_BLOCKED_DATES so the day renders the red flag / wind card.
