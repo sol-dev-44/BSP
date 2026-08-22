@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { format } from 'date-fns';
 import { Elements } from '@stripe/react-stripe-js';
 import { stripePromise } from '@/lib/stripe';
 import DateSelector from '@/components/booking/DateSelector';
@@ -413,10 +414,17 @@ export default function BookingClient() {
 
                                 <div className="lg:col-span-7 space-y-8">
                                     <div className="bg-[#FFEACC] rounded-xl shadow-xl p-8">
-                                        <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-[#2D1600] font-[family-name:var(--font-headline)] uppercase tracking-wide">
-                                            <span className="bg-[#FF9500]/10 text-[#FF9500] p-2 rounded-xl"><Clock className="w-6 h-6" /></span>
-                                            Select Time
-                                        </h3>
+                                        <div className="flex items-center gap-3 mb-6">
+                                            <span className="bg-[#FF9500]/10 text-[#FF9500] p-2 rounded-xl shrink-0"><Clock className="w-6 h-6" /></span>
+                                            <div>
+                                                <h3 className="text-2xl font-bold leading-none text-[#2D1600] font-[family-name:var(--font-headline)] uppercase tracking-wide">
+                                                    Select Time
+                                                </h3>
+                                                <p className="mt-1.5 text-sm font-medium text-[#8B6914]">
+                                                    {format(new Date(selectedDate + 'T12:00:00'), 'EEEE, MMMM d')}
+                                                </p>
+                                            </div>
+                                        </div>
                                         <TimeSlotPicker
                                             slots={availableSlots}
                                             selectedTime={selectedTime}
