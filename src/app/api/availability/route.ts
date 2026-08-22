@@ -210,11 +210,12 @@ export async function GET(request: Request) {
             // Thu 8/27 and Fri 8/28: 6 PM only — 4 PM closed (neither day had bookings)
             '2026-08-27': (t) => { const h = to24Hour(t); return h !== 18; },
             '2026-08-28': (t) => { const h = to24Hour(t); return h !== 18; },
-            // Sat 8/29: 10 AM (Abraham) through 2 PM open; 3 PM closed once the
-            // Wanner Viator party cancelled, and later slots stay blocked.
-            '2026-08-29': (t) => { const h = to24Hour(t); return h !== null && (h < 10 || h > 14); },
-            // Sun 8/30: 10 AM and 11 AM only; block the rest
-            '2026-08-30': (t) => { const h = to24Hour(t); return h !== 10 && h !== 11; },
+            // Sat 8/29: 10 AM (Abraham) and 2 PM (Williams) only — 11 AM, 12 PM and
+            // 1 PM closed (none had bookings). 3 PM closed once the Wanner Viator
+            // party cancelled, and later slots stay blocked.
+            '2026-08-29': (t) => { const h = to24Hour(t); return h !== 10 && h !== 14; },
+            // Sun 8/30: 10 AM only — 11 AM closed (no bookings); block the rest
+            '2026-08-30': (t) => { const h = to24Hour(t); return h !== 10; },
         };
 
         // Hard season cutoff: every slot on or after this date is closed, so the
