@@ -202,13 +202,14 @@ export async function GET(request: Request) {
             // Mon 8/24: 5 PM (Burns GYG + Georgeson Viator + Larrick GYG, 7/10) and
             // 6 PM run. 4 PM closed — it had no bookings; 6 PM opened in its place.
             '2026-08-24': (t) => { const h = to24Hour(t); return h !== 17 && h !== 18; },
-            // Season extended through 8/30. Tue 8/25 - Fri 8/28: 4 PM only.
+            // Season extended through 8/30. Tue 8/25: 4 PM only.
             // 8/25 4 PM: Royal + Salehin (moved off 8/22 3 PM), 8/10.
             '2026-08-25': (t) => { const h = to24Hour(t); return h !== 16; },
             // Wed 8/26: 4 PM and 5 PM
             '2026-08-26': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
-            '2026-08-27': (t) => { const h = to24Hour(t); return h !== 16; },
-            '2026-08-28': (t) => { const h = to24Hour(t); return h !== 16; },
+            // Thu 8/27 and Fri 8/28: 6 PM only — 4 PM closed (neither day had bookings)
+            '2026-08-27': (t) => { const h = to24Hour(t); return h !== 18; },
+            '2026-08-28': (t) => { const h = to24Hour(t); return h !== 18; },
             // Sat 8/29: 10 AM (Abraham) through 2 PM open; 3 PM closed once the
             // Wanner Viator party cancelled, and later slots stay blocked.
             '2026-08-29': (t) => { const h = to24Hour(t); return h !== null && (h < 10 || h > 14); },
