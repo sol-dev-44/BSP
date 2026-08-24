@@ -202,9 +202,10 @@ export async function GET(request: Request) {
             // Mon 8/24: 5 PM (Burns GYG + Georgeson Viator + Larrick GYG, 7/10) and
             // 6 PM run. 4 PM closed — it had no bookings; 6 PM opened in its place.
             '2026-08-24': (t) => { const h = to24Hour(t); return h !== 17 && h !== 18; },
-            // Season extended through 8/30. Tue 8/25: 4 PM only.
-            // 8/25 4 PM: Royal + Salehin (moved off 8/22 3 PM), 8/10.
-            '2026-08-25': (t) => { const h = to24Hour(t); return h !== 16; },
+            // Season extended through 8/30. Tue 8/25: 4 PM and 5 PM.
+            // 8/25 4 PM: Royal + Salehin (moved off 8/22 3 PM), 8/10. 5 PM opened
+            // for overflow once 4 PM was down to two seats.
+            '2026-08-25': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Wed 8/26: 4 PM and 5 PM
             '2026-08-26': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Thu 8/27 and Fri 8/28: 6 PM only — 4 PM closed (neither day had bookings)
