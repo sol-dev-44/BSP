@@ -210,10 +210,10 @@ export async function GET(request: Request) {
             // Thu 8/27 and Fri 8/28: 6 PM only — 4 PM closed (neither day had bookings)
             '2026-08-27': (t) => { const h = to24Hour(t); return h !== 18; },
             '2026-08-28': (t) => { const h = to24Hour(t); return h !== 18; },
-            // Sat 8/29: 10 AM (Abraham) and 2 PM (Williams) only — 11 AM, 12 PM and
-            // 1 PM closed (none had bookings). 3 PM closed once the Wanner Viator
-            // party cancelled, and later slots stay blocked.
-            '2026-08-29': (t) => { const h = to24Hour(t); return h !== 10 && h !== 14; },
+            // Sat 8/29: 10 AM (Abraham) and 11 AM only. 2 PM pulled — Williams gets
+            // moved by hand; 11 AM opened in its place. 12 PM and 1 PM stay closed,
+            // as does 3 PM (the Wanner Viator party cancelled) and everything later.
+            '2026-08-29': (t) => { const h = to24Hour(t); return h !== 10 && h !== 11; },
             // Sun 8/30: closed — 10 AM pulled (no bookings). 8/29 is the last day the
             // boat runs, so this and everything after it falls under the season cutoff.
             '2026-08-30': () => true,
