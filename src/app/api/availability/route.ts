@@ -253,6 +253,14 @@ export async function GET(request: Request) {
             },
         };
 
+        // Per-slot capacity caps. Overrides the boat's normal 10-passenger limit for
+        // a single trip — used when a run is held to a smaller load. Keyed by date,
+        // then by display time; anything not listed uses BOOKING_CONFIG.MAX_PASSENGERS.
+        const SLOT_CAPACITY_OVERRIDES: Record<string, Record<string, number>> = {
+            // Thu 8/27: 6 PM held to 8 aboard (Kindt's 2 count toward the cap)
+            '2026-08-27': { '6:00 PM': 8 },
+        };
+
         // Weather closures — block the entire day AND surface a structured notice
         // so the UI can show a "Too Windy to Operate" card with a wind icon
         // instead of a row of disabled time tiles.
@@ -319,6 +327,7 @@ export async function GET(request: Request) {
             price: number;
             availability: 'past' | 'too-soon' | 'bookable';
             blocked: boolean;
+            capacity: number;
             soldOut?: boolean;
             soldOutReason?: string;
         };
@@ -330,9 +339,10 @@ export async function GET(request: Request) {
             const slotSoldOut = soldOutBlock ? soldOutBlock.match(time) : false;
             const availability = getSlotAvailability(date, time, nowMs, used > 0);
             const noticeBlocked = availability !== 'bookable';
+            const capacity = SLOT_CAPACITY_OVERRIDES[date]?.[time] ?? BOOKING_CONFIG.MAX_PASSENGERS;
             const remaining = (slotBlocked || slotSoldOut || noticeBlocked)
                 ? 0
-                : Math.max(0, BOOKING_CONFIG.MAX_PASSENGERS - used);
+                : Math.max(0, capacity - used);
             const type = getSlotType(date, time);
             const price = getSlotPrice(type);
             return {
@@ -342,6 +352,7 @@ export async function GET(request: Request) {
                 price,
                 availability,
                 blocked: slotBlocked,
+                capacity,
                 ...(slotSoldOut ? { soldOut: true, soldOutReason: soldOutBlock!.reason } : {}),
             };
         });
@@ -360,6 +371,7 @@ export async function GET(request: Request) {
                 price: getSlotPrice(privateType),
                 availability: 'bookable',
                 blocked: false,
+                capacity: BOOKING_CONFIG.MAX_PASSENGERS,
                 soldOut: true,
                 soldOutReason: 'Sold out for Private',
             });

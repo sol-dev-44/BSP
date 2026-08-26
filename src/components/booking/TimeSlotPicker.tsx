@@ -11,6 +11,7 @@ interface TimeSlot {
     price: number;
     availability?: 'past' | 'too-soon' | 'bookable';
     blocked?: boolean;
+    capacity?: number;
     soldOut?: boolean;
     soldOutReason?: string;
 }
@@ -265,7 +266,7 @@ export default function TimeSlotPicker({ slots, selectedTime, onSelectTime, isLo
 
                             {/* Spots remaining */}
                             <span className={`text-[10px] mt-1 ${isSelected ? 'text-[#FFFFFF]/70' : 'text-[#8B6914]'}`}>
-                                {slot.remaining} of {BOOKING_CONFIG.MAX_PASSENGERS} spots
+                                {slot.remaining} of {slot.capacity ?? BOOKING_CONFIG.MAX_PASSENGERS} spots
                             </span>
                         </motion.button>
                     );
