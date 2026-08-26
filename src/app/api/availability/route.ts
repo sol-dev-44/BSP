@@ -208,8 +208,8 @@ export async function GET(request: Request) {
             '2026-08-25': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Wed 8/26: 4 PM (Peterson + McLaughlin), 5 PM and 6 PM
             '2026-08-26': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17 && h !== 18; },
-            // Thu 8/27: 6 PM only (Kindt) — 4 PM closed, it had no bookings
-            '2026-08-27': (t) => { const h = to24Hour(t); return h !== 18; },
+            // Thu 8/27: 5 PM and 6 PM (Kindt); 4 PM stays closed
+            '2026-08-27': (t) => { const h = to24Hour(t); return h !== 17 && h !== 18; },
             // Fri 8/28: 5 PM and 6 PM (Kannel); 4 PM stays closed
             '2026-08-28': (t) => { const h = to24Hour(t); return h !== 17 && h !== 18; },
             // Sat 8/29: 10 AM (Abraham) and 11 AM (Williams, moved off the pulled
