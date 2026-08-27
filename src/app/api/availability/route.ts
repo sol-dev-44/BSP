@@ -208,14 +208,15 @@ export async function GET(request: Request) {
             '2026-08-25': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17; },
             // Wed 8/26: 4 PM (Peterson + McLaughlin), 5 PM and 6 PM
             '2026-08-26': (t) => { const h = to24Hour(t); return h !== 16 && h !== 17 && h !== 18; },
-            // Thu 8/27: 5 PM and 6 PM (Kindt); 4 PM stays closed
-            '2026-08-27': (t) => { const h = to24Hour(t); return h !== 17 && h !== 18; },
+            // Thu 8/27: closed all day — 5 PM and 6 PM both pulled. Kindt's 2 stay on
+            // the 6 PM row and get shuffled by hand.
+            '2026-08-27': () => true,
             // Fri 8/28: 5 PM and 6 PM (Kannel); 4 PM stays closed
             '2026-08-28': (t) => { const h = to24Hour(t); return h !== 17 && h !== 18; },
-            // Sat 8/29: 10 AM (Abraham) and 11 AM (Williams, moved off the pulled
-            // 2 PM) only. 12 PM and 1 PM stay closed, as does 3 PM (the Wanner
-            // Viator party cancelled) and everything later. Last day of the season.
-            '2026-08-29': (t) => { const h = to24Hour(t); return h !== 10 && h !== 11; },
+            // Sat 8/29: closed all day — 10 AM and 11 AM both pulled. Abraham's 4 and
+            // Williams' 1 stay on their rows and get shuffled by hand. Still the
+            // season's last calendar day (see SEASON_LAST_DAY).
+            '2026-08-29': () => true,
             // Sun 8/30: closed — 10 AM pulled (no bookings). 8/29 is the last day the
             // boat runs, so this and everything after it falls under the season cutoff.
             '2026-08-30': () => true,
