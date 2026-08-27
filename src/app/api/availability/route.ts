@@ -211,11 +211,12 @@ export async function GET(request: Request) {
             // Thu 8/27: closed all day — 5 PM and 6 PM both pulled. Kindt's 2 stay on
             // the 6 PM row and get shuffled by hand.
             '2026-08-27': () => true,
-            // Fri 8/28: 10 AM and 11 AM — the last two trips of the season. 11 AM is
-            // nearly full with parties shuffled off the pulled 8/27-8/29 slots; the
-            // 10 AM reopened to take the overflow. Both only exist because 8/28 is
-            // in fullDayOverrides — a limited Friday would otherwise start at 3 PM.
-            '2026-08-28': (t) => { const h = to24Hour(t); return h !== 10 && h !== 11; },
+            // Fri 8/28: 11 AM only — the last trip of the season, carrying the parties
+            // shuffled off the pulled 8/27-8/29 slots. The 10 AM was reopened for
+            // overflow and closed again once Abraham's party was refunded instead.
+            // The slot only exists because 8/28 is in fullDayOverrides — a limited
+            // Friday would otherwise start at 3 PM.
+            '2026-08-28': (t) => { const h = to24Hour(t); return h !== 11; },
             // Sat 8/29: closed all day — 10 AM and 11 AM both pulled. Abraham's 4 and
             // Williams' 1 stay on their rows and get shuffled by hand. Still the
             // season's last calendar day (see SEASON_LAST_DAY).
