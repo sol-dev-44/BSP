@@ -211,8 +211,10 @@ export async function GET(request: Request) {
             // Thu 8/27: closed all day — 5 PM and 6 PM both pulled. Kindt's 2 stay on
             // the 6 PM row and get shuffled by hand.
             '2026-08-27': () => true,
-            // Fri 8/28: 5 PM and 6 PM (Kannel); 4 PM stays closed
-            '2026-08-28': (t) => { const h = to24Hour(t); return h !== 17 && h !== 18; },
+            // Fri 8/28: 2 PM, 3 PM and 6 PM (Kannel) run; 5 PM pulled. The midday
+            // slots only exist because 8/28 is in fullDayOverrides — a limited
+            // Friday would otherwise start at 3 PM. Morning slots stay closed.
+            '2026-08-28': (t) => { const h = to24Hour(t); return h !== 14 && h !== 15 && h !== 18; },
             // Sat 8/29: closed all day — 10 AM and 11 AM both pulled. Abraham's 4 and
             // Williams' 1 stay on their rows and get shuffled by hand. Still the
             // season's last calendar day (see SEASON_LAST_DAY).

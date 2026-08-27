@@ -34,6 +34,7 @@ export const BOOKING_CONFIG = {
         '2026-08-10', // Mon - Alison Hoffer 1 PM trip runs
         '2026-08-11', // Tue - Heather Vest (Viator 2 PM)
         '2026-08-12', // Wed - Danielle Karpel Liel 10 AM trip runs
+        '2026-08-28', // Fri - 2 PM opened; a limited Friday would start at 3 PM
     ] as string[],
 
     // Max passengers per boat (Cloud Dancer holds 10)
